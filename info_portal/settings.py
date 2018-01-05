@@ -31,14 +31,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'user_profile',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'user_profile',
 ]
+
+
+AUTH_USER_MODEL = 'user_profile.StudentProfile'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
