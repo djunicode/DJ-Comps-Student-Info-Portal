@@ -74,7 +74,7 @@ class StudentProfile(AbstractUser):
 
 
 class Internship(models.Model):
-    employee = models.ForeignKey(StudentProfile)
+    employee = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     company = models.CharField(max_length=50, blank=True)
     Position = models.CharField(max_length=50, blank=True)
     Loc = models.CharField(max_length=50, blank=True)
@@ -87,7 +87,7 @@ class Internship(models.Model):
 
 
 class Project(models.Model):
-    student = models.ForeignKey(StudentProfile)
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     ProjName = models.CharField(max_length=50)
     ProjURL = models.TextField(validators=[URLValidator()], blank=True)
     ProjDesc = models.CharField(max_length=500, blank=True)
@@ -97,7 +97,7 @@ class Project(models.Model):
 
 
 class Committee(models.Model):
-    employee = models.ForeignKey(StudentProfile)
+    employee = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     OrganisationName = models.CharField(max_length=50)
     YourPosition = models.CharField(max_length=50)
     Loc = models.CharField(max_length=50, blank=True)
@@ -110,7 +110,7 @@ class Committee(models.Model):
 
 
 class ResearchPaper(models.Model):
-    student = models.ForeignKey(StudentProfile)
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     Title = models.CharField(max_length=50)
     Publication = models.CharField(max_length=100)
     DateOfPublication = models.DateField(("Date"), default=datetime.date.today, blank=True)
@@ -121,7 +121,7 @@ class ResearchPaper(models.Model):
 
 
 class BeProject(models.Model):
-    student = models.ForeignKey(StudentProfile, related_name='BE_projects')
+    student = models.ForeignKey(StudentProfile, related_name='BE_projects', on_delete=models.CASCADE)
     ProjName = models.CharField(max_length=50)
     ProjURL = models.TextField(validators=[URLValidator()])
     ProjDesc = models.CharField(max_length=500, blank=True)
