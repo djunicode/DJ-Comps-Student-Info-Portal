@@ -1,5 +1,6 @@
 from django.contrib import admin
-# from .models import TeacherProfile, Experience
+# from .models import TeacherProfile
+# from .models import Experience
 from .models import Hackathon, Committee, ResearchPaper, BeProject, Internship
 from .models import Project, StudentProfile, Skill
 
