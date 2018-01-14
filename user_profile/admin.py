@@ -3,7 +3,6 @@ from .models import TeacherProfile, Experience
 from .models import Hackathon, Committee, ResearchPaper, BeProject, Internship
 from .models import Project, StudentProfile, Skill
 
-# Register your models here.
 admin.site.register(TeacherProfile)
 admin.site.register(Experience)
 admin.site.register(StudentProfile)

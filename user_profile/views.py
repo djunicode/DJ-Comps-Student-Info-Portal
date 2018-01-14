@@ -1,15 +1,10 @@
 from django.shortcuts import render
-# from django.core.urlresolvers import reverse_lazy
-# from django.views import generic
 from django.contrib.auth import authenticate
-# from django.views.generic import View
 from .models import StudentProfile, TeacherProfile
 from django.http import HttpResponse
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
-
-# Create your views here.
 
 
 def register(request):
