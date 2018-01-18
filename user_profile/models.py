@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.core.validators import URLValidator
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator
+from django.db.models.signals import m2m_changed
+from django.core.exceptions import ValidationError
 
 
 class TeacherProfile(models.Model):
@@ -33,8 +35,11 @@ class Hackathon(models.Model):
     Date = models.DateField()
     Desc = models.CharField(max_length=500)
     URL = models.TextField(validators=[URLValidator()])
-    isVerified = models.BooleanField(default=False)
-    verifiedBy = models.ForeignKey(TeacherProfile, blank=True, null=True)
+    image1 = models.FileField()
+    image2 = models.FileField(blank=True)
+    image3 = models.FileField(blank=True)
+    image4 = models.FileField(blank=True)
+    image5 = models.FileField(blank=True)
 
 
 class Skill(models.Model):
@@ -73,8 +78,11 @@ class Internship(models.Model):
     To = models.DateField(("Date"), default=datetime.date.today, blank=True)
     desc = models.CharField(max_length=500, blank=True)
     Certificate = models.FileField(blank=True)
-    isVerified = models.BooleanField(default=False)
-    verifiedBy = models.ForeignKey(TeacherProfile, blank=True, null=True, related_name="verifiedinternships")
+    image1 = models.FileField()
+    image2 = models.FileField(blank=True)
+    image3 = models.FileField(blank=True)
+    image4 = models.FileField(blank=True)
+    image5 = models.FileField(blank=True)
 
     def __str__(self):
         return self.company
@@ -85,8 +93,12 @@ class Project(models.Model):
     ProjName = models.CharField(max_length=50)
     ProjURL = models.TextField(validators=[URLValidator()], blank=True)
     ProjDesc = models.CharField(max_length=500, blank=True)
-    isVerified = models.BooleanField(default=False)
     projectUnderTeacher = models.ForeignKey(TeacherProfile, blank=True, null=True, related_name="verifiedprojects")
+    image1 = models.FileField()
+    image2 = models.FileField(blank=True)
+    image3 = models.FileField(blank=True)
+    image4 = models.FileField(blank=True)
+    image5 = models.FileField(blank=True)
 
 
 class Committee(models.Model):
@@ -98,8 +110,11 @@ class Committee(models.Model):
     dateTo = models.DateField(("Date"), default=datetime.date.today, blank=True)
     Desc = models.CharField(max_length=500, blank=True)
     Certificate = models.FileField(blank=True)
-    isVerified = models.BooleanField(default=False)
-    verifiedBy = models.ForeignKey(TeacherProfile, blank=True, null=True, related_name="verifiedcommittee")
+    image1 = models.FileField()
+    image2 = models.FileField(blank=True)
+    image3 = models.FileField(blank=True)
+    image4 = models.FileField(blank=True)
+    image5 = models.FileField(blank=True)
 
 
 class ResearchPaper(models.Model):
@@ -111,6 +126,11 @@ class ResearchPaper(models.Model):
     LinkToPaper = models.TextField(validators=[URLValidator()], blank=True)
     PaperId = models.CharField(max_length=50, blank=True)
     Published_under = models.ForeignKey(TeacherProfile, blank=True, null=True, related_name="verifiedpaper")
+    image1 = models.FileField()
+    image2 = models.FileField(blank=True)
+    image3 = models.FileField(blank=True)
+    image4 = models.FileField(blank=True)
+    image5 = models.FileField(blank=True)
 
 
 class BeProject(models.Model):
@@ -118,6 +138,10 @@ class BeProject(models.Model):
     ProjName = models.CharField(max_length=50)
     ProjURL = models.TextField(validators=[URLValidator()])
     ProjDesc = models.CharField(max_length=500, blank=True)
-    isVerified = models.BooleanField(default=False)
     teammates = models.ManyToManyField(StudentProfile, related_name='beteammate', blank=True)
     projectUnderTeacher = models.ForeignKey(TeacherProfile, blank=True, null=True, related_name="verifiedbeprojects")
+    image1 = models.FileField()
+    image2 = models.FileField(blank=True)
+    image3 = models.FileField(blank=True)
+    image4 = models.FileField(blank=True)
+    image5 = models.FileField(blank=True)
