@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 
 
 class TeacherProfile(models.Model):
-    teacher = models.OneToOneField(User)
+    teacher = models.OneToOneField(User, on_delete=models.CASCADE)
     Sap_Id = models.BigIntegerField(validators=[MaxValueValidator(99999999999), MinValueValidator(10000000000)])
     department = models.CharField(max_length=50)
     photo = models.FileField(blank=True)
@@ -20,9 +20,14 @@ class TeacherProfile(models.Model):
     )
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
 
+    class Meta:
+        permissions = (
+            ("view_teacher", "Can see teacher profile"),
+        )
+
 
 class Experience(models.Model):
-    employee = models.ForeignKey(TeacherProfile)
+    employee = models.ForeignKey(TeacherProfile, on_delete=models.CASCADE)
     companyName = models.CharField(max_length=50)
     yourPosition = models.CharField(max_length=50)
     Location = models.CharField(max_length=50)
@@ -47,7 +52,7 @@ class Skill(models.Model):
 
 
 class StudentProfile(models.Model):
-    student = models.OneToOneField(User)
+    student = models.OneToOneField(User, on_delete=models.CASCADE)
     Sap_Id = models.BigIntegerField(validators=[MaxValueValidator(99999999999), MinValueValidator(10000000000)])
     department = models.CharField(max_length=50)
     photo = models.FileField(blank=True)
@@ -67,6 +72,11 @@ class StudentProfile(models.Model):
     year = models.CharField(max_length=20, choices=YEAR_CHOICES)
     skills = models.ManyToManyField(Skill, blank=True)
     hackathon = models.ManyToManyField(Hackathon, blank=True)
+
+    class Meta:
+        permissions = (
+            ("view_student", "Can see student profile"),
+        )
 
 
 class Internship(models.Model):
