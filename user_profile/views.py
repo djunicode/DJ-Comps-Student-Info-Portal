@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from .models import StudentProfile, TeacherProfile, Internship, Project, Committee, ResearchPaper, BeProject
 from django.http import HttpResponse
@@ -7,6 +7,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+from django.urls import reverse
 
 
 def register(request):
@@ -130,6 +131,11 @@ def user_login_teacher(request):
             return render(request, 'user_profile/teacher_login.html', {})
 
 
-def logout(request):
+def logout_student(request):
     auth_logout(request)
-    return render(request, 'user_profile/login.html', {})
+    return redirect(reverse('login'))
+
+
+def logout_teacher(request):
+    auth_logout(request)
+    return redirect(reverse('user_login_teacher'))
