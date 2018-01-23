@@ -8,6 +8,10 @@ from django.db.models.signals import m2m_changed
 from django.core.exceptions import ValidationError
 
 
+class Recruiter(models.Model):
+    recruiter = models.OneToOneField(User, on_delete=models.CASCADE)
+
+
 class TeacherProfile(models.Model):
     teacher = models.OneToOneField(User, on_delete=models.CASCADE)
     Sap_Id = models.BigIntegerField(validators=[MaxValueValidator(99999999999), MinValueValidator(10000000000)])

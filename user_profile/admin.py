@@ -1,8 +1,10 @@
 from django.contrib import admin
 from .models import TeacherProfile, Experience
 from .models import Hackathon, Committee, ResearchPaper, BeProject, Internship
-from .models import Project, StudentProfile, Skill
+from .models import Project, StudentProfile, Skill, Recruiter
 
+
+admin.site.register(Recruiter)
 admin.site.register(TeacherProfile)
 admin.site.register(Experience)
 admin.site.register(StudentProfile)
