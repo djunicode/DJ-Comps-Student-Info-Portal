@@ -139,3 +139,30 @@ def logout_student(request):
 def logout_teacher(request):
     auth_logout(request)
     return redirect(reverse('user_login_teacher'))
+
+
+def logout_recruiter(request):
+    auth_logout(request)
+    return redirect(reverse('user_login_recruiter'))
+
+
+def user_login_recruiter(request):
+    if request.user.is_authenticated:
+            return render(request, 'user_profile/recruiter.html', {})
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username', '')
+            password = request.POST.get('password', '')
+            user = authenticate(username=username, password=password)
+            if user:
+                if user.is_active:
+                    auth_login(request, user)
+                    return render(request, 'user_profile/recruiter.html', {})
+                else:
+                    error = 'Your account is disabled.'
+                    return render(request, 'user_profile/login_recruiter.html', {'error': error})
+            else:
+                error = 'Incorrect Username or Password'
+                return render(request, 'user_profile/login_recruiter.html', {'error': error})
+        else:
+            return render(request, 'user_profile/login_recruiter.html', {})
