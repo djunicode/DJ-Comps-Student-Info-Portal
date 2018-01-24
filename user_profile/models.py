@@ -29,6 +29,9 @@ class TeacherProfile(models.Model):
             ("view_teacher", "Can see teacher profile"),
         )
 
+    def __str__(self):
+        return self.Sap_Id
+
 
 class Experience(models.Model):
     employee = models.ForeignKey(TeacherProfile, on_delete=models.CASCADE)
@@ -81,6 +84,9 @@ class StudentProfile(models.Model):
         permissions = (
             ("view_student", "Can see student profile"),
         )
+
+    def __str__(self):
+        return self.Sap_Id
 
 
 class Internship(models.Model):

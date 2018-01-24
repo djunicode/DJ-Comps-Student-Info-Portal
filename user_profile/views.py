@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
 
 
 def register(request):
@@ -166,3 +167,8 @@ def user_login_recruiter(request):
                 return render(request, 'user_profile/login_recruiter.html', {'error': error})
         else:
             return render(request, 'user_profile/login_recruiter.html', {})
+
+
+def student_profile(request, sapid):
+    student = get_object_or_404(StudentProfile, Sap_Id=sapid)
+    return render(request, 'user_profile/student_profile.html', {'student': student})
