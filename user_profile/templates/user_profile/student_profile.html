@@ -4,6 +4,6 @@
 
 <h1>Internships</h1>
 {% for internship in student.internships.all %}
-    <h3>{{ internship.company }}</h3>
-    <img src=" {{ internship.image1.url }}">
+    <h3>Company name : {{ internship.company }}</h3>
+    Screenshot <img src=" {{ internship.image1.url }}">
 {% endfor %}
