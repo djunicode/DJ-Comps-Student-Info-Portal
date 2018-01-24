@@ -1,2 +1,9 @@
 <h1>Sap Id : {{ student.Sap_Id }}</h1>
 <h2>Bio :  {{ student.bio }}</h2>
+
+
+<h1>Internships</h1>
+{% for internship in student.internships.all %}
+    <h3>{{ internship.company }}</h3>
+    <img src=" {{ internship.image1.url }}">
+{% endfor %}

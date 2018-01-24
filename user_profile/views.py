@@ -170,5 +170,8 @@ def user_login_recruiter(request):
 
 
 def student_profile(request, sapid):
-    student = get_object_or_404(StudentProfile, Sap_Id=sapid)
-    return render(request, 'user_profile/student_profile.html', {'student': student})
+    if request.user.is_authenticated:
+        student = get_object_or_404(StudentProfile, Sap_Id=sapid)
+        return render(request, 'user_profile/student_profile.html', {'student': student})
+    else:
+        return HttpResponse("Please Login")

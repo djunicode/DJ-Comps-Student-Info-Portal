@@ -30,7 +30,7 @@ class TeacherProfile(models.Model):
         )
 
     def __str__(self):
-        return self.Sap_Id
+        return str(self.Sap_Id)
 
 
 class Experience(models.Model):
@@ -86,7 +86,7 @@ class StudentProfile(models.Model):
         )
 
     def __str__(self):
-        return self.Sap_Id
+        return str(self.Sap_Id)
 
 
 class Internship(models.Model):
