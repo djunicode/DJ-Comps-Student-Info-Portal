@@ -1,20 +1,9 @@
-<!DOCTYPE html>
+{% load staticfiles %}
 <html>
-    <head>
-        <!-- Is anyone getting tired of repeatedly entering the header over and over?? -->
-        <title>Rango</title>
-    </head>
-
-    <body>
-
-      <form method='POST'>
-      {% csrf_token %}
-      Username <input type="text" name="username"><br>
-      Password <input type="password" name="password"><br>
-      <input type="submit" name="Submit">
-    </form>
-    {% if error %}
-      <p>{{ error }}</p>
-    {% endif %}
-    </body>
+<head>
+</head>
+<body>
+  <div id="root"></div>
+  <script src={% static "/bundles/LoginPageBundle.js" %}></script>	
+</body>
 </html>
