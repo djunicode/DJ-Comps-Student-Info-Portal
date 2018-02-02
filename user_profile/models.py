@@ -6,6 +6,7 @@ from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator
 from django.db.models.signals import m2m_changed
 from django.core.exceptions import ValidationError
+from simple_history.models import HistoricalRecords
 
 
 class Recruiter(models.Model):
@@ -52,10 +53,12 @@ class Hackathon(models.Model):
     image3 = models.FileField(blank=True)
     image4 = models.FileField(blank=True)
     image5 = models.FileField(blank=True)
+    history = HistoricalRecords()
 
 
 class Skill(models.Model):
     skill = models.CharField(max_length=50)
+    history = HistoricalRecords()
 
 
 class StudentProfile(models.Model):
@@ -103,6 +106,7 @@ class Internship(models.Model):
     image3 = models.FileField(blank=True)
     image4 = models.FileField(blank=True)
     image5 = models.FileField(blank=True)
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.company
@@ -119,6 +123,7 @@ class Project(models.Model):
     image3 = models.FileField(blank=True)
     image4 = models.FileField(blank=True)
     image5 = models.FileField(blank=True)
+    history = HistoricalRecords()
 
 
 class Committee(models.Model):
@@ -135,6 +140,7 @@ class Committee(models.Model):
     image3 = models.FileField(blank=True)
     image4 = models.FileField(blank=True)
     image5 = models.FileField(blank=True)
+    history = HistoricalRecords()
 
 
 class ResearchPaper(models.Model):
@@ -151,6 +157,7 @@ class ResearchPaper(models.Model):
     image3 = models.FileField(blank=True)
     image4 = models.FileField(blank=True)
     image5 = models.FileField(blank=True)
+    history = HistoricalRecords()
 
 
 class BeProject(models.Model):
@@ -165,3 +172,4 @@ class BeProject(models.Model):
     image3 = models.FileField(blank=True)
     image4 = models.FileField(blank=True)
     image5 = models.FileField(blank=True)
+    history = HistoricalRecords()
