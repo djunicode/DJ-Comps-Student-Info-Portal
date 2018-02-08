@@ -229,13 +229,15 @@ def notifs(request):
             if cmp1[4] != cmp2[4]:
                 a.append('Date To')
             if cmp1[5] != cmp2[5]:
+                a.append('Description')
+            if cmp1[6] != cmp2[6]:
                 a.append('Certificate')
-            if cmp1[5] != cmp2[5]:
+            if cmp1[7] != cmp2[7]:
                 a.append('Screenshot')
             if len(a) != 2:
                 listed[student.Sap_Id].append(a)
 
-    # Dictionary for storing internship changes with key as Sap_Id
+    # Dictionary for storing projects changes with key as Sap_Id
     projects = {}
     for student in StudentProfile.objects.all():
         projects[student.Sap_Id] = []
@@ -276,7 +278,7 @@ def notifs(request):
             if len(a) != 2:
                 projects[student.Sap_Id].append(a)
 
-        # Dictionary for storing internship changes with key as Sap_Id
+        # Dictionary for storing beprojects changes with key as Sap_Id
         beprojects = {}
         for student in StudentProfile.objects.all():
             beprojects[student.Sap_Id] = []
@@ -317,5 +319,63 @@ def notifs(request):
                 if len(a) != 2:
                     beprojects[student.Sap_Id].append(a)
 
+        # Dictionary for storing committee changes with key as Sap_Id
+        committee = {}
+        for student in StudentProfile.objects.all():
+            committee[student.Sap_Id] = []
+            for committe in student.committee.all():
+                a = []
+                a.append(committe)
+                cmp1 = []
+                cmp2 = []
+                count = 0
+                c1 = committe.history.all().count()
+                if c1 == 1:
+                    break
+                for x in committe.history.all():
+                    b = x.history_date
+                    k = HistoricalCommittee.objects.get(history_date=b)
+                    if count == 0:
+                        a.append(b)
+                        cmp1.append(k.OrganisationName)
+                        cmp1.append(k.YourPosition)
+                        cmp1.append(k.Loc)
+                        cmp1.append(k.dateFrom)
+                        cmp1.append(k.dateTo)
+                        cmp1.append(k.Desc)
+                        cmp1.append(k.Certificate)
+                        cmp1.append(k.image1)
+                    if count == 1:
+                        cmp2.append(k.OrganisationName)
+                        cmp2.append(k.YourPosition)
+                        cmp2.append(k.Loc)
+                        cmp2.append(k.dateFrom)
+                        cmp2.append(k.dateTo)
+                        cmp2.append(k.Desc)
+                        cmp2.append(k.Certificate)
+                        cmp2.append(k.image1)
+                    if count == 2:
+                        break
+                    count = count + 1
+                if cmp1[0] != cmp2[0]:
+                    a.append('Company')
+                if cmp1[1] != cmp2[1]:
+                    a.append('Position')
+                if cmp1[2] != cmp2[2]:
+                    a.append('Location')
+                if cmp1[3] != cmp2[3]:
+                    a.append('Date Joined')
+                if cmp1[4] != cmp2[4]:
+                    a.append('Date To')
+                if cmp1[5] != cmp2[5]:
+                    a.append('Description')
+                if cmp1[6] != cmp2[6]:
+                    a.append('Certificate')
+                if cmp1[7] != cmp2[7]:
+                    a.append('Screenshot')
+                if len(a) != 2:
+                    committee[student.Sap_Id].append(a)
+
     return render(request, 'user_profile/notifs.html', {'listed': listed, 'projects': projects,
-                                                        'beprojects': beprojects})
+                                                        'beprojects': beprojects,
+                                                        'committee': committee})
