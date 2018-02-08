@@ -125,6 +125,9 @@ class Project(models.Model):
     image5 = models.FileField(blank=True)
     history = HistoricalRecords()
 
+    def __str__(self):
+        return str(self.ProjName)
+
 
 class Committee(models.Model):
     employee = models.ForeignKey(StudentProfile, related_name="committee")
