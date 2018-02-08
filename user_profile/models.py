@@ -109,7 +109,7 @@ class Internship(models.Model):
     history = HistoricalRecords()
 
     def __str__(self):
-        return self.company
+        return str(self.company)
 
 
 class Project(models.Model):

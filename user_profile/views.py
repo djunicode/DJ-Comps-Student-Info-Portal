@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from .models import StudentProfile, TeacherProfile, Internship, Project, Committee, ResearchPaper, BeProject
+from .models import HistoricalInternship, HistoricalProject, HistoricalCommittee, HistoricalResearchPaper
+from .models import HistoricalBeProject
 from django.http import HttpResponse
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -175,3 +177,60 @@ def student_profile(request, sapid):
         return render(request, 'user_profile/student_profile.html', {'student': student})
     else:
         return HttpResponse("Please Login")
+
+
+def notifs(request):
+    listed = {}
+    for student in StudentProfile.objects.all():
+        listed[student.Sap_Id] = []
+        for internship in student.internships.all():
+            a = []
+            a.append(internship)
+            cmp1 = []
+            cmp2 = []
+            count = 0
+            c1 = internship.history.all().count()
+            if c1 == 1:
+                break
+            for x in internship.history.all():
+                b = x.history_date
+                k = HistoricalInternship.objects.get(history_date=b)
+                if count == 0:
+                    a.append(b)
+                    cmp1.append(k.company)
+                    cmp1.append(k.Position)
+                    cmp1.append(k.Loc)
+                    cmp1.append(k.From)
+                    cmp1.append(k.To)
+                    cmp1.append(k.desc)
+                    cmp1.append(k.Certificate)
+                    cmp1.append(k.image1)
+                if count == 1:
+                    cmp2.append(k.company)
+                    cmp2.append(k.Position)
+                    cmp2.append(k.Loc)
+                    cmp2.append(k.From)
+                    cmp2.append(k.To)
+                    cmp2.append(k.desc)
+                    cmp2.append(k.Certificate)
+                    cmp2.append(k.image1)
+                if count == 2:
+                    break
+                count = count + 1
+            if cmp1[0] != cmp2[0]:
+                a.append('company')
+            if cmp1[1] != cmp2[1]:
+                a.append('Position')
+            if cmp1[2] != cmp2[2]:
+                a.append('Loc')
+            if cmp1[3] != cmp2[3]:
+                a.append('Date Joined')
+            if cmp1[4] != cmp2[4]:
+                a.append('Date To')
+            if cmp1[5] != cmp2[5]:
+                a.append('Certificate')
+            if cmp1[5] != cmp2[5]:
+                a.append('Screenshot')
+            if len(a) != 2:
+                listed[student.Sap_Id].append(a)
+    return render(request, 'user_profile/notifs.html', {'listed': listed})
