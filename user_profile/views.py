@@ -376,6 +376,64 @@ def notifs(request):
                 if len(a) != 2:
                     committee[student.Sap_Id].append(a)
 
+        # Dictionary for storing ResearchPaper changes with key as Sap_Id
+        researchpaper = {}
+        for student in StudentProfile.objects.all():
+            researchpaper[student.Sap_Id] = []
+            for research in student.researchpaper.all():
+                a = []
+                a.append(research)
+                cmp1 = []
+                cmp2 = []
+                count = 0
+                c1 = research.history.all().count()
+                if c1 == 1:
+                    break
+                for x in research.history.all():
+                    b = x.history_date
+                    k = HistoricalResearchPaper.objects.get(history_date=b)
+                    if count == 0:
+                        a.append(b)
+                        cmp1.append(k.Title)
+                        cmp1.append(k.Publication)
+                        cmp1.append(k.DateOfPublication)
+                        cmp1.append(k.Desc)
+                        cmp1.append(k.LinkToPaper)
+                        cmp1.append(k.Desc)
+                        cmp1.append(k.PaperId)
+                        cmp1.append(k.image1)
+                    if count == 1:
+                        cmp2.append(k.Title)
+                        cmp2.append(k.Publication)
+                        cmp2.append(k.DateOfPublication)
+                        cmp2.append(k.Desc)
+                        cmp2.append(k.LinkToPaper)
+                        cmp2.append(k.Desc)
+                        cmp2.append(k.PaperId)
+                        cmp2.append(k.image1)
+                    if count == 2:
+                        break
+                    count = count + 1
+                if cmp1[0] != cmp2[0]:
+                    a.append('Title')
+                if cmp1[1] != cmp2[1]:
+                    a.append('Publication')
+                if cmp1[2] != cmp2[2]:
+                    a.append('DateOfPublication')
+                if cmp1[3] != cmp2[3]:
+                    a.append('Description')
+                if cmp1[4] != cmp2[4]:
+                    a.append('LinkToPaper')
+                if cmp1[5] != cmp2[5]:
+                    a.append('Description')
+                if cmp1[6] != cmp2[6]:
+                    a.append('PaperId')
+                if cmp1[7] != cmp2[7]:
+                    a.append('Screenshot')
+                if len(a) != 2:
+                    researchpaper[student.Sap_Id].append(a)
+
     return render(request, 'user_profile/notifs.html', {'listed': listed, 'projects': projects,
                                                         'beprojects': beprojects,
-                                                        'committee': committee})
+                                                        'committee': committee,
+                                                        'researchpaper': researchpaper})

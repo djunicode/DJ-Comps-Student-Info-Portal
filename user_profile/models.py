@@ -165,6 +165,9 @@ class ResearchPaper(models.Model):
     image5 = models.FileField(blank=True)
     history = HistoricalRecords()
 
+    def __str__(self):
+        return str(self.Title)
+
 
 class BeProject(models.Model):
     student = models.ForeignKey(StudentProfile, related_name='beprojects')
