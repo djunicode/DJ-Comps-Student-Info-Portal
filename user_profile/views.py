@@ -276,4 +276,46 @@ def notifs(request):
             if len(a) != 2:
                 projects[student.Sap_Id].append(a)
 
-    return render(request, 'user_profile/notifs.html', {'listed': listed, 'projects': projects})
+        # Dictionary for storing internship changes with key as Sap_Id
+        beprojects = {}
+        for student in StudentProfile.objects.all():
+            beprojects[student.Sap_Id] = []
+            for beproject in student.beprojects.all():
+                a = []
+                a.append(beproject)
+                cmp1 = []
+                cmp2 = []
+                count = 0
+                c1 = beproject.history.all().count()
+                if c1 == 1:
+                    break
+                for x in beproject.history.all():
+                    b = x.history_date
+                    k = HistoricalBeProject.objects.get(history_date=b)
+                    if count == 0:
+                        a.append(b)
+                        cmp1.append(k.ProjName)
+                        cmp1.append(k.ProjURL)
+                        cmp1.append(k.ProjDesc)
+                        cmp1.append(k.image1)
+                    if count == 1:
+                        cmp2.append(k.ProjName)
+                        cmp2.append(k.ProjURL)
+                        cmp2.append(k.ProjDesc)
+                        cmp2.append(k.image1)
+                    if count == 2:
+                        break
+                    count = count + 1
+                if cmp1[0] != cmp2[0]:
+                    a.append('Project Name')
+                if cmp1[1] != cmp2[1]:
+                    a.append('Project URL')
+                if cmp1[2] != cmp2[2]:
+                    a.append('Project Description')
+                if cmp1[3] != cmp2[3]:
+                    a.append('Screenshot')
+                if len(a) != 2:
+                    beprojects[student.Sap_Id].append(a)
+
+    return render(request, 'user_profile/notifs.html', {'listed': listed, 'projects': projects,
+                                                        'beprojects': beprojects})

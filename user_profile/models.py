@@ -176,3 +176,6 @@ class BeProject(models.Model):
     image4 = models.FileField(blank=True)
     image5 = models.FileField(blank=True)
     history = HistoricalRecords()
+
+    def __str__(self):
+        return str(self.ProjName)

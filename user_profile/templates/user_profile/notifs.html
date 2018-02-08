@@ -31,3 +31,20 @@
       <br>
   {% endfor %}
 {% endfor %}
+
+<h1>BEProjects</h1>
+{% for key,value in beprojects.items %}
+  {% for k in value %}
+  <br>
+      <b> {{ key }}  </b>
+      {% for x in k %}
+        {% if forloop.counter == 1%}
+            <h3>{{x}}</h3>
+        {% endif %}
+        {% if forloop.counter != 1%}
+            {{x}}
+        {% endif %}
+      {% endfor %}
+      <br>
+  {% endfor %}
+{% endfor %}
