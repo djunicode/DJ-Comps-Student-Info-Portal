@@ -175,3 +175,19 @@ def student_profile(request, sapid):
         return render(request, 'user_profile/student_profile.html', {'student': student})
     else:
         return HttpResponse("Please Login")
+
+
+def student_editprofile(request, sapid):
+    if request.user.is_authenticated:
+        student = get_object_or_404(StudentProfile, Sap_Id=sapid)
+
+        if request.method == 'POST':
+            department = request.POST.get('department', '')
+            mobileNo = request.POST.get('mobileNo', '')
+            student.department = department
+            student.mobileNo = mobileNo
+            student.save()
+            return render(request, 'user_profile/profile.html')
+    else:
+        return HttpResponse("Please Login")
+    return render(request, 'user_profile/edit_student_profile.html', {'student': student})

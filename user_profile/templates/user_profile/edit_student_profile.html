@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Book</title>
+  </head>
+  <body>
+    <h1>Edit Profile:</h1>
+    <form method="post">
+      {%csrf_token%}
+      Department <input type="text" name="department" value={{student.department}}><br>
+      Mobile Number <input type="text" name="mobileNo" value={{student.mobileNo}}><br>
+
+      <input type="submit" name="Submit">
+    </form>
+  </body>
+</html>
