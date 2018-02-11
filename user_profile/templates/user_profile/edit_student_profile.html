@@ -6,11 +6,25 @@
   </head>
   <body>
     <h1>Edit Profile:</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
       {%csrf_token%}
-      Department <input type="text" name="department" value={{student.department}}><br>
-      Mobile Number <input type="text" name="mobileNo" value={{student.mobileNo}}><br>
-
+      Bio <input type="text" name="bio" value="{{student.bio}}"><br>
+      Mobile No <input type="text" name="mobileNo" value="{{student.mobileNo}}"><br>
+      Skill <input type="text" name="skill"><br>
+      Hackathon:<br>
+      Competition Name <input type="text" name="CompetitionName"><br>
+      Date <input type="date" name="Date"><br>
+      Description <input type="text" name="Desc"><br>
+      URL <input type="text" name="URL"><br>
+      Image <input type="file" name="hackathonimage1"><br>
+      Internship:<br>
+      Company <input type="text" name="company"><br>
+      Position <input type="text" name="Position"><br>
+      Location <input type="text" name="Loc"><br>
+      From <input type="Date" name="From"><br>
+      To <input type="Date" name="To"><br>
+      Description <input type="text" name="desc"><br>
+      Image <input type="file" name="internshipimage1"><br>
       <input type="submit" name="Submit">
     </form>
   </body>

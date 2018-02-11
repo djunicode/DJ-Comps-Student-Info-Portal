@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
-from .models import StudentProfile, TeacherProfile, Internship, Project, Committee, ResearchPaper, BeProject
+from .models import (StudentProfile, TeacherProfile, Internship, Project, Committee, ResearchPaper, BeProject,
+                     Hackathon, Skill)
 from django.http import HttpResponse
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -9,6 +10,8 @@ from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+
+import datetime
 
 
 def register(request):
@@ -182,10 +185,40 @@ def student_editprofile(request, sapid):
         student = get_object_or_404(StudentProfile, Sap_Id=sapid)
 
         if request.method == 'POST':
-            department = request.POST.get('department', '')
+            bio = request.POST.get('bio', '')
+            skill = request.POST.get('skill', '')
             mobileNo = request.POST.get('mobileNo', '')
-            student.department = department
+            CompetitionName = request.POST.get('CompetitionName', '')
+            company = request.POST.get('company', '')
+            student.bio = bio
             student.mobileNo = mobileNo
+            if CompetitionName != '':
+                Date = request.POST.get('Date')
+                Desc = request.POST.get('Desc', '')
+                URL = request.POST.get('URL', '')
+                image1 = request.FILES.get('hackathonimage1')
+                hackathon = Hackathon(CompetitionName=CompetitionName, Desc=Desc, URL=URL, image1=image1)
+                if Date != '':
+                    hackathon.Date = datetime.datetime.strptime(Date, '%Y-%m-%d').date()
+                hackathon.save()
+                student.hackathon.add(hackathon)
+            if skill != '':
+                skills = Skill(skill=skill)
+                skills.save()
+                student.skills.add(skills)
+            if company != '':
+                Position = request.POST.get('Position', '')
+                Loc = request.POST.get('Loc', '')
+                desc = request.POST.get('desc', '')
+                From = request.POST.get('From')
+                To = request.POST.get('To')
+                image1 = request.FILES.get('internshipimage1')
+                internship = Internship(company=company, Position=Position, Loc=Loc, desc=desc,
+                                        employee=student, image1=image1)
+                if From and To:
+                    internship.From = datetime.datetime.strptime(From, '%Y-%m-%d').date()
+                    internship.To = datetime.datetime.strptime(To, '%Y-%m-%d').date()
+                internship.save()
             student.save()
             return render(request, 'user_profile/profile.html')
     else:
