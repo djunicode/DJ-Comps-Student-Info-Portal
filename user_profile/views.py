@@ -215,7 +215,7 @@ def student_editprofile(request, sapid):
                 image1 = request.FILES.get('internshipimage1')
                 internship = Internship(company=company, Position=Position, Loc=Loc, desc=desc,
                                         employee=student, image1=image1)
-                if From and To:
+                if From != '' and To != '':
                     internship.From = datetime.datetime.strptime(From, '%Y-%m-%d').date()
                     internship.To = datetime.datetime.strptime(To, '%Y-%m-%d').date()
                 internship.save()
