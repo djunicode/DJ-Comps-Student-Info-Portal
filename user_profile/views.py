@@ -190,6 +190,10 @@ def student_editprofile(request, sapid):
             mobileNo = request.POST.get('mobileNo', '')
             CompetitionName = request.POST.get('CompetitionName', '')
             company = request.POST.get('company', '')
+            ProjName = request.POST.get('ProjName', '')
+            OrganisationName = request.POST.get('OrganisationName', '')
+            Title = request.POST.get('Title', '')
+            BeProjName = request.POST.get('BeProjName', '')
             student.bio = bio
             student.mobileNo = mobileNo
             if CompetitionName != '':
@@ -219,8 +223,88 @@ def student_editprofile(request, sapid):
                     internship.From = datetime.datetime.strptime(From, '%Y-%m-%d').date()
                     internship.To = datetime.datetime.strptime(To, '%Y-%m-%d').date()
                 internship.save()
+            if ProjName != '':
+                ProjURL = request.POST.get('ProjURL', '')
+                ProjDesc = request.POST.get('ProjDesc', '')
+                projectUnderTeacher = request.POST.get('projectUnderTeacher', '')
+                image1 = request.FILES.get('projectimage1')
+                project = Project(student=student, ProjName=ProjName, ProjURL=ProjURL, ProjDesc=ProjDesc, image1=image1)
+                if projectUnderTeacher != '':
+                    projectUnderTeacher = get_object_or_404(TeacherProfile, Sap_Id=projectUnderTeacher)
+                    project.projectUnderTeacher = projectUnderTeacher
+                project.save()
+            if OrganisationName != '':
+                YourPosition = request.POST.get('YourPosition', '')
+                Loc = request.POST.get('committeeLoc', '')
+                dateFrom = request.POST.get('dateFrom')
+                dateTo = request.POST.get('dateTo')
+                Desc = request.POST.get('committeeDesc', '')
+                image1 = request.FILES.get('committeeimage1')
+                committee = Committee(employee=student, OrganisationName=OrganisationName, YourPosition=YourPosition,
+                                      Loc=Loc, Desc=Desc, image1=image1)
+                if dateFrom != '' and dateTo != '':
+                    internship.From = datetime.datetime.strptime(dateFrom, '%Y-%m-%d').date()
+                    internship.To = datetime.datetime.strptime(dateTo, '%Y-%m-%d').date()
+                committee.save()
+            if Title != '':
+                Publication = request.POST.get('Publication', '')
+                DateOfPublication = request.POST.get('DateOfPublication')
+                Desc = request.POST.get('researchdesc', '')
+                LinkToPaper = request.POST.get('LinkToPaper', '')
+                PaperId = request.POST.get('PaperId', '')
+                Published_under = request.POST.get('Published_under', '')
+                image1 = request.FILES.get('researchimage1')
+                researchpaper = ResearchPaper(student=student, Title=Title, Desc=Desc, LinkToPaper=LinkToPaper,
+                                              Publication=Publication, PaperId=PaperId, image1=image1)
+                if Published_under != '':
+                    Published_under = get_object_or_404(TeacherProfile, Sap_Id=Published_under)
+                    researchpaper.Published_under = Published_under
+                if DateOfPublication != '':
+                    researchpaper.DateOfPublication = datetime.datetime.strptime(DateOfPublication, '%Y-%m-%d').date()
+                researchpaper.save()
+            if BeProjName != '':
+                ProjURL = request.POST.get('BeProjURL', '')
+                ProjDesc = request.POST.get('BeProjDesc', '')
+                projectUnderTeacher = request.POST.get('BeprojectUnderTeacher', '')
+                image1 = request.FILES.get('Beprojectimage1')
+                teammate1 = request.POST.get('teammate1')
+                teammate2 = request.POST.get('teammate2')
+                teammate3 = request.POST.get('teammate3')
+                teammate4 = request.POST.get('teammate4')
+                beproject = BeProject(student=student, ProjName=ProjName, ProjURL=ProjURL, ProjDesc=ProjDesc,
+                                      image1=image1)
+                if teammate1:
+                    teammate1 = get_object_or_404(StudentProfile, Sap_Id=teammate1)
+                    teammate1.beteammate.clear()
+                    beproject.save()
+                    beproject.teammates.add(teammate1)
+                if teammate2:
+                    teammate2 = get_object_or_404(StudentProfile, Sap_Id=teammate2)
+                    teammate2.beteammate.clear()
+                    beproject.teammates.add(teammate2)
+                if teammate3:
+                    teammate3 = get_object_or_404(StudentProfile, Sap_Id=teammate3)
+                    teammate3.beteammate.clear()
+                    beproject.teammates.add(teammate3)
+                if teammate4:
+                    teammate4 = get_object_or_404(StudentProfile, Sap_Id=teammate4)
+                    teammate4.beteammate.clear()
+                    beproject.teammates.add(teammate4)
+                if projectUnderTeacher != '':
+                    projectUnderTeacher = get_object_or_404(TeacherProfile, Sap_Id=projectUnderTeacher)
+                    beproject.projectUnderTeacher = projectUnderTeacher
+                beproject.save()
             student.save()
-            return render(request, 'user_profile/profile.html')
+            return render(request, 'user_profile/student_profile.html', {'student': student})
+        else:
+            beproject = student.beprojects.all()[0]
+            context = {'student': student,
+                       'ProjName': beproject.ProjName,
+                       'ProjURL': beproject.ProjURL,
+                       'ProjDesc': beproject.ProjDesc,
+                       'Teacher': beproject.projectUnderTeacher.Sap_Id}
+            for i, teammate in enumerate(beproject.teammates.all()):
+                context['teammate' + str(i + 1)] = teammate.Sap_Id
+            return render(request, 'user_profile/edit_student_profile.html', context)
     else:
         return HttpResponse("Please Login")
-    return render(request, 'user_profile/edit_student_profile.html', {'student': student})
