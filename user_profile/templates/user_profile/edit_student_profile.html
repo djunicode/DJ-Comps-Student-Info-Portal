@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Book</title>
+  </head>
+  <body>
+    <h1>Edit Profile:</h1>
+    <form method="post" enctype="multipart/form-data">
+      {%csrf_token%}
+      Bio <input type="text" name="bio" value="{{student.bio}}"><br>
+      Mobile No <input type="text" name="mobileNo" value="{{student.mobileNo}}"><br>
+      Skills:<br>
+      {% for skill in student.skills.all %}
+      {{ skill.skill }}<br>
+      {% endfor %}
+      New Skill <input type="text" name="skill" ><br>
+      Hackathon:<br>
+      Competition Name <input type="text" name="CompetitionName"><br>
+      Date <input type="date" name="Date"><br>
+      Description <input type="text" name="Desc"><br>
+      URL <input type="text" name="URL"><br>
+      Image <input type="file" name="hackathonimage1"><br>
+      Internship:<br>
+      Company <input type="text" name="company"><br>
+      Position <input type="text" name="Position"><br>
+      Location <input type="text" name="Loc"><br>
+      From <input type="Date" name="From"><br>
+      To <input type="Date" name="To"><br>
+      Description <input type="text" name="desc"><br>
+      Image <input type="file" name="internshipimage1"><br>
+      New Project:<br>
+      Project Name <input type="text" name="ProjName"><br>
+      URL <input type="text" name="ProjURL"><br>
+      Description <input type="text" name="ProjDesc"><br>
+      Teacher's SAP ID <input type="text" name="projectUnderTeacher"><br>
+      Image <input type="file" name="projectimage1"><br>
+      Committee:<br>
+      Name <input type="text" name="OrganisationName"><br>
+      Position <input type="text" name="YourPosition"><br>
+      Location <input type="text" name="committeeLoc"><br>
+      From <input type="Date" name="dateFrom"><br>
+      To <input type="Date" name="dateTo"><br>
+      Description <input type="text" name="committeeDesc"><br>
+      Image <input type="file" name="committeeimage1"><br>
+      Research Paper:
+      Title <input type="text" name="Title"><br>
+      Publication <input type="text" name="Publication"><br>
+      Date of Publication <input type="Date" name="DateOfPublication"><br>
+      Description <input type="text" name="researchdesc"><br>
+      Link <input type="text" name="LinkToPaper"><br>
+      Paper ID <input type="text" name="PaperId"><br>
+      Teacher's SAP ID <input type="text" name="Published_under"><br>
+      Image <input type="file" name="researchimage1"><br>
+      BE Project:<br>
+      Name <input type="text" name="BeProjName" value="{{ ProjName }}"><br>
+      URL <input type="text" name="BeProjURL" value="{{ ProjURL }}"><br>
+      Description <input type="text" name="BeProjDesc" value="{{ ProjDesc }}"><br>
+      Teamate 1: <input type="text" name="teammate1" value="{{ teammate1 }}"><br>
+      Teamate 2: <input type="text" name="teammate2" value="{{ teammate2 }}"><br>
+      Teamate 3: <input type="text" name="teammate3" value="{{ teammate3 }}"><br>
+      Teamate 4: <input type="text" name="teammate4" value="{{ teammate4 }}"><br>
+      Teacher's SAP ID <input type="text" name="BeprojectUnderTeacher" value="{{ Teacher }}"><br>
+      Image <input type="file" name="Beprojectimage1"><br>
+      <input type="submit" name="Submit">
+    </form>
+  </body>
+</html>

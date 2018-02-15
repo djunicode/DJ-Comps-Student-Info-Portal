@@ -45,7 +45,7 @@ class Experience(models.Model):
 
 class Hackathon(models.Model):
     CompetitionName = models.CharField(max_length=50)
-    Date = models.DateField()
+    Date = models.DateField(null=True, blank=True)
     Desc = models.CharField(max_length=500)
     URL = models.TextField(validators=[URLValidator()])
     image1 = models.FileField()
@@ -55,10 +55,16 @@ class Hackathon(models.Model):
     image5 = models.FileField(blank=True)
     history = HistoricalRecords()
 
+    def __str__(self):
+        return str(self.CompetitionName)
+
 
 class Skill(models.Model):
     skill = models.CharField(max_length=50)
     history = HistoricalRecords()
+
+    def __str__(self):
+        return str(self.skill)
 
 
 class StudentProfile(models.Model):
