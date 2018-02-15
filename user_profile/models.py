@@ -109,7 +109,7 @@ class Internship(models.Model):
     history = HistoricalRecords()
 
     def __str__(self):
-        return self.company
+        return str(self.company)
 
 
 class Project(models.Model):
@@ -124,6 +124,9 @@ class Project(models.Model):
     image4 = models.FileField(blank=True)
     image5 = models.FileField(blank=True)
     history = HistoricalRecords()
+
+    def __str__(self):
+        return str(self.ProjName)
 
 
 class Committee(models.Model):
@@ -142,6 +145,9 @@ class Committee(models.Model):
     image5 = models.FileField(blank=True)
     history = HistoricalRecords()
 
+    def __str__(self):
+        return str(self.OrganisationName)
+
 
 class ResearchPaper(models.Model):
     student = models.ForeignKey(StudentProfile, related_name="researchpaper")
@@ -159,6 +165,9 @@ class ResearchPaper(models.Model):
     image5 = models.FileField(blank=True)
     history = HistoricalRecords()
 
+    def __str__(self):
+        return str(self.Title)
+
 
 class BeProject(models.Model):
     student = models.ForeignKey(StudentProfile, related_name='beprojects')
@@ -173,3 +182,6 @@ class BeProject(models.Model):
     image4 = models.FileField(blank=True)
     image5 = models.FileField(blank=True)
     history = HistoricalRecords()
+
+    def __str__(self):
+        return str(self.ProjName)
