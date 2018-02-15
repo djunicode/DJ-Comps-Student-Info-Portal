@@ -273,40 +273,49 @@ def student_editprofile(request, sapid):
                 teammate2 = request.POST.get('teammate2')
                 teammate3 = request.POST.get('teammate3')
                 teammate4 = request.POST.get('teammate4')
-                beproject = BeProject(student=student, ProjName=ProjName, ProjURL=ProjURL, ProjDesc=ProjDesc,
-                                      image1=image1)
-                if teammate1:
-                    teammate1 = get_object_or_404(StudentProfile, Sap_Id=teammate1)
-                    teammate1.beteammate.clear()
-                    beproject.save()
-                    beproject.teammates.add(teammate1)
-                if teammate2:
-                    teammate2 = get_object_or_404(StudentProfile, Sap_Id=teammate2)
-                    teammate2.beteammate.clear()
-                    beproject.teammates.add(teammate2)
-                if teammate3:
-                    teammate3 = get_object_or_404(StudentProfile, Sap_Id=teammate3)
-                    teammate3.beteammate.clear()
-                    beproject.teammates.add(teammate3)
-                if teammate4:
-                    teammate4 = get_object_or_404(StudentProfile, Sap_Id=teammate4)
-                    teammate4.beteammate.clear()
-                    beproject.teammates.add(teammate4)
-                if projectUnderTeacher != '':
-                    projectUnderTeacher = get_object_or_404(TeacherProfile, Sap_Id=projectUnderTeacher)
-                    beproject.projectUnderTeacher = projectUnderTeacher
-                beproject.save()
+                try:
+                    beproject = BeProject.objects.get(student=student)
+                except BeProject.DoesNotExist:
+                    beproject = BeProject(student=student)
+                finally:
+                    beproject.ProjName = BeProjName
+                    beproject.ProjURL = ProjURL
+                    beproject.ProjDesc = ProjDesc
+                    beproject.image1 = image1
+                    if teammate1:
+                        teammate1 = get_object_or_404(StudentProfile, Sap_Id=teammate1)
+                        teammate1.beteammate.clear()
+                        beproject.save()
+                        beproject.teammates.add(teammate1)
+                    if teammate2:
+                        teammate2 = get_object_or_404(StudentProfile, Sap_Id=teammate2)
+                        teammate2.beteammate.clear()
+                        beproject.teammates.add(teammate2)
+                    if teammate3:
+                        teammate3 = get_object_or_404(StudentProfile, Sap_Id=teammate3)
+                        teammate3.beteammate.clear()
+                        beproject.teammates.add(teammate3)
+                    if teammate4:
+                        teammate4 = get_object_or_404(StudentProfile, Sap_Id=teammate4)
+                        teammate4.beteammate.clear()
+                        beproject.teammates.add(teammate4)
+                    if projectUnderTeacher != '':
+                        projectUnderTeacher = get_object_or_404(TeacherProfile, Sap_Id=projectUnderTeacher)
+                        beproject.projectUnderTeacher = projectUnderTeacher
+                        beproject.save()
             student.save()
             return render(request, 'user_profile/student_profile.html', {'student': student})
         else:
-            beproject = student.beprojects.all()[0]
-            context = {'student': student,
-                       'ProjName': beproject.ProjName,
-                       'ProjURL': beproject.ProjURL,
-                       'ProjDesc': beproject.ProjDesc,
-                       'Teacher': beproject.projectUnderTeacher.Sap_Id}
-            for i, teammate in enumerate(beproject.teammates.all()):
-                context['teammate' + str(i + 1)] = teammate.Sap_Id
+            beproject = student.beprojects.all()
+            context = {}
+            if beproject:
+                context = {'ProjName': beproject[0].ProjName,
+                           'ProjURL': beproject[0].ProjURL,
+                           'ProjDesc': beproject[0].ProjDesc,
+                           'Teacher': beproject[0].projectUnderTeacher.Sap_Id}
+                for i, teammate in enumerate(beproject[0].teammates.all()):
+                    context['teammate' + str(i + 1)] = teammate.Sap_Id
+            context['student'] = student
             return render(request, 'user_profile/edit_student_profile.html', context)
     else:
         return HttpResponse("Please Login")
