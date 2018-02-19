@@ -668,5 +668,6 @@ def teacher_dashboard(request):
     intern_stats = collections.Counter(intern_stats)
     return HttpResponse(most_frequent_skills)
 
+    
 def education_graphs():
     pass
