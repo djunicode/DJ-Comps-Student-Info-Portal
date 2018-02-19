@@ -666,7 +666,7 @@ def teacher_dashboard(request):
     intern_stats = [
         internship.employee.year for internship in internship_objects]
     intern_stats = collections.Counter(intern_stats)
-
+    return HttpResponse(most_frequent_skills)
 
 def education_graphs():
     pass
