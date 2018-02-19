@@ -32,6 +32,7 @@ class StudentProfile(models.Model):
         ("BE", "Final Year"),
     )
     year = models.CharField(max_length=20, choices=YEAR_CHOICES)
+
     class Meta:
         permissions = (
             ("view_student", "Can see student profile"),
@@ -40,12 +41,14 @@ class StudentProfile(models.Model):
     def __str__(self):
         return str(self.Sap_Id)
 
+
 class Recruiter(models.Model):
     recruiter = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
 class Education(models.Model):
-    student_profile = models.ForeignKey(StudentProfile, related_name='education')
+    student_profile = models.ForeignKey(
+        StudentProfile, related_name='education')
     sem1_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
     sem2_gpa = models.DecimalField(
@@ -102,6 +105,7 @@ class TeacherProfile(models.Model):
     def __str__(self):
         return str(self.Sap_Id)
 
+
 '''
 class Experience(models.Model):
     employee = models.ForeignKey(TeacherProfile, on_delete=models.CASCADE)
@@ -111,6 +115,7 @@ class Experience(models.Model):
     description = models.CharField(max_length=500)
     date = models.DateField(("Date"), default=datetime.date.today, blank=True)
 '''
+
 
 class Hackathon(models.Model):
     student_profile = models.ForeignKey(StudentProfile)
@@ -137,6 +142,7 @@ class Skill(models.Model):
     def __str__(self):
         return str(self.skill)
 
+
 class Internship(models.Model):
     employee = models.ForeignKey(StudentProfile, related_name="internships")
     company = models.CharField(max_length=50, blank=True)
@@ -158,13 +164,15 @@ class Internship(models.Model):
 
 
 class Project(models.Model):
-    student_profile = models.ForeignKey(StudentProfile, related_name="projects")
+    student_profile = models.ForeignKey(
+        StudentProfile, related_name="projects")
     ProjName = models.CharField(max_length=50)
     ProjURL = models.TextField(validators=[URLValidator()], blank=True)
     ProjDesc = models.CharField(max_length=500, blank=True)
     projectUnderTeacher = models.ForeignKey(
         TeacherProfile, blank=True, null=True, related_name="verifiedprojects")
-    skill = models.ForeignKey(Skill, related_name="projectskills", null=True, blank=True)
+    skill = models.ForeignKey(
+        Skill, related_name="projectskills", null=True, blank=True)
     image1 = models.FileField()
     image2 = models.FileField(blank=True)
     image3 = models.FileField(blank=True)
