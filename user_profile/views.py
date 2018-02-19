@@ -35,10 +35,13 @@ def register(request):
                 user = User.objects.create_user(username=username, email=email)
                 user.set_password(password)
                 user.save()
-                content_type = ContentType.objects.get_for_model(StudentProfile)
-                permission = Permission.objects.get(content_type=content_type, codename='view_student')
+                content_type = ContentType.objects.get_for_model(
+                    StudentProfile)
+                permission = Permission.objects.get(
+                    content_type=content_type, codename='view_student')
                 user.user_permissions.add(permission)
-                student = StudentProfile.objects.create(student=user, Sap_Id=Sap_Id)
+                student = StudentProfile.objects.create(
+                    student=user, Sap_Id=Sap_Id)
                 student.save()
                 return render(request, 'user_profile/profile.html', {})
         else:
@@ -47,7 +50,7 @@ def register(request):
 
 def user_login(request):
     if request.user.is_authenticated:
-            return render(request, 'user_profile/profile.html', {})
+        return render(request, 'user_profile/profile.html', {})
     else:
         if request.method == 'POST':
             username = request.POST.get('username', '')
@@ -84,32 +87,43 @@ def register_teacher(request):
             else:
                 user = User.objects.create_user(username=username, email=email)
                 user.set_password(password)
-                content_type = ContentType.objects.get_for_model(TeacherProfile)
-                permission = Permission.objects.get(content_type=content_type, codename='view_teacher')
+                content_type = ContentType.objects.get_for_model(
+                    TeacherProfile)
+                permission = Permission.objects.get(
+                    content_type=content_type, codename='view_teacher')
                 user.user_permissions.add(permission)
-                content_type = ContentType.objects.get_for_model(StudentProfile)
-                permission = Permission.objects.get(content_type=content_type, codename='view_student')
+                content_type = ContentType.objects.get_for_model(
+                    StudentProfile)
+                permission = Permission.objects.get(
+                    content_type=content_type, codename='view_student')
                 user.user_permissions.add(permission)
                 ct = ContentType.objects.get_for_model(StudentProfile)
-                permission = Permission.objects.get(codename='delete_studentprofile', content_type=ct)
+                permission = Permission.objects.get(
+                    codename='delete_studentprofile', content_type=ct)
                 user.user_permissions.add(permission)
                 ct = ContentType.objects.get_for_model(Internship)
-                permission = Permission.objects.get(codename='delete_internship', content_type=ct)
+                permission = Permission.objects.get(
+                    codename='delete_internship', content_type=ct)
                 user.user_permissions.add(permission)
                 ct = ContentType.objects.get_for_model(Project)
-                permission = Permission.objects.get(codename='delete_project', content_type=ct)
+                permission = Permission.objects.get(
+                    codename='delete_project', content_type=ct)
                 user.user_permissions.add(permission)
                 ct = ContentType.objects.get_for_model(Committee)
-                permission = Permission.objects.get(codename='delete_committee', content_type=ct)
+                permission = Permission.objects.get(
+                    codename='delete_committee', content_type=ct)
                 user.user_permissions.add(permission)
                 ct = ContentType.objects.get_for_model(ResearchPaper)
-                permission = Permission.objects.get(codename='delete_researchpaper', content_type=ct)
+                permission = Permission.objects.get(
+                    codename='delete_researchpaper', content_type=ct)
                 user.user_permissions.add(permission)
                 ct = ContentType.objects.get_for_model(BeProject)
-                permission = Permission.objects.get(codename='delete_beproject', content_type=ct)
+                permission = Permission.objects.get(
+                    codename='delete_beproject', content_type=ct)
                 user.user_permissions.add(permission)
                 user.save()
-                teacher = TeacherProfile.objects.create(teacher=user, Sap_Id=Sap_Id)
+                teacher = TeacherProfile.objects.create(
+                    teacher=user, Sap_Id=Sap_Id)
                 teacher.save()
                 return render(request, 'user_profile/teacherprofile.html', {})
         else:
@@ -118,7 +132,7 @@ def register_teacher(request):
 
 def user_login_teacher(request):
     if request.user.is_authenticated:
-            return render(request, 'user_profile/teacherprofile.html', {})
+        return render(request, 'user_profile/teacherprofile.html', {})
     else:
         if request.method == 'POST':
             username = request.POST.get('username', '')
@@ -155,7 +169,7 @@ def logout_recruiter(request):
 
 def user_login_recruiter(request):
     if request.user.is_authenticated:
-            return render(request, 'user_profile/recruiter.html', {})
+        return render(request, 'user_profile/recruiter.html', {})
     else:
         if request.method == 'POST':
             username = request.POST.get('username', '')
@@ -204,9 +218,11 @@ def student_editprofile(request, sapid):
                 Desc = request.POST.get('Desc', '')
                 URL = request.POST.get('URL', '')
                 image1 = request.FILES.get('hackathonimage1')
-                hackathon = Hackathon(CompetitionName=CompetitionName, Desc=Desc, URL=URL, image1=image1)
+                hackathon = Hackathon(
+                    CompetitionName=CompetitionName, Desc=Desc, URL=URL, image1=image1)
                 if Date != '':
-                    hackathon.Date = datetime.datetime.strptime(Date, '%Y-%m-%d').date()
+                    hackathon.Date = datetime.datetime.strptime(
+                        Date, '%Y-%m-%d').date()
                 hackathon.save()
                 student.hackathon.add(hackathon)
             if skill != '':
@@ -223,17 +239,22 @@ def student_editprofile(request, sapid):
                 internship = Internship(company=company, Position=Position, Loc=Loc, desc=desc,
                                         employee=student, image1=image1)
                 if From != '' and To != '':
-                    internship.From = datetime.datetime.strptime(From, '%Y-%m-%d').date()
-                    internship.To = datetime.datetime.strptime(To, '%Y-%m-%d').date()
+                    internship.From = datetime.datetime.strptime(
+                        From, '%Y-%m-%d').date()
+                    internship.To = datetime.datetime.strptime(
+                        To, '%Y-%m-%d').date()
                 internship.save()
             if ProjName != '':
                 ProjURL = request.POST.get('ProjURL', '')
                 ProjDesc = request.POST.get('ProjDesc', '')
-                projectUnderTeacher = request.POST.get('projectUnderTeacher', '')
+                projectUnderTeacher = request.POST.get(
+                    'projectUnderTeacher', '')
                 image1 = request.FILES.get('projectimage1')
-                project = Project(student=student, ProjName=ProjName, ProjURL=ProjURL, ProjDesc=ProjDesc, image1=image1)
+                project = Project(student=student, ProjName=ProjName,
+                                  ProjURL=ProjURL, ProjDesc=ProjDesc, image1=image1)
                 if projectUnderTeacher != '':
-                    projectUnderTeacher = get_object_or_404(TeacherProfile, Sap_Id=projectUnderTeacher)
+                    projectUnderTeacher = get_object_or_404(
+                        TeacherProfile, Sap_Id=projectUnderTeacher)
                     project.projectUnderTeacher = projectUnderTeacher
                 project.save()
             if OrganisationName != '':
@@ -246,8 +267,10 @@ def student_editprofile(request, sapid):
                 committee = Committee(employee=student, OrganisationName=OrganisationName, YourPosition=YourPosition,
                                       Loc=Loc, Desc=Desc, image1=image1)
                 if dateFrom != '' and dateTo != '':
-                    internship.From = datetime.datetime.strptime(dateFrom, '%Y-%m-%d').date()
-                    internship.To = datetime.datetime.strptime(dateTo, '%Y-%m-%d').date()
+                    internship.From = datetime.datetime.strptime(
+                        dateFrom, '%Y-%m-%d').date()
+                    internship.To = datetime.datetime.strptime(
+                        dateTo, '%Y-%m-%d').date()
                 committee.save()
             if Title != '':
                 Publication = request.POST.get('Publication', '')
@@ -260,15 +283,18 @@ def student_editprofile(request, sapid):
                 researchpaper = ResearchPaper(student=student, Title=Title, Desc=Desc, LinkToPaper=LinkToPaper,
                                               Publication=Publication, PaperId=PaperId, image1=image1)
                 if Published_under != '':
-                    Published_under = get_object_or_404(TeacherProfile, Sap_Id=Published_under)
+                    Published_under = get_object_or_404(
+                        TeacherProfile, Sap_Id=Published_under)
                     researchpaper.Published_under = Published_under
                 if DateOfPublication != '':
-                    researchpaper.DateOfPublication = datetime.datetime.strptime(DateOfPublication, '%Y-%m-%d').date()
+                    researchpaper.DateOfPublication = datetime.datetime.strptime(
+                        DateOfPublication, '%Y-%m-%d').date()
                 researchpaper.save()
             if BeProjName != '':
                 ProjURL = request.POST.get('BeProjURL', '')
                 ProjDesc = request.POST.get('BeProjDesc', '')
-                projectUnderTeacher = request.POST.get('BeprojectUnderTeacher', '')
+                projectUnderTeacher = request.POST.get(
+                    'BeprojectUnderTeacher', '')
                 image1 = request.FILES.get('Beprojectimage1')
                 teammate1 = request.POST.get('teammate1')
                 teammate2 = request.POST.get('teammate2')
@@ -284,24 +310,29 @@ def student_editprofile(request, sapid):
                     beproject.ProjDesc = ProjDesc
                     beproject.image1 = image1
                     if teammate1:
-                        teammate1 = get_object_or_404(StudentProfile, Sap_Id=teammate1)
+                        teammate1 = get_object_or_404(
+                            StudentProfile, Sap_Id=teammate1)
                         teammate1.beteammate.clear()
                         beproject.save()
                         beproject.teammates.add(teammate1)
                     if teammate2:
-                        teammate2 = get_object_or_404(StudentProfile, Sap_Id=teammate2)
+                        teammate2 = get_object_or_404(
+                            StudentProfile, Sap_Id=teammate2)
                         teammate2.beteammate.clear()
                         beproject.teammates.add(teammate2)
                     if teammate3:
-                        teammate3 = get_object_or_404(StudentProfile, Sap_Id=teammate3)
+                        teammate3 = get_object_or_404(
+                            StudentProfile, Sap_Id=teammate3)
                         teammate3.beteammate.clear()
                         beproject.teammates.add(teammate3)
                     if teammate4:
-                        teammate4 = get_object_or_404(StudentProfile, Sap_Id=teammate4)
+                        teammate4 = get_object_or_404(
+                            StudentProfile, Sap_Id=teammate4)
                         teammate4.beteammate.clear()
                         beproject.teammates.add(teammate4)
                     if projectUnderTeacher != '':
-                        projectUnderTeacher = get_object_or_404(TeacherProfile, Sap_Id=projectUnderTeacher)
+                        projectUnderTeacher = get_object_or_404(
+                            TeacherProfile, Sap_Id=projectUnderTeacher)
                         beproject.projectUnderTeacher = projectUnderTeacher
                         beproject.save()
             student.save()
@@ -581,12 +612,14 @@ def notifs(request):
                                                         'committee': committee,
                                                         'researchpaper': researchpaper})
 
+
 def student_list(request):
     if request.method == 'POST':
         most_common_to_take = 3
         skills = Skill.objects.all()
         list_of_skills = [skill.skill for skill in skills]
-        most_frequent = collections.Counter(list_of_skills).most_common(most_common_to_take)
+        most_frequent = collections.Counter(
+            list_of_skills).most_common(most_common_to_take)
         skillss = [skill[0] for skill in most_frequent]
 
         year = request.POST.getlist('year[]')
@@ -595,11 +628,13 @@ def student_list(request):
         print(skills)
 
         if year and skills:
-            result = StudentProfile.objects.filter(year__in=year).filter(skills__skill__in=skills).distinct()
+            result = StudentProfile.objects.filter(year__in=year).filter(
+                skills__skill__in=skills).distinct()
         elif year:
             result = StudentProfile.objects.filter(year__in=year)
         elif skills:
-            result = StudentProfile.objects.filter(skills__skill__in=skills).distinct()
+            result = StudentProfile.objects.filter(
+                skills__skill__in=skills).distinct()
         else:
             result = []
         print(result, "res")
@@ -609,7 +644,7 @@ def student_list(request):
         most_common_to_take = 3
         skills = Skill.objects.all()
         list_of_skills = [skill.skill for skill in skills]
-        most_frequent = collections.Counter(list_of_skills).most_common(most_common_to_take)
+        most_frequent = collections.Counter(
+            list_of_skills).most_common(most_common_to_take)
         skillss = [skill[0] for skill in most_frequent]
         return render(request, 'user_profile/search.html', {'skills': skillss})
-

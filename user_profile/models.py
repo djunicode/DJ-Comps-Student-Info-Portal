@@ -13,15 +13,25 @@ from simple_history.models import HistoricalRecords
 class Recruiter(models.Model):
     recruiter = models.OneToOneField(User, on_delete=models.CASCADE)
 
+
 class Education(models.Model):
-    sem1_gpa = models.DecimalField(blank=True, null=True, default=None, max_digits=4, decimal_places = 2)
-    sem2_gpa = models.DecimalField(blank=True, null=True, default=None, max_digits=4, decimal_places = 2)
-    sem3_gpa = models.DecimalField(blank=True, null=True, default=None, max_digits=4, decimal_places = 2)
-    sem4_gpa = models.DecimalField(blank=True, null=True, default=None, max_digits=4, decimal_places = 2)
-    sem5_gpa = models.DecimalField(blank=True, null=True, default=None, max_digits=4, decimal_places = 2)
-    sem6_gpa = models.DecimalField(blank=True, null=True, default=None, max_digits=4, decimal_places = 2)
-    sem7_gpa = models.DecimalField(blank=True, null=True, default=None, max_digits=4, decimal_places = 2)
-    sem8_gpa = models.DecimalField(blank=True, null=True, default=None, max_digits=4, decimal_places = 2)
+    sem1_gpa = models.DecimalField(
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem2_gpa = models.DecimalField(
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem3_gpa = models.DecimalField(
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem4_gpa = models.DecimalField(
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem5_gpa = models.DecimalField(
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem6_gpa = models.DecimalField(
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem7_gpa = models.DecimalField(
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem8_gpa = models.DecimalField(
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+
 
 class KT(models.Model):
     subject_name = models.CharField(max_length=100)
@@ -38,9 +48,12 @@ class KT(models.Model):
     subject_semester = models.CharField(max_length=20, choices=SEM_CHOICES)
     education = models.ForeignKey(Education)
 
+
 class TeacherProfile(models.Model):
     teacher = models.OneToOneField(User, on_delete=models.CASCADE)
-    Sap_Id = models.BigIntegerField(validators=[MaxValueValidator(99999999999), MinValueValidator(10000000000)])
+    Sap_Id = models.BigIntegerField(
+        validators=[MaxValueValidator(99999999999),
+                    MinValueValidator(10000000000)])
     department = models.CharField(max_length=50)
     photo = models.FileField(blank=True)
     bio = models.CharField(max_length=200)
@@ -94,8 +107,11 @@ class Skill(models.Model):
 
 class StudentProfile(models.Model):
     student = models.OneToOneField(User, on_delete=models.CASCADE)
-    education = models.OneToOneField(Education, on_delete=models.CASCADE, null=True)
-    Sap_Id = models.BigIntegerField(validators=[MaxValueValidator(99999999999), MinValueValidator(10000000000)])
+    education = models.OneToOneField(
+        Education, on_delete=models.CASCADE, null=True)
+    Sap_Id = models.BigIntegerField(
+        validators=[MaxValueValidator(99999999999),
+                    MinValueValidator(10000000000)])
     department = models.CharField(max_length=50)
     photo = models.FileField(blank=True)
     bio = models.CharField(max_length=200)
@@ -149,7 +165,8 @@ class Project(models.Model):
     ProjName = models.CharField(max_length=50)
     ProjURL = models.TextField(validators=[URLValidator()], blank=True)
     ProjDesc = models.CharField(max_length=500, blank=True)
-    projectUnderTeacher = models.ForeignKey(TeacherProfile, blank=True, null=True, related_name="verifiedprojects")
+    projectUnderTeacher = models.ForeignKey(
+        TeacherProfile, blank=True, null=True, related_name="verifiedprojects")
     image1 = models.FileField()
     image2 = models.FileField(blank=True)
     image3 = models.FileField(blank=True)
@@ -166,8 +183,10 @@ class Committee(models.Model):
     OrganisationName = models.CharField(max_length=50)
     YourPosition = models.CharField(max_length=50)
     Loc = models.CharField(max_length=50, blank=True)
-    dateFrom = models.DateField(("Date"), default=datetime.date.today, blank=True)
-    dateTo = models.DateField(("Date"), default=datetime.date.today, blank=True)
+    dateFrom = models.DateField(
+        ("Date"), default=datetime.date.today, blank=True)
+    dateTo = models.DateField(
+        ("Date"), default=datetime.date.today, blank=True)
     Desc = models.CharField(max_length=500, blank=True)
     Certificate = models.FileField(blank=True)
     image1 = models.FileField()
@@ -185,11 +204,13 @@ class ResearchPaper(models.Model):
     student = models.ForeignKey(StudentProfile, related_name="researchpaper")
     Title = models.CharField(max_length=50)
     Publication = models.CharField(max_length=100)
-    DateOfPublication = models.DateField(("Date"), default=datetime.date.today, blank=True)
+    DateOfPublication = models.DateField(
+        ("Date"), default=datetime.date.today, blank=True)
     Desc = models.CharField(max_length=500, blank=True)
     LinkToPaper = models.TextField(validators=[URLValidator()], blank=True)
     PaperId = models.CharField(max_length=50, blank=True)
-    Published_under = models.ForeignKey(TeacherProfile, blank=True, null=True, related_name="verifiedpaper")
+    Published_under = models.ForeignKey(
+        TeacherProfile, blank=True, null=True, related_name="verifiedpaper")
     image1 = models.FileField()
     image2 = models.FileField(blank=True)
     image3 = models.FileField(blank=True)
@@ -206,8 +227,11 @@ class BeProject(models.Model):
     ProjName = models.CharField(max_length=50)
     ProjURL = models.TextField(validators=[URLValidator()])
     ProjDesc = models.CharField(max_length=500, blank=True)
-    teammates = models.ManyToManyField(StudentProfile, related_name='beteammate', blank=True)
-    projectUnderTeacher = models.ForeignKey(TeacherProfile, blank=True, null=True, related_name="verifiedbeprojects")
+    teammates = models.ManyToManyField(
+        StudentProfile, related_name='beteammate', blank=True)
+    projectUnderTeacher = models.ForeignKey(
+        TeacherProfile, blank=True, null=True,
+        related_name="verifiedbeprojects")
     image1 = models.FileField()
     image2 = models.FileField(blank=True)
     image3 = models.FileField(blank=True)
@@ -216,4 +240,4 @@ class BeProject(models.Model):
     history = HistoricalRecords()
 
     def __str__(self):
-        return str(self.ProjName)    
+        return str(self.ProjName)
