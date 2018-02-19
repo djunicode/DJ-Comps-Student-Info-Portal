@@ -114,6 +114,7 @@ class StudentProfile(models.Model):
                     MinValueValidator(10000000000)])
     department = models.CharField(max_length=50)
     photo = models.FileField(blank=True)
+    github_id = models.CharField(max_length=50, null=True, blank=True)
     bio = models.CharField(max_length=200)
     GENDER_CHOICES = (
         ("Male", "Male"),
@@ -167,6 +168,7 @@ class Project(models.Model):
     ProjDesc = models.CharField(max_length=500, blank=True)
     projectUnderTeacher = models.ForeignKey(
         TeacherProfile, blank=True, null=True, related_name="verifiedprojects")
+    skill = models.ForeignKey(Skill, related_name="projectskills", null=True, blank=True)
     image1 = models.FileField()
     image2 = models.FileField(blank=True)
     image3 = models.FileField(blank=True)
