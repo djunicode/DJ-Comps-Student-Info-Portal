@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'assets'),
+    os.path.join(BASE_DIR, 'static'),
 )
 
 INSTALLED_APPS = [

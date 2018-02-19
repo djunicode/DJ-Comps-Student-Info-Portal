@@ -738,3 +738,7 @@ def view_beproject(request, beprojectid):
     beproject = BeProject.objects.get(id=beprojectid)
     # return render(request, '',{'beproject':beproject})
     return HttpResponse(beproject.ProjName)
+
+
+def show_base(request):
+    return render(request,'base.html')
