@@ -374,12 +374,18 @@ def searchany(request):
         beproject_vector = SearchVector('ProjName')
 
         # bio_vector = SearchVector('bio')
-        queryset = StudentProfile.objects.annotate(search=dept_vector).filter(search=searchquery)
-        skillset = Skill.objects.annotate(search=skill_vector).filter(search=searchquery)
-        hackathonset = Hackathon.objects.annotate(search=hackathon_vector).filter(search=searchquery)
-        internshipset = Internship.objects.annotate(search=internship_vector).filter(search=searchquery)
-        projectset = Project.objects.annotate(search=project_vector).filter(search=searchquery)
-        beprojectset = BeProject.objects.annotate(search=beproject_vector).filter(search=searchquery)
+        queryset = StudentProfile.objects.annotate(
+            search=dept_vector).filter(search=searchquery)
+        skillset = Skill.objects.annotate(
+            search=skill_vector).filter(search=searchquery)
+        hackathonset = Hackathon.objects.annotate(
+            search=hackathon_vector).filter(search=searchquery)
+        internshipset = Internship.objects.annotate(
+            search=internship_vector).filter(search=searchquery)
+        projectset = Project.objects.annotate(
+            search=project_vector).filter(search=searchquery)
+        beprojectset = BeProject.objects.annotate(
+            search=beproject_vector).filter(search=searchquery)
 
         # StudentProfile.objects.annotate(search=skill_vector).filter(search=searchquery)
         context['queryset'] = queryset
@@ -738,3 +744,7 @@ def view_beproject(request, beprojectid):
     beproject = BeProject.objects.get(id=beprojectid)
     # return render(request, '',{'beproject':beproject})
     return HttpResponse(beproject.ProjName)
+
+
+def show_base(request):
+    return render(request, 'base.html')

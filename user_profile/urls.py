@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^project/(\d+)$', views.view_project),
     url(r'^beproject/(\d+)$', views.view_beproject),
     url(r'^searchany/', views.searchany, name='searchany'),
+    url(r'^vishal/$', views.show_base),
 ]
