@@ -18,4 +18,10 @@ urlpatterns = [
     url(r'^notifications/$', views.notifs, name='notifs'),
     url(r'^search/$', views.student_list, name='student_list'),
     url(r'^teacherdashboard/$', views.teacher_dashboard),
+    url(r'^search/$', views.student_list, name='student_list'),
+    url(r'^internship/(\d+)$', views.view_internship),
+    url(r'^hackathon/(\d+)$', views.view_hackathon),
+    url(r'^project/(\d+)$', views.view_project),
+    url(r'^beproject/(\d+)$', views.view_beproject),
+    url(r'^searchany/', views.searchany, name='searchany'),
 ]

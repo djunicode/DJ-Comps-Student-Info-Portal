@@ -1,0 +1,40 @@
+<h1>Sap Id : {{ student.Sap_Id }}</h1>
+<h2>Bio :  {{ student.bio }}</h2>
+<h1>Mobile No : {{ student.mobileNo }}</h1>
+{% if student.photo %}
+<h2>Profile photo <img src="{{student.photo.url}}"></h2>
+{%endif%}
+<h1>Skills:</h1>
+{% for skill in student.skills.all %}
+{{ skill.skill }}<br>
+{% endfor %}
+<h1>Hackathon(s):</h1>
+{% for hackathon in student.hackathon.all %}
+Competition: {{ hackathon.CompetitionName }}<br>
+Screenshot <img src="{{ hackathon.image1.url }}">
+{% endfor %}
+<h1>Internships</h1>
+{% for internship in student.internships.all %}
+    <h3>Company name : {{ internship.company }}</h3><br>
+    Screenshot <img src=" {{ internship.image1.url }}">
+{% endfor %}
+<h1>Project(s):</h1>
+{% for project in student.projects.all %}
+    <h3>{{ project.ProjName }}</h3><br>
+    Screenshot <img src="{{ project.image1.url }}">
+{% endfor %}
+<h1>Committee(s):</h1>
+{% for committee in student.committee.all %}
+  <h3>Name : {{ committee.OrganisationName }} Position : {{ committee.YourPosition }}</h3><br>
+{% endfor %}
+<h1>Research Paper(s):</h1>
+{% for researchpaper in student.researchpaper.all %}
+  <h3>Title:{{ researchpaper.Title }} Publication:{{ researchpaper.Publication }}</h3>
+{% endfor %}
+<h1>BE project:</h1>
+{% for beproject in student.beprojects.all %}
+  <h3>{{ beproject.ProjName }}</h3>
+  {% for teammate in beproject.teammates.all %}
+   <h4>Teammate {{ forloop.counter }}: {{ teammate.Sap_Id }}</h4>
+  {% endfor %}
+{% endfor %}
