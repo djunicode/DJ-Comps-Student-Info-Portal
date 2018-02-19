@@ -55,6 +55,7 @@ coverage.xml
 .static_storage/
 .media/
 local_settings.py
+user_profile/migrations/*
 
 # Flask stuff:
 instance/

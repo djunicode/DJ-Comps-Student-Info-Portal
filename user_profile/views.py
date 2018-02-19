@@ -579,3 +579,4 @@ def notifs(request):
                                                         'beprojects': beprojects,
                                                         'committee': committee,
                                                         'researchpaper': researchpaper})
+
