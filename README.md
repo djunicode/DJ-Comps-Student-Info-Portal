@@ -30,4 +30,4 @@ Vishal Jain, Krutik Menkudle, Shraddha Shaligram, Saumya Shah
 Parth Mehta, Sanika Potdar, Kushal Doshi, Vishesh Vohra
 
 ### Back End Developers
-Ayush Kothari, Rahil Jhaveri
+Ayush Kothari, Sarvesh Joglekar, Siddhant Soni
