@@ -12,6 +12,7 @@ from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 import collections
 
 import datetime
@@ -205,6 +206,8 @@ def student_editprofile(request, sapid):
             bio = request.POST.get('bio', '')
             skill = request.POST.get('skill', '')
             mobileNo = request.POST.get('mobileNo', '')
+            photo = request.FILES.get('photo', '')
+            year = request.POST.get('year', '')
             CompetitionName = request.POST.get('CompetitionName', '')
             company = request.POST.get('company', '')
             ProjName = request.POST.get('ProjName', '')
@@ -213,6 +216,8 @@ def student_editprofile(request, sapid):
             BeProjName = request.POST.get('BeProjName', '')
             student.bio = bio
             student.mobileNo = mobileNo
+            student.year = year
+            student.photo = photo
             if CompetitionName != '':
                 Date = request.POST.get('Date')
                 Desc = request.POST.get('Desc', '')
@@ -309,11 +314,11 @@ def student_editprofile(request, sapid):
                     beproject.ProjURL = ProjURL
                     beproject.ProjDesc = ProjDesc
                     beproject.image1 = image1
+                    beproject.teammates.clear()
                     if teammate1:
                         teammate1 = get_object_or_404(
                             StudentProfile, Sap_Id=teammate1)
                         teammate1.beteammate.clear()
-                        beproject.save()
                         beproject.teammates.add(teammate1)
                     if teammate2:
                         teammate2 = get_object_or_404(
@@ -344,13 +349,49 @@ def student_editprofile(request, sapid):
                 context = {'ProjName': beproject[0].ProjName,
                            'ProjURL': beproject[0].ProjURL,
                            'ProjDesc': beproject[0].ProjDesc,
-                           'Teacher': beproject[0].projectUnderTeacher.Sap_Id}
+                           }
+                teacher = beproject[0].projectUnderTeacher
+                if teacher:
+                    context['Teacher'] = teacher.Sap_Id
                 for i, teammate in enumerate(beproject[0].teammates.all()):
                     context['teammate' + str(i + 1)] = teammate.Sap_Id
             context['student'] = student
             return render(request, 'user_profile/edit_student_profile.html', context)
     else:
         return HttpResponse("Please Login")
+
+
+def searchany(request):
+    context = {}
+    if request.method == 'POST':
+        searchquery = request.POST.get('searchany')
+        # queryset=StudentProfile.objects.filter(department__trigram_similar=searchquery)
+        dept_vector = SearchVector('department', 'bio', 'mobileNo')
+        skill_vector = SearchVector('skill')
+        hackathon_vector = SearchVector('CompetitionName', 'Desc', 'URL')
+        internship_vector = SearchVector('company')
+        project_vector = SearchVector('ProjName')
+        beproject_vector = SearchVector('ProjName')
+
+        # bio_vector = SearchVector('bio')
+        queryset = StudentProfile.objects.annotate(search=dept_vector).filter(search=searchquery)
+        skillset = Skill.objects.annotate(search=skill_vector).filter(search=searchquery)
+        hackathonset = Hackathon.objects.annotate(search=hackathon_vector).filter(search=searchquery)
+        internshipset = Internship.objects.annotate(search=internship_vector).filter(search=searchquery)
+        projectset = Project.objects.annotate(search=project_vector).filter(search=searchquery)
+        beprojectset = BeProject.objects.annotate(search=beproject_vector).filter(search=searchquery)
+
+        # StudentProfile.objects.annotate(search=skill_vector).filter(search=searchquery)
+        context['queryset'] = queryset
+        context['skillset'] = skillset
+        context['hackathonset'] = hackathonset
+        context['internshipset'] = internshipset
+        context['projectset'] = projectset
+        context['beprojectset'] = beprojectset
+
+        return render(request, 'user_profile/searchany.html', context)
+    else:
+        return render(request, 'user_profile/searchany.html')
 
 
 def notifs(request):
@@ -673,3 +714,27 @@ def teacher_dashboard(request):
 
 def education_graphs():
     pass
+
+
+def view_internship(request, internshipid):
+    internship = Internship.objects.get(id=internshipid)
+    # return render(request, '',{'internship':internship})
+    return HttpResponse(internship.company)
+
+
+def view_hackathon(request, hackathonid):
+    hackathon = Hackathon.objects.get(id=hackathonid)
+    # return render(request, '',{'hackathon':hackathon})
+    return HttpResponse(hackathon.CompetitionName)
+
+
+def view_project(request, projectid):
+    project = Project.objects.get(id=projectid)
+    # return render(request, '',{'project':project})
+    return HttpResponse(project.ProjName)
+
+
+def view_beproject(request, beprojectid):
+    beproject = BeProject.objects.get(id=beprojectid)
+    # return render(request, '',{'beproject':beproject})
+    return HttpResponse(beproject.ProjName)
