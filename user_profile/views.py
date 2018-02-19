@@ -648,3 +648,18 @@ def student_list(request):
             list_of_skills).most_common(most_common_to_take)
         skillss = [skill[0] for skill in most_frequent]
         return render(request, 'user_profile/search.html', {'skills': skillss})
+
+def teacher_dashboard(request):
+    most_common_to_take = 3
+    skills = Skill.objects.all()
+    list_of_skills = [skill.skill for skill in skills]
+    most_frequent_skills = collections.Counter(
+        list_of_skills).most_common(most_common_to_take)
+    internship_objects = Internship.objects.all()
+    intern_stats = [internship.employee.year for internship in internship_objects]
+    intern_stats = collections.Counter(intern_stats)
+    return HttpResponse(intern_stats)
+
+
+def education_graphs():
+    pass

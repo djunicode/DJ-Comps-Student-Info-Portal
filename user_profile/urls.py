@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^student/editprofile/(?P<sapid>[0-9]+)/$', views.student_editprofile, name='student_editprofile'),
     url(r'^notifications/$', views.notifs, name='notifs'),
     url(r'^search/$', views.student_list, name='student_list'),
+    url(r'^teacherdashboard/$', views.teacher_dashboard),
 ]
