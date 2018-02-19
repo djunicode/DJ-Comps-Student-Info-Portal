@@ -630,14 +630,16 @@ def student_list(request):
         if year and skills:
             result = StudentProfile.objects.filter(year__in=year).filter(
                 skills__skill__in=skills).distinct()
-            projects = Project.objects.filter(skill__skill__in=skills).distinct()
+            projects = Project.objects.filter(
+                skill__skill__in=skills).distinct()
         elif year:
             result = StudentProfile.objects.filter(year__in=year)
             projects = []
         elif skills:
             result = StudentProfile.objects.filter(
                 skills__skill__in=skills).distinct()
-            projects = Project.objects.filter(skill__skill__in=skills).distinct()
+            projects = Project.objects.filter(
+                skill__skill__in=skills).distinct()
         else:
             result = []
             projects = []
@@ -668,6 +670,6 @@ def teacher_dashboard(request):
     intern_stats = collections.Counter(intern_stats)
     return HttpResponse(most_frequent_skills)
 
-    
+
 def education_graphs():
     pass
