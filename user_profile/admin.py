@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import TeacherProfile, Experience
 from .models import Hackathon, Committee, ResearchPaper, BeProject, Internship
 from .models import Project, StudentProfile, Skill, Recruiter
+from .models import Education
 from simple_history.admin import SimpleHistoryAdmin
 
 
@@ -16,3 +17,4 @@ admin.site.register(BeProject, SimpleHistoryAdmin)
 admin.site.register(Skill, SimpleHistoryAdmin)
 admin.site.register(Internship, SimpleHistoryAdmin)
 admin.site.register(Project, SimpleHistoryAdmin)
+admin.site.register(Education)
