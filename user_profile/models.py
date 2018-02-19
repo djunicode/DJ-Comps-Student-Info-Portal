@@ -10,11 +10,45 @@ from simple_history.models import HistoricalRecords
 # import django_filters
 
 
+class StudentProfile(models.Model):
+    student = models.OneToOneField(User, on_delete=models.CASCADE)
+    Sap_Id = models.BigIntegerField(
+        validators=[MaxValueValidator(99999999999),
+                    MinValueValidator(10000000000)])
+    department = models.CharField(max_length=50)
+    photo = models.FileField(blank=True)
+    github_id = models.CharField(max_length=50, null=True, blank=True)
+    bio = models.CharField(max_length=200)
+    GENDER_CHOICES = (
+        ("Male", "Male"),
+        ("Female", "Female"),
+    )
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
+    mobileNo = models.CharField(max_length=50)
+    YEAR_CHOICES = (
+        ("FE", "First Year"),
+        ("SE", "Second Year"),
+        ("TE", "Third Year"),
+        ("BE", "Final Year"),
+    )
+    year = models.CharField(max_length=20, choices=YEAR_CHOICES)
+
+    class Meta:
+        permissions = (
+            ("view_student", "Can see student profile"),
+        )
+
+    def __str__(self):
+        return str(self.Sap_Id)
+
+
 class Recruiter(models.Model):
     recruiter = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
 class Education(models.Model):
+    student_profile = models.ForeignKey(
+        StudentProfile, related_name='education')
     sem1_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
     sem2_gpa = models.DecimalField(
@@ -46,7 +80,7 @@ class KT(models.Model):
         ("SEM8", "Semester 8"),
     )
     subject_semester = models.CharField(max_length=20, choices=SEM_CHOICES)
-    education = models.ForeignKey(Education)
+    education = models.ForeignKey(Education, related_name='kt')
 
 
 class TeacherProfile(models.Model):
@@ -72,6 +106,7 @@ class TeacherProfile(models.Model):
         return str(self.Sap_Id)
 
 
+'''
 class Experience(models.Model):
     employee = models.ForeignKey(TeacherProfile, on_delete=models.CASCADE)
     companyName = models.CharField(max_length=50)
@@ -79,9 +114,11 @@ class Experience(models.Model):
     Location = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
     date = models.DateField(("Date"), default=datetime.date.today, blank=True)
+'''
 
 
 class Hackathon(models.Model):
+    student_profile = models.ForeignKey(StudentProfile)
     CompetitionName = models.CharField(max_length=50)
     Date = models.DateField(null=True, blank=True)
     Desc = models.CharField(max_length=500)
@@ -98,47 +135,12 @@ class Hackathon(models.Model):
 
 
 class Skill(models.Model):
+    user_profile = models.ForeignKey(StudentProfile)
     skill = models.CharField(max_length=50)
     history = HistoricalRecords()
 
     def __str__(self):
         return str(self.skill)
-
-
-class StudentProfile(models.Model):
-    student = models.OneToOneField(User, on_delete=models.CASCADE)
-    education = models.OneToOneField(
-        Education, on_delete=models.CASCADE, null=True)
-    Sap_Id = models.BigIntegerField(
-        validators=[MaxValueValidator(99999999999),
-                    MinValueValidator(10000000000)])
-    department = models.CharField(max_length=50)
-    photo = models.FileField(blank=True)
-    github_id = models.CharField(max_length=50, null=True, blank=True)
-    bio = models.CharField(max_length=200)
-    GENDER_CHOICES = (
-        ("Male", "Male"),
-        ("Female", "Female"),
-    )
-    gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
-    mobileNo = models.CharField(max_length=50)
-    YEAR_CHOICES = (
-        ("FE", "First Year"),
-        ("SE", "Second Year"),
-        ("TE", "Third Year"),
-        ("BE", "Final Year"),
-    )
-    year = models.CharField(max_length=20, choices=YEAR_CHOICES)
-    skills = models.ManyToManyField(Skill, blank=True)
-    hackathon = models.ManyToManyField(Hackathon, blank=True)
-
-    class Meta:
-        permissions = (
-            ("view_student", "Can see student profile"),
-        )
-
-    def __str__(self):
-        return str(self.Sap_Id)
 
 
 class Internship(models.Model):
@@ -162,13 +164,15 @@ class Internship(models.Model):
 
 
 class Project(models.Model):
-    student = models.ForeignKey(StudentProfile, related_name="projects")
+    student_profile = models.ForeignKey(
+        StudentProfile, related_name="projects")
     ProjName = models.CharField(max_length=50)
     ProjURL = models.TextField(validators=[URLValidator()], blank=True)
     ProjDesc = models.CharField(max_length=500, blank=True)
     projectUnderTeacher = models.ForeignKey(
         TeacherProfile, blank=True, null=True, related_name="verifiedprojects")
-    skill = models.ForeignKey(Skill, related_name="projectskills", null=True, blank=True)
+    skill = models.ForeignKey(
+        Skill, related_name="projectskills", null=True, blank=True)
     image1 = models.FileField()
     image2 = models.FileField(blank=True)
     image3 = models.FileField(blank=True)
