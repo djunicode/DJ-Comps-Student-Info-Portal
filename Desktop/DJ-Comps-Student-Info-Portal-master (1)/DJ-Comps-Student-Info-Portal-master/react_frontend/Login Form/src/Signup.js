@@ -71,7 +71,7 @@ export default class Signup extends Component{
             <br/><br/>
             <form
                     id="signup"
-                    action="user_profile/registration.html"
+                    action="/registration/"
                     method="post">
               <TextField className="tf"
               hintText="Enter your SAP ID"
@@ -96,9 +96,9 @@ export default class Signup extends Component{
             /> 
                    
         
-            </form>
+            
             <Button className="b1">Register</Button>      
-                     
+            </form>         
             </div>
           </div>
         </Tab>

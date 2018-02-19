@@ -1,0 +1,30 @@
+language: python
+
+python:
+  - 3.6
+
+services:
+  - postgresql
+
+env:
+  - DJANGO=1.11.8 DB=postgresql
+
+before_install:
+  - export DJANGO_SETTINGS_MODULE=info_portal.settings
+
+install:
+  - pip install -r requirements.txt
+
+before_script:
+  - psql -c "CREATE DATABASE info_portal;" -U postgres
+  - psql -c "CREATE USER xyz WITH CREATEUSER PASSWORD 'abc@123';" -U postgres
+  - psql -c "ALTER USER xyz CREATEDB;" -U postgres
+  - python3 manage.py makemigrations
+  - python3 manage.py migrate
+
+script:
+  - flake8
+  - python3 manage.py test
+
+notifications:
+  slack: 'djunicode:nPWYqrZjc5axuXrKNW0flJ8h'
