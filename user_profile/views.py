@@ -630,16 +630,20 @@ def student_list(request):
         if year and skills:
             result = StudentProfile.objects.filter(year__in=year).filter(
                 skills__skill__in=skills).distinct()
+            projects = Project.objects.filter(skill__skill__in=skills).distinct()
         elif year:
             result = StudentProfile.objects.filter(year__in=year)
+            projects = []
         elif skills:
             result = StudentProfile.objects.filter(
                 skills__skill__in=skills).distinct()
+            projects = Project.objects.filter(skill__skill__in=skills).distinct()
         else:
             result = []
+            projects = []
         print(result, "res")
 
-        return render(request, 'user_profile/search.html', {'result': result, 'skills': skillss})
+        return render(request, 'user_profile/search.html', {'result': result, 'skills': skillss, 'projects': projects})
     else:
         most_common_to_take = 3
         skills = Skill.objects.all()
