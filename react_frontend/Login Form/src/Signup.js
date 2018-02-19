@@ -18,6 +18,14 @@ export default class Signup extends Component{
     });
   };
 
+  state = {
+    passwordDisplayed: false
+  }
+
+  toggleDisplay() {
+    this.setState({ passwordDisplayed: !this.state.passwordDisplayed })
+  }
+
   render() {
     return (
       <Tabs
@@ -27,10 +35,14 @@ export default class Signup extends Component{
         <Tab label="Login" value="a">
           <div className="tf">
           <br/><br/>
-               <TextField
-             hintText="Enter your SAP ID"
-             floatingLabelText="SAP ID"
-             onChange = {(event,newValue) => this.setState({username:newValue})}
+          <form
+                    id="login"
+                    action="user_profile/login.html"
+                    method="post">
+          <TextField
+            hintText="Enter your SAP ID"
+            floatingLabelText="SAP ID"
+            onChange = {(event,newValue) => this.setState({username:newValue})}
           />
           <br/>
         <TextField
@@ -38,7 +50,9 @@ export default class Signup extends Component{
             floatingLabelText="Password"
             onChange = {(event,newValue) => this.setState({password:newValue})}
             type="password"
+            id="password"
             />
+            </form>
             <br/><br/>
             <Button className="b1">GO!</Button>
             <br/><br/>
@@ -51,6 +65,10 @@ export default class Signup extends Component{
           <div>
             <div className="tf">
             <br/><br/>
+            <form
+                    id="signup"
+                    action="user_profile/registration.html"
+                    method="post">
               <TextField className="tf"
               hintText="Enter your SAP ID"
               floatingLabelText="SAP ID"
@@ -65,11 +83,11 @@ export default class Signup extends Component{
             /> 
             <br/>            
         <TextField className="tf"
-            hintText="Confirm your Password"
-            floatingLabelText="Confirm Password"
+            hintText="Username"
+            floatingLabelText="Username"
             onChange = {(event,newValue) => this.setState({password:newValue})}
-            type="password"
             /><br/><br/>       
+            </form>
             <Button className="b1">Register</Button>      
                      
             </div>
@@ -79,3 +97,10 @@ export default class Signup extends Component{
     );
   }
 }
+
+
+
+
+
+
+

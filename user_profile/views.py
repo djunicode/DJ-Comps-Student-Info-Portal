@@ -12,6 +12,7 @@ from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+import collections
 
 import datetime
 
@@ -579,4 +580,36 @@ def notifs(request):
                                                         'beprojects': beprojects,
                                                         'committee': committee,
                                                         'researchpaper': researchpaper})
+
+def student_list(request):
+    if request.method == 'POST':
+        most_common_to_take = 3
+        skills = Skill.objects.all()
+        list_of_skills = [skill.skill for skill in skills]
+        most_frequent = collections.Counter(list_of_skills).most_common(most_common_to_take)
+        skillss = [skill[0] for skill in most_frequent]
+
+        year = request.POST.getlist('year[]')
+        skills = request.POST.getlist('skills[]')
+        print(year)
+        print(skills)
+
+        if year and skills:
+            result = StudentProfile.objects.filter(year__in=year).filter(skills__skill__in=skills).distinct()
+        elif year:
+            result = StudentProfile.objects.filter(year__in=year)
+        elif skills:
+            result = StudentProfile.objects.filter(skills__skill__in=skills).distinct()
+        else:
+            result = []
+        print(result, "res")
+
+        return render(request, 'user_profile/search.html', {'result': result, 'skills': skillss})
+    else:
+        most_common_to_take = 3
+        skills = Skill.objects.all()
+        list_of_skills = [skill.skill for skill in skills]
+        most_frequent = collections.Counter(list_of_skills).most_common(most_common_to_take)
+        skillss = [skill[0] for skill in most_frequent]
+        return render(request, 'user_profile/search.html', {'skills': skillss})
 
