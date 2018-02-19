@@ -10,7 +10,8 @@ urlpatterns = [
     url(r'^logout/teacher/$', views.logout_teacher, name='logout_teacher'),
     url(r'^login/recruiter/$', views.user_login_recruiter, name='user_login_recruiter'),
     url(r'^logout/recruiter/$', views.logout_recruiter, name='logout_recruiter'),
-    url(r'^student/profile/(?P<sapid>[0-9]+)/', views.student_profile, name='student_profile'),
-    url(r'^student/editprofile/(?P<sapid>[0-9]+)/', views.student_editprofile, name='student_editprofile'),
-    url(r'^notifications/', views.notifs, name='notifs'),
+    url(r'^student/profile/(?P<sapid>[0-9]+)/$', views.student_profile, name='student_profile'),
+    url(r'^student/editprofile/(?P<sapid>[0-9]+)/$', views.student_editprofile, name='student_editprofile'),
+    url(r'^notifications/$', views.notifs, name='notifs'),
+    url(r'^search/$', views.student_list, name='student_list'),
 ]

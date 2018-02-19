@@ -7,6 +7,7 @@ from django.core.validators import MaxValueValidator
 from django.db.models.signals import m2m_changed
 from django.core.exceptions import ValidationError
 from simple_history.models import HistoricalRecords
+# import django_filters
 
 
 class Recruiter(models.Model):
@@ -191,3 +192,8 @@ class BeProject(models.Model):
 
     def __str__(self):
         return str(self.ProjName)
+
+
+# class StudentFilter(django_filters.FilterSet):
+#    class Meta:
+#        fields = ['year', 'Sap_Id', 'department', 'skills']
