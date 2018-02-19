@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-"# Login-Form" 
-"# Login-Form" 
-=======
 # DJ Comps Student Information Portal
 Information about Students with complete background, for use  primarily by recruiters.
 
@@ -34,5 +30,4 @@ Vishal Jain, Krutik Menkudle, Shraddha Shaligram, Saumya Shah
 Parth Mehta, Sanika Potdar, Kushal Doshi, Vishesh Vohra
 
 ### Back End Developers
-Ayush Kothari, Raj Shah, Rahil Jhaveri
->>>>>>> 332d4a5f94879ffede9ccc6546c39f7624dcb01a
+Ayush Kothari, Sarvesh Joglekar, Siddhant Soni

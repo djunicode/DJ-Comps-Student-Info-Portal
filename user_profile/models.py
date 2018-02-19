@@ -4,10 +4,18 @@ from django.contrib.auth.models import User
 from django.core.validators import URLValidator
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator
+from django.db.models.signals import m2m_changed
+from django.core.exceptions import ValidationError
+from simple_history.models import HistoricalRecords
+# import django_filters
+
+
+class Recruiter(models.Model):
+    recruiter = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
 class TeacherProfile(models.Model):
-    teacher = models.OneToOneField(User)
+    teacher = models.OneToOneField(User, on_delete=models.CASCADE)
     Sap_Id = models.BigIntegerField(validators=[MaxValueValidator(99999999999), MinValueValidator(10000000000)])
     department = models.CharField(max_length=50)
     photo = models.FileField(blank=True)
@@ -18,9 +26,17 @@ class TeacherProfile(models.Model):
     )
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
 
+    class Meta:
+        permissions = (
+            ("view_teacher", "Can see teacher profile"),
+        )
+
+    def __str__(self):
+        return str(self.Sap_Id)
+
 
 class Experience(models.Model):
-    employee = models.ForeignKey(TeacherProfile)
+    employee = models.ForeignKey(TeacherProfile, on_delete=models.CASCADE)
     companyName = models.CharField(max_length=50)
     yourPosition = models.CharField(max_length=50)
     Location = models.CharField(max_length=50)
@@ -30,19 +46,30 @@ class Experience(models.Model):
 
 class Hackathon(models.Model):
     CompetitionName = models.CharField(max_length=50)
-    Date = models.DateField()
+    Date = models.DateField(null=True, blank=True)
     Desc = models.CharField(max_length=500)
     URL = models.TextField(validators=[URLValidator()])
-    isVerified = models.BooleanField(default=False)
-    verifiedBy = models.ForeignKey(TeacherProfile, blank=True, null=True)
+    image1 = models.FileField()
+    image2 = models.FileField(blank=True)
+    image3 = models.FileField(blank=True)
+    image4 = models.FileField(blank=True)
+    image5 = models.FileField(blank=True)
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return str(self.CompetitionName)
 
 
 class Skill(models.Model):
     skill = models.CharField(max_length=50)
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return str(self.skill)
 
 
 class StudentProfile(models.Model):
-    student = models.OneToOneField(User)
+    student = models.OneToOneField(User, on_delete=models.CASCADE)
     Sap_Id = models.BigIntegerField(validators=[MaxValueValidator(99999999999), MinValueValidator(10000000000)])
     department = models.CharField(max_length=50)
     photo = models.FileField(blank=True)
@@ -63,6 +90,14 @@ class StudentProfile(models.Model):
     skills = models.ManyToManyField(Skill, blank=True)
     hackathon = models.ManyToManyField(Hackathon, blank=True)
 
+    class Meta:
+        permissions = (
+            ("view_student", "Can see student profile"),
+        )
+
+    def __str__(self):
+        return str(self.Sap_Id)
+
 
 class Internship(models.Model):
     employee = models.ForeignKey(StudentProfile, related_name="internships")
@@ -73,11 +108,15 @@ class Internship(models.Model):
     To = models.DateField(("Date"), default=datetime.date.today, blank=True)
     desc = models.CharField(max_length=500, blank=True)
     Certificate = models.FileField(blank=True)
-    isVerified = models.BooleanField(default=False)
-    verifiedBy = models.ForeignKey(TeacherProfile, blank=True, null=True, related_name="verifiedinternships")
+    image1 = models.FileField()
+    image2 = models.FileField(blank=True)
+    image3 = models.FileField(blank=True)
+    image4 = models.FileField(blank=True)
+    image5 = models.FileField(blank=True)
+    history = HistoricalRecords()
 
     def __str__(self):
-        return self.company
+        return str(self.company)
 
 
 class Project(models.Model):
@@ -85,8 +124,16 @@ class Project(models.Model):
     ProjName = models.CharField(max_length=50)
     ProjURL = models.TextField(validators=[URLValidator()], blank=True)
     ProjDesc = models.CharField(max_length=500, blank=True)
-    isVerified = models.BooleanField(default=False)
     projectUnderTeacher = models.ForeignKey(TeacherProfile, blank=True, null=True, related_name="verifiedprojects")
+    image1 = models.FileField()
+    image2 = models.FileField(blank=True)
+    image3 = models.FileField(blank=True)
+    image4 = models.FileField(blank=True)
+    image5 = models.FileField(blank=True)
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return str(self.ProjName)
 
 
 class Committee(models.Model):
@@ -98,8 +145,15 @@ class Committee(models.Model):
     dateTo = models.DateField(("Date"), default=datetime.date.today, blank=True)
     Desc = models.CharField(max_length=500, blank=True)
     Certificate = models.FileField(blank=True)
-    isVerified = models.BooleanField(default=False)
-    verifiedBy = models.ForeignKey(TeacherProfile, blank=True, null=True, related_name="verifiedcommittee")
+    image1 = models.FileField()
+    image2 = models.FileField(blank=True)
+    image3 = models.FileField(blank=True)
+    image4 = models.FileField(blank=True)
+    image5 = models.FileField(blank=True)
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return str(self.OrganisationName)
 
 
 class ResearchPaper(models.Model):
@@ -111,6 +165,15 @@ class ResearchPaper(models.Model):
     LinkToPaper = models.TextField(validators=[URLValidator()], blank=True)
     PaperId = models.CharField(max_length=50, blank=True)
     Published_under = models.ForeignKey(TeacherProfile, blank=True, null=True, related_name="verifiedpaper")
+    image1 = models.FileField()
+    image2 = models.FileField(blank=True)
+    image3 = models.FileField(blank=True)
+    image4 = models.FileField(blank=True)
+    image5 = models.FileField(blank=True)
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return str(self.Title)
 
 
 class BeProject(models.Model):
@@ -118,6 +181,19 @@ class BeProject(models.Model):
     ProjName = models.CharField(max_length=50)
     ProjURL = models.TextField(validators=[URLValidator()])
     ProjDesc = models.CharField(max_length=500, blank=True)
-    isVerified = models.BooleanField(default=False)
     teammates = models.ManyToManyField(StudentProfile, related_name='beteammate', blank=True)
     projectUnderTeacher = models.ForeignKey(TeacherProfile, blank=True, null=True, related_name="verifiedbeprojects")
+    image1 = models.FileField()
+    image2 = models.FileField(blank=True)
+    image3 = models.FileField(blank=True)
+    image4 = models.FileField(blank=True)
+    image5 = models.FileField(blank=True)
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return str(self.ProjName)
+
+
+# class StudentFilter(django_filters.FilterSet):
+#    class Meta:
+#        fields = ['year', 'Sap_Id', 'department', 'skills']
