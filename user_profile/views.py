@@ -17,6 +17,8 @@ import collections
 
 import datetime
 
+def show_rollingform(request):
+    return render(request, 'user_profile/edit_student_profile.html')
 
 def register(request):
     if request.user.is_authenticated:
@@ -747,4 +749,4 @@ def view_beproject(request, beprojectid):
 
 
 def show_base(request):
-    return render(request, 'base.html')
+    return render(request, 'user_profile/edit_student_profile.html')
