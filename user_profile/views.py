@@ -17,6 +17,7 @@ import collections
 
 import datetime
 
+
 def show_rollingform(request):
     return render(request, 'user_profile/edit_student_profile.html')
 
