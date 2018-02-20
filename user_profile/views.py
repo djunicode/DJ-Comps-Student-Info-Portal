@@ -20,6 +20,7 @@ import datetime
 def show_rollingform(request):
 	return render(request, 'user_profile/edit_student_profile.html')
 
+	
 def register(request):
     if request.user.is_authenticated:
         return render(request, 'user_profile/profile.html', {})
