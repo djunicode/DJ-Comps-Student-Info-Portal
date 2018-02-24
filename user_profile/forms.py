@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import ModelForm
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator
 from .models import StudentProfile, Hackathon, Education, KT, Skill, Internship, Project, Committee, BeProject, ResearchPaper
