@@ -37,25 +37,15 @@
   <div class="register-box-body">
     <p class="login-box-msg">Register a new membership</p>
 
-    <form action="user_profile/registration" method="post">
+    <form id="register" action="../../user_profile/registration" method="post">
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="SAP ID" name="Sap_Id">
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email-ID" name="email">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password" name="password">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
+        {{form}}
       <div class="row">
         <div class="col-xs-8">I have already registered!<br />
           <a href="../../login/student" class="text-center">Login</a>
         </div>
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat" onClick="register();">Register</button>
         </div>
       </div>
     </form>
@@ -80,5 +70,17 @@
     });
   });
 </script>
+
+<script>
+    function register(){
+      var data = $('#register').serialize();
+      $.post( "/register/student/", data, function( data, status ) {
+        console.log("The Data Sent is: " + data);
+      });
+    }
+
+</script>
+
 </body>
 </html>
+
