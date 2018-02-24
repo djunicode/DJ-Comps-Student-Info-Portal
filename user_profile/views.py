@@ -13,7 +13,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
-from .forms import LoginForm, RegistrationForm, StudentProfileForm, HackathonForm, InternshipForm, EducationForm, KTForm, ProjectForm, SkillForm, CommitteeForm, ResearchPaperForm, BeProjectForm
+from .forms import (LoginForm, RegistrationForm, StudentProfileForm, HackathonForm, InternshipForm,
+                    EducationForm, KTForm, ProjectForm, SkillForm, CommitteeForm, ResearchPaperForm, BeProjectForm)
 import collections
 import datetime
 
@@ -774,4 +775,3 @@ def view_beproject(request, beprojectid):
 
 def show_base(request):
     return render(request, 'user_profile/edit_student_profile.html')
-
