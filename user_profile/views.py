@@ -13,8 +13,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from .forms import LoginForm, RegistrationForm, StudentProfileForm, HackathonForm, InternshipForm, EducationForm, KTForm, ProjectForm, SkillForm, CommitteeForm, ResearchPaperForm, BeProjectForm
 import collections
-
 import datetime
 
 
@@ -23,6 +23,7 @@ def show_rollingform(request):
 
 
 def register(request):
+    form = RegistrationForm()
     if request.user.is_authenticated:
         return render(request, 'user_profile/profile.html', {})
     else:
@@ -34,7 +35,7 @@ def register(request):
 
             if User.objects.filter(username=username).exists():
                 error = 'The Sap_id is already in use by another account.'
-                return render(request, 'user_profile/registration.html', {'error': error})
+                return render(request, 'user_profile/registration.html', {'error': error, 'form': form})
 
             else:
                 user = User.objects.create_user(username=username, email=email)
@@ -50,10 +51,11 @@ def register(request):
                 student.save()
                 return render(request, 'user_profile/profile.html', {})
         else:
-            return render(request, 'user_profile/registration.html', {})
+            return render(request, 'user_profile/registration.html', {'form': form})
 
 
 def user_login(request):
+    form = LoginForm()
     if request.user.is_authenticated:
         return render(request, 'user_profile/profile.html', {})
     else:
@@ -67,12 +69,12 @@ def user_login(request):
                     return render(request, 'user_profile/profile.html', {})
                 else:
                     error = 'Your account is disabled.'
-                    return render(request, 'user_profile/login.html', {'error': error})
+                    return render(request, 'user_profile/login.html', {'error': error, 'form': form})
             else:
                 error = 'Incorrect Username or Password'
-                return render(request, 'user_profile/login.html', {'error': error})
+                return render(request, 'user_profile/login.html', {'error': error, 'form': form})
         else:
-            return render(request, 'user_profile/login.html', {})
+            return render(request, 'user_profile/login.html', {'form': form})
 
 
 def register_teacher(request):
@@ -203,6 +205,16 @@ def student_profile(request, sapid):
 
 
 def student_editprofile(request, sapid):
+    form1 = StudentProfileForm()
+    form2 = SkillForm()
+    form3 = InternshipForm()
+    form4 = HackathonForm()
+    form5 = ProjectForm()
+    form6 = CommitteeForm()
+    form7 = ResearchPaperForm()
+    form8 = BeProjectForm()
+    form9 = EducationForm()
+    form10 = KTForm()
     if request.user.is_authenticated:
         student = get_object_or_404(StudentProfile, Sap_Id=sapid)
 
@@ -360,6 +372,16 @@ def student_editprofile(request, sapid):
                 for i, teammate in enumerate(beproject[0].teammates.all()):
                     context['teammate' + str(i + 1)] = teammate.Sap_Id
             context['student'] = student
+            context['form1'] = form1
+            context['form2'] = form2
+            context['form3'] = form3
+            context['form4'] = form4
+            context['form5'] = form5
+            context['form6'] = form6
+            context['form7'] = form7
+            context['form8'] = form8
+            context['form9'] = form9
+            context['form10'] = form10
             return render(request, 'user_profile/edit_student_profile.html', context)
     else:
         return HttpResponse("Please Login")
@@ -752,3 +774,4 @@ def view_beproject(request, beprojectid):
 
 def show_base(request):
     return render(request, 'user_profile/edit_student_profile.html')
+
