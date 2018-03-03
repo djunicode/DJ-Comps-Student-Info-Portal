@@ -732,7 +732,7 @@ def teacher_dashboard(request):
     list_of_skills = [skill.skill for skill in skills]
     most_frequent_skills = collections.Counter(
         list_of_skills).most_common(most_common_to_take)
-
+    print(most_frequent_skills)
     # calculating year-wise internship stats
     internship_objects = Internship.objects.all()
     intern_stats = [
@@ -750,7 +750,7 @@ def teacher_dashboard(request):
     sem6_list = [education.sem6_gpa for education in Education.objects.all() if education.sem6_gpa is not None]
     sem7_list = [education.sem7_gpa for education in Education.objects.all() if education.sem7_gpa is not None]
     sem8_list = [education.sem8_gpa for education in Education.objects.all() if education.sem8_gpa is not None]
-    print(sem1_list, sem2_list)
+    print(sem1_list, sem2_list, sem3_list, sem4_list, sem5_list, sem6_list, sem7_list, sem8_list)
 
     # internship time stamps
     intern_dates = [format(internship.From, 'U') for internship in Internship.objects.all()]
