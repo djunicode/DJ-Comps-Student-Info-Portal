@@ -1,7 +1,5 @@
-from .models import (HistoricalInternship, HistoricalProject, HistoricalCommittee, HistoricalResearchPaper,
-                     HistoricalBeProject)
 from .models import (StudentProfile, TeacherProfile, Internship, Project, Committee, ResearchPaper, BeProject,
-                     Hackathon, Skill)
+                     Hackathon, Skill, User, Education, KT)
 import random
 from datetime import datetime
 import numpy as np
@@ -29,7 +27,6 @@ def fill():
             u.year = "BE"
         u.save()
 
-
     # TeacherProfile
     for i in range(90000000001, 90000000030):
         user = User.objects.create(username=i, password='asdasdasd')
@@ -42,7 +39,6 @@ def fill():
             u.gender = "Female"
         u.save()
 
-
     # Recruiter model
     for i in range(0, 100):
         user = User.objects.create(username=i, password='asdasdasd')
@@ -51,12 +47,10 @@ def fill():
         u = Recruiter.objects.create(recruiter=user)
         u.save()
 
-
     users = StudentProfile.objects.all()
     users = [s for s in users]
     teachers = TeacherProfile.objects.all()
     teachers = [s for s in teachers]
-
 
     # Internship model
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
@@ -64,20 +58,17 @@ def fill():
             Loc='Mumbai', desc='Computer Science')
         i.save()
 
-
     # Skills model
     skillz = ['HTML', 'CSS', 'JS', 'DJANGO', 'ML', 'NLP']
     for i in skillz:
         s = Skill.objects.create(skill=i, user_profile=random.choice(users))
         s.save()
 
-
     # Random date generation
     year = random.choice(range(2015, 2018))
     month = random.choice(range(1, 13))
     day = random.choice(range(1, 29))
     date = datetime(year, month, day)
-
 
     # Hackathon model
     hacks = ['MSF', 'FLOCHAT', 'SIH', 'MONEY CONTROL', 'HACK IN NORTH']
@@ -86,21 +77,18 @@ def fill():
             student_profile=random.choice(users), Date=date)
         s.save()
 
-
     # Education model
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
         i = Education.objects.create(student_profile=random.choice(users),
-            sem1_gpa = round(np.random.uniform(6, 10), 2),
-            sem2_gpa = round(np.random.uniform(6, 10), 2),
-            sem3_gpa = round(np.random.uniform(6, 10), 2),
-            sem4_gpa = round(np.random.uniform(6, 10), 2),
-            sem5_gpa = round(np.random.uniform(6, 10), 2),
-            sem6_gpa = round(np.random.uniform(6, 10), 2),
-            sem7_gpa = round(np.random.uniform(6, 10), 2),
-            sem8_gpa = round(np.random.uniform(6, 10), 2)
-                                    )
+            sem1_gpa=round(np.random.uniform(6, 10), 2),
+            sem2_gpa= round(np.random.uniform(6, 10), 2),
+            sem3_gpa=round(np.random.uniform(6, 10), 2),
+            sem4_gpa=round(np.random.uniform(6, 10), 2),
+            sem5_gpa=round(np.random.uniform(6, 10), 2),
+            sem6_gpa=round(np.random.uniform(6, 10), 2),
+            sem7_gpa=round(np.random.uniform(6, 10), 2),
+            sem8_gpa=round(np.random.uniform(6, 10), 2))
         i.save()
-
 
     # Project model:
     skills = Skill.objects.all()
@@ -110,19 +98,16 @@ def fill():
             projectUnderTeacher=random.choice(teachers), skill=random.choice(skills), ProjName=i)
         i.save()
 
-
     # Committee
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
         i = Committee.objects.create(employee=random.choice(users), OrganisationName='ACM', 
             YourPosition='Tech Head')
         i.save()
 
-
     # KT model
     edu = Education.objects.all()
     edu = [s for s in edu]
     subj = ['tcs', 'dbms', 'ds', 'oopm', 'maths-1', 'physics', 'chemistry']
-
 
     for i in range(0,48):
         u = KT.objects.create(education=random.choice(edu), subject_name=random.choice(subj))
@@ -144,13 +129,11 @@ def fill():
             u.subject_semester = "Semester 8"
         u.save()
 
-
     # Research Paper
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
         i = ResearchPaper.objects.create(student=random.choice(users), 
             Title='Dropout: NN', Publication='IEEE', Published_under=random.choice(teachers))
         i.save()
-
 
 # TO RUN THIS SCRIPT -
 #
