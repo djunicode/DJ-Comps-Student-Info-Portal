@@ -83,14 +83,10 @@ def fill():
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
         i = Project.objects.create(student_profile=random.choice(users), projectUnderTeacher=random.choice(teachers), skill=random.choice(skills), ProjName=i)
         i.save()
-
-
-
     #Committee
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
         i = Committee.objects.create(employee=random.choice(users), OrganisationName='ACM', YourPosition='Tech Head')
         i.save()
-
     #KT model
     edu = Education.objects.all()
     edu = [s for s in edu]
@@ -114,10 +110,9 @@ def fill():
         elif i % 8 == 7:
             u.subject_semester = "Semester 8"
         u.save()
-
     #Research Paper
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
-        i = ResearchPaper.objects.create(student=random.choice(users), Title='Dropout: NN',Publication='IEEE', Published_under=random.choice(teachers))
+        i = ResearchPaper.objects.create(student=random.choice(users), Title='Dropout: NN', Publication='IEEE', Published_under=random.choice(teachers))
         i.save()
 
 
