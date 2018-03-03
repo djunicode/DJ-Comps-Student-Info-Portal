@@ -95,7 +95,10 @@ def fill():
     skills = [s for s in skills]
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
         i = Project.objects.create(
-            student_profile=random.choice(users), projectUnderTeacher=random.choice(teachers), skill=random.choice(skills), ProjName=i)
+            student_profile=random.choice(users), 
+            projectUnderTeacher=random.choice(teachers), 
+            skill=random.choice(skills), 
+            ProjName=i)
         i.save()
 
     # Committee
@@ -132,7 +135,10 @@ def fill():
     # Research Paper
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
         i = ResearchPaper.objects.create(
-            student=random.choice(users), Title='Dropout: NN', Publication='IEEE', Published_under=random.choice(teachers))
+            student=random.choice(users), 
+            Title='Dropout: NN', 
+            Publication='IEEE', 
+            Published_under=random.choice(teachers))
         i.save()
 
 # TO RUN THIS SCRIPT -
