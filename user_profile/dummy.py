@@ -114,8 +114,6 @@ def fill():
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
         i = ResearchPaper.objects.create(student=random.choice(users), Title='Dropout: NN', Publication='IEEE', Published_under=random.choice(teachers))
         i.save()
-
-
 # TO RUN THIS SCRIPT -
 #
 # python manage.py shell
