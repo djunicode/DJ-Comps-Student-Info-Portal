@@ -1,9 +1,10 @@
-from .models import *
+from .models import (HistoricalInternship, HistoricalProject, HistoricalCommittee, HistoricalResearchPaper,
+                     HistoricalBeProject)
 import random
 from datetime import datetime
 import numpy as np
 def fill():
-    #student profile model
+    # Student profile model
     for i in range(60004150306, 60004150502):
         user = User.objects.create(username=i, password='asdasdasd')
         user.set_password('asdasdasd')
@@ -22,7 +23,7 @@ def fill():
         elif i % 4 == 3:
             u.year = "BE"
         u.save()
-    #teacherProfile
+    # TeacherProfile
     for i in range(90000000001, 90000000030):
         user = User.objects.create(username=i, password='asdasdasd')
         user.set_password('asdasdasd')
@@ -33,7 +34,7 @@ def fill():
         else:
             u.gender = "Female"
         u.save()
-    #Recruiter model
+    # Recruiter model
     for i in range(0,100):
         user = User.objects.create(username=i, password='asdasdasd')
         user.set_password('asdasdasd')
@@ -45,52 +46,52 @@ def fill():
     users = [s for s in users]
     teachers = TeacherProfile.objects.all()
     teachers = [s for s in teachers]
-     #internship model
+    # Internship model
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
         i = Internship.objects.create(employee=random.choice(users), company=i, Position='Intern', Loc='Mumbai', desc='Computer Science')
         i.save()
-     #Skills model
+    # Skills model
     skillz = ['HTML', 'CSS', 'JS', 'DJANGO', 'ML', 'NLP']
     for i in skillz:
         s = Skill.objects.create(skill=i, user_profile=random.choice(users))
         s.save() 
-    #random date generation
+    # Random date generation
     year = random.choice(range(2015, 2018))
     month = random.choice(range(1, 13))
     day = random.choice(range(1, 29))
     date = datetime(year, month, day)
-     #hackathon model
+    # Hackathon model
     hacks = ['MSF', 'FLOCHAT', 'SIH', 'MONEY CONTROL', 'HACK IN NORTH']
     for i in hacks:
         s = Hackathon.objects.create(CompetitionName=i, student_profile=random.choice(users), Date=date)
         s.save()
-    #Education model
+    # Education model
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
         i = Education.objects.create(student_profile=random.choice(users),
-            sem1_gpa= round(np.random.uniform(6,10),2),
-            sem2_gpa= round(np.random.uniform(6,10),2),
-            sem3_gpa= round(np.random.uniform(6,10),2),
-            sem4_gpa= round(np.random.uniform(6,10),2),
-            sem5_gpa= round(np.random.uniform(6,10),2),
-            sem6_gpa= round(np.random.uniform(6,10),2),
-            sem7_gpa= round(np.random.uniform(6,10),2),
-            sem8_gpa= round(np.random.uniform(6,10),2)
+            sem1_gpa = round(np.random.uniform(6,10),2),
+            sem2_gpa = round(np.random.uniform(6,10),2),
+            sem3_gpa = round(np.random.uniform(6,10),2),
+            sem4_gpa = round(np.random.uniform(6,10),2),
+            sem5_gpa = round(np.random.uniform(6,10),2),
+            sem6_gpa = round(np.random.uniform(6,10),2),
+            sem7_gpa = round(np.random.uniform(6,10),2),
+            sem8_gpa = round(np.random.uniform(6,10),2)
             )
         i.save()
-    #Project model:
+    # Project model:
     skills = Skill.objects.all()
     skills = [s for s in skills]
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
         i = Project.objects.create(student_profile=random.choice(users), projectUnderTeacher=random.choice(teachers), skill=random.choice(skills), ProjName=i)
         i.save()
-    #Committee
+    # Committee
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
         i = Committee.objects.create(employee=random.choice(users), OrganisationName='ACM', YourPosition='Tech Head')
         i.save()
-    #KT model
+    # KT model
     edu = Education.objects.all()
     edu = [s for s in edu]
-    subj = ['tcs','dbms','ds','oopm','maths-1','physics','chemistry']
+    subj = ['tcs', 'dbms', 'ds', 'oopm', 'maths-1', 'physics', 'chemistry']
     for i in range(0,48):
         u = KT.objects.create(education=random.choice(edu), subject_name=random.choice(subj))
         if i % 8 == 0:
@@ -110,7 +111,7 @@ def fill():
         elif i % 8 == 7:
             u.subject_semester = "Semester 8"
         u.save()
-    #Research Paper
+    # Research Paper
     for i in 'qwertyuiolkjhgfdsazxcvbnm':
         i = ResearchPaper.objects.create(student=random.choice(users), Title='Dropout: NN', Publication='IEEE', Published_under=random.choice(teachers))
         i.save()
