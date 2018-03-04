@@ -159,12 +159,12 @@ def user_login_teacher(request):
 
 def logout_student(request):
     auth_logout(request)
-    return redirect(reverse('login'))
+    return redirect(reverse('user_profile:user_login'))
 
 
 def logout_teacher(request):
     auth_logout(request)
-    return redirect(reverse('user_login_teacher'))
+    return redirect(reverse('user_profile:user_login_teacher'))
 
 
 def logout_recruiter(request):
