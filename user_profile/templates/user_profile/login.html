@@ -38,7 +38,7 @@
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
 
-    <form  action="{% url 'user_profile:register'%}" method="post">
+    <form  action="{% url 'user_profile:user_login'%}" method="post">
       {% csrf_token %}
       <div class="form-group has-feedback">
         <input  class="form-control" placeholder="SAP ID" name="Sap_Id">
