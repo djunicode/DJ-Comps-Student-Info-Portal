@@ -226,7 +226,7 @@
 <script>
     function submitBasicInfo(){
       var data = $('#BasicInfo').serialize();
-      $.post( "/student/editprofile/", data, function( data, status ) {
+      $.post( "/student/profile/", data, function( data, status ) {
         console.log("The Data Sent is: " + data);
       });
     }
