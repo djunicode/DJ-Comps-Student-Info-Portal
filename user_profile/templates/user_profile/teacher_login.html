@@ -32,13 +32,13 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
+    <a href="../../index2.html"><b>Teacher</b>Login</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
 
-    <form  action="{% url 'user_profile:user_login'%}" method="post">
+    <form  action="{% url 'user_profile:user_login_teacher'%}" method="post">
       {% csrf_token %}
       <div class="form-group has-feedback">
         <input  class="form-control" placeholder="SAP ID" name="username">
@@ -64,7 +64,7 @@
 
 
     <a href="#">I forgot my password</a><br>
-    <a href="../../register/student/" class="text-center">Register!</a>
+    <a href="../../register/teacher/" class="text-center">Register!</a>
 
   </div>
   <!-- /.login-box-body -->
