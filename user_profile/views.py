@@ -71,7 +71,8 @@ def user_login(request):
                 if user.is_active:
                     auth_login(request, user)
                     #return render(request, 'user_profile/profile.html', {})
-                    student_profile_url = '/student_profile/'+str(user.id) 
+                    student_profile = StudentProfile.objects.get(student=request.user)
+                    student_profile_url = '/student_profile/'+str(student_profile.id) 
                     return HttpResponseRedirect(student_profile_url)
                 else:
                     error = 'Your account is disabled.'
@@ -806,14 +807,14 @@ def view_beproject(request, beprojectid):
     return HttpResponse(beproject.ProjName)
 
 
-def show_edit_studentprofile(request,id):
-    if request.method=='POST':
-        pass
+def show_edit_studentprofile(request):
+    if request.user.is_authenticated:
+        student_profile = StudentProfile.objects.get(student=request.user)
+        return render(request, 'user_profile/edit_student_profile_2.html',{'student_profile':student_profile})
     else:
-        student_profile = StudentProfile.objects.get(id=id)
-
+        return HttpResponseRedirect('/login/student/')
     
-    return render(request, 'user_profile/edit_student_profile_2.html',{'student_profile':student_profile})
+    
 def edit_student_profile(request,id):
     if request.method=='POST':
         pass
