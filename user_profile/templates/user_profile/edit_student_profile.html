@@ -230,12 +230,6 @@
         console.log("The Data Sent is: " + data);
       });
     }
-    function submitAcademic(){
-      var data = $('#Academic').serialize();
-      $.post( "/student/editprofile/", data, function( data, status ) {
-        console.log("The Data Sent is: " + data);
-      });
-    }
 </script>
 
 {% endblock %}
