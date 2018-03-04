@@ -25,7 +25,7 @@ def show_rollingform(request):
 def register(request):
     if request.user.is_authenticated:
         student_profile = StudentProfile.objects.get(student=request.user)
-        student_profile_url = 'user_profile/'+str(student_profile.id) 
+        student_profile_url = '/user_profile/'+str(student_profile.id) 
         return HttpResponseRedirect(student_profile_url)
     else:
         if request.method == 'POST':
@@ -50,7 +50,7 @@ def register(request):
                 student = StudentProfile.objects.create(
                     student=user, Sap_Id=Sap_Id)
                 student.save()
-                student_profile_url = 'user_profile/'+str(student.id)
+                student_profile_url = '/user_profile/'+str(student.id)
                 return HttpResponseRedirect(student_profile_url)
                 return render(request, 'user_profile/profile.html', {"student": student})
         else:
@@ -60,7 +60,7 @@ def register(request):
 def user_login(request):
     if request.user.is_authenticated:
         student_profile = StudentProfile.objects.get(student=request.user)
-        student_profile_url = 'user_profile/'+str(student_profile.id) 
+        student_profile_url = '/user_profile/'+str(student_profile.id) 
         return HttpResponseRedirect(student_profile_url)
     else:
         if request.method == 'POST':
@@ -70,7 +70,9 @@ def user_login(request):
             if user:
                 if user.is_active:
                     auth_login(request, user)
-                    return render(request, 'user_profile/profile.html', {})
+                    #return render(request, 'user_profile/profile.html', {})
+                    student_profile_url = '/user_profile/'+str(user.id) 
+                    return HttpResponseRedirect(student_profile_url)
                 else:
                     error = 'Your account is disabled.'
                     return render(request, 'user_profile/login.html', {'error': error})
