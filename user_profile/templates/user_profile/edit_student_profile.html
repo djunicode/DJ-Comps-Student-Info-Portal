@@ -83,7 +83,7 @@
                 <div id="BasicData" class="panel-collapse collapse in">
                       <!-- /.box-header -->
                       <!-- form start -->
-                      <form method="post" enctype="multipart/form-data">
+                      <form id="BasicInfo" method="post" enctype="multipart/form-data">
       {%csrf_token%}
       Bio <input type="text" name="bio" value="{{student.bio}}"><br>
       Mobile No <input type="text" name="mobileNo" value="{{student.mobileNo}}"><br>
