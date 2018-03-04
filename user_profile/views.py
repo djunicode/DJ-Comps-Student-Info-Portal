@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from .models import (StudentProfile, TeacherProfile, Internship, Project, Committee, ResearchPaper, BeProject,
-                     Hackathon, Skill)
+                     Hackathon, Skill, Education)
 from .models import (HistoricalInternship, HistoricalProject, HistoricalCommittee, HistoricalResearchPaper,
                      HistoricalBeProject)
 from django.http import HttpResponse
@@ -14,7 +14,7 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 import collections
-
+from django.utils.dateformat import format
 import datetime
 
 
@@ -197,7 +197,25 @@ def user_login_recruiter(request):
 def student_profile(request, sapid):
     if request.user.is_authenticated:
         student = get_object_or_404(StudentProfile, Sap_Id=sapid)
-        return render(request, 'user_profile/student_profile.html', {'student': student})
+        # line chart of marks
+        # gpa_list = [gpa for gpa in student.education.all()[0].__dict__.values()]
+        sem1gpa = student.education.all()[0].sem1_gpa
+        sem2gpa = student.education.all()[0].sem2_gpa
+        sem3gpa = student.education.all()[0].sem3_gpa
+        sem4gpa = student.education.all()[0].sem4_gpa
+        sem5gpa = student.education.all()[0].sem5_gpa
+        sem6gpa = student.education.all()[0].sem6_gpa
+        sem7gpa = student.education.all()[0].sem7_gpa
+        sem8gpa = student.education.all()[0].sem8_gpa
+        gpa_list = [sem1gpa, sem2gpa, sem3gpa, sem4gpa, sem5gpa, sem6gpa, sem7gpa, sem8gpa]
+
+        project_objects = student.projects.all()
+        projectskill_stats = [
+            project.skill.skill for project in project_objects]
+        projectskill_stats = dict(collections.Counter(projectskill_stats))
+        print(projectskill_stats)
+        return render(request, 'user_profile/profile.html',
+                      {'gpa_list': gpa_list, 'projectskill_stats': projectskill_stats})
     else:
         return HttpResponse("Please Login")
 
@@ -714,12 +732,33 @@ def teacher_dashboard(request):
     list_of_skills = [skill.skill for skill in skills]
     most_frequent_skills = collections.Counter(
         list_of_skills).most_common(most_common_to_take)
+    print(most_frequent_skills)
     # calculating year-wise internship stats
     internship_objects = Internship.objects.all()
     intern_stats = [
         internship.employee.year for internship in internship_objects]
     intern_stats = collections.Counter(intern_stats)
-    return HttpResponse(most_frequent_skills)
+    print(intern_stats)
+
+    # list of all pointers
+    sem1_list = [education.sem1_gpa for education in Education.objects.all() if education.sem1_gpa is not None]
+    # sem1_list = filter(None, sem1_list)
+    sem2_list = [education.sem2_gpa for education in Education.objects.all() if education.sem2_gpa is not None]
+    sem3_list = [education.sem3_gpa for education in Education.objects.all() if education.sem3_gpa is not None]
+    sem4_list = [education.sem4_gpa for education in Education.objects.all() if education.sem4_gpa is not None]
+    sem5_list = [education.sem5_gpa for education in Education.objects.all() if education.sem5_gpa is not None]
+    sem6_list = [education.sem6_gpa for education in Education.objects.all() if education.sem6_gpa is not None]
+    sem7_list = [education.sem7_gpa for education in Education.objects.all() if education.sem7_gpa is not None]
+    sem8_list = [education.sem8_gpa for education in Education.objects.all() if education.sem8_gpa is not None]
+    print(sem1_list, sem2_list, sem3_list, sem4_list, sem5_list, sem6_list, sem7_list, sem8_list)
+
+    # internship time stamps
+    intern_dates = [format(internship.From, 'U') for internship in Internship.objects.all()]
+    intern_dates.sort()
+    intern_date = [int(x) - int(intern_dates[0]) for x in intern_dates]
+    print(intern_dates)
+    print(intern_date)
+    return HttpResponse(intern_stats)
 
 
 def education_graphs():
