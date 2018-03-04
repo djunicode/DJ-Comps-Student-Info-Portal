@@ -207,9 +207,10 @@ def student_profile(request, id):
         #student = get_object_or_404(StudentProfile, Sap_Id=sapid)
         # line chart of marks
         # gpa_list = [gpa for gpa in student.education.all()[0].__dict__.values()]
+       
         student = StudentProfile.objects.get(id=id)
         
-        if Education.objects.get(student_profile=student).exists():
+        try : 
             education = Education.objects.get(student_profile=student)
             sem1gpa = education.sem1_gpa
             sem2gpa = education.sem2_gpa
@@ -220,13 +221,17 @@ def student_profile(request, id):
             sem7gpa = education.sem7_gpa
             sem8gpa = education.sem8_gpa
             gpa_list = [sem1gpa, sem2gpa, sem3gpa, sem4gpa, sem5gpa, sem6gpa, sem7gpa, sem8gpa]
+        except Education.DoesNotExist:
+            gpa_list = []
 
         if Project.objects.filter(student_profile=student).exists():
             project_objects = Project.objects.filter(student_profile=student)
             projectskill_stats = [
                 project.skill.skill for project in project_objects]
             projectskill_stats = dict(collections.Counter(projectskill_stats))
-        
+            print (projectskill_stats)       
+        else:
+            projectskill_stats = {}
         return render(request, 'user_profile/profile.html',
                       {'gpa_list': gpa_list, 'projectskill_stats': projectskill_stats})
     else:
