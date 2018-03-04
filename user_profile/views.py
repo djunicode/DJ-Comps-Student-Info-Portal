@@ -4,7 +4,7 @@ from .models import (StudentProfile, TeacherProfile, Internship, Project, Commit
                      Hackathon, Skill, Education)
 from .models import (HistoricalInternship, HistoricalProject, HistoricalCommittee, HistoricalResearchPaper,
                      HistoricalBeProject)
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
@@ -24,7 +24,9 @@ def show_rollingform(request):
 
 def register(request):
     if request.user.is_authenticated:
-        return render(request, 'user_profile/profile.html', {})
+        student_profile = StudentProfile.objects.get(student=request.user)
+        student_profile_url = 'user_profile/'+str(student_profile.id) 
+        return HttpResponseRedirect(student_profile_url)
     else:
         if request.method == 'POST':
             username = request.POST.get('Sap_Id', '')
@@ -48,6 +50,8 @@ def register(request):
                 student = StudentProfile.objects.create(
                     student=user, Sap_Id=Sap_Id)
                 student.save()
+                student_profile_url = 'user_profile/'+str(student.id)
+                return HttpResponseRedirect(student_profile_url)
                 return render(request, 'user_profile/profile.html', {"student": student})
         else:
             return render(request, 'user_profile/registration.html', {})
@@ -55,7 +59,9 @@ def register(request):
 
 def user_login(request):
     if request.user.is_authenticated:
-        return render(request, 'user_profile/profile.html', {})
+        student_profile = StudentProfile.objects.get(student=request.user)
+        student_profile_url = 'user_profile/'+str(student_profile.id) 
+        return HttpResponseRedirect(student_profile_url)
     else:
         if request.method == 'POST':
             username = request.POST.get('username', '')
@@ -789,5 +795,10 @@ def view_beproject(request, beprojectid):
     return HttpResponse(beproject.ProjName)
 
 
-def show_base(request):
-    return render(request, 'user_profile/edit_student_profile.html')
+def show_edit_profile(request,id):
+    if request.method=='POST':
+        pass
+    else:
+        student_profile = StudentProfile.objects.get(id=id)
+
+    return render(request, 'user_profile/edit_student_profile_2.html',{'student_profile':student_profile})

@@ -39,7 +39,7 @@ class StudentProfile(models.Model):
         )
 
     def __str__(self):
-        return str(self.Sap_Id)
+        return str(str(self.Sap_Id) + '   ' + str(self.id)) 
 
 
 class Recruiter(models.Model):
