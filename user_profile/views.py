@@ -209,7 +209,6 @@ def student_profile(request, id):
         # gpa_list = [gpa for gpa in student.education.all()[0].__dict__.values()]
        
         student = StudentProfile.objects.get(id=id)
-        
         try : 
             education = Education.objects.get(student_profile=student)
             sem1gpa = education.sem1_gpa
@@ -807,10 +806,14 @@ def view_beproject(request, beprojectid):
     return HttpResponse(beproject.ProjName)
 
 
-def show_edit_profile(request,id):
+def show_edit_studentprofile(request,id):
     if request.method=='POST':
         pass
     else:
         student_profile = StudentProfile.objects.get(id=id)
 
+    
     return render(request, 'user_profile/edit_student_profile_2.html',{'student_profile':student_profile})
+def edit_student_profile(request,id):
+    if request.method=='POST':
+        pass

@@ -12,6 +12,8 @@ from simple_history.models import HistoricalRecords
 
 class StudentProfile(models.Model):
     student = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
     Sap_Id = models.BigIntegerField(
         validators=[MaxValueValidator(99999999999),
                     MinValueValidator(10000000000)])
