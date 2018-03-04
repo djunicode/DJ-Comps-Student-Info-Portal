@@ -25,7 +25,7 @@ def show_rollingform(request):
 def register(request):
     if request.user.is_authenticated:
         student_profile = StudentProfile.objects.get(student=request.user)
-        student_profile_url = '/user_profile/'+str(student_profile.id) 
+        student_profile_url = '/student_profile/'+str(student_profile.id) 
         return HttpResponseRedirect(student_profile_url)
     else:
         if request.method == 'POST':
@@ -50,9 +50,9 @@ def register(request):
                 student = StudentProfile.objects.create(
                     student=user, Sap_Id=Sap_Id)
                 student.save()
-                student_profile_url = '/user_profile/'+str(student.id)
+                student_profile_url = '/student_profile/'+str(student.id)
                 return HttpResponseRedirect(student_profile_url)
-                return render(request, 'user_profile/profile.html', {"student": student})
+                #return render(request, 'user_profile/profile.html', {"student": student})
         else:
             return render(request, 'user_profile/registration.html', {})
 
@@ -60,7 +60,7 @@ def register(request):
 def user_login(request):
     if request.user.is_authenticated:
         student_profile = StudentProfile.objects.get(student=request.user)
-        student_profile_url = '/user_profile/'+str(student_profile.id) 
+        student_profile_url = '/student_profile/'+str(student_profile.id) 
         return HttpResponseRedirect(student_profile_url)
     else:
         if request.method == 'POST':
@@ -71,7 +71,7 @@ def user_login(request):
                 if user.is_active:
                     auth_login(request, user)
                     #return render(request, 'user_profile/profile.html', {})
-                    student_profile_url = '/user_profile/'+str(user.id) 
+                    student_profile_url = '/student_profile/'+str(user.id) 
                     return HttpResponseRedirect(student_profile_url)
                 else:
                     error = 'Your account is disabled.'
@@ -202,26 +202,31 @@ def user_login_recruiter(request):
             return render(request, 'user_profile/login_recruiter.html', {})
 
 
-def student_profile(request, sapid):
+def student_profile(request, id):
     if request.user.is_authenticated:
-        student = get_object_or_404(StudentProfile, Sap_Id=sapid)
+        #student = get_object_or_404(StudentProfile, Sap_Id=sapid)
         # line chart of marks
         # gpa_list = [gpa for gpa in student.education.all()[0].__dict__.values()]
-        sem1gpa = student.education.all()[0].sem1_gpa
-        sem2gpa = student.education.all()[0].sem2_gpa
-        sem3gpa = student.education.all()[0].sem3_gpa
-        sem4gpa = student.education.all()[0].sem4_gpa
-        sem5gpa = student.education.all()[0].sem5_gpa
-        sem6gpa = student.education.all()[0].sem6_gpa
-        sem7gpa = student.education.all()[0].sem7_gpa
-        sem8gpa = student.education.all()[0].sem8_gpa
-        gpa_list = [sem1gpa, sem2gpa, sem3gpa, sem4gpa, sem5gpa, sem6gpa, sem7gpa, sem8gpa]
+        student = StudentProfile.objects.get(id=id)
+        
+        if Education.objects.get(student_profile=student).exists():
+            education = Education.objects.get(student_profile=student)
+            sem1gpa = education.sem1_gpa
+            sem2gpa = education.sem2_gpa
+            sem3gpa = education.sem3_gpa
+            sem4gpa = education.sem4_gpa
+            sem5gpa = education.sem5_gpa
+            sem6gpa = education.sem6_gpa
+            sem7gpa = education.sem7_gpa
+            sem8gpa = education.sem8_gpa
+            gpa_list = [sem1gpa, sem2gpa, sem3gpa, sem4gpa, sem5gpa, sem6gpa, sem7gpa, sem8gpa]
 
-        project_objects = student.projects.all()
-        projectskill_stats = [
-            project.skill.skill for project in project_objects]
-        projectskill_stats = dict(collections.Counter(projectskill_stats))
-        print(projectskill_stats)
+        if Project.objects.filter(student_profile=student).exists():
+            project_objects = Project.objects.filter(student_profile=student)
+            projectskill_stats = [
+                project.skill.skill for project in project_objects]
+            projectskill_stats = dict(collections.Counter(projectskill_stats))
+        
         return render(request, 'user_profile/profile.html',
                       {'gpa_list': gpa_list, 'projectskill_stats': projectskill_stats})
     else:
