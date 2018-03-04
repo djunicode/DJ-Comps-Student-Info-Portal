@@ -38,9 +38,10 @@
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
 
-    <form action="/login/" method="post">
+    <form  action="{% url 'user_profile:register'%}" method="post">
+      {% csrf_token %}
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="SAP ID" name="Sap_Id">
+        <input  class="form-control" placeholder="SAP ID" name="Sap_Id">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
@@ -56,12 +57,14 @@
         </div>
         <!-- /.col -->
       </div>
+
+
     </form>
 
 
 
     <a href="#">I forgot my password</a><br>
-    <a href="register.html" class="text-center">Register!</a>
+    <a href="../../register/student/" class="text-center">Register!</a>
 
   </div>
   <!-- /.login-box-body -->
@@ -83,5 +86,17 @@
     });
   });
 </script>
+
+<script>
+    function signIn(){
+      var data = $('#login').serialize();
+      $.post( "../../student/profile/", data, function( data, status ) {
+        console.log("The Data Sent is: " + data);
+      });
+    }
+
+
+</script>
+
 </body>
 </html>

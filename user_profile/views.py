@@ -48,7 +48,7 @@ def register(request):
                 student = StudentProfile.objects.create(
                     student=user, Sap_Id=Sap_Id)
                 student.save()
-                return render(request, 'user_profile/profile.html', {})
+                return render(request, 'user_profile/profile.html', {"student": student})
         else:
             return render(request, 'user_profile/registration.html', {})
 
