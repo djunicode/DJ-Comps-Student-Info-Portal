@@ -83,28 +83,35 @@
                 <div id="BasicData" class="panel-collapse collapse in">
                       <!-- /.box-header -->
                       <!-- form start -->
-                      <form id="BasicInfo" class="form-horizontal">
+                      <form id="BasicInfo" class="form-horizontal" action="/edit_basic_info/{{student_profile.id}}">
                         {% csrf_token %}
                         <div class="box-body">
                           <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">Name</label>
+                            <label for="name" class="col-sm-2 control-label"> First Name</label>
 
                             <div class="col-sm-8">
-                              <input type="email" name="name" class="form-control" id="name" placeholder="Name">
+                              <input type="text" name="fname" class="form-control" id="fname" value="{{student_profile.first_name}}">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label"> Last Name</label>
+
+                            <div class="col-sm-8">
+                              <input type="text" name="lname" class="form-control" id="lname" value="{{student_profile.last_name}}">
                             </div>
                           </div>
                           <div class="form-group">
                             <label for="Sap_Id" class="col-sm-2 control-label">Sap_Id</label>
 
                             <div class="col-sm-8">
-                              <input type="number" class="form-control" id="Sap_Id" name="Sap_Id" placeholder="Sap Id">
+                              <input type="number" class="form-control" id="Sap_Id" name="Sap_Id" value="{{student_profile.student.username}}">
                             </div>
                           </div>
                           <div class="form-group">
                             <label for="Department" class="col-sm-2 control-label">Department</label>
 
                             <div class="col-sm-8">
-                              <input type="text" class="form-control" id="Department" name="department" placeholder="Department">
+                              <input type="text" class="form-control" id="Department" name="department" value="{{student_profile.department}}">
                             </div>
                           </div>
                           <div class="form-group">
@@ -113,10 +120,10 @@
                             </label>
                             <div class="col-sm-8">
                               <label>
-                                <input type="radio" name="gender" class="flat-red" checked>&nbsp;Male
+                                <input type="radio" name="gender" class="flat-red" value="Male">&nbsp;Male
                               </label>
                               <label>
-                                <input type="radio" name="gender" class="flat-red">&nbsp;Female
+                                <input type="radio" name="gender" class="flat-red" value="Female">&nbsp;Female
                               </label>
                             </div>
                           </div>
@@ -124,7 +131,7 @@
                             <label for="MobileNO" class="col-sm-2 control-label">Mobile No.</label>
 
                             <div class="col-sm-8">
-                              <input type="number" class="form-control" name="mobileNo" id="MobileNO" placeholder="Mobile Number">
+                              <input type="number" class="form-control" name="mobileNo" id="MobileNO" value={{student_profile.mobileNo}}>
                             </div>
                           </div>
                           <div class="form-group">
@@ -311,10 +318,13 @@
 <script>
     function submitBasicInfo(){
       var data = $('#BasicInfo').serialize();
-      $.post( "#", data, function( data, status ) {
-        console.log("The Data Sent is: " + data);
+      var url = "/edit_basic_info/{{student_profile.id}}"
+      $.post(url, data, function( data, status ) {
+        //console.log("The Data Sent is: " + data);
+        console.log(url);
       });
     }
+    
     function submitAcadamic(){
       var data = $('#Acadamic').serialize();
       $.post( "#", data, function( data, status ) {
