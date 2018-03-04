@@ -83,200 +83,116 @@
                 <div id="BasicData" class="panel-collapse collapse in">
                       <!-- /.box-header -->
                       <!-- form start -->
-                      <form id="BasicInfo" class="form-horizontal">
-                        <div class="box-body">
-                          <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">Name</label>
+                      <form id="BasicInfo" method="post" enctype="multipart/form-data">
+      {%csrf_token%}
+      Bio <input type="text" name="bio" value="{{student.bio}}"><br>
+      Mobile No <input type="text" name="mobileNo" value="{{student.mobileNo}}"><br>
+      {%if student.photo%}
+      Profile photo <img src="{{student.photo.url}}">
+      {%endif%}
+      <input type="file" name="photo"><br>
+      Year:<br>
+      {%if student.year == "FE"%}
+      <select name="year">
+        <option value="FE" selected>First Year</option>
+        <option value="SE">Second Year</option>
+        <option value="TE">Third Year</option>
+        <option value="BE">Final Year</option>
+      </select>
+      {%endif%}
+      {%if student.year == "SE"%}
+      <select name="year">
+        <option value="FE">First Year</option>
+        <option value="SE" selected>Second Year</option>
+        <option value="TE">Third Year</option>
+        <option value="BE">Final Year</option>
+      </select>
+      {%endif%}
+      {%if student.year == "TE"%}
+      <select name="year">
+        <option value="FE">First Year</option>
+        <option value="SE">Second Year</option>
+        <option value="TE" selected>Third Year</option>
+        <option value="BE">Final Year</option>
+      </select>
+      {%endif%}
+      {%if student.year == "BE"%}
+      <select name="year">
+        <option value="FE">First Year</option>
+        <option value="SE">Second Year</option>
+        <option value="TE">Third Year</option>
+        <option value="BE" selected>Final Year</option>
+      </select>
+      {%endif%}
+      <br>
+      Skills:<br>
+      {% for skill in student.skills.all %}
+      {{ skill.skill }}<br>
+      {% endfor %}
+      New Skill <input type="text" name="skill" ><br>
+      Hackathon:<br>
+      Competition Name <input type="text" name="CompetitionName"><br>
+      Date <input type="date" name="Date"><br>
+      Description <input type="text" name="Desc"><br>
+      URL <input type="text" name="URL"><br>
+      Image <input type="file" name="hackathonimage1"><br>
+      Internship:<br>
+      Company <input type="text" name="company"><br>
+      Position <input type="text" name="Position"><br>
+      Location <input type="text" name="Loc"><br>
+      From <input type="Date" name="From"><br>
+      To <input type="Date" name="To"><br>
+      Description <input type="text" name="desc"><br>
+      Image <input type="file" name="internshipimage1"><br>
+      New Project:<br>
+      Project Name <input type="text" name="ProjName"><br>
+      URL <input type="text" name="ProjURL"><br>
+      Description <input type="text" name="ProjDesc"><br>
+      Teacher's SAP ID <input type="text" name="projectUnderTeacher"><br>
+      Image <input type="file" name="projectimage1"><br>
+      Committee:<br>
+      Name <input type="text" name="OrganisationName"><br>
+      Position <input type="text" name="YourPosition"><br>
+      Location <input type="text" name="committeeLoc"><br>
+      From <input type="Date" name="dateFrom"><br>
+      To <input type="Date" name="dateTo"><br>
+      Description <input type="text" name="committeeDesc"><br>
+      Image <input type="file" name="committeeimage1"><br>
+      Research Paper:
+      Title <input type="text" name="Title"><br>
+      Publication <input type="text" name="Publication"><br>
+      Date of Publication <input type="Date" name="DateOfPublication"><br>
+      Description <input type="text" name="researchdesc"><br>
+      Link <input type="text" name="LinkToPaper"><br>
+      Paper ID <input type="text" name="PaperId"><br>
+      Teacher's SAP ID <input type="text" name="Published_under"><br>
+      Image <input type="file" name="researchimage1"><br>
+      BE Project:<br>
+      Name <input type="text" name="BeProjName" value="{{ ProjName }}"><br>
+      URL <input type="text" name="BeProjURL" value="{{ ProjURL }}"><br>
+      Description <input type="text" name="BeProjDesc" value="{{ ProjDesc }}"><br>
+      Teamate 1: <input type="text" name="teammate1" value="{{ teammate1 }}"><br>
+      Teamate 2: <input type="text" name="teammate2" value="{{ teammate2 }}"><br>
+      Teamate 3: <input type="text" name="teammate3" value="{{ teammate3 }}"><br>
+      Teamate 4: <input type="text" name="teammate4" value="{{ teammate4 }}"><br>
+      Teacher's SAP ID <input type="text" name="BeprojectUnderTeacher" value="{{ Teacher }}"><br>
+      Image <input type="file" name="Beprojectimage1"><br>
+      <input type="submit" name="Submit">
+    </form>
 
-                            <div class="col-sm-8">
-                              <input type="email" name="name" class="form-control" id="name" placeholder="Name">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label for="Sap_Id" class="col-sm-2 control-label">Sap_Id</label>
 
-                            <div class="col-sm-8">
-                              <input type="number" class="form-control" id="Sap_Id" name="Sap_Id" placeholder="Sap Id">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label for="Department" class="col-sm-2 control-label">Department</label>
-
-                            <div class="col-sm-8">
-                              <input type="text" class="form-control" id="Department" name="department" placeholder="Department">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label for="Gender" class="col-sm-2 control-label">
-                              Gender
-                            </label>
-                            <div class="col-sm-8">
-                              <label>
-                                <input type="radio" name="gender" class="flat-red" checked>&nbsp;Male
-                              </label>
-                              <label>
-                                <input type="radio" name="gender" class="flat-red">&nbsp;Female
-                              </label>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label for="MobileNO" class="col-sm-2 control-label">Mobile No.</label>
-
-                            <div class="col-sm-8">
-                              <input type="number" class="form-control" name="mobileNo" id="MobileNO" placeholder="Mobile Number">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label for="year" class="col-sm-2 control-label">
-                              Year
-                            </label>
-                            <div class="col-sm-8">
-                              <label>
-                                <input type="radio" name="year" class="flat-red" checked>&nbsp;FE
-                              </label>
-                              <label>
-                                <input type="radio" name="year" class="flat-red">&nbsp;SE
-                              </label>
-                              <label>
-                                <input type="radio" name="year" class="flat-red">&nbsp;TE
-                              </label>
-                              <label>
-                                <input type="radio" name="year" class="flat-red">&nbsp;BE
-                              </label>
-                            </div>
-                          </div>
                         </div>
                         <!-- /.box-body -->
-                        <div class="box-footer">
-                          <button type="submit" class="btn btn-default">Cancel</button>
-                          <button type="button" class="btn btn-info pull-right" onClick="submitBasicInfo();">Submit</button>
-                        </div>
-                        <!-- /.box-footer -->
-                    </form>
-                </div>
-              </div>
-              <div class="panel box box-primary">
-                <div class="box-header with-border">
-                  <h4 class="box-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#AcadsData">
-                      Acads
-                    </a>
-                  </h4>
-                </div>
-                <div id="AcadsData" class="panel-collapse collapse">
-                      <!-- /.box-header -->
-                      <!-- form start -->
-                      <form id="Acadamic" class="form-horizontal">
-                        <div class="box-body">
-                          <div class="form-group">
-                            <label for="sem1_gpa" class="col-sm-2 control-label">Sem 1 GPA</label>
 
-                            <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem1_gpa" name="sem1_gpa" placeholder="Sem 1 GPA">
-                            </div>
-                          </div>
 
-                          <div class="form-group">
-                            <label for="sem2_gpa" class="col-sm-2 control-label">Sem 2 GPA</label>
 
-                            <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem2_gpa" name="sem2_gpa" placeholder="Sem 2 GPA">
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <label for="sem3_gpa" class="col-sm-2 control-label">Sem 3 GPA</label>
-
-                            <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem3_gpa" name="sem3_gpa" placeholder="Sem 3 GPA">
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <label for="sem4_gpa" class="col-sm-2 control-label">Sem 4 GPA</label>
-
-                            <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem4_gpa" name="sem4_gpa" placeholder="Sem 4 GPA">
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <label for="sem5_gpa" class="col-sm-2 control-label">Sem 5 GPA</label>
-
-                            <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem5_gpa" name="sem5_gpa" placeholder="Sem 5 GPA">
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <label for="sem6_gpa" class="col-sm-2 control-label">Sem 6 GPA</label>
-
-                            <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem6_gpa" name="sem6_gpa" placeholder="Sem 6 GPA">
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <label for="sem7_gpa" class="col-sm-2 control-label">Sem 7 GPA</label>
-
-                            <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem7_gpa" name="sem7_gpa" placeholder="Sem 7 GPA">
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <label for="sem8_gpa" class="col-sm-2 control-label">Sem 8 GPA</label>
-
-                            <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem8_gpa" name="sem8_gpa" placeholder="Sem 8 GPA">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label for="year" class="col-sm-2 control-label">
-                              KT
-                            </label>
-                            <div class="col-sm-8">
-                              <label>
-                                <input type="checkbox" name="kt" class="flat-red" value="SEM1">&nbsp;Sem 1
-                              </label>
-                              <label>
-                                <input type="checkbox" name="kt" class="flat-red"  value="SEM2">&nbsp;Sem 2
-                              </label>
-                              <label>
-                                <input type="checkbox" name="kt" class="flat-red"  value="SEM3">&nbsp;Sem 3
-                              </label>
-                              <label>
-                                <input type="checkbox" name="kt" class="flat-red"  value="SEM4">&nbsp;Sem 4
-                              </label>
-                              <label>
-                                <input type="checkbox" name="kt" class="flat-red" value="SEM5">&nbsp;Sem 5
-                              </label>
-                              <label>
-                                <input type="checkbox" name="kt" class="flat-red" value="SEM6">&nbsp;Sem 6
-                              </label>
-                              <label>
-                                <input type="checkbox" name="kt" class="flat-red" value="SEM7">&nbsp;Sem 7
-                              </label>
-                              <label>
-                                <input type="checkbox" name="kt" class="flat-red" value="SEM8">&nbsp;Sem 8
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer">
-                          <button type="submit" class="btn btn-default">Cancel</button>
-                          <button type="button" class="btn btn-info pull-right" onClick="submitAcadamic();">Submit</button>
-                        </div>
-                        <!-- /.box-footer -->
-                      </form>
                 </div>
               </div>
             </div>
           </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
+          <!-- /.box -->
+
+
 
     </section>
     <!-- /.content -->
@@ -310,13 +226,7 @@
 <script>
     function submitBasicInfo(){
       var data = $('#BasicInfo').serialize();
-      $.post( "#", data, function( data, status ) {
-        console.log("The Data Sent is: " + data);
-      });
-    }
-    function submitAcadamic(){
-      var data = $('#Acadamic').serialize();
-      $.post( "#", data, function( data, status ) {
+      $.post( "/student/profile/", data, function( data, status ) {
         console.log("The Data Sent is: " + data);
       });
     }

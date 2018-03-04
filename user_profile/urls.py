@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from . import views
 
+app_name = 'user_profile'
 urlpatterns = [
     url(r'^register/student/$', views.register, name='register'),
     url(r'^login/student/$', views.user_login, name='login'),
