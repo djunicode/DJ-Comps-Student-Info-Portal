@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^login/recruiter/$', views.user_login_recruiter,
         name='user_login_recruiter'),
     url(r'^logout/recruiter/$', views.logout_recruiter, name='logout_recruiter'),
-    url(r'^student/profile/(?P<sapid>[0-9]+)/$',
+    url(r'^student_profile/(\d+)$',
         views.student_profile, name='student_profile'),
     url(r'^student/editprofile/(?P<sapid>[0-9]+)/$',
         views.student_editprofile, name='student_editprofile'),
@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^project/(\d+)$', views.view_project),
     url(r'^beproject/(\d+)$', views.view_beproject),
     url(r'^searchany/', views.searchany, name='searchany'),
-    url(r'^vishal/$', views.show_base),
+    url(r'^editprofile', views.show_edit_studentprofile),
+    url(r'^edit_basic_info/(\d+)$', views.edit_basic_info),
 ]

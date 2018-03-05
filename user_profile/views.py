@@ -4,7 +4,7 @@ from .models import (StudentProfile, TeacherProfile, Internship, Project, Commit
                      Hackathon, Skill, Education)
 from .models import (HistoricalInternship, HistoricalProject, HistoricalCommittee, HistoricalResearchPaper,
                      HistoricalBeProject)
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
@@ -24,7 +24,9 @@ def show_rollingform(request):
 
 def register(request):
     if request.user.is_authenticated:
-        return render(request, 'user_profile/profile.html', {})
+        student_profile = StudentProfile.objects.get(student=request.user)
+        student_profile_url = '/student_profile/' + str(student_profile.id)
+        return HttpResponseRedirect(student_profile_url)
     else:
         if request.method == 'POST':
             username = request.POST.get('Sap_Id', '')
@@ -48,14 +50,18 @@ def register(request):
                 student = StudentProfile.objects.create(
                     student=user, Sap_Id=Sap_Id)
                 student.save()
-                return render(request, 'user_profile/profile.html', {"student": student})
+                student_profile_url = '/student_profile/' + str(student.id)
+                return HttpResponseRedirect(student_profile_url)
+                # return render(request, 'user_profile/profile.html', {"student": student})
         else:
             return render(request, 'user_profile/registration.html', {})
 
 
 def user_login(request):
     if request.user.is_authenticated:
-        return render(request, 'user_profile/profile.html', {})
+        student_profile = StudentProfile.objects.get(student=request.user)
+        student_profile_url = '/student_profile/' + str(student_profile.id)
+        return HttpResponseRedirect(student_profile_url)
     else:
         if request.method == 'POST':
             username = request.POST.get('username', '')
@@ -64,7 +70,12 @@ def user_login(request):
             if user:
                 if user.is_active:
                     auth_login(request, user)
-                    return render(request, 'user_profile/profile.html', {})
+                    # return render(request, 'user_profile/profile.html', {})
+                    student_profile = StudentProfile.objects.get(
+                        student=request.user)
+                    student_profile_url = '/student_profile/' + \
+                        str(student_profile.id)
+                    return HttpResponseRedirect(student_profile_url)
                 else:
                     error = 'Your account is disabled.'
                     return render(request, 'user_profile/login.html', {'error': error})
@@ -194,26 +205,36 @@ def user_login_recruiter(request):
             return render(request, 'user_profile/login_recruiter.html', {})
 
 
-def student_profile(request, sapid):
+def student_profile(request, id):
     if request.user.is_authenticated:
-        student = get_object_or_404(StudentProfile, Sap_Id=sapid)
+        # student = get_object_or_404(StudentProfile, Sap_Id=sapid)
         # line chart of marks
         # gpa_list = [gpa for gpa in student.education.all()[0].__dict__.values()]
-        sem1gpa = student.education.all()[0].sem1_gpa
-        sem2gpa = student.education.all()[0].sem2_gpa
-        sem3gpa = student.education.all()[0].sem3_gpa
-        sem4gpa = student.education.all()[0].sem4_gpa
-        sem5gpa = student.education.all()[0].sem5_gpa
-        sem6gpa = student.education.all()[0].sem6_gpa
-        sem7gpa = student.education.all()[0].sem7_gpa
-        sem8gpa = student.education.all()[0].sem8_gpa
-        gpa_list = [sem1gpa, sem2gpa, sem3gpa, sem4gpa, sem5gpa, sem6gpa, sem7gpa, sem8gpa]
 
-        project_objects = student.projects.all()
-        projectskill_stats = [
-            project.skill.skill for project in project_objects]
-        projectskill_stats = dict(collections.Counter(projectskill_stats))
-        print(projectskill_stats)
+        student = StudentProfile.objects.get(id=id)
+        try:
+            education = Education.objects.get(student_profile=student)
+            sem1gpa = education.sem1_gpa
+            sem2gpa = education.sem2_gpa
+            sem3gpa = education.sem3_gpa
+            sem4gpa = education.sem4_gpa
+            sem5gpa = education.sem5_gpa
+            sem6gpa = education.sem6_gpa
+            sem7gpa = education.sem7_gpa
+            sem8gpa = education.sem8_gpa
+            gpa_list = [sem1gpa, sem2gpa, sem3gpa, sem4gpa,
+                        sem5gpa, sem6gpa, sem7gpa, sem8gpa]
+        except Education.DoesNotExist:
+            gpa_list = []
+
+        if Project.objects.filter(student_profile=student).exists():
+            project_objects = Project.objects.filter(student_profile=student)
+            projectskill_stats = [
+                project.skill.skill for project in project_objects]
+            projectskill_stats = dict(collections.Counter(projectskill_stats))
+            print(projectskill_stats)
+        else:
+            projectskill_stats = {}
         return render(request, 'user_profile/profile.html',
                       {'gpa_list': gpa_list, 'projectskill_stats': projectskill_stats})
     else:
@@ -741,19 +762,29 @@ def teacher_dashboard(request):
     print(intern_stats)
 
     # list of all pointers
-    sem1_list = [education.sem1_gpa for education in Education.objects.all() if education.sem1_gpa is not None]
+    sem1_list = [education.sem1_gpa for education in Education.objects.all(
+    ) if education.sem1_gpa is not None]
     # sem1_list = filter(None, sem1_list)
-    sem2_list = [education.sem2_gpa for education in Education.objects.all() if education.sem2_gpa is not None]
-    sem3_list = [education.sem3_gpa for education in Education.objects.all() if education.sem3_gpa is not None]
-    sem4_list = [education.sem4_gpa for education in Education.objects.all() if education.sem4_gpa is not None]
-    sem5_list = [education.sem5_gpa for education in Education.objects.all() if education.sem5_gpa is not None]
-    sem6_list = [education.sem6_gpa for education in Education.objects.all() if education.sem6_gpa is not None]
-    sem7_list = [education.sem7_gpa for education in Education.objects.all() if education.sem7_gpa is not None]
-    sem8_list = [education.sem8_gpa for education in Education.objects.all() if education.sem8_gpa is not None]
-    print(sem1_list, sem2_list, sem3_list, sem4_list, sem5_list, sem6_list, sem7_list, sem8_list)
+    sem2_list = [education.sem2_gpa for education in Education.objects.all(
+    ) if education.sem2_gpa is not None]
+    sem3_list = [education.sem3_gpa for education in Education.objects.all(
+    ) if education.sem3_gpa is not None]
+    sem4_list = [education.sem4_gpa for education in Education.objects.all(
+    ) if education.sem4_gpa is not None]
+    sem5_list = [education.sem5_gpa for education in Education.objects.all(
+    ) if education.sem5_gpa is not None]
+    sem6_list = [education.sem6_gpa for education in Education.objects.all(
+    ) if education.sem6_gpa is not None]
+    sem7_list = [education.sem7_gpa for education in Education.objects.all(
+    ) if education.sem7_gpa is not None]
+    sem8_list = [education.sem8_gpa for education in Education.objects.all(
+    ) if education.sem8_gpa is not None]
+    print(sem1_list, sem2_list, sem3_list, sem4_list,
+          sem5_list, sem6_list, sem7_list, sem8_list)
 
     # internship time stamps
-    intern_dates = [format(internship.From, 'U') for internship in Internship.objects.all()]
+    intern_dates = [format(internship.From, 'U')
+                    for internship in Internship.objects.all()]
     intern_dates.sort()
     intern_date = [int(x) - int(intern_dates[0]) for x in intern_dates]
     print(intern_dates)
@@ -789,5 +820,23 @@ def view_beproject(request, beprojectid):
     return HttpResponse(beproject.ProjName)
 
 
-def show_base(request):
-    return render(request, 'user_profile/edit_student_profile.html')
+def show_edit_studentprofile(request):
+    if request.user.is_authenticated:
+        student_profile = StudentProfile.objects.get(student=request.user)
+        return render(request, 'user_profile/edit_student_profile_2.html', {'student_profile': student_profile})
+    else:
+        return HttpResponseRedirect('/login/student/')
+
+
+def edit_basic_info(request, id):
+    if request.method == 'POST':
+        student_profile = StudentProfile.objects.get(id=id)
+        student_profile.first_name = request.POST.get('fname')
+        student_profile.last_name = request.POST.get('lname')
+        student_profile.department = request.POST.get('department')
+        print(request.POST.get('gender'))
+        student_profile.gender = request.POST.get('gender')
+        student_profile.mobileNo = request.POST.get('mobileNo')
+        student_profile.save()
+        print('IT WORKS ASSHOLE')
+        return HttpResponse('done')
