@@ -36,17 +36,17 @@
 	    <div class="navbar-custom-menu">
 	      <ul class="nav navbar-nav">
 	        <!-- Messages: style can be found in dropdown.less-->
-	        <li class="dropdown messages-menu">
+	       <!-- <li class="dropdown messages-menu">
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 	                <i class="fa fa-envelope-o"></i>
 	                <span class="label label-success">4</span>
 	              </a>
 	              <ul class="dropdown-menu">
 	                <li class="header">You have 4 messages</li>
-	                <li>
+	                <li>  -->
 	                  <!-- inner menu: contains the actual data -->
-	                  <ul class="menu">
-	                    <li><!-- start message -->
+	                <!--  <ul class="menu">
+	                    <li>
 	                      <a href="#">
 	                        <div class="pull-left">
 	                          <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
@@ -58,7 +58,6 @@
 	                        <p>Why not buy a new awesome theme?</p>
 	                      </a>
 	                    </li>
-	                    <!-- end message -->
 	                    <li>
 	                      <a href="#">
 	                        <div class="pull-left">
@@ -111,18 +110,18 @@
 	                </li>
 	                <li class="footer"><a href="#">See All Messages</a></li>
 	              </ul>
-	        </li>
+	        </li>  -->
 	        <!-- Notifications: style can be found in dropdown.less -->
-	        <li class="dropdown notifications-menu">
+	     <!--   <li class="dropdown notifications-menu">
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 	                <i class="fa fa-bell-o"></i>
 	                <span class="label label-warning">10</span>
 	              </a>
 	              <ul class="dropdown-menu">
 	                <li class="header">You have 10 notifications</li>
-	                <li>
+	                <li>  -->
 	                  <!-- inner menu: contains the actual data -->
-	                  <ul class="menu">
+	               <!--   <ul class="menu">
 	                    <li>
 	                      <a href="#">
 	                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
@@ -153,7 +152,7 @@
 	                </li>
 	                <li class="footer"><a href="#">View all</a></li>
 	              </ul>
-	        </li>
+	        </li>   -->
 	        <!-- User Account: style can be found in dropdown.less -->
 	        <li class="dropdown user user-menu">
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -163,15 +162,14 @@
 	              <ul class="dropdown-menu">
 	                <!-- User image -->
 	                <li class="user-header">
-	                  <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+	                  <img src="{{ student.photo.url }}" class="img-circle" alt="User Image">
 
 	                  <p>
-	                    Alexander Pierce - Web Developer
-	                    <small>Member since Nov. 2012</small>
+	                    {{student.Sap_Id}}
 	                  </p>
 	                </li>
 	                <!-- Menu Body -->
-	                <li class="user-body">
+	          <!--      <li class="user-body">
 	                  <div class="row">
 	                    <div class="col-xs-4 text-center">
 	                      <a href="#">Followers</a>
@@ -183,15 +181,14 @@
 	                      <a href="#">Friends</a>
 	                    </div>
 	                  </div>
-	                  <!-- /.row -->
-	                </li>
+	                </li>  -->
 	                <!-- Menu Footer-->
 	                <li class="user-footer">
 	                  <div class="pull-left">
-	                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+	                    <a href="{% url 'user_profile:student_editprofile' student.Sap_Id %}" class="btn btn-default btn-flat">Edit Profile</a>
 	                  </div>
 	                  <div class="pull-right">
-	                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+	                    <a href="{% url 'user_profile:logout_student' %}" class="btn btn-default btn-flat">Sign out</a>
 	                  </div>
 	                </li>
 	              </ul>
@@ -220,24 +217,24 @@
                   <!-- Profile Image -->
                   <div class="box box-primary">
                      <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
-                        <h3 class="profile-username text-center">Name</h3>
-                        <p class="text-muted text-center">Computer Engineer</p>
+                        <img class="profile-user-img img-responsive img-circle" src="{{ student.photo.url }}" alt="User profile picture">
+                        <h3 class="profile-username text-center">{{ student.Sap_Id }}</h3>
+                        <p class="text-muted text-center">{{ student.department }}</p>
                         <ul class="list-group list-group-unbordered">
                            <li class="list-group-item">
-                              <b>Skills</b> <a class="pull-right">3</a>
+                              <b>Skills</b> <a class="pull-right">{{ skill|length }}</a>
                            </li>
                            <li class="list-group-item">
-                              <b>Internships</b> <a class="pull-right">2</a>
+                              <b>Internships</b> <a class="pull-right">{{ internship|length }}</a>
                            </li>
                            <li class="list-group-item">
-                              <b>Projects</b> <a class="pull-right">5</a>
+                              <b>Projects</b> <a class="pull-right">{{ projects|length }}</a>
                            </li>
                            <li class="list-group-item">
-                              <b>Extra-Curricular</b> <a class="pull-right">3</a>
+                              <b>Extra-Curricular</b> <a class="pull-right">{{ committe|length }}</a>
                            </li>
                            <li class="list-group-item">
-                              <b>Grades</b> <a class="pull-right">8.9</a>
+                              <b>Grades</b> <a class="pull-right">{{ gpa_list|length }}</a>
                            </li>
                         </ul>
                      </div>
@@ -253,10 +250,10 @@
                      <div class="box-body">
                         <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
                         <p class="text-muted">
-                           B.S. in Computer Science from the University of Tennessee at Knoxville
+                           B.E. in Computer Science from the University of Mumbai
                         </p> <hr>
                         <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
-                        <p class="text-muted">Malibu, California</p>
+                        <p class="text-muted">Mumbai, India</p>
                      </div>
                      <!-- /.box-body -->
                   </div>
@@ -267,13 +264,39 @@
                <div class="nav-tabs-custom">
                   <ul class="nav nav-tabs">
                      <li class="active">
+										 <li><a href="#about" data-toggle="tab">About Me</a></li>
                      <li><a href="#Skills" data-toggle="tab">Skills</a></li>
                      <li><a href="#Internship" data-toggle="tab">Internship</a></li>
                      <li><a href="#Projects" data-toggle="tab">Projects</a></li>
                      <li><a href="#Extra-Curricular" data-toggle="tab">Extra-Curricular</a></li>
                      <li><a href="#Grades" data-toggle="tab">Grades</a></li>
+										 <li><a href="#BeProj" data-toggle="tab">BE Project</a></li>
+										 <li><a href="#paper" data-toggle="tab">Research Paper</a></li>
+										 <li><a href="#hackathon" data-toggle="tab">Hackathon</a></li>
                   </ul>
                   <div class="tab-content">
+										<div class="tab-pane" id="about">
+											 <!-- Post -->
+											 <div class="post">
+													<!-- /.user-block -->
+													<div class="box">
+														 <div class="box-header with-border">
+															 <h3 class="box-title">About Me</h3>
+														 </div>
+														 <!-- /.box-header -->
+														 <div class="box-body">
+															 BIO :  {{ student.bio }}  <br>
+															 {% if student.github_id %}
+															 Github Id : {{ student.github_id }} <br>
+															 {% endif %}
+															 Mobile number : {{ student.mobileNo }} <br>
+															 Gender : {{ student.gender }} <br>
+															 Year :  {{ student.year }} <br>
+														 </div>
+													</div>
+											 </div>
+											 <!-- /.post -->
+										</div>
                      <div class="active tab-pane" id="Skills">
                         <!-- Post -->
                         <div class="post">
@@ -281,8 +304,9 @@
                            <form class="form-horizontal">
                               <div class="form-group margin-bottom-none">
                                  <div class="col-sm-9">
-                                    <h3>Summary</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur  . Sit amet purus gravida quis blandit turpis cursus in hac. Et tortor at risus viverra. Felis eget nunc lobortis mattis aliquam faucibus purus in massa. Non diam phasellus vestibulum lorem sed risus ultricies tristique. Dictum varius duis at consectetur lorem donec massa sapien faucibus. Sollicitudin tempor id eu nisl nunc mi ipsum faucibus. Diam volutpat commodo sed egestas egestas. Orci nulla pellentesque dignissim enim sit amet venenatis. Blandit libero volutpat sed cras ornare arcu dui vivamus. Sem nulla pharetra diam sit amet nisl suscipit. Massa tempor nec feugiat nisl pretium fusce id. Donec ac odio tempor orci dapibus ultrices. Pharetra diam sit amet nisl. Orci nulla pellentesque dignissim enim sit amet venenatis.</p>
+                                  		{% for skil in skill %}
+																			  <h3>{{ skil.skill }}</h3>
+																			{% endfor %}
                                  </div>
                               </div>
                            </form>
@@ -300,73 +324,45 @@
                               </div>
                               <!-- /.box-header -->
                               <div class="box-body">
-                                <table class="table table-bordered">
-                                  <tbody><tr>
-                                    <th style="width: 10px">#</th>
-                                    <th>Internships</th>
-                                    <th>Months</th>
-                                    <th style="width: 40px">Label</th>
-                                  </tr>
+																	{% for intern in internship %}
                                   <tr>
-                                    <td>1.</td>
-                                    <td>Internship 1</td>
-                                    <td>
-                                      <div class="progress progress-xs">
-                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-red">55%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>2.</td>
-                                    <td>Internship 2</td>
-                                    <td>
-                                      <div class="progress progress-xs">
-                                        <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-yellow">70%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>3.</td>
-                                    <td>Internship 3</td>
-                                    <td>
-                                      <div class="progress progress-xs progress-striped active">
-                                        <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-light-blue">30%</span></td>
-                                  </tr>
-                                </tbody></table>
-                              </div>
-                              <!-- /.box-body -->
-                              <div class="box-footer clearfix">
-                                <ul class="pagination pagination-sm no-margin pull-right">
-                                  <li><a href="#">«</a></li>
-                                  <li><a href="#">1</a></li>
-                                  <li><a href="#">2</a></li>
-                                  <li><a href="#">3</a></li>
-                                  <li><a href="#">»</a></li>
-                                </ul>
+                                    {{forloop.counter}}.
+                                    Company : {{ intern.company }} <br>
+                                    Position : {{ intern.Position }}  <br>
+																		Company Location : {{ intern.Loc }}  <br>
+																		{% if intern.From %}
+																		Date Started : {{ intern.From }}  <br>
+																		{% endif %}
+																		{% if intern.To %}
+																		Date To : {{ intern.To }}  <br>
+																		{% endif %}
+																		Description : {{ intern.desc }}  <br>
+																		{% if intern.Certificate == None %}
+																		Certificate :  <img  src="{{ intern.Certificate.url }}">  <br>
+																		{% endif %}
+																		Screenshot :
+																		<img src="{{ intern.image1.url }}">
+																		{% if intern.image2 == None %}
+																		<img src="{{ intern.image2.url }}">
+																		{% endif %}
+																		{% if intern.image3 == None %}
+																		<img src="{{ intern.image3.url }}">
+																		{% endif %}
+																		{% if intern.image4 == None %}
+																		<img src="{{ intern.image4.url }}">
+																		{% endif %}
+																		{% if intern.image5 == None %}
+																		<img src="{{ intern.image5.url }}">
+																		{% endif %}
+																	{% endfor %}
                               </div>
                            </div>
-                        </div>
-                        <div class="post">
-                           <!-- /.user-block -->
-                           <form class="form-horizontal">
-                              <div class="form-group margin-bottom-none">
-                                 <div class="col-sm-9">
-                                    <h3>Internship description</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur  . Sit amet purus gravida quis blandit turpis cursus in hac. Et tortor at risus viverra. Felis eget nunc lobortis mattis aliquam faucibus purus in massa. Non diam phasellus vestibulum lorem sed risus ultricies tristique. Dictum varius duis at consectetur lorem donec massa sapien faucibus. Sollicitudin tempor id eu nisl nunc mi ipsum faucibus. Diam volutpat commodo sed egestas egestas. Orci nulla pellentesque dignissim enim sit amet venenatis. Blandit libero volutpat sed cras ornare arcu dui vivamus. Sem nulla pharetra diam sit amet nisl suscipit. Massa tempor nec feugiat nisl pretium fusce id. Donec ac odio tempor orci dapibus ultrices. Pharetra diam sit amet nisl. Orci nulla pellentesque dignissim enim sit amet venenatis.</p>
-                                 </div>
-                              </div>
-                           </form>
                         </div>
                         <!-- /.post -->
                      </div>
                      <div class="tab-pane" id="Projects">
                         <!-- Post -->
-                        <div class="post">
+												<div class="post">
                            <!-- /.user-block -->
                            <div class="box">
                               <div class="box-header with-border">
@@ -374,143 +370,83 @@
                               </div>
                               <!-- /.box-header -->
                               <div class="box-body">
-                                <table class="table table-bordered">
-                                  <tbody><tr>
-                                    <th style="width: 10px">#</th>
-                                    <th>Task</th>
-                                    <th>Progress</th>
-                                    <th style="width: 40px">Label</th>
-                                  </tr>
+																	{% for intern in projects %}
                                   <tr>
-                                    <td>1.</td>
-                                    <td>Project 1</td>
-                                    <td>
-                                      <div class="progress progress-xs">
-                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-red">55%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>2.</td>
-                                    <td>Project 2</td>
-                                    <td>
-                                      <div class="progress progress-xs">
-                                        <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-yellow">70%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>3.</td>
-                                    <td>Project 3</td>
-                                    <td>
-                                      <div class="progress progress-xs progress-striped active">
-                                        <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-light-blue">30%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>4.</td>
-                                    <td>Project 4</td>
-                                    <td>
-                                      <div class="progress progress-xs progress-striped active">
-                                        <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-green">90%</span></td>
-                                  </tr>
-                                </tbody></table>
-                              </div>
-                              <!-- /.box-body -->
-                              <div class="box-footer clearfix">
-                                <ul class="pagination pagination-sm no-margin pull-right">
-                                  <li><a href="#">«</a></li>
-                                  <li><a href="#">1</a></li>
-                                  <li><a href="#">2</a></li>
-                                  <li><a href="#">3</a></li>
-                                  <li><a href="#">»</a></li>
-                                </ul>
+                                    {{forloop.counter}}.
+                                    Name : {{ intern.ProjName }} <br>
+																		{% if intern.ProjURL %}
+                                    Url : {{ intern.ProjURL }}  <br>
+																		{% endif %}
+																		Project Description : {{ intern.ProjDesc }}  <br>
+																		{% if intern.projectUnderTeacher %}
+																		Teacher : {{ intern.projectUnderTeacher }}  <br>
+																		{% endif %}
+																		skill: {{ intern.skill.skill }}  <br>
+																		Screenshot :
+																		<img src="{{ intern.image1.url }}">
+																		{% if intern.image2 == None %}
+																		<img src="{{ intern.image2.url }}">
+																		{% endif %}
+																		{% if intern.image3 == None %}
+																		<img src="{{ intern.image3.url }}">
+																		{% endif %}
+																		{% if intern.image4 == None %}
+																		<img src="{{ intern.image4.url }}">
+																		{% endif %}
+																		{% if intern.image5 == None %}
+																		<img src="{{ intern.image5.url }}">
+																		{% endif %}
+
+																	{% endfor %}
                               </div>
                            </div>
-                        </div>
-                        <div class="post">
-                           <!-- /.user-block -->
-                           <form class="form-horizontal">
-                              <div class="form-group margin-bottom-none">
-                                 <div class="col-sm-9">
-                                    <h3>Project description</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur  . Sit amet purus gravida quis blandit turpis cursus in hac. Et tortor at risus viverra. Felis eget nunc lobortis mattis aliquam faucibus purus in massa. Non diam phasellus vestibulum lorem sed risus ultricies tristique. Dictum varius duis at consectetur lorem donec massa sapien faucibus. Sollicitudin tempor id eu nisl nunc mi ipsum faucibus. Diam volutpat commodo sed egestas egestas. Orci nulla pellentesque dignissim enim sit amet venenatis. Blandit libero volutpat sed cras ornare arcu dui vivamus. Sem nulla pharetra diam sit amet nisl suscipit. Massa tempor nec feugiat nisl pretium fusce id. Donec ac odio tempor orci dapibus ultrices. Pharetra diam sit amet nisl. Orci nulla pellentesque dignissim enim sit amet venenatis.</p>
-                                 </div>
-                              </div>
-                           </form>
                         </div>
                         <!-- /.post -->
                      </div>
                      <div class="tab-pane" id="Extra-Curricular">
-                        <!-- Post -->
-                        <div class="post">
-                           <!-- /.user-block -->
-                           <div class="box">
-                              <div class="box-header with-border">
-                                <h3 class="box-title">Bordered Table</h3>
-                              </div>
-                              <!-- /.box-header -->
-                              <div class="box-body">
-                                <table class="table table-bordered">
-                                  <tbody><tr>
-                                    <th style="width: 10px">#</th>
-                                    <th>Task</th>
-                                    <th>Progress</th>
-                                    <th style="width: 40px">Label</th>
-                                  </tr>
-                                  <tr>
-                                    <td>1.</td>
-                                    <td>Update software</td>
-                                    <td>
-                                      <div class="progress progress-xs">
-                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-red">55%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>2.</td>
-                                    <td>Clean database</td>
-                                    <td>
-                                      <div class="progress progress-xs">
-                                        <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-yellow">70%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>3.</td>
-                                    <td>Cron job running</td>
-                                    <td>
-                                      <div class="progress progress-xs progress-striped active">
-                                        <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-light-blue">30%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>4.</td>
-                                    <td>Fix and squish bugs</td>
-                                    <td>
-                                      <div class="progress progress-xs progress-striped active">
-                                        <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-green">90%</span></td>
-                                  </tr>
-                                </tbody></table>
-                              </div>
-                              <!-- /.box-body -->
-                           </div>
-                        </div>
-                        <!-- /.post -->
+											 <div class="post">
+													<!-- /.user-block -->
+													<div class="box">
+														 <div class="box-header with-border">
+															 <h3 class="box-title">Committee and Extra-Curricular</h3>
+														 </div>
+														 <!-- /.box-header -->
+														 <div class="box-body">
+																 {% for intern in committe %}
+																 <tr>
+																	 {{forloop.counter}}.
+																	 Name : {{ intern.OrganisationName }} <br>
+																	 Position : {{ intern.YourPosition }}  <br>
+																	 Location : {{ intern.Loc }}  <br>
+																	 {% if intern.dateFrom %}
+																	 Date Started : {{ intern.dateFrom }}  <br>
+																	 {% endif %}
+																	 {% if intern.dateTo %}
+																	 Date To : {{ intern.dateTo }}  <br>
+																	 {% endif %}
+																	 Description : {{ intern.Desc }}  <br>
+																	 {% if intern.Certificate == None %}
+																	 Certificate :  <img  src="{{ intern.Certificate.url }}">  <br>
+																	 {% endif %}
+																	 Screenshot :
+																	 <img src="{{ intern.image1.url }}">
+																	 {% if intern.image2 == None %}
+																	 <img src="{{ intern.image2.url }}">
+																	 {% endif %}
+																	 {% if intern.image3 == None %}
+																	 <img src="{{ intern.image3.url }}">
+																	 {% endif %}
+																	 {% if intern.image4 == None %}
+																	 <img src="{{ intern.image4.url }}">
+																	 {% endif %}
+																	 {% if intern.image5 == None %}
+																	 <img src="{{ intern.image5.url }}">
+																	 {% endif %}
+																 {% endfor %}
+														 </div>
+													</div>
+											 </div>
+
                      </div>
                      <div class="tab-pane" id="Grades">
                         <!-- Post -->
@@ -521,102 +457,137 @@
                                 <h3 class="box-title">Semester Pointers</h3>
                               </div>
                               <!-- /.box-header -->
-                              <div class="box-body">
-                                <table class="table table-bordered">
-                                  <tbody><tr>
-                                    <th style="width: 10px">#</th>
-                                    <th>Task</th>
-                                    <th>Progress</th>
-                                    <th style="width: 40px">Label</th>
-                                  </tr>
-                                  <tr>
-                                    <td>1.</td>
-                                    <td>Semester 1</td>
-                                    <td>
-                                      <div class="progress progress-xs">
-                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-red">55%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>2.</td>
-                                    <td>Semester 2</td>
-                                    <td>
-                                      <div class="progress progress-xs">
-                                        <div class="progress-bar progress-bar-red" style="width: 70%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-red">70%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>3.</td>
-                                    <td>Semester 3</td>
-                                    <td>
-                                      <div class="progress progress-xs progress-striped active">
-                                        <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-light-blue">30%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>4.</td>
-                                    <td>Semester 4</td>
-                                    <td>
-                                      <div class="progress progress-xs progress-striped active">
-                                        <div class="progress-bar progress-bar-primary" style="width: 90%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-light-blue">90%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>5.</td>
-                                    <td>Semester 5</td>
-                                    <td>
-                                      <div class="progress progress-xs progress-striped active">
-                                        <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-green">90%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>6.</td>
-                                    <td>Semester 6</td>
-                                    <td>
-                                      <div class="progress progress-xs progress-striped active">
-                                        <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-green">90%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>7.</td>
-                                    <td>Semester 7</td>
-                                    <td>
-                                      <div class="progress progress-xs progress-striped active">
-                                        <div class="progress-bar progress-bar-yellow" style="width: 90%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-yellow">90%</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>8.</td>
-                                    <td>Semester 8</td>
-                                    <td>
-                                      <div class="progress progress-xs progress-striped active">
-                                        <div class="progress-bar progress-bar-yellow" style="width: 90%"></div>
-                                      </div>
-                                    </td>
-                                    <td><span class="badge bg-yellow">90%</span></td>
-                                  </tr>
-                                </tbody></table>
-                              </div>
+                              {% for x in gpa_list %}
+															{% if x != None %}
+																Semester  {{forloop.counter}} - {{x}} <br>
+															{% endif %}
+															{% endfor %}
                               <!-- /.box-body -->
                            </div>
                         </div>
                         <!-- /.post -->
                      </div>
-
+										 <div class="active tab-pane" id="BeProj">
+                        <!-- Post -->
+                        <div class="post">
+                           <!-- /.user-block -->
+                           <form class="form-horizontal">
+                              <div class="form-group margin-bottom-none">
+                                 <div class="col-sm-9">
+																	 {% for intern in beproj %}
+																	 <tr>
+																		 {{forloop.counter}}.
+																		 Name : {{ intern.ProjName }} <br>
+																		 Url : {{ intern.ProjURL }}  <br>
+																		 Project Description : {{ intern.ProjDesc }}  <br>
+																		 {% if intern.projectUnderTeacher %}
+																		 Teacher : {{ intern.projectUnderTeacher }}  <br>
+																		 {% endif %}
+																		 {% if intern.teammates %}
+																		 Teammates : {{intern.teammates}} <br>
+																		 {% endif %}
+																		 Screenshot :
+  																	 <img src="{{ intern.image1.url }}">
+  																	 {% if intern.image2 == None %}
+  																	 <img src="{{ intern.image2.url }}">
+  																	 {% endif %}
+  																	 {% if intern.image3 == None %}
+  																	 <img src="{{ intern.image3.url }}">
+  																	 {% endif %}
+  																	 {% if intern.image4 == None %}
+  																	 <img src="{{ intern.image4.url }}">
+  																	 {% endif %}
+  																	 {% if intern.image5 == None %}
+  																	 <img src="{{ intern.image5.url }}">
+  																	 {% endif %}
+																	 {% endfor %}
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
+                        <!-- /.post -->
+                     </div>
+										 <div class="active tab-pane" id="paper">
+                        <!-- Post -->
+                        <div class="post">
+                           <!-- /.user-block -->
+                           <form class="form-horizontal">
+                              <div class="form-group margin-bottom-none">
+                                 <div class="col-sm-9">
+																	 {% for intern in researchpaper %}
+																	<tr>
+																		{{forloop.counter}}.
+																		Title : {{ intern.Title }} <br>
+																		Publication : {{ intern.Publication }}  <br>
+																		{% if intern.DateOfPublication %}
+																		Date Of Publication : {{ intern.DateOfPublication }}  <br>
+																		{% endif %}
+																		Description : {{ intern.Desc }}  <br>
+																		{% if intern.LinkToPaper%}
+																		URL : {{intern.LinkToPaper}} <br>
+																		{% endif %}
+																		{% if intern.Published_under %}
+																		Teacher :  {{intern.Published_under}} <br>
+																		{% endif %}
+																		Paper Id :  {{intern.PaperId}} <br>
+																		Screenshot :
+ 																	 <img src="{{ intern.image1.url }}">
+ 																	 {% if intern.image2 == None %}
+ 																	 <img src="{{ intern.image2.url }}">
+ 																	 {% endif %}
+ 																	 {% if intern.image3 == None %}
+ 																	 <img src="{{ intern.image3.url }}">
+ 																	 {% endif %}
+ 																	 {% if intern.image4 == None %}
+ 																	 <img src="{{ intern.image4.url }}">
+ 																	 {% endif %}
+ 																	 {% if intern.image5 == None %}
+ 																	 <img src="{{ intern.image5.url }}">
+ 																	 {% endif %}
+																	{% endfor %}
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
+                        <!-- /.post -->
+                     </div>
+										 <div class="active tab-pane" id="hackathon">
+                        <!-- Post -->
+                        <div class="post">
+                           <!-- /.user-block -->
+                           <form class="form-horizontal">
+                              <div class="form-group margin-bottom-none">
+                                 <div class="col-sm-9">
+																	 {% for intern in hackathon %}
+																	<tr>
+																		{{forloop.counter}}.
+																		Name : {{ intern.CompetitionName }} <br>
+																		Url : {{ intern.URL }}  <br>
+																		Project Description : {{ intern.Desc }}  <br>
+																		{% if intern.Date %}
+																		Date : {{ intern.Date }}  <br>
+																		{% endif %}
+																		Screenshot :
+																		<img src="{{ intern.image1.url }}">
+																		{% if intern.image2 == None %}
+																		<img src="{{ intern.image2.url }}">
+																		{% endif %}
+																		{% if intern.image3 == None %}
+																		<img src="{{ intern.image3.url }}">
+																		{% endif %}
+																		{% if intern.image4 == None %}
+																		<img src="{{ intern.image4.url }}">
+																		{% endif %}
+																		{% if intern.image5 == None %}
+																		<img src="{{ intern.image5.url }}">
+																		{% endif %}
+																	{% endfor %}
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
+                        <!-- /.post -->
+                     </div>
                   </div>
                   <!-- /.tab-content -->
                </div>

@@ -4,7 +4,7 @@ from .models import (StudentProfile, TeacherProfile, Internship, Project, Commit
                      Hackathon, Skill, Education)
 from .models import (HistoricalInternship, HistoricalProject, HistoricalCommittee, HistoricalResearchPaper,
                      HistoricalBeProject)
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
@@ -24,7 +24,9 @@ def show_rollingform(request):
 
 def register(request):
     if request.user.is_authenticated:
-        return render(request, 'user_profile/profile.html', {})
+        student_profile = StudentProfile.objects.get(student=request.user)
+        student_profile_url = '/student_profile/' + str(student_profile.id)
+        return HttpResponseRedirect(student_profile_url)
     else:
         if request.method == 'POST':
             username = request.POST.get('Sap_Id', '')
@@ -48,14 +50,18 @@ def register(request):
                 student = StudentProfile.objects.create(
                     student=user, Sap_Id=Sap_Id)
                 student.save()
-                return render(request, 'user_profile/profile.html', {"student": student})
+                student_profile_url = '/student_profile/' + str(student.id)
+                return HttpResponseRedirect(student_profile_url)
+                # return render(request, 'user_profile/profile.html', {"student": student})
         else:
             return render(request, 'user_profile/registration.html', {})
 
 
 def user_login(request):
     if request.user.is_authenticated:
-        return render(request, 'user_profile/profile.html', {})
+        student_profile = StudentProfile.objects.get(student=request.user)
+        student_profile_url = '/student_profile/' + str(student_profile.id)
+        return HttpResponseRedirect(student_profile_url)
     else:
         if request.method == 'POST':
             username = request.POST.get('username', '')
@@ -64,7 +70,12 @@ def user_login(request):
             if user:
                 if user.is_active:
                     auth_login(request, user)
-                    return render(request, 'user_profile/profile.html', {})
+                    # return render(request, 'user_profile/profile.html', {})
+                    student_profile = StudentProfile.objects.get(
+                        student=request.user)
+                    student_profile_url = '/student_profile/' + \
+                        str(student_profile.id)
+                    return HttpResponseRedirect(student_profile_url)
                 else:
                     error = 'Your account is disabled.'
                     return render(request, 'user_profile/login.html', {'error': error})
@@ -194,28 +205,66 @@ def user_login_recruiter(request):
             return render(request, 'user_profile/login_recruiter.html', {})
 
 
-def student_profile(request, sapid):
+def student_profile(request, id):
     if request.user.is_authenticated:
-        student = get_object_or_404(StudentProfile, Sap_Id=sapid)
+        # student = get_object_or_404(StudentProfile, Sap_Id=sapid)
         # line chart of marks
         # gpa_list = [gpa for gpa in student.education.all()[0].__dict__.values()]
-        sem1gpa = student.education.all()[0].sem1_gpa
-        sem2gpa = student.education.all()[0].sem2_gpa
-        sem3gpa = student.education.all()[0].sem3_gpa
-        sem4gpa = student.education.all()[0].sem4_gpa
-        sem5gpa = student.education.all()[0].sem5_gpa
-        sem6gpa = student.education.all()[0].sem6_gpa
-        sem7gpa = student.education.all()[0].sem7_gpa
-        sem8gpa = student.education.all()[0].sem8_gpa
-        gpa_list = [sem1gpa, sem2gpa, sem3gpa, sem4gpa, sem5gpa, sem6gpa, sem7gpa, sem8gpa]
 
-        project_objects = student.projects.all()
-        projectskill_stats = [
-            project.skill.skill for project in project_objects]
-        projectskill_stats = dict(collections.Counter(projectskill_stats))
-        print(projectskill_stats)
+        student = StudentProfile.objects.get(id=id)
+        try:
+            education = Education.objects.get(student_profile=student)
+            sem1gpa = education.sem1_gpa
+            sem2gpa = education.sem2_gpa
+            sem3gpa = education.sem3_gpa
+            sem4gpa = education.sem4_gpa
+            sem5gpa = education.sem5_gpa
+            sem6gpa = education.sem6_gpa
+            sem7gpa = education.sem7_gpa
+            sem8gpa = education.sem8_gpa
+            gpa_list = []
+            if sem1gpa is not None:
+                gpa_list.append(sem1gpa)
+            if sem2gpa is not None:
+                gpa_list.append(sem2gpa)
+            if sem3gpa is not None:
+                gpa_list.append(sem3gpa)
+            if sem4gpa is not None:
+                gpa_list.append(sem4gpa)
+            if sem5gpa is not None:
+                gpa_list.append(sem5gpa)
+            if sem6gpa is not None:
+                gpa_list.append(sem6gpa)
+            if sem7gpa is not None:
+                gpa_list.append(sem7gpa)
+            if sem8gpa is not None:
+                gpa_list.append(sem8gpa)
+
+        except Education.DoesNotExist:
+            gpa_list = []
+            print(gpa_list)
+        if Project.objects.filter(student_profile=student).exists():
+            project_objects = Project.objects.filter(student_profile=student)
+            projectskill_stats = [
+                project.skill.skill for project in project_objects]
+            projectskill_stats = dict(collections.Counter(projectskill_stats))
+            print(projectskill_stats)
+        else:
+            projectskill_stats = {}
+
+        internship = Internship.objects.filter(employee=student)
+        projects = Project.objects.filter(student_profile=student)
+        committe = Committee.objects.filter(employee=student)
+        researchpaper = ResearchPaper.objects.filter(student=student)
+        beproj = BeProject.objects.filter(student=student)
+        hackathon = Hackathon.objects.filter(student_profile=student)
+        skill = Skill.objects.filter(user_profile=student)
+
         return render(request, 'user_profile/profile.html',
-                      {'gpa_list': gpa_list, 'projectskill_stats': projectskill_stats})
+                      {'gpa_list': gpa_list, 'projectskill_stats': projectskill_stats,
+                       'internship': internship, 'projects': projects, 'committe': committe,
+                       'researchpaper': researchpaper, 'beproj': beproj, 'skill': skill,
+                       'hackathon': hackathon, 'student': student})
     else:
         return HttpResponse("Please Login")
 
