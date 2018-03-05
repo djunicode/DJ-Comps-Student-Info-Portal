@@ -790,19 +790,29 @@ def teacher_dashboard(request):
     print(intern_stats)
 
     # list of all pointers
-    sem1_list = [education.sem1_gpa for education in Education.objects.all() if education.sem1_gpa is not None]
+    sem1_list = [education.sem1_gpa for education in Education.objects.all(
+    ) if education.sem1_gpa is not None]
     # sem1_list = filter(None, sem1_list)
-    sem2_list = [education.sem2_gpa for education in Education.objects.all() if education.sem2_gpa is not None]
-    sem3_list = [education.sem3_gpa for education in Education.objects.all() if education.sem3_gpa is not None]
-    sem4_list = [education.sem4_gpa for education in Education.objects.all() if education.sem4_gpa is not None]
-    sem5_list = [education.sem5_gpa for education in Education.objects.all() if education.sem5_gpa is not None]
-    sem6_list = [education.sem6_gpa for education in Education.objects.all() if education.sem6_gpa is not None]
-    sem7_list = [education.sem7_gpa for education in Education.objects.all() if education.sem7_gpa is not None]
-    sem8_list = [education.sem8_gpa for education in Education.objects.all() if education.sem8_gpa is not None]
-    print(sem1_list, sem2_list, sem3_list, sem4_list, sem5_list, sem6_list, sem7_list, sem8_list)
+    sem2_list = [education.sem2_gpa for education in Education.objects.all(
+    ) if education.sem2_gpa is not None]
+    sem3_list = [education.sem3_gpa for education in Education.objects.all(
+    ) if education.sem3_gpa is not None]
+    sem4_list = [education.sem4_gpa for education in Education.objects.all(
+    ) if education.sem4_gpa is not None]
+    sem5_list = [education.sem5_gpa for education in Education.objects.all(
+    ) if education.sem5_gpa is not None]
+    sem6_list = [education.sem6_gpa for education in Education.objects.all(
+    ) if education.sem6_gpa is not None]
+    sem7_list = [education.sem7_gpa for education in Education.objects.all(
+    ) if education.sem7_gpa is not None]
+    sem8_list = [education.sem8_gpa for education in Education.objects.all(
+    ) if education.sem8_gpa is not None]
+    print(sem1_list, sem2_list, sem3_list, sem4_list,
+          sem5_list, sem6_list, sem7_list, sem8_list)
 
     # internship time stamps
-    intern_dates = [format(internship.From, 'U') for internship in Internship.objects.all()]
+    intern_dates = [format(internship.From, 'U')
+                    for internship in Internship.objects.all()]
     intern_dates.sort()
     intern_date = [int(x) - int(intern_dates[0]) for x in intern_dates]
     print(intern_dates)
@@ -838,5 +848,23 @@ def view_beproject(request, beprojectid):
     return HttpResponse(beproject.ProjName)
 
 
-def show_base(request):
-    return render(request, 'user_profile/edit_student_profile.html')
+def show_edit_studentprofile(request):
+    if request.user.is_authenticated:
+        student_profile = StudentProfile.objects.get(student=request.user)
+        return render(request, 'user_profile/edit_student_profile_2.html', {'student_profile': student_profile})
+    else:
+        return HttpResponseRedirect('/login/student/')
+
+
+def edit_basic_info(request, id):
+    if request.method == 'POST':
+        student_profile = StudentProfile.objects.get(id=id)
+        student_profile.first_name = request.POST.get('fname')
+        student_profile.last_name = request.POST.get('lname')
+        student_profile.department = request.POST.get('department')
+        print(request.POST.get('gender'))
+        student_profile.gender = request.POST.get('gender')
+        student_profile.mobileNo = request.POST.get('mobileNo')
+        student_profile.save()
+        print('IT WORKS ASSHOLE')
+        return HttpResponse('done')

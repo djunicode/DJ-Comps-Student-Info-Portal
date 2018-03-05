@@ -12,26 +12,35 @@ from simple_history.models import HistoricalRecords
 
 class StudentProfile(models.Model):
     student = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
     Sap_Id = models.BigIntegerField(
         validators=[MaxValueValidator(99999999999),
                     MinValueValidator(10000000000)])
+<<<<<<< HEAD
     department = models.CharField(max_length=50)
     photo = models.FileField(blank=True, null=True)
+=======
+    department = models.CharField(max_length=50, blank=True, null=True)
+    photo = models.FileField(blank=True)
+>>>>>>> 11a6c715580dff5cada038da1c47b8addad5d52e
     github_id = models.CharField(max_length=50, null=True, blank=True)
-    bio = models.CharField(max_length=200)
+    bio = models.CharField(max_length=200, blank=True, null=True)
     GENDER_CHOICES = (
         ("Male", "Male"),
         ("Female", "Female"),
     )
-    gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
-    mobileNo = models.CharField(max_length=50)
+    gender = models.CharField(
+        max_length=6, choices=GENDER_CHOICES, blank=True, null=True)
+    mobileNo = models.CharField(max_length=50, blank=True, null=True)
     YEAR_CHOICES = (
         ("FE", "First Year"),
         ("SE", "Second Year"),
         ("TE", "Third Year"),
         ("BE", "Final Year"),
     )
-    year = models.CharField(max_length=20, choices=YEAR_CHOICES)
+    year = models.CharField(
+        max_length=20, choices=YEAR_CHOICES, blank=True, null=True)
 
     class Meta:
         permissions = (
@@ -39,7 +48,7 @@ class StudentProfile(models.Model):
         )
 
     def __str__(self):
-        return str(self.Sap_Id)
+        return str(str(self.Sap_Id) + '   ' + str(self.id))
 
 
 class Recruiter(models.Model):
