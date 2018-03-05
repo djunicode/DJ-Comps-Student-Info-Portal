@@ -88,7 +88,8 @@ def user_login(request):
 
 def register_teacher(request):
     if request.user.is_authenticated:
-        return render(request, 'user_profile/teacherprofile.html', {})
+        teacher_profile_url = '/teacherdashboard/'
+        return HttpResponseRedirect(teacher_profile_url)
     else:
         if request.method == 'POST':
             username = request.POST.get('Sap_Id', '')
@@ -141,14 +142,16 @@ def register_teacher(request):
                 teacher = TeacherProfile.objects.create(
                     teacher=user, Sap_Id=Sap_Id)
                 teacher.save()
-                return render(request, 'user_profile/teacherprofile.html', {})
+                teacher_profile_url = '/teacherdashboard/'
+                return HttpResponseRedirect(teacher_profile_url)
         else:
             return render(request, 'user_profile/registration_teacher.html', {})
 
 
 def user_login_teacher(request):
     if request.user.is_authenticated:
-        return render(request, 'user_profile/teacherprofile.html', {})
+        teacher_profile_url = '/teacherdashboard/'
+        return HttpResponseRedirect(teacher_profile_url)
     else:
         if request.method == 'POST':
             username = request.POST.get('username', '')
@@ -157,7 +160,8 @@ def user_login_teacher(request):
             if user:
                 if user.is_active:
                     auth_login(request, user)
-                    return render(request, 'user_profile/teacherprofile.html', {})
+                    teacher_profile_url = '/teacherdashboard/'
+                    return HttpResponseRedirect(teacher_profile_url)
                 else:
                     error = 'Your account is disabled.'
                     return render(request, 'user_profile/teacher_login.html', {'error': error})
@@ -222,11 +226,27 @@ def student_profile(request, id):
             sem6gpa = education.sem6_gpa
             sem7gpa = education.sem7_gpa
             sem8gpa = education.sem8_gpa
-            gpa_list = [sem1gpa, sem2gpa, sem3gpa, sem4gpa,
-                        sem5gpa, sem6gpa, sem7gpa, sem8gpa]
+            gpa_list = []
+            if sem1gpa is not None:
+                gpa_list.append(sem1gpa)
+            if sem2gpa is not None:
+                gpa_list.append(sem2gpa)
+            if sem3gpa is not None:
+                gpa_list.append(sem3gpa)
+            if sem4gpa is not None:
+                gpa_list.append(sem4gpa)
+            if sem5gpa is not None:
+                gpa_list.append(sem5gpa)
+            if sem6gpa is not None:
+                gpa_list.append(sem6gpa)
+            if sem7gpa is not None:
+                gpa_list.append(sem7gpa)
+            if sem8gpa is not None:
+                gpa_list.append(sem8gpa)
+
         except Education.DoesNotExist:
             gpa_list = []
-
+            print(gpa_list)
         if Project.objects.filter(student_profile=student).exists():
             project_objects = Project.objects.filter(student_profile=student)
             projectskill_stats = [
@@ -235,8 +255,20 @@ def student_profile(request, id):
             print(projectskill_stats)
         else:
             projectskill_stats = {}
+
+        internship = Internship.objects.filter(employee=student)
+        projects = Project.objects.filter(student_profile=student)
+        committe = Committee.objects.filter(employee=student)
+        researchpaper = ResearchPaper.objects.filter(student=student)
+        beproj = BeProject.objects.filter(student=student)
+        hackathon = Hackathon.objects.filter(student_profile=student)
+        skill = Skill.objects.filter(user_profile=student)
+
         return render(request, 'user_profile/profile.html',
-                      {'gpa_list': gpa_list, 'projectskill_stats': projectskill_stats})
+                      {'gpa_list': gpa_list, 'projectskill_stats': projectskill_stats,
+                       'internship': internship, 'projects': projects, 'committe': committe,
+                       'researchpaper': researchpaper, 'beproj': beproj, 'skill': skill,
+                       'hackathon': hackathon, 'student': student})
     else:
         return HttpResponse("Please Login")
 
