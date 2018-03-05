@@ -25,7 +25,7 @@ def show_rollingform(request):
 def register(request):
     if request.user.is_authenticated:
         student_profile = StudentProfile.objects.get(student=request.user)
-        student_profile_url = '/student_profile/'+str(student_profile.id)
+        student_profile_url = '/student_profile/' + str(student_profile.id)
         return HttpResponseRedirect(student_profile_url)
     else:
         if request.method == 'POST':
@@ -50,7 +50,7 @@ def register(request):
                 student = StudentProfile.objects.create(
                     student=user, Sap_Id=Sap_Id)
                 student.save()
-                student_profile_url = '/student_profile/'+str(student.id)
+                student_profile_url = '/student_profile/' + str(student.id)
                 return HttpResponseRedirect(student_profile_url)
                 # return render(request, 'user_profile/profile.html', {"student": student})
         else:
@@ -60,7 +60,7 @@ def register(request):
 def user_login(request):
     if request.user.is_authenticated:
         student_profile = StudentProfile.objects.get(student=request.user)
-        student_profile_url = '/student_profile/'+str(student_profile.id)
+        student_profile_url = '/student_profile/' + str(student_profile.id)
         return HttpResponseRedirect(student_profile_url)
     else:
         if request.method == 'POST':
@@ -207,7 +207,7 @@ def user_login_recruiter(request):
 
 def student_profile(request, id):
     if request.user.is_authenticated:
-        #student = get_object_or_404(StudentProfile, Sap_Id=sapid)
+        # student = get_object_or_404(StudentProfile, Sap_Id=sapid)
         # line chart of marks
         # gpa_list = [gpa for gpa in student.education.all()[0].__dict__.values()]
 
