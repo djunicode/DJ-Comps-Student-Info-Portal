@@ -17,13 +17,8 @@ class StudentProfile(models.Model):
     Sap_Id = models.BigIntegerField(
         validators=[MaxValueValidator(99999999999),
                     MinValueValidator(10000000000)])
-<<<<<<< HEAD
     department = models.CharField(max_length=50)
     photo = models.FileField(blank=True, null=True)
-=======
-    department = models.CharField(max_length=50, blank=True, null=True)
-    photo = models.FileField(blank=True)
->>>>>>> 11a6c715580dff5cada038da1c47b8addad5d52e
     github_id = models.CharField(max_length=50, null=True, blank=True)
     bio = models.CharField(max_length=200, blank=True, null=True)
     GENDER_CHOICES = (
