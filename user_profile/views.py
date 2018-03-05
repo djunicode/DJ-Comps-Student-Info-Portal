@@ -88,7 +88,8 @@ def user_login(request):
 
 def register_teacher(request):
     if request.user.is_authenticated:
-        return render(request, 'user_profile/teacherprofile.html', {})
+        teacher_profile_url = '/teacherdashboard/'
+        return HttpResponseRedirect(teacher_profile_url)
     else:
         if request.method == 'POST':
             username = request.POST.get('Sap_Id', '')
@@ -141,14 +142,16 @@ def register_teacher(request):
                 teacher = TeacherProfile.objects.create(
                     teacher=user, Sap_Id=Sap_Id)
                 teacher.save()
-                return render(request, 'user_profile/teacherprofile.html', {})
+                teacher_profile_url = '/teacherdashboard/'
+                return HttpResponseRedirect(teacher_profile_url)
         else:
             return render(request, 'user_profile/registration_teacher.html', {})
 
 
 def user_login_teacher(request):
     if request.user.is_authenticated:
-        return render(request, 'user_profile/teacherprofile.html', {})
+        teacher_profile_url = '/teacherdashboard/'
+        return HttpResponseRedirect(teacher_profile_url)
     else:
         if request.method == 'POST':
             username = request.POST.get('username', '')
@@ -157,7 +160,8 @@ def user_login_teacher(request):
             if user:
                 if user.is_active:
                     auth_login(request, user)
-                    return render(request, 'user_profile/teacherprofile.html', {})
+                    teacher_profile_url = '/teacherdashboard/'
+                    return HttpResponseRedirect(teacher_profile_url)
                 else:
                     error = 'Your account is disabled.'
                     return render(request, 'user_profile/teacher_login.html', {'error': error})
