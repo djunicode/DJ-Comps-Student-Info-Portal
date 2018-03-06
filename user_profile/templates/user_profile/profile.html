@@ -32,7 +32,7 @@
                   <!-- Profile Image -->
                   <div class="box box-primary">
                      <div class="box-body box-profile">
-                       {% if student.photo == None %}
+                       {% if student.photo %}
                         <img class="profile-user-img img-responsive img-circle" src="{{ student.photo.url }}" alt="User profile picture">
                         {% endif %}
                         <h3 class="profile-username text-center">{{ student.Sap_Id }}</h3>
@@ -51,7 +51,7 @@
                               <b>Extra-Curricular</b> <a class="pull-right">{{ committe|length }}</a>
                            </li>
                            <li class="list-group-item">
-                              <b>Grades</b> <a class="pull-right">{{ gpa_list|length }}</a>
+                              <b>CGPA</b> <a class="pull-right">{{ student.cgpa }}</a>
                            </li>
                         </ul>
                      </div>
@@ -143,7 +143,7 @@
                               <div class="box-body">
                                   {% for intern in internship %}
                                   <dl class="dl-horizontal">
-                                    
+
                                     <dt>Company </dt>
                                     <dd>: {{ intern.company }} </dd>
                                     <dt>Position </dt>
@@ -151,7 +151,7 @@
                                     <dt>Company Location </dt>
                                     <dd>: {{ intern.Loc }}</dd>
                                     {% if intern.From %}
-                                      <dt>Date Started </dt> 
+                                      <dt>Date Started </dt>
                                       <dd> : {{ intern.From }}  </dd>
                                     {% endif %}
                                     {% if intern.To %}
@@ -160,27 +160,27 @@
                                     {% endif %}
                                       <dt>Description </dt>
                                       <dd>: {{ intern.desc }}  </dd>
-                                    {% if intern.Certificate == None %}
-                                   <dt> Certificate</dt> 
+                                    {% if intern.Certificate  %}
+                                   <dt> Certificate</dt>
                                    <dd> :  <img  src="{{ intern.Certificate.url }}">  </dd>
                                     {% endif %}
                                     <dt> Screenshot</dt> :
                                     <dd>
                                     <img src="{{ intern.image1.url }}">
-                                    {% if intern.image2 == None %}
+                                    {% if intern.image2 %}
                                     <img src="{{ intern.image2.url }}">
                                     {% endif %}
-                                    {% if intern.image3 == None %}
+                                    {% if intern.image3%}
                                     <img src="{{ intern.image3.url }}">
                                     {% endif %}
-                                    {% if intern.image4 == None %}
+                                    {% if intern.image4 %}
                                     <img src="{{ intern.image4.url }}">
                                     {% endif %}
-                                    {% if intern.image5 == None %}
+                                    {% if intern.image5 %}
                                     <img src="{{ intern.image5.url }}">
                                     {% endif %}
                                     </dd>
-                                  
+
                                 </dl>
                                   {% endfor %}
                               </div>
@@ -199,32 +199,38 @@
                               <!-- /.box-header -->
                               <div class="box-body">
                                   {% for intern in projects %}
-                                  <tr>
-                                    {{forloop.counter}}.
-                                    Name : {{ intern.ProjName }} <br>
-                                    {% if intern.ProjURL %}
-                                    Url : {{ intern.ProjURL }}  <br>
-                                    {% endif %}
-                                    Project Description : {{ intern.ProjDesc }}  <br>
+                                  <dl class="dl-horizontal">
+
+                                    <dt>Name</dt>
+                                    <dd>: {{ intern.ProjName }} </dd>
+                                    <dt>URL </dt>
+                                    <dd>: {{ intern.ProjURL }} </dd>
+                                    <dt>Description </dt>
+                                    <dd>: {{ intern.ProjDesc }}</dd>
                                     {% if intern.projectUnderTeacher %}
-                                    Teacher : {{ intern.projectUnderTeacher }}  <br>
+                                      <dt>Teacher</dt>
+                                      <dd> : {{ intern.projectUnderTeacher }}  </dd>
                                     {% endif %}
-                                    skill: {{ intern.skill.skill }}  <br>
-                                    Screenshot :
+                                    <dt>Skill </dt>
+                                    <dd>: {{ intern.skill }}</dd>
+                                    <dt> Screenshot</dt> :
+                                    <dd>
                                     <img src="{{ intern.image1.url }}">
-                                    {% if intern.image2 == None %}
+                                    {% if intern.image2  %}
                                     <img src="{{ intern.image2.url }}">
                                     {% endif %}
-                                    {% if intern.image3 == None %}
+                                    {% if intern.image3  %}
                                     <img src="{{ intern.image3.url }}">
                                     {% endif %}
-                                    {% if intern.image4 == None %}
+                                    {% if intern.image4  %}
                                     <img src="{{ intern.image4.url }}">
                                     {% endif %}
-                                    {% if intern.image5 == None %}
+                                    {% if intern.image5  %}
                                     <img src="{{ intern.image5.url }}">
                                     {% endif %}
+                                    </dd>
 
+                                </dl>
                                   {% endfor %}
                               </div>
                            </div>
@@ -236,40 +242,53 @@
                           <!-- /.user-block -->
                           <div class="box">
                              <div class="box-header with-border">
-                               <h3 class="box-title">Committee and Extra-Curricular</h3>
+                               <h3 class="box-title">Extra-Curricular</h3>
                              </div>
                              <!-- /.box-header -->
                              <div class="box-body">
                                  {% for intern in committe %}
-                                 <tr>
-                                   {{forloop.counter}}.
-                                   Name : {{ intern.OrganisationName }} <br>
-                                   Position : {{ intern.YourPosition }}  <br>
-                                   Location : {{ intern.Loc }}  <br>
+                                 <dl class="dl-horizontal">
+
+                                   <dt>Company </dt>
+                                   <dd>: {{ intern.OrganisationName }} </dd>
+                                   <dt>Position </dt>
+                                   <dd>: {{ intern.YourPosition }} </dd>
+                                   <dt>Company Location </dt>
+                                   <dd>: {{ intern.Loc }}</dd>
                                    {% if intern.dateFrom %}
-                                   Date Started : {{ intern.dateFrom }}  <br>
+                                     <dt>Date Started </dt>
+                                     <dd> : {{ intern.dateFrom }}  </dd>
                                    {% endif %}
                                    {% if intern.dateTo %}
-                                   Date To : {{ intern.dateTo }}  <br>
+                                     <dt>Date To </dt>
+                                     <dd>: {{ intern.dateTo }}  </dd>
                                    {% endif %}
-                                   Description : {{ intern.Desc }}  <br>
-                                   {% if intern.Certificate == None %}
-                                   Certificate :  <img  src="{{ intern.Certificate.url }}">  <br>
+                                   {% if intern.Desc %}
+                                     <dt>Description </dt>
+                                     <dd>: {{ intern.Desc }}  </dd>
+                                     {% endif %}
+                                   {% if intern.Certificate %}
+                                  <dt> Certificate</dt>
+                                  <dd> :  <img  src="{{ intern.Certificate.url }}">  </dd>
                                    {% endif %}
-                                   Screenshot :
+                                   <dt> Screenshot</dt> :
+                                   <dd>
                                    <img src="{{ intern.image1.url }}">
-                                   {% if intern.image2 == None %}
+                                   {% if intern.image2  %}
                                    <img src="{{ intern.image2.url }}">
                                    {% endif %}
-                                   {% if intern.image3 == None %}
+                                   {% if intern.image3  %}
                                    <img src="{{ intern.image3.url }}">
                                    {% endif %}
-                                   {% if intern.image4 == None %}
+                                   {% if intern.image4  %}
                                    <img src="{{ intern.image4.url }}">
                                    {% endif %}
-                                   {% if intern.image5 == None %}
+                                   {% if intern.image5  %}
                                    <img src="{{ intern.image5.url }}">
                                    {% endif %}
+                                   </dd>
+
+                               </dl>
                                  {% endfor %}
                              </div>
                           </div>
@@ -299,39 +318,50 @@
                         <!-- Post -->
                         <div class="post">
                            <!-- /.user-block -->
-                           <form class="form-horizontal">
-                              <div class="form-group margin-bottom-none">
-                                 <div class="col-sm-9">
-                                   {% for intern in beproj %}
-                                   <tr>
-                                     {{forloop.counter}}.
-                                     Name : {{ intern.ProjName }} <br>
-                                     Url : {{ intern.ProjURL }}  <br>
-                                     Project Description : {{ intern.ProjDesc }}  <br>
-                                     {% if intern.projectUnderTeacher %}
-                                     Teacher : {{ intern.projectUnderTeacher }}  <br>
-                                     {% endif %}
-                                     {% if intern.teammates %}
-                                     Teammates : {{intern.teammates}} <br>
-                                     {% endif %}
-                                     Screenshot :
-                                     <img src="{{ intern.image1.url }}">
-                                     {% if intern.image2 == None %}
-                                     <img src="{{ intern.image2.url }}">
-                                     {% endif %}
-                                     {% if intern.image3 == None %}
-                                     <img src="{{ intern.image3.url }}">
-                                     {% endif %}
-                                     {% if intern.image4 == None %}
-                                     <img src="{{ intern.image4.url }}">
-                                     {% endif %}
-                                     {% if intern.image5 == None %}
-                                     <img src="{{ intern.image5.url }}">
-                                     {% endif %}
-                                   {% endfor %}
-                                 </div>
+                           <div class="box">
+                              <div class="box-header with-border">
+                                <h3 class="box-title">BE-Project</h3>
                               </div>
-                           </form>
+                              <!-- /.box-header -->
+                              <div class="box-body">
+                                  {% for intern in beproj %}
+                                  <dl class="dl-horizontal">
+
+                                    <dt>Name</dt>
+                                    <dd>: {{ intern.ProjName }} </dd>
+                                    <dt>URL </dt>
+                                    <dd>: {{ intern.ProjURL }} </dd>
+                                    <dt>Description </dt>
+                                    <dd>: {{ intern.ProjDesc }}</dd>
+                                    {% if intern.projectUnderTeacher %}
+                                      <dt>Teacher</dt>
+                                      <dd> : {{ intern.projectUnderTeacher }}  </dd>
+                                    {% endif %}
+                                    {% if intern.teammates %}
+                                    <dt>Teammates </dt>
+                                    <dd>: {{ intern.teammates }}</dd>
+                                    {% endif %}
+                                    <dt> Screenshot</dt> :
+                                    <dd>
+                                    <img src="{{ intern.image1.url }}">
+                                    {% if intern.image2  %}
+                                    <img src="{{ intern.image2.url }}">
+                                    {% endif %}
+                                    {% if intern.image3  %}
+                                    <img src="{{ intern.image3.url }}">
+                                    {% endif %}
+                                    {% if intern.image4  %}
+                                    <img src="{{ intern.image4.url }}">
+                                    {% endif %}
+                                    {% if intern.image5 %}
+                                    <img src="{{ intern.image5.url }}">
+                                    {% endif %}
+                                    </dd>
+
+                                </dl>
+                                  {% endfor %}
+                              </div>
+                           </div>
                         </div>
                         <!-- /.post -->
                      </div>
@@ -339,43 +369,56 @@
                         <!-- Post -->
                         <div class="post">
                            <!-- /.user-block -->
-                           <form class="form-horizontal">
-                              <div class="form-group margin-bottom-none">
-                                 <div class="col-sm-9">
-                                   {% for intern in researchpaper %}
-                                  <tr>
-                                    {{forloop.counter}}.
-                                    Title : {{ intern.Title }} <br>
-                                    Publication : {{ intern.Publication }}  <br>
-                                    {% if intern.DateOfPublication %}
-                                    Date Of Publication : {{ intern.DateOfPublication }}  <br>
-                                    {% endif %}
-                                    Description : {{ intern.Desc }}  <br>
-                                    {% if intern.LinkToPaper%}
-                                    URL : {{intern.LinkToPaper}} <br>
+                           <div class="box">
+                              <div class="box-header with-border">
+                                <h3 class="box-title">Research Paper</h3>
+                              </div>
+                              <!-- /.box-header -->
+                              <div class="box-body">
+                                  {% for intern in researchpaper %}
+                                  <dl class="dl-horizontal">
+
+                                    <dt>Title</dt>
+                                    <dd>: {{ intern.Title }} </dd>
+                                    <dt>Publication </dt>
+                                    <dd>: {{ intern.Publication }} </dd>
+                                      {% if intern.DateOfPublication %}
+                                    <dt>Date Of Publication </dt>
+                                    <dd>: {{ intern.DateOfPublication }}</dd>
+                                      {% endif %}
+                                    <dt>Link To Paper </dt>
+                                    <dd>: {{ intern.LinkToPaper }} </dd>
+                                    <dt>Paper Id</dt>
+                                    <dd>: {{ intern.PaperId }}</dd>
+                                    {% if intern.Desc %}
+                                    <dt>Description</dt>
+                                    <dd>: {{ intern.Desc }}</dd>
                                     {% endif %}
                                     {% if intern.Published_under %}
-                                    Teacher :  {{intern.Published_under}} <br>
+                                      <dt>Teacher</dt>
+                                      <dd> : {{ intern.Published_under }}  </dd>
                                     {% endif %}
-                                    Paper Id :  {{intern.PaperId}} <br>
-                                    Screenshot :
-                                   <img src="{{ intern.image1.url }}">
-                                   {% if intern.image2 == None %}
-                                   <img src="{{ intern.image2.url }}">
-                                   {% endif %}
-                                   {% if intern.image3 == None %}
-                                   <img src="{{ intern.image3.url }}">
-                                   {% endif %}
-                                   {% if intern.image4 == None %}
-                                   <img src="{{ intern.image4.url }}">
-                                   {% endif %}
-                                   {% if intern.image5 == None %}
-                                   <img src="{{ intern.image5.url }}">
-                                   {% endif %}
+                                    <dt> Screenshot</dt> :
+                                    <dd>
+                                    <img src="{{ intern.image1.url }}">
+                                    {% if intern.image2  %}
+                                    <img src="{{ intern.image2.url }}">
+                                    {% endif %}
+                                    {% if intern.image3  %}
+                                    <img src="{{ intern.image3.url }}">
+                                    {% endif %}
+                                    {% if intern.image4  %}
+                                    <img src="{{ intern.image4.url }}">
+                                    {% endif %}
+                                    {% if intern.image5  %}
+                                    <img src="{{ intern.image5.url }}">
+                                    {% endif %}
+                                    </dd>
+
+                                </dl>
                                   {% endfor %}
-                                 </div>
                               </div>
-                           </form>
+                           </div>
                         </div>
                         <!-- /.post -->
                      </div>
@@ -383,36 +426,46 @@
                         <!-- Post -->
                         <div class="post">
                            <!-- /.user-block -->
-                           <form class="form-horizontal">
-                              <div class="form-group margin-bottom-none">
-                                 <div class="col-sm-9">
-                                   {% for intern in hackathon %}
-                                  <tr>
-                                    {{forloop.counter}}.
-                                    Name : {{ intern.CompetitionName }} <br>
-                                    Url : {{ intern.URL }}  <br>
-                                    Project Description : {{ intern.Desc }}  <br>
+                           <div class="box">
+                              <div class="box-header with-border">
+                                <h3 class="box-title">Hackathon</h3>
+                              </div>
+                              <!-- /.box-header -->
+                              <div class="box-body">
+                                  {% for intern in hackathon %}
+                                  <dl class="dl-horizontal">
+
+                                    <dt>Name</dt>
+                                    <dd>: {{ intern.CompetitionName }} </dd>
+                                    <dt>URL </dt>
+                                    <dd>: {{ intern.URL }} </dd>
+                                    <dt>Description </dt>
+                                    <dd>: {{ intern.Desc }}</dd>
                                     {% if intern.Date %}
-                                    Date : {{ intern.Date }}  <br>
+                                      <dt>Date</dt>
+                                      <dd> : {{ intern.Date }}  </dd>
                                     {% endif %}
-                                    Screenshot :
+                                    <dt> Screenshot</dt> :
+                                    <dd>
                                     <img src="{{ intern.image1.url }}">
-                                    {% if intern.image2 == None %}
+                                    {% if intern.image2  %}
                                     <img src="{{ intern.image2.url }}">
                                     {% endif %}
-                                    {% if intern.image3 == None %}
+                                    {% if intern.image3  %}
                                     <img src="{{ intern.image3.url }}">
                                     {% endif %}
-                                    {% if intern.image4 == None %}
+                                    {% if intern.image4  %}
                                     <img src="{{ intern.image4.url }}">
                                     {% endif %}
-                                    {% if intern.image5 == None %}
+                                    {% if intern.image5  %}
                                     <img src="{{ intern.image5.url }}">
                                     {% endif %}
+                                    </dd>
+
+                                </dl>
                                   {% endfor %}
-                                 </div>
                               </div>
-                           </form>
+                           </div>
                         </div>
                         <!-- /.post -->
                      </div>
@@ -423,7 +476,7 @@
             </div>
          </div>
        </section>
-    
+
     <!-- /.content -->
 {% endblock %}
 <!-- ./wrapper -->
