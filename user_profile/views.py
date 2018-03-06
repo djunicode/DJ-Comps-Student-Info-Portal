@@ -441,7 +441,7 @@ def searchany(request):
     if request.method == 'POST':
         searchquery = request.POST.get('searchany')
         # queryset=StudentProfile.objects.filter(department__trigram_similar=searchquery)
-        dept_vector = SearchVector('department', 'bio', 'mobileNo')
+        dept_vector = SearchVector('first_name', 'last_name', 'department', 'bio', 'mobileNo')
         skill_vector = SearchVector('skill')
         hackathon_vector = SearchVector('CompetitionName', 'Desc', 'URL')
         internship_vector = SearchVector('company')
@@ -746,12 +746,14 @@ def student_list(request):
 
         year = request.POST.getlist('year[]')
         skills = request.POST.getlist('skills[]')
+        # gpa = request.POST.getlist('gpa_list[]')
+
         print(year)
         print(skills)
-
+        # print(gpa_list)
         if year and skills:
             result = StudentProfile.objects.filter(year__in=year).filter(
-                skills__skill__in=skills).distinct()
+                skill__skill__in=skills).distinct()
             projects = Project.objects.filter(
                 skill__skill__in=skills).distinct()
         elif year:
@@ -759,7 +761,7 @@ def student_list(request):
             projects = []
         elif skills:
             result = StudentProfile.objects.filter(
-                skills__skill__in=skills).distinct()
+                skill__skill__in=skills).distinct()
             projects = Project.objects.filter(
                 skill__skill__in=skills).distinct()
         else:
@@ -767,7 +769,7 @@ def student_list(request):
             projects = []
         print(result, "res")
 
-        return render(request, 'user_profile/search.html', {'result': result, 'skills': skillss, 'projects': projects})
+        return render(request, 'user_profile/filter.html', {'result': result, 'skills': skillss, 'projects': projects})
     else:
         most_common_to_take = 3
         skills = Skill.objects.all()
@@ -775,7 +777,7 @@ def student_list(request):
         most_frequent = collections.Counter(
             list_of_skills).most_common(most_common_to_take)
         skillss = [skill[0] for skill in most_frequent]
-        return render(request, 'user_profile/search.html', {'skills': skillss})
+        return render(request, 'user_profile/filter.html', {'skills': skillss})
 
 
 def teacher_dashboard(request):
