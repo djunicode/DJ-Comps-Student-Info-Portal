@@ -36,6 +36,8 @@ class StudentProfile(models.Model):
     )
     year = models.CharField(
         max_length=20, choices=YEAR_CHOICES, blank=True, null=True)
+    cgpa = models.DecimalField(
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
 
     class Meta:
         permissions = (

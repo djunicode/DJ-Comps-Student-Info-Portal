@@ -270,7 +270,8 @@ def student_profile(request, id):
                        'researchpaper': researchpaper, 'beproj': beproj, 'skill': skill,
                        'hackathon': hackathon, 'student': student})
     else:
-        return HttpResponse("Please Login")
+        login = '/login/student/'
+        return HttpResponseRedirect(login)
 
 
 def student_editprofile(request, sapid):
