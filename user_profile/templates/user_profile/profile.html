@@ -337,9 +337,13 @@
                                       <dt>Teacher</dt>
                                       <dd> : {{ intern.projectUnderTeacher }}  </dd>
                                     {% endif %}
-                                    {% if intern.teammates %}
+                                    {% if intern.teammates.all %}
                                     <dt>Teammates </dt>
-                                    <dd>: {{ intern.teammates }}</dd>
+                                    <dd>:
+                                          {% for x in intern.teammates.all %}
+                                                {{ x.Sap_Id }}
+                                          {% endfor %}
+                                    </dd>
                                     {% endif %}
                                     <dt> Screenshot</dt> :
                                     <dd>
