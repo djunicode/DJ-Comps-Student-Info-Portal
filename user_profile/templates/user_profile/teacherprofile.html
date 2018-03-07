@@ -101,8 +101,7 @@
           <!-- AREA CHART -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Line Chart</h3>
-
+              <h3 class="box-title">Internships per month</h3>
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
@@ -135,7 +134,108 @@
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">FE Average GPA</h3>
 
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="chart">
+                <canvas id="FEAllSemBarChart" style="height:250px"></canvas>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">TE Average GPA</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="chart">
+                <canvas id="TEAllSemBarChart" style="height:250px"></canvas>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+
+          <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Semester 1</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="chart">
+                <canvas id="Sem1BarChart" style="height:250px"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Semester 3</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="chart">
+                <canvas id="Sem3BarChart" style="height:250px"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Semester 5</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="chart">
+                <canvas id="Sem5BarChart" style="height:250px"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Semester 7</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="chart">
+                <canvas id="Sem7BarChart" style="height:250px"></canvas>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- /.col (LEFT) -->
         <div class="col-md-6">
@@ -143,7 +243,6 @@
           <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">Skills</h3>
-
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
@@ -172,34 +271,131 @@
             </div>
             <div class="box-body">
               <div class="chart">
-                <canvas id="barChart" style="height:230px"></canvas>
+                <canvas id="barChart" style="height:250px"></canvas>
               </div>
             </div>
-            <!-- /.box-body -->
           </div>
-          <!-- /.box -->
+            <!-- /.box-body -->
+            <div class="box box-success">
+              <div class="box-header with-border">
+                <h3 class="box-title">SE Average GPA</h3>
 
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+              </div>
+              <div class="box-body">
+                <div class="chart">
+                  <canvas id="SEAllSemBarChart" style="height:250px"></canvas>
+                </div>
+              </div>
+            </div>
+              <div class="box box-success">
+                <div class="box-header with-border">
+                  <h3 class="box-title">BE Average GPA</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart">
+                    <canvas id="BEAllSemBarChart" style="height:250px"></canvas>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+
+              <div class="box box-success">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Semester 2</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart">
+                    <canvas id="Sem2BarChart" style="height:250px"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div class="box box-success">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Semester 4</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart">
+                    <canvas id="Sem4BarChart" style="height:250px"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div class="box box-success">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Semester 6</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart">
+                    <canvas id="Sem6BarChart" style="height:250px"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div class="box box-success">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Semester 8</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart">
+                    <canvas id="Sem8BarChart" style="height:250px"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
-        <!-- /.col (RIGHT) -->
-      </div>
-      <!-- /.row -->
-
     </section>
     <!-- /.content -->
 {% endblock %}
 <!-- ./wrapper -->
 {% block js %}
-<script src="{% static "/plugins/Chart.js/Chart.js/Chart.js" %}"></script>
+<script src="{% static "/plugins/chart.js/Chart.js" %}"></script>
 <script>
-    // for bar chart
     var label_for_bar_chart = {{ sem_labels|safe }}
+    var fe_gpa = {{ FE_gpa }}
+    var se_gpa = {{ SE_gpa }}
+    var te_gpa = {{ TE_gpa }}
+    var be_gpa = {{ BE_gpa }}
     var avg_gpa = {{ avg_gpa }}
-    // var dataX2 = {{ dataX2 }}
-    // for line graph
-    // var label_for_line_graph = {{ intern_dates|safe }}
-    // var
-    // for intern pie Chart
-    // var label_for_pie_chart = {{ intern_stats|safe }}
+    var label_for_line_graph = {{ months|safe }}
+    var internship_in_months = {{ internship_in_months }}
+    var label_for_sem_bar_charts = ['FE', 'SE', 'TE', 'BE']
+    Chart.defaults.bar.scales.xAxes[0].categorySpacing = 4
 </script>
 <!-- iCheck for checkboxes and radio inputs -->
 <script>
@@ -216,10 +412,10 @@
     // Get context with jQuery - using jQuery's .get() method.
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
     // This will get the first returned node in the jQuery collection.
-    var areaChart       = new Chart(areaChartCanvas)
+    var areaChart = new Chart(areaChartCanvas)
 
     var areaChartData = {
-      labels  : label_for_bar_chart,
+      labels  : label_for_line_graph,
       datasets: [
         {
           label               : 'Electronics',
@@ -229,7 +425,7 @@
           pointStrokeColor    : '#c1c7d1',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : avg_gpa
+          data                : internship_in_months
         },
         // {
         //   label               : 'Digital Goods',
@@ -283,7 +479,7 @@
     }
 
     // //Create the line chart
-    // areaChart.Line(areaChartData, areaChartOptions)
+    areaChart.Line(areaChartData, areaChartOptions)
     //
     // //-------------
     // //- LINE CHART -
@@ -325,18 +521,6 @@
         highlight: '#00c0ef',
         label    : 'BE'
       },
-      // {
-      //   value    : 300,
-      //   color    : '#3c8dbc',
-      //   highlight: '#3c8dbc',
-      //   label    : 'Opera'
-      // },
-      // {
-      //   value    : 100,
-      //   color    : '#d2d6de',
-      //   highlight: '#d2d6de',
-      //   label    : 'Navigator'
-      // }
     ]
     var donutOptions     = {
       //Boolean - Whether we should show a stroke on each segment
@@ -381,22 +565,9 @@
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(220,220,220,1)',
           data                : avg_gpa
-        },
-        // {
-        //   label               : 'Digital Goods',
-        //   fillColor           : 'rgba(60,141,188,0.9)',
-        //   strokeColor         : 'rgba(60,141,188,0.8)',
-        //   pointColor          : '#3b8bba',
-        //   pointStrokeColor    : 'rgba(60,141,188,1)',
-        //   pointHighlightFill  : '#fff',
-        //   pointHighlightStroke: 'rgba(60,141,188,1)',
-        //   data                : dataX2
-        // }
+        }
       ]
     }
-    // barChartData.datasets[1].fillColor   = '#00a65a'
-    // barChartData.datasets[1].strokeColor = '#00a65a'
-    // barChartData.datasets[1].pointColor  = '#00a65a'
     var barChartOptions                  = {
       //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
       scaleBeginAtZero        : true,
@@ -423,76 +594,290 @@
       //Boolean - whether to make the chart responsive
       maintainAspectRatio     : true
     }
-
+    barChartOptions.maxBarThickness = 20
     barChartOptions.datasetFill = false
+    barChart.Bar(barChartData, barChartOptions)
+
+    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+    var pieChart       = new Chart(pieChartCanvas)
+    var PieData        = [
+      {
+        value    : {{skill1.1}},
+        color    : '#f56954',
+        highlight: '#f56954',
+        label    : '{{skill1.0}}'
+      },
+      {
+        value    : {{skill2.1}},
+        color    : '#00a65a',
+        highlight: '#00a65a',
+        label    : '{{skill2.0}}'
+      },
+      {
+        value    : {{skill3.1}},
+        color    : '#f39c12',
+        highlight: '#f39c12',
+        label    : '{{skill3.0}}'
+      }
+    ]
+    var pieOptions     = {
+      //Boolean - Whether we should show a stroke on each segment
+      segmentShowStroke    : true,
+      //String - The colour of each segment stroke
+      segmentStrokeColor   : '#fff',
+      //Number - The width of each segment stroke
+      segmentStrokeWidth   : 2,
+      //Number - The percentage of the chart that we cut out of the middle
+      percentageInnerCutout: 0, // This is 0 for Pie charts
+      //Number - Amount of animation steps
+      animationSteps       : 100,
+      //String - Animation easing effect
+      animationEasing      : 'easeOutBounce',
+      //Boolean - Whether we animate the rotation of the Doughnut
+      animateRotate        : true,
+      //Boolean - Whether we animate scaling the Doughnut from the centre
+      animateScale         : false,
+      //Boolean - whether to make the chart responsive to window resizing
+      responsive           : true,
+      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+      maintainAspectRatio  : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    pieChart.Pie(PieData, pieOptions)
+
+    var barChartCanvas                   = $('#FEAllSemBarChart').get(0).getContext('2d')
+    var barChart                         = new Chart(barChartCanvas)
+    var barChartData = {
+      labels  : label_for_bar_chart,
+      datasets: [
+        {
+          label               : 'Electronics',
+          fillColor           : 'rgba(210, 214, 222, 1)',
+          strokeColor         : 'rgba(210, 214, 222, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : fe_gpa
+        }
+      ]
+    }
+    barChart.Bar(barChartData, barChartOptions)
+
+    var barChartCanvas                   = $('#SEAllSemBarChart').get(0).getContext('2d')
+    var barChart                         = new Chart(barChartCanvas)
+    var barChartData = {
+      labels  : label_for_bar_chart,
+      datasets: [
+        {
+          label               : 'Electronics',
+          fillColor           : 'rgba(210, 214, 222, 1)',
+          strokeColor         : 'rgba(210, 214, 222, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : se_gpa
+        },
+      ]
+    }
+    barChart.Bar(barChartData, barChartOptions)
+
+    var barChartCanvas                   = $('#TEAllSemBarChart').get(0).getContext('2d')
+    var barChart                         = new Chart(barChartCanvas)
+    var barChartData = {
+      labels  : label_for_bar_chart,
+      datasets: [
+        {
+          label               : 'Electronics',
+          fillColor           : 'rgba(210, 214, 222, 1)',
+          strokeColor         : 'rgba(210, 214, 222, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : te_gpa
+        }
+      ]
+    }
+
+    barChart.Bar(barChartData, barChartOptions)
+
+    var barChartCanvas                   = $('#BEAllSemBarChart').get(0).getContext('2d')
+    var barChart                         = new Chart(barChartCanvas)
+    var barChartData = {
+      labels  : label_for_bar_chart,
+      datasets: [
+        {
+          label               : 'Electronics',
+          fillColor           : 'rgba(210, 214, 222, 1)',
+          strokeColor         : 'rgba(210, 214, 222, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : be_gpa
+        }
+      ]
+    }
+    barChart.Bar(barChartData, barChartOptions)
+
+
+    var barChartCanvas                   = $('#Sem1BarChart').get(0).getContext('2d')
+    var barChart                         = new Chart(barChartCanvas)
+    var barChartData = {
+      labels  : ['FE', 'SE', 'TE', 'BE'],
+      datasets: [
+        {
+          label               : 'Electronics',
+          fillColor           : 'rgba(210, 214, 222, 1)',
+          strokeColor         : 'rgba(210, 214, 222, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : [fe_gpa[0], se_gpa[0], te_gpa[0], be_gpa[0]]
+        }
+      ]
+    }
+    barChart.Bar(barChartData, barChartOptions)
+
+    var barChartCanvas                   = $('#Sem2BarChart').get(0).getContext('2d')
+    var barChart                         = new Chart(barChartCanvas)
+    var barChartData = {
+      labels  : ['FE', 'SE', 'TE', 'BE'],
+      datasets: [
+        {
+          label               : 'Electronics',
+          fillColor           : 'rgba(210, 214, 222, 1)',
+          strokeColor         : 'rgba(210, 214, 222, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : [fe_gpa[1], se_gpa[1], te_gpa[1], be_gpa[1]]
+        }
+      ]
+    }
+    barChart.Bar(barChartData, barChartOptions)
+
+    var barChartCanvas                   = $('#Sem3BarChart').get(0).getContext('2d')
+    var barChart                         = new Chart(barChartCanvas)
+    var barChartData = {
+      labels  : ['SE', 'TE', 'BE'],
+      datasets: [
+        {
+          label               : 'Electronics',
+          fillColor           : 'rgba(210, 214, 222, 1)',
+          strokeColor         : 'rgba(210, 214, 222, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : [se_gpa[2], te_gpa[2], be_gpa[2]]
+        }
+      ]
+    }
+    barChart.Bar(barChartData, barChartOptions)
+
+    var barChartCanvas                   = $('#Sem4BarChart').get(0).getContext('2d')
+    var barChart                         = new Chart(barChartCanvas)
+    var barChartData = {
+      labels  : ['SE', 'TE', 'BE'],
+      datasets: [
+        {
+          label               : 'Electronics',
+          fillColor           : 'rgba(210, 214, 222, 1)',
+          strokeColor         : 'rgba(210, 214, 222, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : [se_gpa[3], te_gpa[3], be_gpa[3]]
+        }
+      ]
+    }
+    barChart.Bar(barChartData, barChartOptions)
+
+    var barChartCanvas                   = $('#Sem5BarChart').get(0).getContext('2d')
+    var barChart                         = new Chart(barChartCanvas)
+    var barChartData = {
+      labels  : ['TE', 'BE'],
+      datasets: [
+        {
+          label               : 'Electronics',
+          fillColor           : 'rgba(210, 214, 222, 1)',
+          strokeColor         : 'rgba(210, 214, 222, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : [te_gpa[4], be_gpa[4]]
+        }
+      ]
+    }
+    barChart.Bar(barChartData, barChartOptions)
+
+    var barChartCanvas                   = $('#Sem6BarChart').get(0).getContext('2d')
+    var barChart                         = new Chart(barChartCanvas)
+    var barChartData = {
+      labels  : ['TE', 'BE'],
+      datasets: [
+        {
+          label               : 'Electronics',
+          fillColor           : 'rgba(210, 214, 222, 1)',
+          strokeColor         : 'rgba(210, 214, 222, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : [te_gpa[5], be_gpa[5]]
+        }
+      ]
+    }
+    barChart.Bar(barChartData, barChartOptions)
+
+    var barChartCanvas                   = $('#Sem7BarChart').get(0).getContext('2d')
+    var barChart                         = new Chart(barChartCanvas)
+    var barChartData = {
+      labels  : ['BE'],
+      datasets: [
+        {
+          label               : 'Electronics',
+          fillColor           : 'rgba(210, 214, 222, 1)',
+          strokeColor         : 'rgba(210, 214, 222, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : [be_gpa[6]]
+        }
+      ]
+    }
+    barChart.Bar(barChartData, barChartOptions)
+
+    var barChartCanvas                   = $('#Sem8BarChart').get(0).getContext('2d')
+    var barChart                         = new Chart(barChartCanvas)
+    var barChartData = {
+      labels  : ['BE'],
+      datasets: [
+        {
+          label               : 'Electronics',
+          fillColor           : 'rgba(210, 214, 222, 1)',
+          strokeColor         : 'rgba(210, 214, 222, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : [be_gpa[7]]
+        }
+      ]
+    }
     barChart.Bar(barChartData, barChartOptions)
   })
 
-  var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-  var pieChart       = new Chart(pieChartCanvas)
-  var PieData        = [
-    {
-      value    : {{skill1.1}},
-      color    : '#f56954',
-      highlight: '#f56954',
-      label    : '{{skill1.0}}'
-    },
-    {
-      value    : {{skill2.1}},
-      color    : '#00a65a',
-      highlight: '#00a65a',
-      label    : '{{skill2.0}}'
-    },
-    {
-      value    : {{skill3.1}},
-      color    : '#f39c12',
-      highlight: '#f39c12',
-      label    : '{{skill3.0}}'
-    },
-    // {
-    //   value    : {{BE_interns}},
-    //   color    : '#00c0ef',
-    //   highlight: '#00c0ef',
-    //   label    : 'BE'
-    // },
-    // {
-    //   value    : 300,
-    //   color    : '#3c8dbc',
-    //   highlight: '#3c8dbc',
-    //   label    : 'Opera'
-    // },
-    // {
-    //   value    : 100,
-    //   color    : '#d2d6de',
-    //   highlight: '#d2d6de',
-    //   label    : 'Navigator'
-    // }
-  ]
-  var pieOptions     = {
-    //Boolean - Whether we should show a stroke on each segment
-    segmentShowStroke    : true,
-    //String - The colour of each segment stroke
-    segmentStrokeColor   : '#fff',
-    //Number - The width of each segment stroke
-    segmentStrokeWidth   : 2,
-    //Number - The percentage of the chart that we cut out of the middle
-    percentageInnerCutout: 0, // This is 0 for Pie charts
-    //Number - Amount of animation steps
-    animationSteps       : 100,
-    //String - Animation easing effect
-    animationEasing      : 'easeOutBounce',
-    //Boolean - Whether we animate the rotation of the Doughnut
-    animateRotate        : true,
-    //Boolean - Whether we animate scaling the Doughnut from the centre
-    animateScale         : false,
-    //Boolean - whether to make the chart responsive to window resizing
-    responsive           : true,
-    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-    maintainAspectRatio  : true,
-  }
-  //Create pie or douhnut chart
-  // You can switch between pie and douhnut using the method below.
-  pieChart.Pie(PieData, pieOptions)
+
 </script>
 
 {% endblock %}
