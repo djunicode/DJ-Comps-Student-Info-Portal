@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block css %}
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="{% static "/dist/css/skins/_all-skins.min.css" %}">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="{% static "/plugins/iCheck/all.css" %}">
+
+  <style type="text/css">
+    .pad{
+      padding: 0px 10px 5px;
+    }
+  </style>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+{% endblock %}
+  <!-- Google Font -->
+{% block content %}
+    <!-- Content Header (Page header) -->
+        <section class="content">
+
+          <div class="row">
+            <div class="col-md-12">
+                  <div class="box box-solid">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Filter</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                      <div class="box-group" id="accordion">
+                        <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+                        <form method="post" action="/search/" role="form">
+                           {% csrf_token %}
+                          <div class="panel box box-primary">
+                            <div class="box-header with-border">
+                              <h4 class="box-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    Skills
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                              <div class="box-body">
+                                {% for skill in skills %}
+                                <div class="checkbox">
+                                  <label>
+                                    <input type="checkbox" name="skills[]" value="{{skill}}"> {{skill}}
+                                  </label>
+                                </div>
+                                {% endfor %}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="panel box box-primary">
+                            <div class="box-header with-border">
+                              <h4 class="box-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                  Year
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse">
+                              <div class="box-body">
+                                <input type="checkbox" name="year[]" value="FE">FE<br>
+                                <input type="checkbox" name="year[]" value="SE">SE<br>
+                                <input type="checkbox" name="year[]" value="TE">TE<br>
+                                <input type="checkbox" name="year[]" value="BE">BE<br>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <!-- /.box-body -->
+                  </div>
+                  <!-- /.box -->
+            </div>
+          </div>
+          {% for result in result %}
+          <div class="row">
+            <div class="col-md-4">
+              <div class="box box-widget widget-user">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-aqua-active">
+                      <h3 class="widget-user-username"> {{ result.first_name }} {{ result.last_name }}</h3>
+                      <h5 class="widget-user-desc">{{ result.Sap_Id }}</h5>
+                    </div>
+                    <div class="widget-user-image">
+                      <img class="img-circle" src="../../static/dist/img/avatar.png" alt="User Avatar">
+                    </div>
+                    <div class="box-footer">
+                      <div class="row">
+                        <div class="col-sm-4 border-right">
+                          <div class="description-block">
+                            <h5 class="description-header">{{ result.year }}</h5>
+                            <span class="description-text">Year</span>
+                          </div>
+                          <!-- /.description-block -->
+                          <!-- /.col -->
+                        </div>
+                          <div class="col-sm-4 border-right">
+                            <div class="description-block">
+                              <h5 class="description-header"><a href="{% url 'user_profile:student_profile' result.id  %}" >View Profile</a></h5>
+                            </div>
+                            <!-- /.description-block -->
+                          </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4">
+                          <div class="description-block">
+                            <h5 class="description-header">{{ result.year }}</h5>
+                            <span class="description-text">CGPA</span>
+                          </div>
+                          <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+                    </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <hr/>
+          {% for project in projects %}
+          <div class="row">
+            <div class="col-md-4">
+                <!-- Widget: user widget style 1 -->
+                <div class="box box-widget widget-userser-2">
+                  <!-- Add the bg color to the header using any of the bg-* classes -->
+                  <div class="pad widget-user-header bg-yellow">  
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username">{{ project.student_profile.Sap_Id }}</h3>
+                    <h5 class="widget-user-desc">{{ project.ProjName }}</h5>
+                  </div>
+                  <div class="box-footer no-padding">
+                    <ul class="pad nav nav-stacked">
+                      <li>{{ project.ProjURL }}</li>
+                      <li> {{ project.skill }}</li>
+                      <li>{{ project.ProjDesc }}</li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- /.widget-user -->
+              </div>
+            </div>
+          {% endfor %}
+        </section>
+    <!-- /.content -->
+{% endblock %}
+<!-- ./wrapper -->
+{% block js %}
+<!-- iCheck for checkboxes and radio inputs -->
+<script src="{% static "/plugins/iCheck/icheck.min.js" %}"></script>
+<script>
+  $(function () {
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+});
+
+</script>
+
+<script>
+    function submitBasicInfo(){
+      var data = $('#BasicInfo').serialize();
+      $.post( "/student/profile/", data, function( data, status ) {
+        console.log("The Data Sent is: " + data);
+      });
+    }
+</script>
+
+{% endblock %}

@@ -16,9 +16,9 @@ class StudentProfile(models.Model):
     last_name = models.CharField(max_length=100, blank=True, null=True)
     Sap_Id = models.BigIntegerField(
         validators=[MaxValueValidator(99999999999),
-                    MinValueValidator(10000000000)])
+                    MinValueValidator(10000000000)], blank=True, null=True)
     department = models.CharField(max_length=50, blank=True, null=True)
-    photo = models.FileField(blank=True)
+    photo = models.FileField(blank=True, null=True)
     github_id = models.CharField(max_length=50, null=True, blank=True)
     bio = models.CharField(max_length=200, blank=True, null=True)
     GENDER_CHOICES = (
@@ -36,6 +36,8 @@ class StudentProfile(models.Model):
     )
     year = models.CharField(
         max_length=20, choices=YEAR_CHOICES, blank=True, null=True)
+    cgpa = models.DecimalField(
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
 
     class Meta:
         permissions = (
@@ -91,15 +93,15 @@ class TeacherProfile(models.Model):
     teacher = models.OneToOneField(User, on_delete=models.CASCADE)
     Sap_Id = models.BigIntegerField(
         validators=[MaxValueValidator(99999999999),
-                    MinValueValidator(10000000000)])
-    department = models.CharField(max_length=50)
-    photo = models.FileField(blank=True)
-    bio = models.CharField(max_length=200)
+                    MinValueValidator(10000000000)], blank=True, null=True)
+    department = models.CharField(max_length=50, blank=True, null=True)
+    photo = models.FileField(blank=True, null=True)
+    bio = models.CharField(max_length=200, blank=True, null=True)
     GENDER_CHOICES = (
         ("Male", "Male"),
         ("Female", "Female"),
     )
-    gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, blank=True, null=True)
 
     class Meta:
         permissions = (
@@ -123,15 +125,15 @@ class Experience(models.Model):
 
 class Hackathon(models.Model):
     student_profile = models.ForeignKey(StudentProfile)
-    CompetitionName = models.CharField(max_length=50)
-    Date = models.DateField(null=True, blank=True)
-    Desc = models.CharField(max_length=500)
-    URL = models.TextField(validators=[URLValidator()])
-    image1 = models.FileField()
-    image2 = models.FileField(blank=True)
-    image3 = models.FileField(blank=True)
-    image4 = models.FileField(blank=True)
-    image5 = models.FileField(blank=True)
+    CompetitionName = models.CharField(max_length=50, blank=True, null=True)
+    Date = models.DateField(blank=True, null=True)
+    Desc = models.CharField(max_length=500, blank=True, null=True)
+    URL = models.TextField(validators=[URLValidator()], null=True, blank=True)
+    image1 = models.FileField(blank=True, null=True)
+    image2 = models.FileField(null=True, blank=True)
+    image3 = models.FileField(null=True, blank=True)
+    image4 = models.FileField(null=True, blank=True)
+    image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
 
     def __str__(self):
@@ -149,18 +151,18 @@ class Skill(models.Model):
 
 class Internship(models.Model):
     employee = models.ForeignKey(StudentProfile, related_name="internships")
-    company = models.CharField(max_length=50, blank=True)
-    Position = models.CharField(max_length=50, blank=True)
-    Loc = models.CharField(max_length=50, blank=True)
-    From = models.DateField(("Date"), default=datetime.date.today, blank=True)
-    To = models.DateField(("Date"), default=datetime.date.today, blank=True)
-    desc = models.CharField(max_length=500, blank=True)
-    Certificate = models.FileField(blank=True)
-    image1 = models.FileField()
-    image2 = models.FileField(blank=True)
-    image3 = models.FileField(blank=True)
-    image4 = models.FileField(blank=True)
-    image5 = models.FileField(blank=True)
+    company = models.CharField(max_length=50, blank=True, null=True)
+    Position = models.CharField(max_length=50, blank=True, null=True)
+    Loc = models.CharField(max_length=50, blank=True, null=True)
+    From = models.DateField(("Date"), default=datetime.date.today)
+    To = models.DateField(("Date"), default=datetime.date.today)
+    desc = models.CharField(max_length=500, blank=True, null=True)
+    Certificate = models.FileField(blank=True, null=True)
+    image1 = models.FileField(blank=True, null=True)
+    image2 = models.FileField(blank=True, null=True)
+    image3 = models.FileField(blank=True, null=True)
+    image4 = models.FileField(blank=True, null=True)
+    image5 = models.FileField(blank=True, null=True)
     history = HistoricalRecords()
 
     def __str__(self):
@@ -170,18 +172,18 @@ class Internship(models.Model):
 class Project(models.Model):
     student_profile = models.ForeignKey(
         StudentProfile, related_name="projects")
-    ProjName = models.CharField(max_length=50)
-    ProjURL = models.TextField(validators=[URLValidator()], blank=True)
-    ProjDesc = models.CharField(max_length=500, blank=True)
+    ProjName = models.CharField(max_length=50, blank=True, null=True)
+    ProjURL = models.TextField(validators=[URLValidator()], blank=True, null=True)
+    ProjDesc = models.CharField(max_length=500, blank=True, null=True)
     projectUnderTeacher = models.ForeignKey(
-        TeacherProfile, blank=True, null=True, related_name="verifiedprojects")
+        TeacherProfile, blank=True, related_name="verifiedprojects", null=True)
     skill = models.ForeignKey(
-        Skill, related_name="projectskills", null=True, blank=True)
-    image1 = models.FileField()
-    image2 = models.FileField(blank=True)
-    image3 = models.FileField(blank=True)
-    image4 = models.FileField(blank=True)
-    image5 = models.FileField(blank=True)
+        Skill, related_name="projectskills", blank=True, null=True)
+    image1 = models.FileField(blank=True, null=True)
+    image2 = models.FileField(blank=True, null=True,)
+    image3 = models.FileField(blank=True, null=True,)
+    image4 = models.FileField(blank=True, null=True,)
+    image5 = models.FileField(blank=True, null=True,)
     history = HistoricalRecords()
 
     def __str__(self):
@@ -190,20 +192,20 @@ class Project(models.Model):
 
 class Committee(models.Model):
     employee = models.ForeignKey(StudentProfile, related_name="committee")
-    OrganisationName = models.CharField(max_length=50)
-    YourPosition = models.CharField(max_length=50)
-    Loc = models.CharField(max_length=50, blank=True)
+    OrganisationName = models.CharField(max_length=50, blank=True, null=True)
+    YourPosition = models.CharField(max_length=50, blank=True, null=True)
+    Loc = models.CharField(max_length=50, blank=True, null=True)
     dateFrom = models.DateField(
-        ("Date"), default=datetime.date.today, blank=True)
+        ("Date"), default=datetime.date.today)
     dateTo = models.DateField(
-        ("Date"), default=datetime.date.today, blank=True)
-    Desc = models.CharField(max_length=500, blank=True)
-    Certificate = models.FileField(blank=True)
-    image1 = models.FileField()
-    image2 = models.FileField(blank=True)
-    image3 = models.FileField(blank=True)
-    image4 = models.FileField(blank=True)
-    image5 = models.FileField(blank=True)
+        ("Date"), default=datetime.date.today)
+    Desc = models.CharField(max_length=500, blank=True, null=True)
+    Certificate = models.FileField(null=True, blank=True)
+    image1 = models.FileField(blank=True, null=True)
+    image2 = models.FileField(null=True, blank=True)
+    image3 = models.FileField(null=True, blank=True)
+    image4 = models.FileField(null=True, blank=True)
+    image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
 
     def __str__(self):
@@ -212,20 +214,20 @@ class Committee(models.Model):
 
 class ResearchPaper(models.Model):
     student = models.ForeignKey(StudentProfile, related_name="researchpaper")
-    Title = models.CharField(max_length=50)
-    Publication = models.CharField(max_length=100)
+    Title = models.CharField(max_length=50, null=True, blank=True)
+    Publication = models.CharField(max_length=100, null=True, blank=True)
     DateOfPublication = models.DateField(
-        ("Date"), default=datetime.date.today, blank=True)
-    Desc = models.CharField(max_length=500, blank=True)
-    LinkToPaper = models.TextField(validators=[URLValidator()], blank=True)
-    PaperId = models.CharField(max_length=50, blank=True)
+        ("Date"), default=datetime.date.today)
+    Desc = models.CharField(max_length=500, null=True, blank=True)
+    LinkToPaper = models.TextField(validators=[URLValidator()], blank=True, null=True)
+    PaperId = models.CharField(max_length=50, null=True, blank=True)
     Published_under = models.ForeignKey(
         TeacherProfile, blank=True, null=True, related_name="verifiedpaper")
-    image1 = models.FileField()
-    image2 = models.FileField(blank=True)
-    image3 = models.FileField(blank=True)
-    image4 = models.FileField(blank=True)
-    image5 = models.FileField(blank=True)
+    image1 = models.FileField(null=True, blank=True)
+    image2 = models.FileField(null=True, blank=True)
+    image3 = models.FileField(null=True, blank=True)
+    image4 = models.FileField(null=True, blank=True)
+    image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
 
     def __str__(self):
@@ -234,19 +236,19 @@ class ResearchPaper(models.Model):
 
 class BeProject(models.Model):
     student = models.ForeignKey(StudentProfile, related_name='beprojects')
-    ProjName = models.CharField(max_length=50)
-    ProjURL = models.TextField(validators=[URLValidator()])
-    ProjDesc = models.CharField(max_length=500, blank=True)
+    ProjName = models.CharField(max_length=50, null=True, blank=True)
+    ProjURL = models.TextField(validators=[URLValidator()], null=True, blank=True)
+    ProjDesc = models.CharField(max_length=500, null=True, blank=True)
     teammates = models.ManyToManyField(
         StudentProfile, related_name='beteammate', blank=True)
     projectUnderTeacher = models.ForeignKey(
         TeacherProfile, blank=True, null=True,
         related_name="verifiedbeprojects")
-    image1 = models.FileField()
-    image2 = models.FileField(blank=True)
-    image3 = models.FileField(blank=True)
-    image4 = models.FileField(blank=True)
-    image5 = models.FileField(blank=True)
+    image1 = models.FileField(null=True, blank=True)
+    image2 = models.FileField(null=True, blank=True)
+    image3 = models.FileField(null=True, blank=True)
+    image4 = models.FileField(null=True, blank=True)
+    image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
 
     def __str__(self):
