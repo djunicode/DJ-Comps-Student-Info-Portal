@@ -795,20 +795,40 @@ def student_list(request):
 
 
 def teacher_dashboard(request):
+    context = {}
     # calculating most common skills
     most_common_to_take = 3
     skills = Skill.objects.all()
     list_of_skills = [skill.skill for skill in skills]
     most_frequent_skills = collections.Counter(
         list_of_skills).most_common(most_common_to_take)
+    for i, skill in enumerate(most_frequent_skills):
+        context['skill' + str(i + 1)] = skill
     print(most_frequent_skills)
     # calculating year-wise internship stats
     internship_objects = Internship.objects.all()
     intern_stats = [
         internship.employee.year for internship in internship_objects]
     intern_stats = collections.Counter(intern_stats)
-    print(intern_stats)
-
+    print(intern_stats.items())
+    context['FE_interns'] = intern_stats['FE']
+    context['SE_interns'] = intern_stats['SE']
+    context['TE_interns'] = intern_stats['TE']
+    context['BE_interns'] = intern_stats['BE']
+    # internship line graph
+    internship_in_months = []
+    context['internship_in_months'] = []
+    for internship in internship_objects:
+        internship_in_months.append(internship.From.month)
+    internship_in_months = collections.Counter(internship_in_months)
+    print(internship_in_months)
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    context['months'] = months
+    for month in months:
+        if months.index(month) + 1 in internship_in_months.keys():
+            context['internship_in_months'].append(internship_in_months[months.index(month) + 1])
+        else:
+            context['internship_in_months'].append(0)
     # list of all pointers
     sem1_list = [education.sem1_gpa for education in Education.objects.all(
     ) if education.sem1_gpa is not None]
@@ -827,9 +847,73 @@ def teacher_dashboard(request):
     ) if education.sem7_gpa is not None]
     sem8_list = [education.sem8_gpa for education in Education.objects.all(
     ) if education.sem8_gpa is not None]
+    sem1_list = float(sum(sem1_list) / len(sem1_list))
+    sem2_list = float(sum(sem2_list) / len(sem2_list))
+    sem3_list = float(sum(sem3_list) / len(sem3_list))
+    sem4_list = float(sum(sem4_list) / len(sem4_list))
+    sem5_list = float(sum(sem5_list) / len(sem5_list))
+    sem6_list = float(sum(sem6_list) / len(sem6_list))
+    sem7_list = float(sum(sem7_list) / len(sem7_list))
+    sem8_list = float(sum(sem8_list) / len(sem8_list))
     print(sem1_list, sem2_list, sem3_list, sem4_list,
           sem5_list, sem6_list, sem7_list, sem8_list)
-
+    context['avg_gpa'] = [sem1_list, sem2_list, sem3_list, sem4_list, sem5_list, sem6_list, sem7_list, sem8_list]
+    context['sem_labels'] = ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6', 'Sem 7', 'Sem 8']
+    # batch wise pointers
+    FE_gpa_objects = Education.objects.filter(student_profile__year='FE')
+    SE_gpa_objects = Education.objects.filter(student_profile__year='SE')
+    TE_gpa_objects = Education.objects.filter(student_profile__year='TE')
+    BE_gpa_objects = Education.objects.filter(student_profile__year='BE')
+    print(FE_gpa_objects, SE_gpa_objects, TE_gpa_objects, BE_gpa_objects)
+    FE_gpa = {'sem1': [], 'sem2': []}
+    SE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': []}
+    TE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': [], 'sem5': [], 'sem6': []}
+    BE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': [], 'sem5': [], 'sem6': [], 'sem7': [], 'sem8': []}
+    for edu in FE_gpa_objects:
+        FE_gpa['sem1'].append(edu.sem1_gpa)
+        FE_gpa['sem2'].append(edu.sem2_gpa)
+    for edu in SE_gpa_objects:
+        SE_gpa['sem1'].append(edu.sem1_gpa)
+        SE_gpa['sem2'].append(edu.sem2_gpa)
+        SE_gpa['sem3'].append(edu.sem3_gpa)
+        SE_gpa['sem4'].append(edu.sem4_gpa)
+    for edu in TE_gpa_objects:
+        TE_gpa['sem1'].append(edu.sem1_gpa)
+        TE_gpa['sem2'].append(edu.sem2_gpa)
+        TE_gpa['sem3'].append(edu.sem3_gpa)
+        TE_gpa['sem4'].append(edu.sem4_gpa)
+        TE_gpa['sem5'].append(edu.sem5_gpa)
+        TE_gpa['sem6'].append(edu.sem6_gpa)
+    for edu in BE_gpa_objects:
+        BE_gpa['sem1'].append(edu.sem1_gpa)
+        BE_gpa['sem2'].append(edu.sem2_gpa)
+        BE_gpa['sem3'].append(edu.sem3_gpa)
+        BE_gpa['sem4'].append(edu.sem4_gpa)
+        BE_gpa['sem5'].append(edu.sem5_gpa)
+        BE_gpa['sem6'].append(edu.sem6_gpa)
+        BE_gpa['sem7'].append(edu.sem7_gpa)
+        BE_gpa['sem8'].append(edu.sem8_gpa)
+    context['FE_gpa'] = [float(sum(FE_gpa['sem1']) / len(FE_gpa['sem1'])),
+                         float(sum(FE_gpa['sem2']) / len(SE_gpa['sem2']))]
+    context['SE_gpa'] = [float(sum(SE_gpa['sem1']) / len(SE_gpa['sem1'])),
+                         float(sum(SE_gpa['sem2']) / len(SE_gpa['sem2'])),
+                         float(sum(SE_gpa['sem3']) / len(SE_gpa['sem3'])),
+                         float(sum(SE_gpa['sem4']) / len(SE_gpa['sem4']))]
+    context['TE_gpa'] = [float(sum(TE_gpa['sem1']) / len(TE_gpa['sem1'])),
+                         float(sum(TE_gpa['sem2']) / len(TE_gpa['sem2'])),
+                         float(sum(TE_gpa['sem3']) / len(TE_gpa['sem3'])),
+                         float(sum(TE_gpa['sem4']) / len(TE_gpa['sem4'])),
+                         float(sum(TE_gpa['sem5']) / len(TE_gpa['sem5'])),
+                         float(sum(TE_gpa['sem6']) / len(TE_gpa['sem6']))]
+    context['BE_gpa'] = [float(sum(BE_gpa['sem1']) / len(BE_gpa['sem1'])),
+                         float(sum(BE_gpa['sem2']) / len(BE_gpa['sem2'])),
+                         float(sum(BE_gpa['sem3']) / len(BE_gpa['sem3'])),
+                         float(sum(BE_gpa['sem4']) / len(BE_gpa['sem4'])),
+                         float(sum(BE_gpa['sem5']) / len(BE_gpa['sem5'])),
+                         float(sum(BE_gpa['sem6']) / len(BE_gpa['sem6'])),
+                         float(sum(BE_gpa['sem7']) / len(BE_gpa['sem7'])),
+                         float(sum(BE_gpa['sem8']) / len(BE_gpa['sem8']))]
+    print(context['FE_gpa'])
     # internship time stamps
     intern_dates = [format(internship.From, 'U')
                     for internship in Internship.objects.all()]
@@ -837,7 +921,8 @@ def teacher_dashboard(request):
     intern_date = [int(x) - int(intern_dates[0]) for x in intern_dates]
     print(intern_dates)
     print(intern_date)
-    return HttpResponse(intern_stats)
+    # return HttpResponse(intern_stats)
+    return render(request, 'user_profile/teacherprofile.html', context)
 
 
 def education_graphs():
