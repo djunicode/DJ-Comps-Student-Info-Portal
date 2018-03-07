@@ -228,34 +228,44 @@ def student_profile(request, id):
             sem8gpa = education.sem8_gpa
             gpa_list = []
             if sem1gpa is not None:
-                gpa_list.append(sem1gpa)
+                gpa_list.append(float(sem1gpa))
             if sem2gpa is not None:
-                gpa_list.append(sem2gpa)
+                gpa_list.append(float(sem2gpa))
             if sem3gpa is not None:
-                gpa_list.append(sem3gpa)
+                gpa_list.append(float(sem3gpa))
             if sem4gpa is not None:
-                gpa_list.append(sem4gpa)
+                gpa_list.append(float(sem4gpa))
             if sem5gpa is not None:
-                gpa_list.append(sem5gpa)
+                gpa_list.append(float(sem5gpa))
             if sem6gpa is not None:
-                gpa_list.append(sem6gpa)
+                gpa_list.append(float(sem6gpa))
             if sem7gpa is not None:
-                gpa_list.append(sem7gpa)
+                gpa_list.append(float(sem7gpa))
             if sem8gpa is not None:
-                gpa_list.append(sem8gpa)
+                gpa_list.append(float(sem8gpa))
 
         except Education.DoesNotExist:
             gpa_list = []
             print(gpa_list)
+
         if Project.objects.filter(student_profile=student).exists():
+            color = ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de']
             project_objects = Project.objects.filter(student_profile=student)
             projectskill_stats = [
                 project.skill.skill for project in project_objects]
             projectskill_stats = dict(collections.Counter(projectskill_stats))
-            print(projectskill_stats)
+            project_skills = []
+            i = 0
+            for key, value in projectskill_stats.items():
+                i = i % 6
+                colors = color[i]
+                i = i + 1
+                project_skills.append({'label': key, 'value': value, 'color': colors, 'highlight': colors})
+            print(project_skills)
         else:
             projectskill_stats = {}
 
+        sem_labels = []
         internship = Internship.objects.filter(employee=student)
         projects = Project.objects.filter(student_profile=student)
         committe = Committee.objects.filter(employee=student)
@@ -264,11 +274,14 @@ def student_profile(request, id):
         hackathon = Hackathon.objects.filter(student_profile=student)
         skill = Skill.objects.filter(user_profile=student)
 
+        for x, i in enumerate(gpa_list):
+            sem_labels.append("Sem " + str(x + 1))
+
         return render(request, 'user_profile/profile.html',
-                      {'gpa_list': gpa_list, 'projectskill_stats': projectskill_stats,
+                      {'gpa_list': gpa_list, 'projectskill_stats': project_skills,
                        'internship': internship, 'projects': projects, 'committe': committe,
                        'researchpaper': researchpaper, 'beproj': beproj, 'skill': skill,
-                       'hackathon': hackathon, 'student': student})
+                       'hackathon': hackathon, 'student': student, 'sem_labels': sem_labels})
     else:
         login = '/login/student/'
         return HttpResponseRedirect(login)
