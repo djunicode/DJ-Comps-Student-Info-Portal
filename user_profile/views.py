@@ -264,7 +264,7 @@ def student_profile(request, id):
                 project_skills.append({'label': key, 'value': value, 'color': colors, 'highlight': colors})
             print(project_skills)
         else:
-            projectskill_stats = {}
+            project_skills = {}
 
         sem_labels = []
         internship = Internship.objects.filter(employee=student)
@@ -1089,7 +1089,7 @@ def show_edit_studentprofile(request):
         except ObjectDoesNotExist:
             acads = Education.objects.create(student_profile=student_profile)
         try:
-            skill = Skill.objects.get(user_profile=student_profile)
+            skill = Skill.objects.filter(user_profile=student_profile)
         except ObjectDoesNotExist:
             skill = Skill.objects.create(user_profile=student_profile)
         context = {'student_profile': student_profile, 'hackathon_list': hackathon, 'project_list': project,
