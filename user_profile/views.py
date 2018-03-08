@@ -916,6 +916,11 @@ def student_list(request):
         return render(request, 'user_profile/filter.html', {'skills': skillss})
 
 
+def average(a):
+    b = len(list(filter(lambda x: x != 0, a)))
+    return float(sum(a) / b) if b != 0 else 0
+
+
 def teacher_dashboard(request):
     context = {}
     # calculating most common skills
@@ -969,14 +974,14 @@ def teacher_dashboard(request):
     ) if education.sem7_gpa is not None]
     sem8_list = [education.sem8_gpa for education in Education.objects.all(
     ) if education.sem8_gpa is not None]
-    sem1_list = float(sum(sem1_list) / len(sem1_list))
-    sem2_list = float(sum(sem2_list) / len(sem2_list))
-    sem3_list = float(sum(sem3_list) / len(sem3_list))
-    sem4_list = float(sum(sem4_list) / len(sem4_list))
-    sem5_list = float(sum(sem5_list) / len(sem5_list))
-    sem6_list = float(sum(sem6_list) / len(sem6_list))
-    sem7_list = float(sum(sem7_list) / len(sem7_list))
-    sem8_list = float(sum(sem8_list) / len(sem8_list))
+    sem1_list = float(sum(sem1_list) / len(sem1_list)) if len(sem1_list) != 0 else []
+    sem2_list = float(sum(sem2_list) / len(sem2_list)) if len(sem2_list) != 0 else []
+    sem3_list = float(sum(sem3_list) / len(sem3_list)) if len(sem3_list) != 0 else []
+    sem4_list = float(sum(sem4_list) / len(sem4_list)) if len(sem4_list) != 0 else []
+    sem5_list = float(sum(sem5_list) / len(sem5_list)) if len(sem5_list) != 0 else []
+    sem6_list = float(sum(sem6_list) / len(sem6_list)) if len(sem6_list) != 0 else []
+    sem7_list = float(sum(sem7_list) / len(sem7_list)) if len(sem7_list) != 0 else []
+    sem8_list = float(sum(sem8_list) / len(sem8_list)) if len(sem8_list) != 0 else []
     print(sem1_list, sem2_list, sem3_list, sem4_list,
           sem5_list, sem6_list, sem7_list, sem8_list)
     context['avg_gpa'] = [sem1_list, sem2_list, sem3_list, sem4_list, sem5_list, sem6_list, sem7_list, sem8_list]
@@ -992,49 +997,40 @@ def teacher_dashboard(request):
     TE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': [], 'sem5': [], 'sem6': []}
     BE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': [], 'sem5': [], 'sem6': [], 'sem7': [], 'sem8': []}
     for edu in FE_gpa_objects:
-        FE_gpa['sem1'].append(edu.sem1_gpa)
-        FE_gpa['sem2'].append(edu.sem2_gpa)
+        FE_gpa['sem1'].append(edu.sem1_gpa if edu.sem1_gpa is not None else 0)
+        FE_gpa['sem2'].append(edu.sem2_gpa if edu.sem2_gpa is not None else 0)
     for edu in SE_gpa_objects:
-        SE_gpa['sem1'].append(edu.sem1_gpa)
-        SE_gpa['sem2'].append(edu.sem2_gpa)
-        SE_gpa['sem3'].append(edu.sem3_gpa)
-        SE_gpa['sem4'].append(edu.sem4_gpa)
+        SE_gpa['sem1'].append(edu.sem1_gpa if edu.sem1_gpa is not None else 0)
+        SE_gpa['sem2'].append(edu.sem2_gpa if edu.sem2_gpa is not None else 0)
+        SE_gpa['sem3'].append(edu.sem3_gpa if edu.sem3_gpa is not None else 0)
+        SE_gpa['sem4'].append(edu.sem4_gpa if edu.sem4_gpa is not None else 0)
     for edu in TE_gpa_objects:
-        TE_gpa['sem1'].append(edu.sem1_gpa)
-        TE_gpa['sem2'].append(edu.sem2_gpa)
-        TE_gpa['sem3'].append(edu.sem3_gpa)
-        TE_gpa['sem4'].append(edu.sem4_gpa)
-        TE_gpa['sem5'].append(edu.sem5_gpa)
-        TE_gpa['sem6'].append(edu.sem6_gpa)
+        TE_gpa['sem1'].append(edu.sem1_gpa if edu.sem1_gpa is not None else 0)
+        TE_gpa['sem2'].append(edu.sem2_gpa if edu.sem2_gpa is not None else 0)
+        TE_gpa['sem3'].append(edu.sem3_gpa if edu.sem3_gpa is not None else 0)
+        TE_gpa['sem4'].append(edu.sem4_gpa if edu.sem4_gpa is not None else 0)
+        TE_gpa['sem5'].append(edu.sem5_gpa if edu.sem5_gpa is not None else 0)
+        TE_gpa['sem6'].append(edu.sem6_gpa if edu.sem6_gpa is not None else 0)
     for edu in BE_gpa_objects:
-        BE_gpa['sem1'].append(edu.sem1_gpa)
-        BE_gpa['sem2'].append(edu.sem2_gpa)
-        BE_gpa['sem3'].append(edu.sem3_gpa)
-        BE_gpa['sem4'].append(edu.sem4_gpa)
-        BE_gpa['sem5'].append(edu.sem5_gpa)
-        BE_gpa['sem6'].append(edu.sem6_gpa)
-        BE_gpa['sem7'].append(edu.sem7_gpa)
-        BE_gpa['sem8'].append(edu.sem8_gpa)
-    context['FE_gpa'] = [float(sum(FE_gpa['sem1']) / len(FE_gpa['sem1'])),
-                         float(sum(FE_gpa['sem2']) / len(SE_gpa['sem2']))]
-    context['SE_gpa'] = [float(sum(SE_gpa['sem1']) / len(SE_gpa['sem1'])),
-                         float(sum(SE_gpa['sem2']) / len(SE_gpa['sem2'])),
-                         float(sum(SE_gpa['sem3']) / len(SE_gpa['sem3'])),
-                         float(sum(SE_gpa['sem4']) / len(SE_gpa['sem4']))]
-    context['TE_gpa'] = [float(sum(TE_gpa['sem1']) / len(TE_gpa['sem1'])),
-                         float(sum(TE_gpa['sem2']) / len(TE_gpa['sem2'])),
-                         float(sum(TE_gpa['sem3']) / len(TE_gpa['sem3'])),
-                         float(sum(TE_gpa['sem4']) / len(TE_gpa['sem4'])),
-                         float(sum(TE_gpa['sem5']) / len(TE_gpa['sem5'])),
-                         float(sum(TE_gpa['sem6']) / len(TE_gpa['sem6']))]
-    context['BE_gpa'] = [float(sum(BE_gpa['sem1']) / len(BE_gpa['sem1'])),
-                         float(sum(BE_gpa['sem2']) / len(BE_gpa['sem2'])),
-                         float(sum(BE_gpa['sem3']) / len(BE_gpa['sem3'])),
-                         float(sum(BE_gpa['sem4']) / len(BE_gpa['sem4'])),
-                         float(sum(BE_gpa['sem5']) / len(BE_gpa['sem5'])),
-                         float(sum(BE_gpa['sem6']) / len(BE_gpa['sem6'])),
-                         float(sum(BE_gpa['sem7']) / len(BE_gpa['sem7'])),
-                         float(sum(BE_gpa['sem8']) / len(BE_gpa['sem8']))]
+        BE_gpa['sem1'].append(edu.sem1_gpa if edu.sem1_gpa is not None else 0)
+        BE_gpa['sem2'].append(edu.sem2_gpa if edu.sem2_gpa is not None else 0)
+        BE_gpa['sem3'].append(edu.sem3_gpa if edu.sem3_gpa is not None else 0)
+        BE_gpa['sem4'].append(edu.sem4_gpa if edu.sem4_gpa is not None else 0)
+        BE_gpa['sem5'].append(edu.sem5_gpa if edu.sem5_gpa is not None else 0)
+        BE_gpa['sem6'].append(edu.sem6_gpa if edu.sem6_gpa is not None else 0)
+        BE_gpa['sem7'].append(edu.sem7_gpa if edu.sem7_gpa is not None else 0)
+        BE_gpa['sem8'].append(edu.sem8_gpa if edu.sem8_gpa is not None else 0)
+    # there's probably a better way to do this
+    context['FE_gpa'] = [average(FE_gpa['sem1']), average(FE_gpa['sem2'])]
+    context['SE_gpa'] = [average(SE_gpa['sem1']), average(SE_gpa['sem2']),
+                         average(SE_gpa['sem3']), average(SE_gpa['sem4'])]
+    context['TE_gpa'] = [average(TE_gpa['sem1']), average(TE_gpa['sem2']),
+                         average(TE_gpa['sem3']), average(TE_gpa['sem4']),
+                         average(TE_gpa['sem5']), average(TE_gpa['sem6'])]
+    context['BE_gpa'] = [average(BE_gpa['sem1']), average(BE_gpa['sem2']),
+                         average(BE_gpa['sem3']), average(BE_gpa['sem4']),
+                         average(BE_gpa['sem5']), average(BE_gpa['sem6']),
+                         average(BE_gpa['sem7']), average(BE_gpa['sem8'])]
     print(context['FE_gpa'])
     # internship time stamps
     intern_dates = [format(internship.From, 'U')
