@@ -264,7 +264,7 @@ def student_profile(request, id):
                 project_skills.append({'label': key, 'value': value, 'color': colors, 'highlight': colors})
             print(project_skills)
         else:
-            projectskill_stats = {}
+            project_skills = {}
 
         sem_labels = []
         internship = Internship.objects.filter(employee=student)
