@@ -71,6 +71,7 @@ class Education(models.Model):
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
     sem8_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    history = HistoricalRecords()
 
 
 class KT(models.Model):
