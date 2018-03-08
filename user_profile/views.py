@@ -15,6 +15,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 import collections
 from django.utils.dateformat import format
+from django.core.exceptions import ObjectDoesNotExist
 import datetime
 
 
@@ -1075,26 +1076,25 @@ def show_edit_studentprofile(request):
     if request.user.is_authenticated:
         student_profile = StudentProfile.objects.get(student=request.user)
         hackathon = Hackathon.objects.filter(student_profile=student_profile)
-        project =  Project.objects.filter(student_profile=student_profile)
-        committee =  Committee.objects.filter(employee=student_profile)
-        researchpaper =  ResearchPaper.objects.filter(student=student_profile)
-        internship =  Internship.objects.filter(employee=student_profile)
+        project = Project.objects.filter(student_profile=student_profile)
+        committee = Committee.objects.filter(employee=student_profile)
+        researchpaper = ResearchPaper.objects.filter(student=student_profile)
+        internship = Internship.objects.filter(employee=student_profile)
         try:
             beproject = BeProject.objects.get(student=student_profile)
-        except:
+        except ObjectDoesNotExist:
             beproject = BeProject.objects.create(student=student_profile)
         try:
             acads = Education.objects.get(student_profile=student_profile)
-        except:
+        except ObjectDoesNotExist:
             acads = Education.objects.create(student_profile=student_profile)
         try:
             skill = Skill.objects.get(user_profile=student_profile)
-        except:
+        except ObjectDoesNotExist:
             skill = Skill.objects.create(user_profile=student_profile)
-        return render(request, 'user_profile/edit_student_profile_2.html', {'student_profile': student_profile, 'hackathon_list': hackathon,
-                                                                            'project_list': project, 'committee_list': committee, 'beproject': beproject,
-                                                                            'researchpaper_list': researchpaper, 'internship_list': internship,
-                                                                            'acads': acads, 'skill': skill})
+        return render(request, 'user_profile/edit_student_profile_2.html', {'student_profile': student_profile,
+         'hackathon_list': hackathon, 'project_list': project, 'committee_list': committee, 'beproject': beproject,
+        'researchpaper_list': researchpaper, 'internship_list': internship, 'acads': acads, 'skill': skill})
     else:
         return HttpResponseRedirect('/login/student/')
 
@@ -1118,7 +1118,7 @@ def edit_academic_info(request, id):
         student_profile = StudentProfile.objects.get(id=id)
         try:
             education = Education.objects.get(student_profile=student_profile)
-        except:
+        except ObjectDoesNotExist:
             education = Education.objects.create(student_profile=student_profile)
         education = Education.objects.get(id=id)
         education.sem1_gpa = request.POST.get('sem1_gpa')
@@ -1130,7 +1130,7 @@ def edit_academic_info(request, id):
         education.sem6_gpa = request.POST.get('sem6_gpa')
         education.sem7_gpa = request.POST.get('sem7_gpa')
         education.sem8_gpa = request.POST.get('sem8_gpa')
-        #student_profile.subject_semester = request.POST.get('')
+        # student_profile.subject_semester = request.POST.get('')
         education.save()
         print('IT WORKS ASSHOLE')
         return HttpResponse('done')
@@ -1141,7 +1141,7 @@ def edit_skill_info(request, id):
         student_profile = StudentProfile.objects.get(id=id)
         try:
             skill = Skill.objects.get(user_profile=student_profile)
-        except:
+        except ObjectDoesNotExist:
             skill = Skill.objects.create(user_profile=student_profile)
         skill.skill = request.POST.get('skill')
         print(request.POST.get('skill'))
@@ -1155,7 +1155,7 @@ def edit_hackathon_info(request, id):
         student_profile = StudentProfile.objects.get(id=id)
         hackathon = Hackathon.objects.create(student_profile=student_profile)
 
-        #hackathon = Hackathon.objects.get(student_profile_id=id)
+        # hackathon = Hackathon.objects.get(student_profile_id=id)
         hackathon.CompetitionName = request.POST.get('name')
         hackathon.Date = request.POST.get('date')
         hackathon.Desc = request.POST.get('description')
@@ -1167,7 +1167,8 @@ def edit_hackathon_info(request, id):
     else:
 
         data = Hackathon.objects.last()
-        return JsonResponse({"CompetitionName": data.CompetitionName, "Date": data.Date, "Desc": data.Desc, "id": data.id, "url": data.URL})
+        return JsonResponse({"CompetitionName": data.CompetitionName, "Date": data.Date, "Desc": data.Desc,
+                             "id": data.id, "url": data.URL})
 
 
 def edit_project_info(request, id):
@@ -1182,7 +1183,8 @@ def edit_project_info(request, id):
         return HttpResponse('done')
     else:
         data = Project.objects.last()
-        return JsonResponse({"ProjName": data.ProjName, "ProjURL": data.ProjURL, "ProjDesc": data.ProjDesc, "id": data.id})
+        return JsonResponse({"ProjName": data.ProjName, "ProjURL": data.ProjURL, "ProjDesc": data.ProjDesc,
+                             "id": data.id})
 
 
 def edit_internship_info(request, id):
@@ -1200,15 +1202,14 @@ def edit_internship_info(request, id):
         return HttpResponse('done')
     else:
         data = Internship.objects.last()
-        return JsonResponse({"company": data.company,"Position": data.Position, "desc": data.desc, "Loc": data.Loc, "From": data.From, "To": data.To, "id": data.id})
+        return JsonResponse({"company": data.company, "Position": data.Position, "desc": data.desc, "Loc": data.Loc,
+                             "From": data.From, "To": data.To, "id": data.id})
 
 
 def edit_committee_info(request, id):
     if request.method == 'POST':
         student_profile = StudentProfile.objects.get(id=id)
         committee = Committee.objects.create(employee=student_profile)
-
-
         committee.OrganisationName = request.POST.get('name')
         committee.YourPosition = request.POST.get('position')
         committee.Desc = request.POST.get('description')
@@ -1219,14 +1220,15 @@ def edit_committee_info(request, id):
         return HttpResponse('done')
     else:
         data = Committee.objects.last()
-        return JsonResponse({"OrganisationName": data.OrganisationName, "YourPosition": data.YourPosition, "Desc": data.Desc, "Loc": data.Loc, "dateFrom": data.dateFrom, "dateTo": data.dateTo, "id": data.id })
+        return JsonResponse({"OrganisationName": data.OrganisationName, "YourPosition": data.YourPosition,
+                             "Desc": data.Desc, "Loc": data.Loc, "dateFrom": data.dateFrom, "dateTo": data.dateTo,
+                             "id": data.id})
 
 
 def edit_research_paper_info(request, id):
     if request.method == 'POST':
         student_profile = StudentProfile.objects.get(id=id)
         paper = ResearchPaper.objects.create(student=student_profile)
-
         paper.Title = request.POST.get('name')
         paper.Publication = request.POST.get('publication')
         paper.DateOfPublication = request.POST.get('date')
@@ -1236,7 +1238,9 @@ def edit_research_paper_info(request, id):
         return HttpResponse('done')
     else:
         data = ResearchPaper.objects.last()
-        return JsonResponse({"Title": data.Title, "Publication": data.Publication, "DateOfPublication": data.DateOfPublication, "Desc": data.Desc, "LinkToPaper": data.LinkToPaper, "id": data.id})
+        return JsonResponse({"Title": data.Title, "Publication": data.Publication,
+                             "DateOfPublication": data.DateOfPublication, "Desc": data.Desc,
+                             "LinkToPaper": data.LinkToPaper, "id": data.id})
 
 
 def edit_beproject_info(request, id):
@@ -1244,10 +1248,8 @@ def edit_beproject_info(request, id):
         student_profile = StudentProfile.objects.get(id=id)
         try:
             proj = BeProject.objects.get(student=student_profile)
-        except:
+        except ObjectDoesNotExist:
             proj = BeProject.objects.create(student=student_profile)
-
-
         proj.ProjName = request.POST.get('name')
         proj.ProjURL = request.POST.get('url')
         proj.ProjDesc = request.POST.get('description')
