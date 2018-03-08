@@ -4,7 +4,7 @@ from .models import (StudentProfile, TeacherProfile, Internship, Project, Commit
                      Hackathon, Skill, Education)
 from .models import (HistoricalInternship, HistoricalProject, HistoricalCommittee, HistoricalResearchPaper,
                      HistoricalBeProject, HistoricalHackathon, HistoricalEducation)
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
@@ -1074,7 +1074,27 @@ def view_beproject(request, beprojectid):
 def show_edit_studentprofile(request):
     if request.user.is_authenticated:
         student_profile = StudentProfile.objects.get(student=request.user)
-        return render(request, 'user_profile/edit_student_profile_2.html', {'student_profile': student_profile})
+        hackathon = Hackathon.objects.filter(student_profile=student_profile)
+        project =  Project.objects.filter(student_profile=student_profile)
+        committee =  Committee.objects.filter(employee=student_profile)
+        researchpaper =  ResearchPaper.objects.filter(student=student_profile)
+        internship =  Internship.objects.filter(employee=student_profile)
+        try:
+            beproject = BeProject.objects.get(student=student_profile)
+        except:
+            beproject = BeProject.objects.create(student=student_profile)
+        try:
+            acads = Education.objects.get(student_profile=student_profile)
+        except:
+            acads = Education.objects.create(student_profile=student_profile)
+        try:
+            skill = Skill.objects.get(user_profile=student_profile)
+        except:
+            skill = Skill.objects.create(user_profile=student_profile)
+        return render(request, 'user_profile/edit_student_profile_2.html', {'student_profile': student_profile, 'hackathon_list': hackathon,
+                                                                            'project_list': project, 'committee_list': committee, 'beproject': beproject,
+                                                                            'researchpaper_list': researchpaper, 'internship_list': internship,
+                                                                            'acads': acads, 'skill': skill})
     else:
         return HttpResponseRedirect('/login/student/')
 
@@ -1091,3 +1111,175 @@ def edit_basic_info(request, id):
         student_profile.save()
         print('IT WORKS ASSHOLE')
         return HttpResponse('done')
+
+
+def edit_academic_info(request, id):
+    if request.method == 'POST':
+        student_profile = StudentProfile.objects.get(id=id)
+        try:
+            education = Education.objects.get(student_profile=student_profile)
+        except:
+            education = Education.objects.create(student_profile=student_profile)
+        education = Education.objects.get(id=id)
+        education.sem1_gpa = request.POST.get('sem1_gpa')
+        education.sem2_gpa = request.POST.get('sem2_gpa')
+        education.sem3_gpa = request.POST.get('sem3_gpa')
+        print(request.POST.get('sem1_gpa'))
+        education.sem4_gpa = request.POST.get('sem4_gpa')
+        education.sem5_gpa = request.POST.get('sem5_gpa')
+        education.sem6_gpa = request.POST.get('sem6_gpa')
+        education.sem7_gpa = request.POST.get('sem7_gpa')
+        education.sem8_gpa = request.POST.get('sem8_gpa')
+        #student_profile.subject_semester = request.POST.get('')
+        education.save()
+        print('IT WORKS ASSHOLE')
+        return HttpResponse('done')
+
+
+def edit_skill_info(request, id):
+    if request.method == 'POST':
+        student_profile = StudentProfile.objects.get(id=id)
+        try:
+            skill = Skill.objects.get(user_profile=student_profile)
+        except:
+            skill = Skill.objects.create(user_profile=student_profile)
+        skill.skill = request.POST.get('skill')
+        print(request.POST.get('skill'))
+        skill.save()
+        print('.....')
+        return HttpResponse('done')
+
+
+def edit_hackathon_info(request, id):
+    if request.method == 'POST':
+        student_profile = StudentProfile.objects.get(id=id)
+        hackathon = Hackathon.objects.create(student_profile=student_profile)
+
+        #hackathon = Hackathon.objects.get(student_profile_id=id)
+        hackathon.CompetitionName = request.POST.get('name')
+        hackathon.Date = request.POST.get('date')
+        hackathon.Desc = request.POST.get('description')
+        hackathon.URL = request.POST.get('url')
+        hackathon.save()
+        print("sdsdsdsd")
+
+        return HttpResponseRedirect('/editprofile/')
+    else:
+
+        data = Hackathon.objects.last()
+        return JsonResponse({"CompetitionName": data.CompetitionName, "Date": data.Date, "Desc": data.Desc, "id": data.id, "url": data.URL})
+
+
+def edit_project_info(request, id):
+    if request.method == 'POST':
+        student_profile = StudentProfile.objects.get(id=id)
+        project = Project.objects.create(student_profile=student_profile)
+
+        project.ProjURL = request.POST.get('url')
+        project.ProjName = request.POST.get('name')
+        project.ProjDesc = request.POST.get('description')
+        project.save()
+        return HttpResponse('done')
+    else:
+        data = Project.objects.last()
+        return JsonResponse({"ProjName": data.ProjName, "ProjURL": data.ProjURL, "ProjDesc": data.ProjDesc, "id": data.id})
+
+
+def edit_internship_info(request, id):
+    if request.method == 'POST':
+        student_profile = StudentProfile.objects.get(id=id)
+        internship = Internship.objects.create(employee=student_profile)
+
+        internship.company = request.POST.get('name')
+        internship.desc = request.POST.get('description')
+        internship.Position = request.POST.get('position')
+        internship.Loc = request.POST.get('location')
+        internship.From = request.POST.get('dateFrom')
+        internship.To = request.POST.get('dateTo')
+        internship.save()
+        return HttpResponse('done')
+    else:
+        data = Internship.objects.last()
+        return JsonResponse({"company": data.company,"Position": data.Position, "desc": data.desc, "Loc": data.Loc, "From": data.From, "To": data.To, "id": data.id})
+
+
+def edit_committee_info(request, id):
+    if request.method == 'POST':
+        student_profile = StudentProfile.objects.get(id=id)
+        committee = Committee.objects.create(employee=student_profile)
+
+
+        committee.OrganisationName = request.POST.get('name')
+        committee.YourPosition = request.POST.get('position')
+        committee.Desc = request.POST.get('description')
+        committee.Loc = request.POST.get('location')
+        committee.dateFrom = request.POST.get('dateFrom')
+        committee.dateTo = request.POST.get('dateTo')
+        committee.save()
+        return HttpResponse('done')
+    else:
+        data = Committee.objects.last()
+        return JsonResponse({"OrganisationName": data.OrganisationName, "YourPosition": data.YourPosition, "Desc": data.Desc, "Loc": data.Loc, "dateFrom": data.dateFrom, "dateTo": data.dateTo, "id": data.id })
+
+
+def edit_research_paper_info(request, id):
+    if request.method == 'POST':
+        student_profile = StudentProfile.objects.get(id=id)
+        paper = ResearchPaper.objects.create(student=student_profile)
+
+        paper.Title = request.POST.get('name')
+        paper.Publication = request.POST.get('publication')
+        paper.DateOfPublication = request.POST.get('date')
+        paper.Desc = request.POST.get('description')
+        paper.LinkToPaper = request.POST.get('url')
+        paper.save()
+        return HttpResponse('done')
+    else:
+        data = ResearchPaper.objects.last()
+        return JsonResponse({"Title": data.Title, "Publication": data.Publication, "DateOfPublication": data.DateOfPublication, "Desc": data.Desc, "LinkToPaper": data.LinkToPaper, "id": data.id})
+
+
+def edit_beproject_info(request, id):
+    if request.method == 'POST':
+        student_profile = StudentProfile.objects.get(id=id)
+        try:
+            proj = BeProject.objects.get(student=student_profile)
+        except:
+            proj = BeProject.objects.create(student=student_profile)
+
+
+        proj.ProjName = request.POST.get('name')
+        proj.ProjURL = request.POST.get('url')
+        proj.ProjDesc = request.POST.get('description')
+        proj.save()
+        return HttpResponse('done')
+
+
+def delete_hackathon_info(request, id):
+        hackathon = Hackathon.objects.get(id=id)
+        hackathon.delete()
+        return HttpResponseRedirect('/editprofile/')
+
+
+def delete_project_info(request, id):
+        project = Project.objects.get(id=id)
+        project.delete()
+        return HttpResponseRedirect('/editprofile/')
+
+
+def delete_committee_info(request, id):
+        committee = Committee.objects.get(id=id)
+        committee.delete()
+        return HttpResponseRedirect('/editprofile/')
+
+
+def delete_internship_info(request, id):
+        internship = Internship.objects.get(id=id)
+        internship.delete()
+        return HttpResponseRedirect('/editprofile/')
+
+
+def delete_researchpaper_info(request, id):
+        researchpaper = ResearchPaper.objects.get(id=id)
+        researchpaper.delete()
+        return HttpResponseRedirect('/editprofile/')
