@@ -1121,7 +1121,6 @@ def edit_academic_info(request, id):
             education = Education.objects.get(student_profile=student_profile)
         except ObjectDoesNotExist:
             education = Education.objects.create(student_profile=student_profile)
-        
         education.sem1_gpa = request.POST.get('sem1_gpa')
         education.sem2_gpa = request.POST.get('sem2_gpa')
         education.sem3_gpa = request.POST.get('sem3_gpa')
