@@ -1092,9 +1092,10 @@ def show_edit_studentprofile(request):
             skill = Skill.objects.get(user_profile=student_profile)
         except ObjectDoesNotExist:
             skill = Skill.objects.create(user_profile=student_profile)
-        return render(request, 'user_profile/edit_student_profile_2.html', {'student_profile': student_profile,
-         'hackathon_list': hackathon, 'project_list': project, 'committee_list': committee, 'beproject': beproject,
-        'researchpaper_list': researchpaper, 'internship_list': internship, 'acads': acads, 'skill': skill})
+        context = {'student_profile': student_profile, 'hackathon_list': hackathon, 'project_list': project,
+                   'committee_list': committee, 'beproject': beproject, 'researchpaper_list': researchpaper,
+                   'internship_list': internship, 'acads': acads, 'skill': skill}
+        return render(request, 'user_profile/edit_student_profile_2.html', context)
     else:
         return HttpResponseRedirect('/login/student/')
 
@@ -1120,7 +1121,7 @@ def edit_academic_info(request, id):
             education = Education.objects.get(student_profile=student_profile)
         except ObjectDoesNotExist:
             education = Education.objects.create(student_profile=student_profile)
-        education = Education.objects.get(id=id)
+        
         education.sem1_gpa = request.POST.get('sem1_gpa')
         education.sem2_gpa = request.POST.get('sem2_gpa')
         education.sem3_gpa = request.POST.get('sem3_gpa')
