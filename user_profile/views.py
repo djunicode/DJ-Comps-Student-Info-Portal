@@ -1089,9 +1089,13 @@ def show_edit_studentprofile(request):
         except ObjectDoesNotExist:
             acads = Education.objects.create(student_profile=student_profile)
         skill = Skill.objects.filter(user_profile=student_profile)
+        skill_list = []
+        for s in skill:
+            if s.skill != '':
+                skill_list.append(s)
         context = {'student_profile': student_profile, 'hackathon_list': hackathon, 'project_list': project,
                    'committee_list': committee, 'beproject': beproject, 'researchpaper_list': researchpaper,
-                   'internship_list': internship, 'acads': acads, 'skill_list': skill}
+                   'internship_list': internship, 'acads': acads, 'skill_list': skill_list}
         return render(request, 'user_profile/edit_student_profile_2.html', context)
     else:
         return HttpResponseRedirect('/login/student/')
@@ -1104,7 +1108,10 @@ def edit_basic_info(request, id):
         student_profile.last_name = request.POST.get('lname')
         student_profile.department = request.POST.get('department')
         print(request.POST.get('gender'))
-        student_profile.gender = request.POST.get('gender')
+        if (request.POST.get('gender') != None):
+            student_profile.gender = request.POST.get('gender')
+        if (request.POST.get('year') != None):
+            student_profile.year = request.POST.get('year')
         student_profile.mobileNo = request.POST.get('mobileNo')
         student_profile.save()
         print('IT WORKS ASSHOLE')
@@ -1118,15 +1125,24 @@ def edit_academic_info(request, id):
             education = Education.objects.get(student_profile=student_profile)
         except ObjectDoesNotExist:
             education = Education.objects.create(student_profile=student_profile)
-        education.sem1_gpa = request.POST.get('sem1_gpa')
-        education.sem2_gpa = request.POST.get('sem2_gpa')
-        education.sem3_gpa = request.POST.get('sem3_gpa')
-        print(request.POST.get('sem1_gpa'))
-        education.sem4_gpa = request.POST.get('sem4_gpa')
-        education.sem5_gpa = request.POST.get('sem5_gpa')
-        education.sem6_gpa = request.POST.get('sem6_gpa')
-        education.sem7_gpa = request.POST.get('sem7_gpa')
-        education.sem8_gpa = request.POST.get('sem8_gpa')
+        if ((request.POST.get('sem1_gpa')) != ''):
+            education.sem1_gpa = request.POST.get('sem1_gpa')
+        if ((request.POST.get('sem2_gpa')) != ''):
+            education.sem2_gpa = request.POST.get('sem2_gpa')
+        if ((request.POST.get('sem3_gpa')) != ''):
+            education.sem3_gpa = request.POST.get('sem3_gpa')
+        if ((request.POST.get('sem4_gpa')) != ''):
+            education.sem4_gpa = request.POST.get('sem4_gpa')
+        if ((request.POST.get('sem5_gpa')) != ''):
+            education.sem5_gpa = request.POST.get('sem5_gpa')
+        if ((request.POST.get('sem6_gpa')) != ''):
+            education.sem6_gpa = request.POST.get('sem6_gpa')
+        if ((request.POST.get('sem7_gpa')) != ''):
+            education.sem7_gpa = request.POST.get('sem7_gpa')
+        if ((request.POST.get('sem8_gpa')) != ''):
+            education.sem8_gpa = request.POST.get('sem8_gpa')
+
+
         # student_profile.subject_semester = request.POST.get('')
         education.save()
         print('IT WORKS ASSHOLE')
@@ -1172,16 +1188,20 @@ def edit_project_info(request, id):
     if request.method == 'POST':
         student_profile = StudentProfile.objects.get(id=id)
         project = Project.objects.create(student_profile=student_profile)
-
+        skill = Skill.objects.create(user_profile=student_profile)
+        skill.skill = request.POST.get('skill')
         project.ProjURL = request.POST.get('url')
         project.ProjName = request.POST.get('name')
         project.ProjDesc = request.POST.get('description')
+        # project.image1 = request.POST.get('image')
+        project.skill = skill
         project.save()
+        skill.save()
         return HttpResponse('done')
     else:
         data = Project.objects.last()
         return JsonResponse({"ProjName": data.ProjName, "ProjURL": data.ProjURL, "ProjDesc": data.ProjDesc,
-                             "id": data.id})
+                             "id": data.id, "Skill": data.skill.skill})
 
 
 def edit_internship_info(request, id):
