@@ -140,16 +140,16 @@
                             </label>
                             <div class="col-sm-8">
                               <label>
-                                <input type="radio" name="year" class="flat-red" checked>&nbsp;FE
+                                <input type="radio" name="year" class="flat-red" value="FE">&nbsp;FE
                               </label>
                               <label>
-                                <input type="radio" name="year" class="flat-red">&nbsp;SE
+                                <input type="radio" name="year" class="flat-red" value="SE">&nbsp;SE
                               </label>
                               <label>
-                                <input type="radio" name="year" class="flat-red">&nbsp;TE
+                                <input type="radio" name="year" class="flat-red" value="TE">&nbsp;TE
                               </label>
                               <label>
-                                <input type="radio" name="year" class="flat-red">&nbsp;BE
+                                <input type="radio" name="year" class="flat-red" value="BE">&nbsp;BE
                               </label>
                             </div>
                           </div>
@@ -475,6 +475,15 @@
                                           <input type="url" name="url" class="form-control" id="url">
                                         </div>
                                       </div>
+                                      <div class="form-group">
+                                        <label for="skill" class="col-sm-2 control-label"> Skill</label>
+
+                                        <div class="col-sm-8">
+                                          <input type="text" name="skill" class="form-control" id="skill">
+                                        </div>
+                                      </div>
+                                      <!--label for="image" class="col-sm-2 control-label"> Image</label-->
+                                      <!--input type="file" name="pic" accept="image/*" id="image"-->
                                     </div>
                                     <div class="box-footer">
 
@@ -509,6 +518,15 @@
                                             <p name="url" class="form-control" id="url">{{project.ProjURL}}</p>
                                           </div>
                                         </div>
+
+                                        <div class="form-group">
+                                          <label for="skill" class="col-sm-2 control-label"> Skill</label>
+
+                                          <div class="col-sm-8">
+                                            <p name="skill" class="form-control" id="skill">{{project.skill.skill}}</p>
+                                          </div>
+                                        </div>
+
                                       </div>
 
                                       <div class="box-footer">
@@ -1356,6 +1374,7 @@
         console.log(url)
       });
       setTimeout(add_project, 500);
+      setTimeout(add_skill, 500);
     }
     function add_project(){
       $.getJSON("/edit_project_info/{{student_profile.id}}", function(data){
@@ -1380,19 +1399,24 @@
         d3.setAttribute("class", "form-group");
         var d4 = document.createElement('div');
         d4.setAttribute("class", "form-group");
+        var d5 = document.createElement('div');
+        d5.setAttribute("class", "form-group");
         var innerdiv1 = document.createElement('div');
         var innerdiv2 = document.createElement('div');
         var innerdiv3 = document.createElement('div');
+        var innerdiv4 = document.createElement('div');
         innerdiv1.setAttribute("class", "col-sm-8");
         innerdiv2.setAttribute("class", "col-sm-8");
         innerdiv3.setAttribute("class", "col-sm-8");
-
+        innerdiv4.setAttribute("class", "col-sm-8");
         var l1 = document.createElement('label');
         var l2 = document.createElement('label');
         var l3 = document.createElement('label');
+        var l4 = document.createElement('label');
         var p1 = document.createElement('p');
         var p2 = document.createElement('p');
         var p3 = document.createElement('p');
+        var p4 = document.createElement('p');
         var b = document.createElement('button');
         l1.setAttribute("class", "col-sm-2 control-label");
         p1.setAttribute("class", "form-control");
@@ -1400,12 +1424,16 @@
         p2.setAttribute("class", "form-control");
         l3.setAttribute("class", "col-sm-2 control-label");
         p3.setAttribute("class", "form-control");
+        l4.setAttribute("class", "col-sm-2 control-label");
+        p4.setAttribute("class", "form-control");
         p1.append(obj.ProjName);
         p2.append(obj.ProjDesc);
         p3.append(obj.ProjURL);
+        p4.append(obj.Skill);
         innerdiv1.append(p1);
         innerdiv2.append(p2);
         innerdiv3.append(p3);
+        innerdiv4.append(p4);
         b.append('Delete');
         b.setAttribute("type", "submit");
         b.setAttribute("class", "btn btn-info pull-right");
@@ -1415,10 +1443,11 @@
         l1.append('Competition Name');
         l2.append('Desc');
         l3.append('URL');
+        l4.append('Skill');
         d1.append(l1, innerdiv1);
         d2.append(l2, innerdiv2);
         d3.append(l3, innerdiv3);
-
+        d4.append(l4, innerdiv4);
         var inputElem = document.createElement('input');
         inputElem.type = 'hidden';
         inputElem.name = 'csrfmiddlewaretoken';
@@ -1426,7 +1455,7 @@
         f.appendChild(inputElem);
         footer.append(b);
         //f.append("{% csrf_token%}");
-        box.append(d1,d2,d3);
+        box.append(d1,d2,d3,d4);
         f.append(box, footer);
         div.append(f);
       });
