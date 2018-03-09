@@ -1088,13 +1088,10 @@ def show_edit_studentprofile(request):
             acads = Education.objects.get(student_profile=student_profile)
         except ObjectDoesNotExist:
             acads = Education.objects.create(student_profile=student_profile)
-        try:
-            skill = Skill.objects.filter(user_profile=student_profile)
-        except ObjectDoesNotExist:
-            skill = Skill.objects.create(user_profile=student_profile)
+        skill = Skill.objects.filter(user_profile=student_profile)
         context = {'student_profile': student_profile, 'hackathon_list': hackathon, 'project_list': project,
                    'committee_list': committee, 'beproject': beproject, 'researchpaper_list': researchpaper,
-                   'internship_list': internship, 'acads': acads, 'skill': skill}
+                   'internship_list': internship, 'acads': acads, 'skill_list': skill}
         return render(request, 'user_profile/edit_student_profile_2.html', context)
     else:
         return HttpResponseRedirect('/login/student/')
@@ -1139,15 +1136,15 @@ def edit_academic_info(request, id):
 def edit_skill_info(request, id):
     if request.method == 'POST':
         student_profile = StudentProfile.objects.get(id=id)
-        try:
-            skill = Skill.objects.get(user_profile=student_profile)
-        except ObjectDoesNotExist:
-            skill = Skill.objects.create(user_profile=student_profile)
+        skill = Skill.objects.create(user_profile=student_profile)
         skill.skill = request.POST.get('skill')
         print(request.POST.get('skill'))
         skill.save()
         print('.....')
-        return HttpResponse('done')
+        return HttpResponseRedirect('')
+    else:
+        data = Skill.objects.last()
+        return JsonResponse({"skill": data.skill, "id": data.id})
 
 
 def edit_hackathon_info(request, id):
@@ -1163,7 +1160,7 @@ def edit_hackathon_info(request, id):
         hackathon.save()
         print("sdsdsdsd")
 
-        return HttpResponseRedirect('/editprofile/')
+        return HttpResponseRedirect('')
     else:
 
         data = Hackathon.objects.last()
@@ -1284,4 +1281,10 @@ def delete_internship_info(request, id):
 def delete_researchpaper_info(request, id):
         researchpaper = ResearchPaper.objects.get(id=id)
         researchpaper.delete()
+        return HttpResponseRedirect('/editprofile/')
+
+
+def delete_skill_info(request, id):
+        skill = Skill.objects.get(id=id)
+        skill.delete()
         return HttpResponseRedirect('/editprofile/')

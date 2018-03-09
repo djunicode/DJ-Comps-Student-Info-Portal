@@ -300,7 +300,7 @@
                                   <label for="skill" class="col-sm-2 control-label"> Skills</label>
 
                                   <div class="col-sm-8">
-                                    <input type="text" name="skill" class="form-control" id="skill" value="{{skill.skill}}">
+                                    <input type="text" name="skill" class="form-control" id="skill">
                                   </div>
                                 </div>
                               </div>
@@ -309,6 +309,25 @@
                                 <button type="button" class="btn btn-info pull-right" onClick="submitSkill();">Submit</button>
                               </div>
                             </form>
+
+                            {% for skill in skill_list %}
+                            <form id="SkillInfo" class="form-horizontal" action="/delete_skill_info/{{skill.id}}">
+                              {% csrf_token %}
+                              <div class="box-body">
+                                <div class="form-group">
+                                  <label for="skill" class="col-sm-2 control-label"> Skills</label>
+
+                                  <div class="col-sm-8">
+                                    <p type="text" name="skill" class="form-control" id="skill">{{skill.skill}}</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="box-footer">
+
+                                <button type="submit" class="btn btn-info pull-right">Delete</button>
+                              </div>
+                            </form>
+                            {% endfor %}
                           </div>
                         </div>
 
@@ -683,7 +702,7 @@
                                             <label for="location" class="col-sm-2 control-label"> Location</label>
 
                                             <div class="col-sm-8">
-                                              <input type="text" name="location" class="form-control" id="location">
+                                              <input type="text" name="location" class="form-control" id="location" required>
                                             </div>
                                           </div>
 
@@ -1428,6 +1447,54 @@
       $.post( url, data, function( data, status ) {
         //console.log("The Data Sent is: " + data);
         console.log(url)
+      });
+      setTimeout(add_skill, 500);
+    }
+
+    function add_skill(){
+      $.getJSON("/edit_skill_info/{{student_profile.id}}", function(data){
+
+        console.log(data)
+        var obj = JSON.parse(JSON.stringify(data));
+
+        var div = document.getElementById("SkillData");
+        var box = document.createElement('div');
+        box.setAttribute("class", "box-body");
+
+
+        var footer = document.createElement('div');
+        footer.setAttribute("class", "box-footer");
+        var f = document.createElement('form');
+        f.setAttribute("action", "/delete_skill_info/".concat(obj.id));
+        f.setAttribute("method", "POST");
+        f.setAttribute("class", "form-horizontal")
+        var d1 = document.createElement('div');
+        d1.setAttribute("class", "form-group");
+        var innerdiv1 = document.createElement('div');
+        innerdiv1.setAttribute("class", "col-sm-8");
+        var l1 = document.createElement('label');
+        var p1 = document.createElement('p');
+        var b = document.createElement('button');
+        l1.setAttribute("class", "col-sm-2 control-label");
+        l1.append("Skill");
+        p1.append(obj.skill);
+        innerdiv1.append(p1)
+        p1.setAttribute("class", "form-control");
+        b.setAttribute("type", "submit");
+        b.setAttribute("class", "btn btn-info pull-right");
+        b.append("Delete");
+        d1.append(l1, innerdiv1);
+        var inputElem = document.createElement('input');
+        inputElem.type = 'hidden';
+        inputElem.name = 'csrfmiddlewaretoken';
+        inputElem.value = '{{ csrf_token }}';
+        f.appendChild(inputElem);
+        footer.append(b);
+        //f.append("{% csrf_token%}");
+        box.append(d1);
+        f.append(box, footer);
+        div.append(f);
+
       });
     }
 
