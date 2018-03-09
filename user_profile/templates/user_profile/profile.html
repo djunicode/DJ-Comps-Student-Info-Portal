@@ -200,9 +200,9 @@
                                    <dt> Certificate</dt>
                                    <dd> :  <img  src="{{ intern.Certificate.url }}">  </dd>
                                     {% endif %}
+                                    {% if intern.image1 %}
                                     <dt> Screenshot</dt> :
                                     <dd>
-                                    {% if intern.image1 %}
                                     <img src="{{ intern.image1.url }}">
                                     {% endif %}
                                     {% if intern.image2 %}
@@ -219,7 +219,7 @@
                                     {% endif %}
                                     </dd>
 
-                                </dl>
+                                </dl><br>
                                   {% endfor %}
                               </div>
                            </div>
@@ -251,9 +251,9 @@
                                     {% endif %}
                                     <dt>Skill </dt>
                                     <dd>: {{ intern.skill }}</dd>
+                                    {% if intern.image1 %}
                                     <dt> Screenshot</dt> :
                                     <dd>
-                                      {% if intern.image1 %}
                                       <img src="{{ intern.image1.url }}">
                                       {% endif %}
                                     {% if intern.image2  %}
@@ -270,7 +270,7 @@
                                     {% endif %}
                                     </dd>
 
-                                </dl>
+                                </dl><br>
                                   {% endfor %}
                               </div>
                            </div>
@@ -311,9 +311,9 @@
                                   <dt> Certificate</dt>
                                   <dd> :  <img  src="{{ intern.Certificate.url }}">  </dd>
                                    {% endif %}
+                                   {% if intern.image1 %}
                                    <dt> Screenshot</dt> :
                                    <dd>
-                                     {% if intern.image1 %}
                                      <img src="{{ intern.image1.url }}">
                                      {% endif %}
                                    {% if intern.image2  %}
@@ -330,7 +330,7 @@
                                    {% endif %}
                                    </dd>
 
-                               </dl>
+                               </dl><br>
                                  {% endfor %}
                              </div>
                           </div>
@@ -349,7 +349,7 @@
                               {% for x in gpa_list %}
                               {% if x != None %}
                                 Semester  {{forloop.counter}} - {{x}} <br>
-                              {% endif %}
+                              {% endif %}<br>
                               {% endfor %}
                               <!-- /.box-body -->
                            </div>
@@ -387,9 +387,9 @@
                                           {% endfor %}
                                     </dd>
                                     {% endif %}
+                                    {% if intern.image1 %}
                                     <dt> Screenshot</dt> :
                                     <dd>
-                                      {% if intern.image1 %}
                                       <img src="{{ intern.image1.url }}">
                                       {% endif %}
                                     {% if intern.image2  %}
@@ -406,7 +406,7 @@
                                     {% endif %}
                                     </dd>
 
-                                </dl>
+                                </dl><br>
                                   {% endfor %}
                               </div>
                            </div>
@@ -446,9 +446,9 @@
                                       <dt>Teacher</dt>
                                       <dd> : {{ intern.Published_under }}  </dd>
                                     {% endif %}
+                                    {% if intern.image1 %}
                                     <dt> Screenshot</dt> :
                                     <dd>
-                                      {% if intern.image1 %}
                                       <img src="{{ intern.image1.url }}">
                                       {% endif %}
                                     {% if intern.image2  %}
@@ -465,7 +465,7 @@
                                     {% endif %}
                                     </dd>
 
-                                </dl>
+                                </dl><br>
                                   {% endfor %}
                               </div>
                            </div>
@@ -495,9 +495,9 @@
                                       <dt>Date</dt>
                                       <dd> : {{ intern.Date }}  </dd>
                                     {% endif %}
+                                    {% if intern.image1 %}
                                     <dt> Screenshot</dt> :
                                     <dd>
-                                      {% if intern.image1 %}
                                       <img src="{{ intern.image1.url }}">
                                       {% endif %}
                                     {% if intern.image2  %}
@@ -515,6 +515,7 @@
                                     </dd>
 
                                 </dl>
+                                <br>
                                   {% endfor %}
                               </div>
                            </div>
