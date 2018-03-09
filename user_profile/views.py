@@ -456,7 +456,8 @@ def searchany(request, skillss):
     if request.method == 'POST':
         searchquery = request.POST.get('searchany')
         # queryset=StudentProfile.objects.filter(department__trigram_similar=searchquery)
-        dept_vector = SearchVector('first_name', 'last_name', 'department', 'bio', 'mobileNo')
+        dept_vector = SearchVector('first_name', 'last_name', 'department', 'bio', 'year',
+                                   'mobileNo', 'github_id')
         skill_vector = SearchVector('skill')
         hackathon_vector = SearchVector('CompetitionName', 'Desc', 'URL')
         internship_vector = SearchVector('company')
@@ -464,20 +465,27 @@ def searchany(request, skillss):
         beproject_vector = SearchVector('ProjName')
 
         # bio_vector = SearchVector('bio')
-        result = StudentProfile.objects.annotate(
-            search=dept_vector).filter(search=searchquery)
+        result = list(StudentProfile.objects.annotate(
+            search=dept_vector).filter(search=searchquery))
         skills = Skill.objects.annotate(
             search=skill_vector).filter(search=searchquery)
+        result.extend(list(StudentProfile.objects.filter(skill__in=skills).distinct()))
         hackathonset = Hackathon.objects.annotate(
             search=hackathon_vector).filter(search=searchquery)
+        result.extend(list(StudentProfile.objects.filter(hackathon__in=hackathonset).distinct()))
         internshipset = Internship.objects.annotate(
             search=internship_vector).filter(search=searchquery)
-        projects = Project.objects.annotate(
-            search=project_vector).filter(search=searchquery)
+        result.extend(list(StudentProfile.objects.filter(internships__in=internshipset).distinct()))
+        projects = list(Project.objects.annotate(
+            search=project_vector).filter(search=searchquery))
+        result.extend(list(StudentProfile.objects.filter(projects__in=projects).distinct()))
         beprojectset = BeProject.objects.annotate(
             search=beproject_vector).filter(search=searchquery)
-
+        projects.extend(list(beprojectset))
+        result.extend(list(StudentProfile.objects.filter(beprojects__in=beprojectset).distinct()))
+        print(projects)
         # StudentProfile.objects.annotate(search=skill_vector).filter(search=searchquery)
+        # print(s)
         context['result'] = result
         context['skills'] = skillss
         # context['hackathonset'] = hackathonset
