@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^project/(\d+)$', views.view_project),
     url(r'^beproject/(\d+)$', views.view_beproject),
     url(r'^searchany/', views.searchany, name='searchany'),
-    url(r'^editprofile', views.show_edit_studentprofile),
+    url(r'^editprofile', views.show_edit_studentprofile, name='show_edit_studentprofile'),
     url(r'^edit_basic_info/(\d+)$', views.edit_basic_info),
     url(r'^edit_academic_info/(\d+)$', views.edit_academic_info),
     url(r'^edit_skill_info/(\d+)$', views.edit_skill_info),
@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^delete_project_info/(\d+)$', views.delete_project_info),
     url(r'^delete_hackathon_info/(\d+)$', views.delete_hackathon_info),
     url(r'^delete_committee_info/(\d+)$', views.delete_committee_info),
+    url(r'^delete_skill_info/(\d+)$', views.delete_skill_info),
     url(r'^delete_internship_info/(\d+)$', views.delete_internship_info),
     url(r'^delete_researchpaper_info/(\d+)$', views.delete_researchpaper_info),
 ]

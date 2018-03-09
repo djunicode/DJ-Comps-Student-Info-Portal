@@ -84,7 +84,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Edit Profile</a>
+                  <a href="{% url 'user_profile:show_edit_studentprofile' %}" class="btn btn-default btn-flat">Edit Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="{% url 'user_profile:logout_student' %}" class="btn btn-default btn-flat">Sign out</a>

@@ -202,7 +202,9 @@
                                     {% endif %}
                                     <dt> Screenshot</dt> :
                                     <dd>
+                                    {% if intern.image1 %}
                                     <img src="{{ intern.image1.url }}">
+                                    {% endif %}
                                     {% if intern.image2 %}
                                     <img src="{{ intern.image2.url }}">
                                     {% endif %}
@@ -251,7 +253,9 @@
                                     <dd>: {{ intern.skill }}</dd>
                                     <dt> Screenshot</dt> :
                                     <dd>
-                                    <img src="{{ intern.image1.url }}">
+                                      {% if intern.image1 %}
+                                      <img src="{{ intern.image1.url }}">
+                                      {% endif %}
                                     {% if intern.image2  %}
                                     <img src="{{ intern.image2.url }}">
                                     {% endif %}
@@ -309,7 +313,9 @@
                                    {% endif %}
                                    <dt> Screenshot</dt> :
                                    <dd>
-                                   <img src="{{ intern.image1.url }}">
+                                     {% if intern.image1 %}
+                                     <img src="{{ intern.image1.url }}">
+                                     {% endif %}
                                    {% if intern.image2  %}
                                    <img src="{{ intern.image2.url }}">
                                    {% endif %}
@@ -383,7 +389,9 @@
                                     {% endif %}
                                     <dt> Screenshot</dt> :
                                     <dd>
-                                    <img src="{{ intern.image1.url }}">
+                                      {% if intern.image1 %}
+                                      <img src="{{ intern.image1.url }}">
+                                      {% endif %}
                                     {% if intern.image2  %}
                                     <img src="{{ intern.image2.url }}">
                                     {% endif %}
@@ -440,7 +448,9 @@
                                     {% endif %}
                                     <dt> Screenshot</dt> :
                                     <dd>
-                                    <img src="{{ intern.image1.url }}">
+                                      {% if intern.image1 %}
+                                      <img src="{{ intern.image1.url }}">
+                                      {% endif %}
                                     {% if intern.image2  %}
                                     <img src="{{ intern.image2.url }}">
                                     {% endif %}
@@ -487,7 +497,9 @@
                                     {% endif %}
                                     <dt> Screenshot</dt> :
                                     <dd>
-                                    <img src="{{ intern.image1.url }}">
+                                      {% if intern.image1 %}
+                                      <img src="{{ intern.image1.url }}">
+                                      {% endif %}
                                     {% if intern.image2  %}
                                     <img src="{{ intern.image2.url }}">
                                     {% endif %}
