@@ -1108,9 +1108,9 @@ def edit_basic_info(request, id):
         student_profile.last_name = request.POST.get('lname')
         student_profile.department = request.POST.get('department')
         print(request.POST.get('gender'))
-        if (request.POST.get('gender') != None):
+        if (request.POST.get('gender') is not None):
             student_profile.gender = request.POST.get('gender')
-        if (request.POST.get('year') != None):
+        if (request.POST.get('year') is not None):
             student_profile.year = request.POST.get('year')
         student_profile.mobileNo = request.POST.get('mobileNo')
         student_profile.save()
@@ -1141,8 +1141,6 @@ def edit_academic_info(request, id):
             education.sem7_gpa = request.POST.get('sem7_gpa')
         if ((request.POST.get('sem8_gpa')) != ''):
             education.sem8_gpa = request.POST.get('sem8_gpa')
-
-
         # student_profile.subject_semester = request.POST.get('')
         education.save()
         print('IT WORKS ASSHOLE')
