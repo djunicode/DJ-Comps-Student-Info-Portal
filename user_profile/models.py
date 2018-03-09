@@ -142,7 +142,7 @@ class Hackathon(models.Model):
 
 
 class Skill(models.Model):
-    user_profile = models.ForeignKey(StudentProfile)
+    user_profile = models.ForeignKey(StudentProfile, related_name="skill")
     skill = models.CharField(max_length=50)
     history = HistoricalRecords()
 

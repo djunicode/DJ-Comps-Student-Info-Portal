@@ -451,12 +451,13 @@ def student_editprofile(request, sapid):
         return HttpResponse("Please Login")
 
 
-def searchany(request):
+def searchany(request, skillss):
     context = {}
     if request.method == 'POST':
         searchquery = request.POST.get('searchany')
         # queryset=StudentProfile.objects.filter(department__trigram_similar=searchquery)
-        dept_vector = SearchVector('first_name', 'last_name', 'department', 'bio', 'mobileNo')
+        dept_vector = SearchVector('first_name', 'last_name', 'department', 'bio', 'year',
+                                   'mobileNo', 'github_id')
         skill_vector = SearchVector('skill')
         hackathon_vector = SearchVector('CompetitionName', 'Desc', 'URL')
         internship_vector = SearchVector('company')
@@ -464,30 +465,37 @@ def searchany(request):
         beproject_vector = SearchVector('ProjName')
 
         # bio_vector = SearchVector('bio')
-        queryset = StudentProfile.objects.annotate(
-            search=dept_vector).filter(search=searchquery)
-        skillset = Skill.objects.annotate(
+        result = list(StudentProfile.objects.annotate(
+            search=dept_vector).filter(search=searchquery))
+        skills = Skill.objects.annotate(
             search=skill_vector).filter(search=searchquery)
+        result.extend(list(StudentProfile.objects.filter(skill__in=skills).distinct()))
         hackathonset = Hackathon.objects.annotate(
             search=hackathon_vector).filter(search=searchquery)
+        result.extend(list(StudentProfile.objects.filter(hackathon__in=hackathonset).distinct()))
         internshipset = Internship.objects.annotate(
             search=internship_vector).filter(search=searchquery)
-        projectset = Project.objects.annotate(
-            search=project_vector).filter(search=searchquery)
+        result.extend(list(StudentProfile.objects.filter(internships__in=internshipset).distinct()))
+        projects = list(Project.objects.annotate(
+            search=project_vector).filter(search=searchquery))
+        result.extend(list(StudentProfile.objects.filter(projects__in=projects).distinct()))
         beprojectset = BeProject.objects.annotate(
             search=beproject_vector).filter(search=searchquery)
-
+        projects.extend(list(beprojectset))
+        result.extend(list(StudentProfile.objects.filter(beprojects__in=beprojectset).distinct()))
+        print(projects)
         # StudentProfile.objects.annotate(search=skill_vector).filter(search=searchquery)
-        context['queryset'] = queryset
-        context['skillset'] = skillset
-        context['hackathonset'] = hackathonset
-        context['internshipset'] = internshipset
-        context['projectset'] = projectset
-        context['beprojectset'] = beprojectset
+        # print(s)
+        context['result'] = result
+        context['skills'] = skillss
+        # context['hackathonset'] = hackathonset
+        # context['internshipset'] = internshipset
+        context['projects'] = projects
+        # context['beprojectset'] = beprojectset
 
-        return render(request, 'user_profile/searchany.html', context)
+        return render(request, 'user_profile/filter.html', context)
     else:
-        return render(request, 'user_profile/searchany.html')
+        return render(request, 'user_profile/filter.html', {})
 
 
 def notifs(request):
@@ -873,47 +881,43 @@ def notifs(request):
 
 
 def student_list(request):
+    most_common_to_take = 3
+    skills = Skill.objects.all()
+    list_of_skills = [skill.skill for skill in skills]
+    most_frequent = collections.Counter(
+        list_of_skills).most_common(most_common_to_take)
+    skillss = [skill[0] for skill in most_frequent]
     if request.method == 'POST':
-        most_common_to_take = 3
-        skills = Skill.objects.all()
-        list_of_skills = [skill.skill for skill in skills]
-        most_frequent = collections.Counter(
-            list_of_skills).most_common(most_common_to_take)
-        skillss = [skill[0] for skill in most_frequent]
-
-        year = request.POST.getlist('year[]')
-        skills = request.POST.getlist('skills[]')
-        # gpa = request.POST.getlist('gpa_list[]')
-
-        print(year)
-        print(skills)
-        # print(gpa_list)
-        if year and skills:
-            result = StudentProfile.objects.filter(year__in=year).filter(
-                skill__skill__in=skills).distinct()
-            projects = Project.objects.filter(
-                skill__skill__in=skills).distinct()
-        elif year:
-            result = StudentProfile.objects.filter(year__in=year)
-            projects = []
-        elif skills:
-            result = StudentProfile.objects.filter(
-                skill__skill__in=skills).distinct()
-            projects = Project.objects.filter(
-                skill__skill__in=skills).distinct()
+        if request.POST.get('searchany'):
+            return searchany(request, skillss)
         else:
-            result = []
-            projects = []
-        print(result, "res")
+            year = request.POST.getlist('year[]')
+            skills = request.POST.getlist('skills[]')
+            # gpa = request.POST.getlist('gpa_list[]')
 
-        return render(request, 'user_profile/filter.html', {'result': result, 'skills': skillss, 'projects': projects})
+            print(year)
+            print(skills)
+            # print(gpa_list)
+            if year and skills:
+                result = StudentProfile.objects.filter(year__in=year).filter(
+                    skill__skill__in=skills).distinct()
+                projects = Project.objects.filter(
+                    skill__skill__in=skills).distinct()
+            elif year:
+                result = StudentProfile.objects.filter(year__in=year)
+                projects = []
+            elif skills:
+                result = StudentProfile.objects.filter(
+                    skill__skill__in=skills).distinct()
+                projects = Project.objects.filter(
+                    skill__skill__in=skills).distinct()
+            else:
+                result = []
+                projects = []
+            print(result, "res")
+            return render(request, 'user_profile/filter.html', {'result': result, 'skills': skillss,
+                          'projects': projects})
     else:
-        most_common_to_take = 3
-        skills = Skill.objects.all()
-        list_of_skills = [skill.skill for skill in skills]
-        most_frequent = collections.Counter(
-            list_of_skills).most_common(most_common_to_take)
-        skillss = [skill[0] for skill in most_frequent]
         return render(request, 'user_profile/filter.html', {'skills': skillss})
 
 
