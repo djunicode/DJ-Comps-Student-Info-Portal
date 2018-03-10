@@ -91,8 +91,8 @@
                   <!-- /.box -->
             </div>
           </div>
-          {% for result in result %}
           <div class="row">
+            {% for result in result %}
             <div class="col-md-4">
               <div class="box box-widget widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
@@ -133,11 +133,11 @@
                     </div>
               </div>
             </div>
+            {% endfor %}
           </div>
-          {% endfor %}
           <hr/>
-          {% for project in projects %}
           <div class="row">
+            {% for project in projects %}
             <div class="col-md-4">
                 <!-- Widget: user widget style 1 -->
                 <div class="box box-widget widget-userser-2">
@@ -157,8 +157,102 @@
                 </div>
                 <!-- /.widget-user -->
               </div>
+              {% endfor %}
             </div>
-          {% endfor %}
+            <hr/>
+            <div class="row">
+              {% for hackathon in hackathons %}
+              <div class="col-md-4">
+                  <!-- Widget: user widget style 1 -->
+                  <div class="box box-widget widget-userser-2">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="pad widget-user-header bg-yellow">
+                      <!-- /.widget-user-image -->
+                      <h3 class="widget-user-username">{{ hackathon.student_profile.Sap_Id }}</h3>
+                      <h5 class="widget-user-desc">{{ hackathon.CompetitionName }}</h5>
+                    </div>
+                    <div class="box-footer no-padding">
+                      <ul class="pad nav nav-stacked">
+                        <li>{{ hackathon.URL }}</li>
+                        <li>{{ project.ProjDesc }}</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- /.widget-user -->
+                </div>
+                {% endfor %}
+              </div>
+              <hr/>
+              <div class="row">
+                {% for internship in internships %}
+                <div class="col-md-4">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-userser-2">
+                      <!-- Add the bg color to the header using any of the bg-* classes -->
+                      <div class="pad widget-user-header bg-yellow">
+                        <!-- /.widget-user-image -->
+                        <h3 class="widget-user-username">{{ internship.employee.Sap_Id }}</h3>
+                        <h5 class="widget-user-desc">{{ internship.company }}</h5>
+                      </div>
+                      <div class="box-footer no-padding">
+                        <ul class="pad nav nav-stacked">
+                          <li>{{ internship.Position }}</li>
+                          <li> {{ internship.Loc }}</li>
+                          <li>{{ internship.desc }}</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- /.widget-user -->
+                  </div>
+                  {% endfor %}
+                </div>
+                <hr/>
+                <div class="row">
+                  {% for committee in committees %}
+                  <div class="col-md-4">
+                      <!-- Widget: user widget style 1 -->
+                      <div class="box box-widget widget-userser-2">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="pad widget-user-header bg-yellow">
+                          <!-- /.widget-user-image -->
+                          <h3 class="widget-user-username">{{ committee.employee.Sap_Id }}</h3>
+                          <h5 class="widget-user-desc">{{ committee.OrganisationName }}</h5>
+                        </div>
+                        <div class="box-footer no-padding">
+                          <ul class="pad nav nav-stacked">
+                            <li>{{ committee.YourPosition }}</li>
+                            <li>{{ committee.Desc }}</li>
+                          </ul>
+                        </div>
+                      </div>
+                      <!-- /.widget-user -->
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <hr/>
+                  <div class="row">
+                    {% for researchpaper in researchpapers %}
+                    <div class="col-md-4">
+                        <!-- Widget: user widget style 1 -->
+                        <div class="box box-widget widget-userser-2">
+                          <!-- Add the bg color to the header using any of the bg-* classes -->
+                          <div class="pad widget-user-header bg-yellow">
+                            <!-- /.widget-user-image -->
+                            <h3 class="widget-user-username">{{ researchpaper.student.Sap_Id }}</h3>
+                            <h5 class="widget-user-desc">{{ researchpaper.Title }}</h5>
+                          </div>
+                          <div class="box-footer no-padding">
+                            <ul class="pad nav nav-stacked">
+                              <li>{{ researchpaper.Publication }}</li>
+                              <li> {{ researchpaper.LinkToPaper }}</li>
+                              <li>{{ researchpaper.Desc }}</li>
+                            </ul>
+                          </div>
+                        </div>
+                        <!-- /.widget-user -->
+                      </div>
+                      {% endfor %}
+                    </div>
         </section>
     <!-- /.content -->
 {% endblock %}
