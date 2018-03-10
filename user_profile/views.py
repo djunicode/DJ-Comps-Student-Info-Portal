@@ -55,6 +55,7 @@ def register(request):
                     student=user, Sap_Id=Sap_Id, sap=sap, first_name=first_name,
                     last_name=last_name)
                 student.save()
+                auth_login(request, user)
                 student_profile_url = '/student_profile/' + str(student.id)
                 return HttpResponseRedirect(student_profile_url)
                 # return render(request, 'user_profile/profile.html', {"student": student})
