@@ -68,10 +68,22 @@
         </div>
       </div>
     </form>
-
   </div>
+
   <!-- /.form-box -->
 </div>
+{% if error%}
+  <div class="error-page">
+    <div class="error-content">
+      <h3><i class="fa fa-warning text-yellow"></i> {{ error }}</h3>
+    </div>
+    <!-- /.error-content -->
+  </div>
+  <!-- /.error-page -->
+{% endif %}
+
+
+
 <!-- /.register-box -->
 
 <!-- jQuery 3 -->

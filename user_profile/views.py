@@ -1010,6 +1010,7 @@ def teacher_dashboard(request):
     sem6_list = float(sum(sem6_list) / len(sem6_list)) if len(sem6_list) != 0 else []
     sem7_list = float(sum(sem7_list) / len(sem7_list)) if len(sem7_list) != 0 else []
     sem8_list = float(sum(sem8_list) / len(sem8_list)) if len(sem8_list) != 0 else []
+    print("Hi")
     print(sem1_list, sem2_list, sem3_list, sem4_list,
           sem5_list, sem6_list, sem7_list, sem8_list)
     context['avg_gpa'] = [sem1_list, sem2_list, sem3_list, sem4_list, sem5_list, sem6_list, sem7_list, sem8_list]
@@ -1067,6 +1068,17 @@ def teacher_dashboard(request):
     intern_date = [int(x) - int(intern_dates[0]) for x in intern_dates]
     print(intern_dates)
     print(intern_date)
+    total_regs = StudentProfile.objects.all().count()
+    total_intern = Internship.objects.all().count()
+    cgpa1 = [pointer.cgpa for pointer in StudentProfile.objects.all(
+    ) if pointer.cgpa is not None]
+    context['total_regs'] = total_regs
+    cgpa1 = float(sum(cgpa1) / len(cgpa1)) if len(cgpa1) != 0 else []
+    context['cgpa1'] = cgpa1
+    context['total_intern'] = total_intern
+    kt = KT.objects.all().count()
+    kt_perc = (float)((kt * 100) / total_regs)
+    context['kt_perc'] = kt_perc
     # return HttpResponse(intern_stats)
     return render(request, 'user_profile/teacherprofile.html', context)
 
