@@ -468,40 +468,47 @@ def searchany(request, skillss):
                                    'mobileNo', 'github_id')
         skill_vector = SearchVector('skill')
         hackathon_vector = SearchVector('CompetitionName', 'Desc', 'URL')
-        internship_vector = SearchVector('company')
-        project_vector = SearchVector('ProjName')
-        beproject_vector = SearchVector('ProjName')
-
+        internship_vector = SearchVector('company', 'Position', 'Loc', 'desc')
+        project_vector = SearchVector('ProjName', 'ProjURL', 'ProjDesc')
+        beproject_vector = SearchVector('ProjName', 'ProjURL', 'ProjDesc')
+        researchpaper_vector = SearchVector('Title', 'Publication', 'Desc', 'LinkToPaper')
+        committee_vector = SearchVector('OrganisationName', 'YourPosition', 'Desc')
         # bio_vector = SearchVector('bio')
         result = list(StudentProfile.objects.annotate(
             search=dept_vector).filter(search=searchquery))
         skills = Skill.objects.annotate(
             search=skill_vector).filter(search=searchquery)
         result.extend(list(StudentProfile.objects.filter(skill__in=skills).distinct()))
-        hackathonset = Hackathon.objects.annotate(
+        hackathons = Hackathon.objects.annotate(
             search=hackathon_vector).filter(search=searchquery)
-        result.extend(list(StudentProfile.objects.filter(hackathon__in=hackathonset).distinct()))
-        internshipset = Internship.objects.annotate(
+        result.extend(list(StudentProfile.objects.filter(hackathon__in=hackathons).distinct()))
+        internships = Internship.objects.annotate(
             search=internship_vector).filter(search=searchquery)
-        result.extend(list(StudentProfile.objects.filter(internships__in=internshipset).distinct()))
+        result.extend(list(StudentProfile.objects.filter(internships__in=internships).distinct()))
         projects = list(Project.objects.annotate(
             search=project_vector).filter(search=searchquery))
         result.extend(list(StudentProfile.objects.filter(projects__in=projects).distinct()))
-        beprojectset = BeProject.objects.annotate(
+        beprojects = BeProject.objects.annotate(
             search=beproject_vector).filter(search=searchquery)
-        projects.extend(list(beprojectset))
         projects.extend(list(Project.objects.filter(skill__in=skills)))
-        result.extend(list(StudentProfile.objects.filter(beprojects__in=beprojectset).distinct()))
+        result.extend(list(StudentProfile.objects.filter(beprojects__in=beprojects).distinct()))
+        researchpapers = ResearchPaper.objects.annotate(
+            search=researchpaper_vector).filter(search=searchquery)
+        result.extend(list(StudentProfile.objects.filter(researchpaper__in=researchpapers).distinct()))
+        committees = Committee.objects.annotate(
+            search=committee_vector).filter(search=searchquery)
+        result.extend(list(StudentProfile.objects.filter(committee__in=committees).distinct()))
         print(projects)
         # StudentProfile.objects.annotate(search=skill_vector).filter(search=searchquery)
         # print(s)
         context['result'] = result
         context['skills'] = skillss
-        # context['hackathonset'] = hackathonset
-        # context['internshipset'] = internshipset
+        context['hackathons'] = hackathons
+        context['internships'] = internships
         context['projects'] = projects
-        # context['beprojectset'] = beprojectset
-
+        context['beprojects'] = beprojects
+        context['committees'] = committees
+        context['researchpapers'] = researchpapers
         return render(request, 'user_profile/filter.html', context)
     else:
         return render(request, 'user_profile/filter.html', {})
@@ -1061,28 +1068,34 @@ def education_graphs():
     pass
 
 
-def view_internship(request, internshipid):
+def internship(request, internshipid):
     internship = Internship.objects.get(id=internshipid)
-    # return render(request, '',{'internship':internship})
-    return HttpResponse(internship.company)
+    return render(request, 'user_profile/internship.html', {'intern': internship})
 
 
-def view_hackathon(request, hackathonid):
+def hackathon(request, hackathonid):
     hackathon = Hackathon.objects.get(id=hackathonid)
-    # return render(request, '',{'hackathon':hackathon})
-    return HttpResponse(hackathon.CompetitionName)
+    return render(request, 'user_profile/hackathon.html', {'intern': hackathon})
 
 
-def view_project(request, projectid):
+def project(request, projectid):
     project = Project.objects.get(id=projectid)
-    # return render(request, '',{'project':project})
-    return HttpResponse(project.ProjName)
+    return render(request, 'user_profile/project.html', {'intern': project})
 
 
-def view_beproject(request, beprojectid):
+def beproject(request, beprojectid):
     beproject = BeProject.objects.get(id=beprojectid)
-    # return render(request, '',{'beproject':beproject})
-    return HttpResponse(beproject.ProjName)
+    return render(request, 'user_profile/beproject.html', {'intern': beproject})
+
+
+def committee(request, committeeid):
+    intern = Committee.objects.get(id=committeeid)
+    return render(request, 'user_profile/committee.html', {'intern': intern})
+
+
+def researchpaper(request, researchpaperid):
+    intern = ResearchPaper.objects.get(id=researchpaperid)
+    return render(request, 'user_profile/researchpaper.html', {'intern': intern})
 
 
 def show_edit_studentprofile(request):
