@@ -490,7 +490,6 @@ def searchany(request, skillss):
         result.extend(list(StudentProfile.objects.filter(projects__in=projects).distinct()))
         beprojects = BeProject.objects.annotate(
             search=beproject_vector).filter(search=searchquery)
-        projects.extend(list(beprojects))
         projects.extend(list(Project.objects.filter(skill__in=skills)))
         result.extend(list(StudentProfile.objects.filter(beprojects__in=beprojects).distinct()))
         researchpapers = ResearchPaper.objects.annotate(
@@ -1069,28 +1068,34 @@ def education_graphs():
     pass
 
 
-def view_internship(request, internshipid):
+def internship(request, internshipid):
     internship = Internship.objects.get(id=internshipid)
-    # return render(request, '',{'internship':internship})
-    return HttpResponse(internship.company)
+    return render(request, 'user_profile/internship.html', {'intern': internship})
 
 
-def view_hackathon(request, hackathonid):
+def hackathon(request, hackathonid):
     hackathon = Hackathon.objects.get(id=hackathonid)
-    # return render(request, '',{'hackathon':hackathon})
-    return HttpResponse(hackathon.CompetitionName)
+    return render(request, 'user_profile/hackathon.html', {'intern': hackathon})
 
 
-def view_project(request, projectid):
+def project(request, projectid):
     project = Project.objects.get(id=projectid)
-    # return render(request, '',{'project':project})
-    return HttpResponse(project.ProjName)
+    return render(request, 'user_profile/project.html', {'intern': project})
 
 
-def view_beproject(request, beprojectid):
+def beproject(request, beprojectid):
     beproject = BeProject.objects.get(id=beprojectid)
-    # return render(request, '',{'beproject':beproject})
-    return HttpResponse(beproject.ProjName)
+    return render(request, 'user_profile/beproject.html', {'intern': beproject})
+
+
+def committee(request, committeeid):
+    intern = Committee.objects.get(id=committeeid)
+    return render(request, 'user_profile/committee.html', {'intern': intern})
+
+
+def researchpaper(request, researchpaperid):
+    intern = ResearchPaper.objects.get(id=researchpaperid)
+    return render(request, 'user_profile/researchpaper.html', {'intern': intern})
 
 
 def show_edit_studentprofile(request):
