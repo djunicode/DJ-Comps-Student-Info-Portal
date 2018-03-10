@@ -110,11 +110,12 @@
 
                        </div>
                        <div class="row">
+                         {% if gpa_list %}
                          <div class="col-md-12">
                            <!-- LINE CHART -->
                            <div class="box box-info">
                              <div class="box-header with-border">
-                               <h3 class="box-title">Line Chart</h3>
+                               <h3 class="box-title">Semester Wise GPA</h3>
 
                                <div class="box-tools pull-right">
                                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -131,12 +132,14 @@
                            </div>
                            <!-- /.box -->
                          </div>
+                         {% endif %}
                            <!-- BAR CHART -->
+                          {% if projectskill_stats %}
                          <div class="col-md-offset-2 col-md-8">
 
                            <div class="box box-danger">
                              <div class="box-header with-border">
-                               <h3 class="box-title">Donut Chart</h3>
+                               <h3 class="box-title">Projects based on Skills</h3>
 
                                <div class="box-tools pull-right">
                                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -151,6 +154,7 @@
                            </div>
 
                          </div>
+                         {% endif %}
                        </div>
                        <!-- /.post -->
                     </div>
