@@ -34,6 +34,8 @@ def register(request):
             password = request.POST.get('password', '')
             email = request.POST.get('email', '')
             Sap_Id = request.POST.get('Sap_Id', '')
+            first_name = request.POST.get('first_name', '')
+            last_name = request.POST.get('last_name', '')
 
             if User.objects.filter(username=username).exists():
                 error = 'The Sap_id is already in use by another account.'
@@ -50,7 +52,8 @@ def register(request):
                 user.user_permissions.add(permission)
                 sap = str(Sap_Id)
                 student = StudentProfile.objects.create(
-                    student=user, Sap_Id=Sap_Id, sap=sap)
+                    student=user, Sap_Id=Sap_Id, sap=sap, first_name=first_name,
+                    last_name=last_name)
                 student.save()
                 student_profile_url = '/student_profile/' + str(student.id)
                 return HttpResponseRedirect(student_profile_url)
@@ -98,6 +101,8 @@ def register_teacher(request):
             password = request.POST.get('password', '')
             email = request.POST.get('email', '')
             Sap_Id = request.POST.get('Sap_Id', '')
+            first_name = request.POST.get('first_name', '')
+            last_name = request.POST.get('last_name', '')
 
             if User.objects.filter(username=username).exists():
                 error = 'The Sap_id is already in use by another account.'
@@ -142,7 +147,8 @@ def register_teacher(request):
                 user.user_permissions.add(permission)
                 user.save()
                 teacher = TeacherProfile.objects.create(
-                    teacher=user, Sap_Id=Sap_Id)
+                    teacher=user, Sap_Id=Sap_Id, first_name=first_name,
+                    last_name=last_name)
                 teacher.save()
                 teacher_profile_url = '/teacherdashboard/'
                 return HttpResponseRedirect(teacher_profile_url)
