@@ -48,8 +48,9 @@ def register(request):
                 permission = Permission.objects.get(
                     content_type=content_type, codename='view_student')
                 user.user_permissions.add(permission)
+                sap = str(Sap_Id)
                 student = StudentProfile.objects.create(
-                    student=user, Sap_Id=Sap_Id)
+                    student=user, Sap_Id=Sap_Id, sap=sap)
                 student.save()
                 student_profile_url = '/student_profile/' + str(student.id)
                 return HttpResponseRedirect(student_profile_url)
@@ -482,6 +483,7 @@ def searchany(request, skillss):
         beprojectset = BeProject.objects.annotate(
             search=beproject_vector).filter(search=searchquery)
         projects.extend(list(beprojectset))
+        projects.extend(list(Project.objects.filter(skill__in=skills)))
         result.extend(list(StudentProfile.objects.filter(beprojects__in=beprojectset).distinct()))
         print(projects)
         # StudentProfile.objects.annotate(search=skill_vector).filter(search=searchquery)
