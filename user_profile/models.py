@@ -257,3 +257,20 @@ class BeProject(models.Model):
 
     def __str__(self):
         return str(self.ProjName)
+
+
+class ExtraCurricular(models.Model):
+    student = models.ForeignKey(StudentProfile, related_name='extracurricular')
+    name = models.CharField(max_length=50, null=True, blank=True)
+    desc = models.CharField(max_length=500, null=True, blank=True)
+    achievements = models.CharField(max_length=500, null=True, blank=True)
+    date = models.DateField(("Date"), default=datetime.date.today)
+    Certificate = models.FileField(null=True, blank=True)
+    image1 = models.FileField(null=True, blank=True)
+    image2 = models.FileField(null=True, blank=True)
+    image3 = models.FileField(null=True, blank=True)
+    image4 = models.FileField(null=True, blank=True)
+    image5 = models.FileField(null=True, blank=True)
+
+    def __str__(self):
+        return str(self.name)

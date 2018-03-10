@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^beproject/(\d+)$', views.beproject, name='beproject'),
     url(r'^committee/(\d+)$', views.committee, name='committee'),
     url(r'^researchpaper/(\d+)$', views.researchpaper, name='researchpaper'),
+    url(r'^extracurricular/(\d+)$', views.extracurricular, name='extracurricular'),
     url(r'^searchany/', views.searchany, name='searchany'),
     url(r'^editprofile', views.show_edit_studentprofile, name='show_edit_studentprofile'),
     url(r'^edit_basic_info/(\d+)$', views.edit_basic_info),
