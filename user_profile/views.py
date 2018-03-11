@@ -981,7 +981,7 @@ def teacher_dashboard(request):
     cgpa1 = [pointer.cgpa for pointer in StudentProfile.objects.all(
     ) if pointer.cgpa is not None]
     context['total_regs'] = total_regs
-    cgpa1 = float(sum(cgpa1) / len(cgpa1)) if len(cgpa1) != 0 else []
+    cgpa1 = float(sum(cgpa1) / len(cgpa1)) if len(cgpa1) != 0 else 0
     context['cgpa1'] = cgpa1
     context['total_intern'] = total_intern
     kt = KT.objects.all().count()
