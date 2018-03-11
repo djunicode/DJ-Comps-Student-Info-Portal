@@ -1127,7 +1127,7 @@ def edit_hackathon_info(request, id):
         hackathon.Desc = request.POST.get('HackathonDescription')
         hackathon.URL = request.POST.get('HackathonUrl')
         hackathon.save()
-	number = "9833175929"
+        number = "9833175929"
         message = "THE STUDENT " + str(student_profile.first_name) + " has added the Hackathon " \
             + hackathon.CompetitionName + " to his profile"
         send_sms(message, number)
