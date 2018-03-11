@@ -43,4 +43,6 @@ urlpatterns = [
     url(r'^delete_skill_info/(\d+)$', views.delete_skill_info),
     url(r'^delete_internship_info/(\d+)$', views.delete_internship_info),
     url(r'^delete_researchpaper_info/(\d+)$', views.delete_researchpaper_info),
+    url(r'^delete_extra_info/(\d+)$', views.delete_extra_info),
+    url(r'^edit_extra_info/(\d+)$', views.edit_extra_info),
 ]
