@@ -1123,15 +1123,15 @@ def edit_hackathon_info(request, id):
         student_profile = StudentProfile.objects.get(id=id)
         hackathon = Hackathon.objects.create(student_profile=student_profile)
         # hackathon = Hackathon.objects.get(student_profile_id=id)
-        hackathon.CompetitionName = request.POST.get('name')
-        hackathon.Date = request.POST.get('date')
-        hackathon.Desc = request.POST.get('description')
-        hackathon.URL = request.POST.get('url')
+        hackathon.CompetitionName = request.POST.get('HackathonName')
+        hackathon.Date = request.POST.get('HackathonDate')
+        hackathon.Desc = request.POST.get('HackathonDescription')
+        hackathon.URL = request.POST.get('HackathonUrl')
         hackathon.save()
         number = "9833175929"
         message = "THE STUDENT " + str(student_profile.first_name) + " has added the Hackathon " \
             + hackathon.CompetitionName + " to his profile"
-        send_sms(message, number)
+        # send_sms(message, number)
         print("sdsdsdsd")
         return HttpResponseRedirect('')
     else:
