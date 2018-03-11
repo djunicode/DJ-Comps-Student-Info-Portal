@@ -1072,7 +1072,6 @@ def edit_basic_info(request, id):
             student_profile.year = request.POST.get('year')
         student_profile.mobileNo = request.POST.get('mobileNo')
         student_profile.save()
-        
         return HttpResponse('done')
 
 
@@ -1148,9 +1147,9 @@ def edit_project_info(request, id):
         project.ProjURL = request.POST.get('ProjectUrl')
         project.ProjName = request.POST.get('ProjectName')
         project.ProjDesc = request.POST.get('ProjectDescription')
-        #image1 = request.FILES.get('image')
-        #print(request.FILES.get('image'))
-        #project.image1 = image1
+        # image1 = request.FILES.get('image')
+        # print(request.FILES.get('image'))
+        # project.image1 = image1
         project.skill = skill
         project.save()
         skill.save()
@@ -1288,7 +1287,6 @@ def delete_extra_info(request, id):
         extra = ExtraCurricular.objects.get(id=id)
         extra.delete()
         return HttpResponseRedirect('/editprofile/')
-
 
 
 def send_sms(message, number):
