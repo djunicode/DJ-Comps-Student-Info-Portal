@@ -19,6 +19,10 @@ from django.core.exceptions import ObjectDoesNotExist
 import datetime
 
 
+def homepage(request):
+    return render(request, 'index.html')
+
+
 def show_rollingform(request):
     return render(request, 'user_profile/edit_student_profile.html')
 
@@ -1141,7 +1145,7 @@ def teacher_dashboard(request):
     context['total_intern'] = total_intern
     kt = KT.objects.all().count()
     kt_perc = (float)((kt * 100) / total_regs)
-    context['kt_perc'] = kt_perc
+    context['kt_perc'] = round(kt_perc, 2)
     # return HttpResponse(intern_stats)
     return render(request, 'user_profile/teacherprofile.html', context)
 
