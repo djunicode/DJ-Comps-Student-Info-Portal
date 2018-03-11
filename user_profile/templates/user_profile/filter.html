@@ -122,7 +122,7 @@
                         <!-- /.col -->
                         <div class="col-sm-4">
                           <div class="description-block">
-                            <h5 class="description-header">{{ result.year }}</h5>
+                            <h5 class="description-header">{{ result.cgpa }}</h5>
                             <span class="description-text">CGPA</span>
                           </div>
                           <!-- /.description-block -->
@@ -151,9 +151,9 @@
                   </div>
                   <div class="box-footer no-padding">
                     <ul class="pad nav nav-stacked">
-                      <li>{{ project.ProjURL }}</li>
-                      <li> {{ project.skill }}</li>
-                      <li>{{ project.ProjDesc }}</li>
+                      <li><strong>URL: </strong>{{ project.ProjURL }}</li>
+                      <li><strong>Skill: </strong>{{ project.skill }}</li>
+                      <li><strong>Desc: </strong>{{ project.ProjDesc }}</li>
                       <li><a href="{% url 'user_profile:project' project.id  %}">View</a></li>
                     </ul>
                   </div>
@@ -178,9 +178,9 @@
                     </div>
                     <div class="box-footer no-padding">
                       <ul class="pad nav nav-stacked">
-                        <li>{{ project.ProjURL }}</li>
-                        <li> {{ project.skill }}</li>
-                        <li>{{ project.ProjDesc }}</li>
+                        <li><strong>URL: </strong>{{ project.ProjURL }}</li>
+                        <li><strong>Teacher: </strong>{{ project.projectUnderTeacher.Sap_Id }}</li>
+                        <li><strong>Desc: </strong>{{ project.ProjDesc }}</li>
                         <li><a href="{% url 'user_profile:beproject' project.id  %}">View</a></li>
                       </ul>
                     </div>
@@ -205,8 +205,8 @@
                     </div>
                     <div class="box-footer no-padding">
                       <ul class="pad nav nav-stacked">
-                        <li>{{ hackathon.URL }}</li>
-                        <li>{{ project.ProjDesc }}</li>
+                        <li><strong>URL: </strong>{{ hackathon.URL }}</li>
+                        <li><strong>Desc: </strong>{{ project.ProjDesc }}</li>
                         <li><a href="{% url 'user_profile:hackathon' hackathon.id  %}">View</a></li>
                       </ul>
                     </div>
@@ -231,9 +231,9 @@
                       </div>
                       <div class="box-footer no-padding">
                         <ul class="pad nav nav-stacked">
-                          <li>{{ internship.Position }}</li>
-                          <li> {{ internship.Loc }}</li>
-                          <li>{{ internship.desc }}</li>
+                          <li><strong>Position: </strong>{{ internship.Position }}</li>
+                          <li><strong>Location: </strong>{{ internship.Loc }}</li>
+                          <li><strong>Desc: </strong>{{ internship.desc }}</li>
                           <li><a href="{% url 'user_profile:internship' internship.id  %}">View</a></li>
                         </ul>
                       </div>
@@ -258,8 +258,8 @@
                         </div>
                         <div class="box-footer no-padding">
                           <ul class="pad nav nav-stacked">
-                            <li>{{ committee.YourPosition }}</li>
-                            <li>{{ committee.Desc }}</li>
+                            <li><strong>Position: </strong>{{ committee.YourPosition }}</li>
+                            <li><strong>Desc: </strong>{{ committee.Desc }}</li>
                             <li><a href="{% url 'user_profile:committee' committee.id  %}">View</a></li>
                           </ul>
                         </div>
@@ -284,9 +284,9 @@
                           </div>
                           <div class="box-footer no-padding">
                             <ul class="pad nav nav-stacked">
-                              <li>{{ researchpaper.Publication }}</li>
-                              <li> {{ researchpaper.LinkToPaper }}</li>
-                              <li>{{ researchpaper.Desc }}</li>
+                              <li><strong>Publication: </strong>{{ researchpaper.Publication }}</li>
+                              <li><strong>Link: </strong>{{ researchpaper.LinkToPaper }}</li>
+                              <li><strong>Desc: </strong>{{ researchpaper.Desc }}</li>
                               <li><a href="{% url 'user_profile:researchpaper' researchpaper.id  %}">View</a></li>
                             </ul>
                           </div>
@@ -311,8 +311,8 @@
                             </div>
                             <div class="box-footer no-padding">
                               <ul class="pad nav nav-stacked">
-                                <li>{{ extra.achievements }}</li>
-                                <li>{{ extra.desc }}</li>
+                                <li><strong>Achievements: </strong>{{ extra.achievements }}</li>
+                                <li><strong>Desc: </strong>{{ extra.desc }}</li>
                                 <li><a href="{% url 'user_profile:extracurricular' extra.id  %}">View</a></li>
                               </ul>
                             </div>

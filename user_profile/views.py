@@ -17,6 +17,8 @@ import collections
 from django.utils.dateformat import format
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
+import os
+import requests
 
 
 def homepage(request):
@@ -301,169 +303,6 @@ def student_profile(request, id):
     else:
         login = '/login/student/'
         return HttpResponseRedirect(login)
-
-
-def student_editprofile(request, sapid):
-    if request.user.is_authenticated:
-        student = get_object_or_404(StudentProfile, Sap_Id=sapid)
-
-        if request.method == 'POST':
-            bio = request.POST.get('bio', '')
-            skill = request.POST.get('skill', '')
-            mobileNo = request.POST.get('mobileNo', '')
-            photo = request.FILES.get('photo', '')
-            year = request.POST.get('year', '')
-            CompetitionName = request.POST.get('CompetitionName', '')
-            company = request.POST.get('company', '')
-            ProjName = request.POST.get('ProjName', '')
-            OrganisationName = request.POST.get('OrganisationName', '')
-            Title = request.POST.get('Title', '')
-            BeProjName = request.POST.get('BeProjName', '')
-            student.bio = bio
-            student.mobileNo = mobileNo
-            student.year = year
-            student.photo = photo
-            if CompetitionName != '':
-                Date = request.POST.get('Date')
-                Desc = request.POST.get('Desc', '')
-                URL = request.POST.get('URL', '')
-                image1 = request.FILES.get('hackathonimage1')
-                hackathon = Hackathon(
-                    CompetitionName=CompetitionName, Desc=Desc, URL=URL, image1=image1)
-                if Date != '':
-                    hackathon.Date = datetime.datetime.strptime(
-                        Date, '%Y-%m-%d').date()
-                hackathon.save()
-                student.hackathon.add(hackathon)
-            if skill != '':
-                skills = Skill(skill=skill)
-                skills.save()
-                student.skills.add(skills)
-            if company != '':
-                Position = request.POST.get('Position', '')
-                Loc = request.POST.get('Loc', '')
-                desc = request.POST.get('desc', '')
-                From = request.POST.get('From')
-                To = request.POST.get('To')
-                image1 = request.FILES.get('internshipimage1')
-                internship = Internship(company=company, Position=Position, Loc=Loc, desc=desc,
-                                        employee=student, image1=image1)
-                if From != '' and To != '':
-                    internship.From = datetime.datetime.strptime(
-                        From, '%Y-%m-%d').date()
-                    internship.To = datetime.datetime.strptime(
-                        To, '%Y-%m-%d').date()
-                internship.save()
-            if ProjName != '':
-                ProjURL = request.POST.get('ProjURL', '')
-                ProjDesc = request.POST.get('ProjDesc', '')
-                projectUnderTeacher = request.POST.get(
-                    'projectUnderTeacher', '')
-                image1 = request.FILES.get('projectimage1')
-                project = Project(student=student, ProjName=ProjName,
-                                  ProjURL=ProjURL, ProjDesc=ProjDesc, image1=image1)
-                if projectUnderTeacher != '':
-                    projectUnderTeacher = get_object_or_404(
-                        TeacherProfile, Sap_Id=projectUnderTeacher)
-                    project.projectUnderTeacher = projectUnderTeacher
-                project.save()
-            if OrganisationName != '':
-                YourPosition = request.POST.get('YourPosition', '')
-                Loc = request.POST.get('committeeLoc', '')
-                dateFrom = request.POST.get('dateFrom')
-                dateTo = request.POST.get('dateTo')
-                Desc = request.POST.get('committeeDesc', '')
-                image1 = request.FILES.get('committeeimage1')
-                committee = Committee(employee=student, OrganisationName=OrganisationName, YourPosition=YourPosition,
-                                      Loc=Loc, Desc=Desc, image1=image1)
-                if dateFrom != '' and dateTo != '':
-                    internship.From = datetime.datetime.strptime(
-                        dateFrom, '%Y-%m-%d').date()
-                    internship.To = datetime.datetime.strptime(
-                        dateTo, '%Y-%m-%d').date()
-                committee.save()
-            if Title != '':
-                Publication = request.POST.get('Publication', '')
-                DateOfPublication = request.POST.get('DateOfPublication')
-                Desc = request.POST.get('researchdesc', '')
-                LinkToPaper = request.POST.get('LinkToPaper', '')
-                PaperId = request.POST.get('PaperId', '')
-                Published_under = request.POST.get('Published_under', '')
-                image1 = request.FILES.get('researchimage1')
-                researchpaper = ResearchPaper(student=student, Title=Title, Desc=Desc, LinkToPaper=LinkToPaper,
-                                              Publication=Publication, PaperId=PaperId, image1=image1)
-                if Published_under != '':
-                    Published_under = get_object_or_404(
-                        TeacherProfile, Sap_Id=Published_under)
-                    researchpaper.Published_under = Published_under
-                if DateOfPublication != '':
-                    researchpaper.DateOfPublication = datetime.datetime.strptime(
-                        DateOfPublication, '%Y-%m-%d').date()
-                researchpaper.save()
-            if BeProjName != '':
-                ProjURL = request.POST.get('BeProjURL', '')
-                ProjDesc = request.POST.get('BeProjDesc', '')
-                projectUnderTeacher = request.POST.get(
-                    'BeprojectUnderTeacher', '')
-                image1 = request.FILES.get('Beprojectimage1')
-                teammate1 = request.POST.get('teammate1')
-                teammate2 = request.POST.get('teammate2')
-                teammate3 = request.POST.get('teammate3')
-                teammate4 = request.POST.get('teammate4')
-                try:
-                    beproject = BeProject.objects.get(student=student)
-                except BeProject.DoesNotExist:
-                    beproject = BeProject(student=student)
-                finally:
-                    beproject.ProjName = BeProjName
-                    beproject.ProjURL = ProjURL
-                    beproject.ProjDesc = ProjDesc
-                    beproject.image1 = image1
-                    beproject.teammates.clear()
-                    if teammate1:
-                        teammate1 = get_object_or_404(
-                            StudentProfile, Sap_Id=teammate1)
-                        teammate1.beteammate.clear()
-                        beproject.teammates.add(teammate1)
-                    if teammate2:
-                        teammate2 = get_object_or_404(
-                            StudentProfile, Sap_Id=teammate2)
-                        teammate2.beteammate.clear()
-                        beproject.teammates.add(teammate2)
-                    if teammate3:
-                        teammate3 = get_object_or_404(
-                            StudentProfile, Sap_Id=teammate3)
-                        teammate3.beteammate.clear()
-                        beproject.teammates.add(teammate3)
-                    if teammate4:
-                        teammate4 = get_object_or_404(
-                            StudentProfile, Sap_Id=teammate4)
-                        teammate4.beteammate.clear()
-                        beproject.teammates.add(teammate4)
-                    if projectUnderTeacher != '':
-                        projectUnderTeacher = get_object_or_404(
-                            TeacherProfile, Sap_Id=projectUnderTeacher)
-                        beproject.projectUnderTeacher = projectUnderTeacher
-                        beproject.save()
-            student.save()
-            return render(request, 'user_profile/student_profile.html', {'student': student})
-        else:
-            beproject = student.beprojects.all()
-            context = {}
-            if beproject:
-                context = {'ProjName': beproject[0].ProjName,
-                           'ProjURL': beproject[0].ProjURL,
-                           'ProjDesc': beproject[0].ProjDesc,
-                           }
-                teacher = beproject[0].projectUnderTeacher
-                if teacher:
-                    context['Teacher'] = teacher.Sap_Id
-                for i, teammate in enumerate(beproject[0].teammates.all()):
-                    context['teammate' + str(i + 1)] = teammate.Sap_Id
-            context['student'] = student
-            return render(request, 'user_profile/edit_student_profile.html', context)
-    else:
-        return HttpResponse("Please Login")
 
 
 def searchany(request, skillss):
@@ -1142,7 +981,7 @@ def teacher_dashboard(request):
     cgpa1 = [pointer.cgpa for pointer in StudentProfile.objects.all(
     ) if pointer.cgpa is not None]
     context['total_regs'] = total_regs
-    cgpa1 = float(sum(cgpa1) / len(cgpa1)) if len(cgpa1) != 0 else []
+    cgpa1 = float(sum(cgpa1) / len(cgpa1)) if len(cgpa1) != 0 else 0
     context['cgpa1'] = cgpa1
     context['total_intern'] = total_intern
     kt = KT.objects.all().count()
@@ -1291,6 +1130,10 @@ def edit_hackathon_info(request, id):
         hackathon.Desc = request.POST.get('description')
         hackathon.URL = request.POST.get('url')
         hackathon.save()
+        number = "9833175929"
+        message = "THE STUDENT " + str(student_profile.first_name) + " has added the Hackathon " \
+            + hackathon.CompetitionName + " to his profile"
+        send_sms(message, number)
         print("sdsdsdsd")
 
         return HttpResponseRedirect('')
@@ -1425,3 +1268,24 @@ def delete_skill_info(request, id):
         skill = Skill.objects.get(id=id)
         skill.delete()
         return HttpResponseRedirect('/editprofile/')
+
+
+def send_sms(message, number):
+    print(number)
+    key = os.environ['MSG91KEY'].strip()
+    print(key)
+    urltosend = 'http://api.msg91.com/api/sendhttp.php?authkey=' + key + '&mobiles=' + number + '&message=' \
+        + message + '&sender=MSGIND&route=4'
+    print(urltosend)
+    r = requests.get(urltosend)
+    print(r.status_code)
+    '''
+    Adding instructions because I will forget later
+    Environment variables will not directly work with virtual environments.
+    #
+    To make them work, in the file [yourvirtualenvname]/bin/activate add the following line :
+    #
+    export MSG91KEY="YOURKEYHERE"
+    #
+    And also remember, rudresh is the best (DUH)
+    '''
