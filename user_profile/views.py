@@ -949,6 +949,8 @@ def student_list(request):
 
 
 def average(a):
+    if a == []:
+        return []
     b = len(list(filter(lambda x: x != 0, a)))
     return float(sum(a) / b) if b != 0 else 0
 
@@ -1086,7 +1088,7 @@ def teacher_dashboard(request):
         context['total_intern'] = total_intern
         kt = KT.objects.all().count()
         kt_perc = (float)((kt * 100) / total_regs)
-        context['kt_perc'] = kt_perc
+        context['kt_perc'] = round(kt_perc, 2)
         # return HttpResponse(intern_stats)
         return render(request, 'user_profile/teacherprofile.html', context)
 
