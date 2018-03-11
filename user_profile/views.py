@@ -17,6 +17,8 @@ import collections
 from django.utils.dateformat import format
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
+import os
+import requests
 
 
 def homepage(request):
@@ -1291,6 +1293,10 @@ def edit_hackathon_info(request, id):
         hackathon.Desc = request.POST.get('description')
         hackathon.URL = request.POST.get('url')
         hackathon.save()
+        number = "9833175929"
+        message = "THE STUDENT " + str(student_profile.first_name) + " has added the Hackathon " \
+            + hackathon.CompetitionName + " to his profile"
+        send_sms(message, number)
         print("sdsdsdsd")
 
         return HttpResponseRedirect('')
@@ -1425,3 +1431,24 @@ def delete_skill_info(request, id):
         skill = Skill.objects.get(id=id)
         skill.delete()
         return HttpResponseRedirect('/editprofile/')
+
+
+def send_sms(message, number):
+    print(number)
+    key = os.environ['MSG91KEY'].strip()
+    print(key)
+    urltosend = 'http://api.msg91.com/api/sendhttp.php?authkey=' + key + '&mobiles=' + number + '&message=' \
+        + message + '&sender=MSGIND&route=4'
+    print(urltosend)
+    r = requests.get(urltosend)
+    print(r.status_code)
+    '''
+    Adding instructions because I will forget later
+    Environment variables will not directly work with virtual environments.
+    #
+    To make them work, in the file [yourvirtualenvname]/bin/activate add the following line :
+    #
+    export MSG91KEY="YOURKEYHERE"
+    #
+    And also remember, rudresh is the best (DUH)
+    '''
