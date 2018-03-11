@@ -839,9 +839,9 @@ def student_list(request):
                 projects = []
             print(result, "res")
             return render(request, 'user_profile/filter.html', {'result': result, 'skills': skillss,
-                          'projects': projects})
+                          'projects': projects, 'teacher': teacher})
     else:
-        return render(request, 'user_profile/filter.html', {'skills': skillss})
+        return render(request, 'user_profile/filter.html', {'skills': skillss, 'teacher': teacher})
 
 
 def average(a):
