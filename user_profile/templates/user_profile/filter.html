@@ -4,13 +4,22 @@
 {% block css %}
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="{% static "/dist/css/skins/_all-skins.min.css" %}">
+  <link rel="stylesheet" href="{% static "/dist/css/skins/all-skins.min.css" %}">
+
+  <link rel="stylesheet" href="{% static "/build/css/dataTables.bootstrap.min.css" %}">
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="{% static "/plugins/iCheck/all.css" %}">
 
   <style type="text/css">
     .pad{
       padding: 0px 10px 5px;
+    }
+
+    @media (min-width: 768px){
+      .modal-dialog {
+          width: 750px;
+          margin: 30px auto;
+      }
     }
   </style>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -30,9 +39,11 @@
               <input type="text" name="searchany" placeholder="Search">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+
           </div>
           <div class="row">
             <div class="col-md-12">
+                        <form method="post" action="/search/" role="form">
                   <div class="box box-solid">
                     <div class="box-header with-border">
                       <h3 class="box-title">Filter</h3>
@@ -41,7 +52,6 @@
                     <div class="box-body">
                       <div class="box-group" id="accordion">
                         <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
-                        <form method="post" action="/search/" role="form">
                            {% csrf_token %}
                           <div class="panel box box-primary">
                             <div class="box-header with-border">
@@ -82,59 +92,127 @@
                           </div>
                           <div class="box-footer">
                             <button type="submit" class="btn btn-primary">Submit</button>
+
                           </div>
-                        </form>
                       </div>
                     </div>
                     <!-- /.box-body -->
                   </div>
+                        </form>
                   <!-- /.box -->
             </div>
           </div>
-          <div class="row">
-            {% for result in result %}
-            <div class="col-md-4">
-              <div class="box box-widget widget-user">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="widget-user-header bg-aqua-active">
-                      <h3 class="widget-user-username"> {{ result.first_name }} {{ result.last_name }}</h3>
-                      <h5 class="widget-user-desc">{{ result.Sap_Id }}</h5>
-                    </div>
-                    <div class="widget-user-image">
-                      <img class="img-circle" src="../../static/dist/img/avatar.png" alt="User Avatar">
-                    </div>
-                    <div class="box-footer">
-                      <div class="row">
-                        <div class="col-sm-4 border-right">
-                          <div class="description-block">
-                            <h5 class="description-header">{{ result.year }}</h5>
-                            <span class="description-text">Year</span>
+          {% if result %}
+            <div class="box box-solid">
+              <div class="box-header with-border">
+                <h3 class="box-title">Students</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">
+                  <div class="modal fade" id="modal-default">
+                    <div class="modal-dialog">
+                       <div class="modal-content">
+                          <div class="modal-header">
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span></button>
+                             <h4 class="modal-title">Students</h4>
+                             <button id="dl" type="button" class="btn btn-primary pull-right">Download</button>
                           </div>
-                          <!-- /.description-block -->
-                          <!-- /.col -->
-                        </div>
-                          <div class="col-sm-4 border-right">
-                            <div class="description-block">
-                              <h5 class="description-header"><a href="{% url 'user_profile:student_profile' result.id  %}" >View Profile</a></h5>
+                          <div class="modal-body">
+                            <div class="box">
+                               <!-- /.box-header -->
+                               <div class="box-body">
+                                  <table id="example2" class="table table-bordered table-hover">
+                                     <thead>
+                                        <tr>
+                                           <th>Name</th>
+                                           <th>Sap Id</th>
+                                           <th>Year</th>
+                                           <th>CGPA</th>
+                                        </tr>
+                                     </thead>
+                                     <tbody>
+                                      {% for result in result %}
+                                        <tr>
+                                           <td>{{ result.first_name }} {{ result.last_name }}</td>
+                                           <td>{{ result.Sap_Id }}</td>
+                                           <td>{{ result.year }}</td>
+                                           <td>{{ result.grade }}</td>
+                                        </tr>
+                                      {% endfor %}
+                                    </tbody>
+                                     <tfoot>
+                                        <tr>
+                                           <th>Name</th>
+                                           <th>Sap Id</th>
+                                           <th>Year</th>
+                                           <th>CGPA</th>
+                                        </tr>
+                                     </tfoot>
+                                  </table>
+                                  <br/>
+                               </div>
+                               <!-- /.box-body -->
                             </div>
-                            <!-- /.description-block -->
                           </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4">
-                          <div class="description-block">
-                            <h5 class="description-header">{{ result.cgpa }}</h5>
-                            <span class="description-text">CGPA</span>
+                          <div class="modal-footer">
+                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                           </div>
-                          <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.row -->
+                       </div>
+                       <!-- /.modal-content -->
                     </div>
+                        <!-- /.modal-dialog -->
+                  </div>
+                  {% for result in result %}
+                    <div class="col-md-4">
+                      <div class="box box-widget widget-user">
+                        <div class="widget-user-header bg-aqua-active">
+                          <h3 class="widget-user-username"> {{ result.first_name }} {{ result.last_name }}</h3>
+                          <h5 class="widget-user-desc">{{ result.Sap_Id }}</h5>
+                        </div>
+                        <div class="widget-user-image">
+                          <img class="img-circle" src="../../static/dist/img/avatar.png" alt="User Avatar">
+                        </div>
+                        <div class="box-footer">
+                          <div class="row">
+                            <div class="col-sm-4 border-right">
+                              <div class="description-block">
+                                <h5 class="description-header">{{ result.year }}</h5>
+                                <span class="description-text">Year</span>
+                              </div>
+                              <!-- /.description-block -->
+                              <!-- /.col -->
+                            </div>
+                            <div class="col-sm-4 border-right">
+                              <div class="description-block">
+                                <h5 class="description-header"><a href="{% url 'user_profile:student_profile' result.id  %}" >View Profile</a></h5>
+                              </div>
+                              <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-4">
+                              <div class="description-block">
+                                <h5 class="description-header">{{ result.year }}</h5>
+                                <span class="description-text">CGPA</span>
+                              </div>
+                              <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                          </div>
+                          <!-- /.row -->
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="box-footer">
+                <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#modal-default">
+                  Show Tabular form
+                </button>
               </div>
             </div>
-            {% endfor %}
-          </div>
+          {% endif %}
           {% if projects %}
           <hr/>
           {% endif %}
@@ -151,9 +229,9 @@
                   </div>
                   <div class="box-footer no-padding">
                     <ul class="pad nav nav-stacked">
-                      <li><strong>URL: </strong>{{ project.ProjURL }}</li>
-                      <li><strong>Skill: </strong>{{ project.skill }}</li>
-                      <li><strong>Desc: </strong>{{ project.ProjDesc }}</li>
+                      <li>{{ project.ProjURL }}</li>
+                      <li> {{ project.skill }}</li>
+                      <li>{{ project.ProjDesc }}</li>
                       <li><a href="{% url 'user_profile:project' project.id  %}">View</a></li>
                     </ul>
                   </div>
@@ -178,9 +256,9 @@
                     </div>
                     <div class="box-footer no-padding">
                       <ul class="pad nav nav-stacked">
-                        <li><strong>URL: </strong>{{ project.ProjURL }}</li>
-                        <li><strong>Teacher: </strong>{{ project.projectUnderTeacher.Sap_Id }}</li>
-                        <li><strong>Desc: </strong>{{ project.ProjDesc }}</li>
+                        <li>{{ project.ProjURL }}</li>
+                        <li> {{ project.skill }}</li>
+                        <li>{{ project.ProjDesc }}</li>
                         <li><a href="{% url 'user_profile:beproject' project.id  %}">View</a></li>
                       </ul>
                     </div>
@@ -205,8 +283,8 @@
                     </div>
                     <div class="box-footer no-padding">
                       <ul class="pad nav nav-stacked">
-                        <li><strong>URL: </strong>{{ hackathon.URL }}</li>
-                        <li><strong>Desc: </strong>{{ project.ProjDesc }}</li>
+                        <li>{{ hackathon.URL }}</li>
+                        <li>{{ project.ProjDesc }}</li>
                         <li><a href="{% url 'user_profile:hackathon' hackathon.id  %}">View</a></li>
                       </ul>
                     </div>
@@ -231,9 +309,9 @@
                       </div>
                       <div class="box-footer no-padding">
                         <ul class="pad nav nav-stacked">
-                          <li><strong>Position: </strong>{{ internship.Position }}</li>
-                          <li><strong>Location: </strong>{{ internship.Loc }}</li>
-                          <li><strong>Desc: </strong>{{ internship.desc }}</li>
+                          <li>{{ internship.Position }}</li>
+                          <li> {{ internship.Loc }}</li>
+                          <li>{{ internship.desc }}</li>
                           <li><a href="{% url 'user_profile:internship' internship.id  %}">View</a></li>
                         </ul>
                       </div>
@@ -258,8 +336,8 @@
                         </div>
                         <div class="box-footer no-padding">
                           <ul class="pad nav nav-stacked">
-                            <li><strong>Position: </strong>{{ committee.YourPosition }}</li>
-                            <li><strong>Desc: </strong>{{ committee.Desc }}</li>
+                            <li>{{ committee.YourPosition }}</li>
+                            <li>{{ committee.Desc }}</li>
                             <li><a href="{% url 'user_profile:committee' committee.id  %}">View</a></li>
                           </ul>
                         </div>
@@ -284,9 +362,9 @@
                           </div>
                           <div class="box-footer no-padding">
                             <ul class="pad nav nav-stacked">
-                              <li><strong>Publication: </strong>{{ researchpaper.Publication }}</li>
-                              <li><strong>Link: </strong>{{ researchpaper.LinkToPaper }}</li>
-                              <li><strong>Desc: </strong>{{ researchpaper.Desc }}</li>
+                              <li>{{ researchpaper.Publication }}</li>
+                              <li> {{ researchpaper.LinkToPaper }}</li>
+                              <li>{{ researchpaper.Desc }}</li>
                               <li><a href="{% url 'user_profile:researchpaper' researchpaper.id  %}">View</a></li>
                             </ul>
                           </div>
@@ -311,8 +389,8 @@
                             </div>
                             <div class="box-footer no-padding">
                               <ul class="pad nav nav-stacked">
-                                <li><strong>Achievements: </strong>{{ extra.achievements }}</li>
-                                <li><strong>Desc: </strong>{{ extra.desc }}</li>
+                                <li>{{ extra.achievements }}</li>
+                                <li>{{ extra.desc }}</li>
                                 <li><a href="{% url 'user_profile:extracurricular' extra.id  %}">View</a></li>
                               </ul>
                             </div>
@@ -321,13 +399,17 @@
                         </div>
                         {% endfor %}
                       </div>
-        </section>
+      </section>
     <!-- /.content -->
 {% endblock %}
 <!-- ./wrapper -->
 {% block js %}
 <!-- iCheck for checkboxes and radio inputs -->
 <script src="{% static "/plugins/iCheck/icheck.min.js" %}"></script>
+
+<script src="{% static "/build/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "/build/js/dataTables.bootstrap.min.js" %}"></script>
+<script src="{% static "/build/js/tabletocsv.js" %}"></script>
 <script>
   $(function () {
 
@@ -351,12 +433,10 @@
 </script>
 
 <script>
-    function submitBasicInfo(){
-      var data = $('#BasicInfo').serialize();
-      $.post( "/student/profile/", data, function( data, status ) {
-        console.log("The Data Sent is: " + data);
-      });
-    }
+  $("#dl").click(function(){
+    //$("#tab").table2csv('output', {appendTo: '#out'});
+    $("#example2").table2csv();
+  })
 </script>
 
 {% endblock %}

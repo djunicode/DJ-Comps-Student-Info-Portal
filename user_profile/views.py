@@ -858,6 +858,7 @@ def teacher_dashboard(request):
         stud = '/login/student/'
         return HttpResponseRedirect(stud)
     context = {}
+    context['teacher'] = teacher
     print(teacher)
     # calculating most common skills
     most_common_to_take = 3
