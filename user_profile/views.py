@@ -1072,7 +1072,7 @@ def edit_basic_info(request, id):
             student_profile.year = request.POST.get('year')
         student_profile.mobileNo = request.POST.get('mobileNo')
         student_profile.save()
-        print('IT WORKS ASSHOLE')
+        
         return HttpResponse('done')
 
 
@@ -1099,9 +1099,8 @@ def edit_academic_info(request, id):
             education.sem7_gpa = request.POST.get('sem7_gpa')
         if ((request.POST.get('sem8_gpa')) != ''):
             education.sem8_gpa = request.POST.get('sem8_gpa')
-        # student_profile.subject_semester = request.POST.get('')
+        student_profile.subject_semester = request.POST.get('kt')
         education.save()
-        print('IT WORKS ASSHOLE')
         return HttpResponse('done')
 
 
@@ -1125,15 +1124,11 @@ def edit_hackathon_info(request, id):
         hackathon = Hackathon.objects.create(student_profile=student_profile)
 
         # hackathon = Hackathon.objects.get(student_profile_id=id)
-        hackathon.CompetitionName = request.POST.get('name')
-        hackathon.Date = request.POST.get('date')
-        hackathon.Desc = request.POST.get('description')
-        hackathon.URL = request.POST.get('url')
+        hackathon.CompetitionName = request.POST.get('HackathonName')
+        hackathon.Date = request.POST.get('HackathonDate')
+        hackathon.Desc = request.POST.get('HackathonDescription')
+        hackathon.URL = request.POST.get('HackathonUrl')
         hackathon.save()
-        number = "9833175929"
-        message = "THE STUDENT " + str(student_profile.first_name) + " has added the Hackathon " \
-            + hackathon.CompetitionName + " to his profile"
-        send_sms(message, number)
         print("sdsdsdsd")
 
         return HttpResponseRedirect('')
@@ -1149,11 +1144,13 @@ def edit_project_info(request, id):
         student_profile = StudentProfile.objects.get(id=id)
         project = Project.objects.create(student_profile=student_profile)
         skill = Skill.objects.create(user_profile=student_profile)
-        skill.skill = request.POST.get('skill')
-        project.ProjURL = request.POST.get('url')
-        project.ProjName = request.POST.get('name')
-        project.ProjDesc = request.POST.get('description')
-        # project.image1 = request.POST.get('image')
+        skill.skill = request.POST.get('ProjectSkill')
+        project.ProjURL = request.POST.get('ProjectUrl')
+        project.ProjName = request.POST.get('ProjectName')
+        project.ProjDesc = request.POST.get('ProjectDescription')
+        #image1 = request.FILES.get('image')
+        #print(request.FILES.get('image'))
+        #project.image1 = image1
         project.skill = skill
         project.save()
         skill.save()
@@ -1169,12 +1166,12 @@ def edit_internship_info(request, id):
         student_profile = StudentProfile.objects.get(id=id)
         internship = Internship.objects.create(employee=student_profile)
 
-        internship.company = request.POST.get('name')
-        internship.desc = request.POST.get('description')
-        internship.Position = request.POST.get('position')
-        internship.Loc = request.POST.get('location')
-        internship.From = request.POST.get('dateFrom')
-        internship.To = request.POST.get('dateTo')
+        internship.company = request.POST.get('InternshipName')
+        internship.desc = request.POST.get('InternshipDescription')
+        internship.Position = request.POST.get('InternshipPosition')
+        internship.Loc = request.POST.get('InternshipLocation')
+        internship.From = request.POST.get('InternshipFrom')
+        internship.To = request.POST.get('InternshipTo')
         internship.save()
         return HttpResponse('done')
     else:
@@ -1187,12 +1184,12 @@ def edit_committee_info(request, id):
     if request.method == 'POST':
         student_profile = StudentProfile.objects.get(id=id)
         committee = Committee.objects.create(employee=student_profile)
-        committee.OrganisationName = request.POST.get('name')
-        committee.YourPosition = request.POST.get('position')
-        committee.Desc = request.POST.get('description')
-        committee.Loc = request.POST.get('location')
-        committee.dateFrom = request.POST.get('dateFrom')
-        committee.dateTo = request.POST.get('dateTo')
+        committee.OrganisationName = request.POST.get('CommitteeName')
+        committee.YourPosition = request.POST.get('CommitteePosition')
+        committee.Desc = request.POST.get('CommitteeDescription')
+        committee.Loc = request.POST.get('CommitteeLocation')
+        committee.dateFrom = request.POST.get('CommitteeFrom')
+        committee.dateTo = request.POST.get('CommitteeTo')
         committee.save()
         return HttpResponse('done')
     else:
@@ -1206,11 +1203,11 @@ def edit_research_paper_info(request, id):
     if request.method == 'POST':
         student_profile = StudentProfile.objects.get(id=id)
         paper = ResearchPaper.objects.create(student=student_profile)
-        paper.Title = request.POST.get('name')
-        paper.Publication = request.POST.get('publication')
-        paper.DateOfPublication = request.POST.get('date')
-        paper.Desc = request.POST.get('description')
-        paper.LinkToPaper = request.POST.get('url')
+        paper.Title = request.POST.get('ResearchPaperName')
+        paper.Publication = request.POST.get('ResearchPaperPublication')
+        paper.DateOfPublication = request.POST.get('ResearchPaperDate')
+        paper.Desc = request.POST.get('ResearchPaperDescription')
+        paper.LinkToPaper = request.POST.get('ResearchPaperUrl')
         paper.save()
         return HttpResponse('done')
     else:
@@ -1220,6 +1217,23 @@ def edit_research_paper_info(request, id):
                              "LinkToPaper": data.LinkToPaper, "id": data.id})
 
 
+def edit_extra_info(request, id):
+    if request.method == 'POST':
+        student_profile = StudentProfile.objects.get(id=id)
+        extra = ExtraCurricular.objects.create(student=student_profile)
+        extra.name = request.POST.get('ExtraName')
+        extra.desc = request.POST.get('ExtraDescription')
+        extra.achievements = request.POST.get('ExtraAchievements')
+        extra.date = request.POST.get('ExtraDate')
+        extra.save()
+        return HttpResponse('done')
+    else:
+        data = ExtraCurricular.objects.last()
+        return JsonResponse({"name": data.name, "desc": data.desc,
+                             "achievements": data.achievements, "date": data.date,
+                             "id": data.id})
+
+
 def edit_beproject_info(request, id):
     if request.method == 'POST':
         student_profile = StudentProfile.objects.get(id=id)
@@ -1227,9 +1241,9 @@ def edit_beproject_info(request, id):
             proj = BeProject.objects.get(student=student_profile)
         except ObjectDoesNotExist:
             proj = BeProject.objects.create(student=student_profile)
-        proj.ProjName = request.POST.get('name')
-        proj.ProjURL = request.POST.get('url')
-        proj.ProjDesc = request.POST.get('description')
+        proj.ProjName = request.POST.get('BEProjectName')
+        proj.ProjURL = request.POST.get('BEProjectUrl')
+        proj.ProjDesc = request.POST.get('BEProjectDescription')
         proj.save()
         return HttpResponse('done')
 
@@ -1268,6 +1282,13 @@ def delete_skill_info(request, id):
         skill = Skill.objects.get(id=id)
         skill.delete()
         return HttpResponseRedirect('/editprofile/')
+
+
+def delete_extra_info(request, id):
+        extra = ExtraCurricular.objects.get(id=id)
+        extra.delete()
+        return HttpResponseRedirect('/editprofile/')
+
 
 
 def send_sms(message, number):
