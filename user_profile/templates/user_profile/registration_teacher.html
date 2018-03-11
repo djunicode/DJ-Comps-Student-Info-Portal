@@ -61,7 +61,8 @@
       </div>
       <div class="row">
         <div class="col-xs-8">I have already registered!<br />
-          <a href="../../login/teacher" class="text-center">Login</a>
+          <a href="../../login/teacher" class="text-center">Login</a><br />
+          <a href="{% url 'user_profile:register' %}" class="text-center">Are you a Student ?</a>
         </div>
         <div class="col-xs-4">
           <button type="submit" class="btn btn-primary btn-block btn-flat" onClick="register();">Register</button>

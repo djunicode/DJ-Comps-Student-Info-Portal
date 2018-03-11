@@ -11,7 +11,7 @@ from simple_history.models import HistoricalRecords
 
 
 class StudentProfile(models.Model):
-    student = models.OneToOneField(User, on_delete=models.CASCADE)
+    student = models.OneToOneField(User, on_delete=models.CASCADE, related_name='stud')
     first_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=True, null=True)
     Sap_Id = models.BigIntegerField(
@@ -271,6 +271,7 @@ class ExtraCurricular(models.Model):
     image3 = models.FileField(null=True, blank=True)
     image4 = models.FileField(null=True, blank=True)
     image5 = models.FileField(null=True, blank=True)
+    history = HistoricalRecords()
 
     def __str__(self):
         return str(self.name)
