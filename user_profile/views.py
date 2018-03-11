@@ -1133,7 +1133,6 @@ def edit_hackathon_info(request, id):
             + hackathon.CompetitionName + " to his profile"
         send_sms(message, number)
         print("sdsdsdsd")
-
         return HttpResponseRedirect('')
     else:
 
