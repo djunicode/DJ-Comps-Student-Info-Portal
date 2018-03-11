@@ -1000,6 +1000,8 @@ def student_list(request):
 
 
 def average(a):
+    if a == []:
+        return []
     b = len(list(filter(lambda x: x != 0, a)))
     return float(sum(a) / b) if b != 0 else 0
 

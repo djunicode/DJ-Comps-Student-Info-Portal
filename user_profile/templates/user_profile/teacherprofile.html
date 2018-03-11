@@ -30,7 +30,7 @@
               <p>Total Registrations</p>
             </div>
             <div class="icon">
-              <i class="ion ion-bag"></i>
+              <i class="ion ion-person-add"></i>
             </div>
           </div>
         </div>
@@ -44,7 +44,7 @@
               <p>Total Internships</p>
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              <i class="ion ion-briefcase"></i>
             </div>
           </div>
         </div>
@@ -53,12 +53,12 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>{{cgpa1}}</h3>
+              <h3>{{cgpa1|safe}}</h3>
 
               <p>Average CGPA</p>
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="ion ion-university"></i>
             </div>
           </div>
         </div>
@@ -90,6 +90,7 @@
       <div class="row">
         <div class="col-md-6">
           <!-- AREA CHART -->
+          {% if internship_in_months %}
           <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Internships per month</h3>
@@ -106,9 +107,11 @@
             </div>
             <!-- /.box-body -->
           </div>
+          {% endif %}
           <!-- /.box -->
 
           <!-- DONUT CHART -->
+          {% if FE_interns or SE_interns or TE_interns or BE_interns %}
           <div class="box box-danger">
             <div class="box-header with-border">
               <h3 class="box-title">Yearwise Internships</h3>
@@ -124,7 +127,9 @@
             </div>
             <!-- /.box-body -->
           </div>
+          {% endif %}
           <!-- /.box -->
+          {% if FE_gpa.0 or FE_gpa.1 %}
           <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">FE Average GPA</h3>
@@ -142,6 +147,8 @@
             </div>
             <!-- /.box-body -->
           </div>
+          {% endif %}
+          {% if TE_gpa.0 or TE_gpa.1 or TE_gpa.2 or TE_gpa.3 or TE_gpa.4 or TE_gpa.5 %}
           <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">TE Average GPA</h3>
@@ -159,7 +166,8 @@
             </div>
             <!-- /.box-body -->
           </div>
-
+          {% endif %}
+          {% if FE_gpa.0 or SE_gpa.0 or TE_gpa.0 or BE_gpa.0 %}
           <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Semester 1</h3>
@@ -176,7 +184,8 @@
               </div>
             </div>
           </div>
-
+          {% endif %}
+          {% if SE_gpa.2 or TE_gpa.2 or BE_gpa.2 %}
           <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Semester 3</h3>
@@ -193,7 +202,8 @@
               </div>
             </div>
           </div>
-
+          {% endif %}
+          {% if TE_gpa.4 or BE_gpa.4 %}
           <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Semester 5</h3>
@@ -210,7 +220,8 @@
               </div>
             </div>
           </div>
-
+          {% endif %}
+          {% if BE_gpa.6 %}
           <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Semester 7</h3>
@@ -227,10 +238,12 @@
               </div>
             </div>
           </div>
+          {% endif %}
         </div>
         <!-- /.col (LEFT) -->
         <div class="col-md-6">
           <!-- LINE CHART -->
+          {% if skill1 or skill2 or skill3 %}
           <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">Skills</h3>
@@ -247,9 +260,11 @@
             </div>
             <!-- /.box-body -->
           </div>
+          {% endif %}
           <!-- /.box -->
 
           <!-- BAR CHART -->
+          {% if avg_gpa %}
           <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Average GPA</h3>
@@ -266,7 +281,9 @@
               </div>
             </div>
           </div>
+          {% endif %}
             <!-- /.box-body -->
+            {% if SE_gpa.0 or SE_gpa.1 or SE_gpa.2 or SE_gpa.3 or SE_gpa.4 %}
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">SE Average GPA</h3>
@@ -283,6 +300,8 @@
                 </div>
               </div>
             </div>
+            {% endif %}
+            {% if BE_gpa.0 or BE_gpa.1 or BE_gpa.2 or BE_gpa.3 or BE_gpa.4 or BE_gpa.5 or BE_gpa.6 or BE_gpa.7 %}
               <div class="box box-success">
                 <div class="box-header with-border">
                   <h3 class="box-title">BE Average GPA</h3>
@@ -300,7 +319,8 @@
                 </div>
                 <!-- /.box-body -->
               </div>
-
+              {% endif %}
+              {% if FE_gpa.1 or SE_gpa.1 or TE_gpa.1 or BE_gpa.1 %}
               <div class="box box-success">
                 <div class="box-header with-border">
                   <h3 class="box-title">Semester 2</h3>
@@ -317,7 +337,8 @@
                   </div>
                 </div>
               </div>
-
+              {% endif %}
+              {% if SE_gpa.3 or TE_gpa.3 or BE_gpa.3 %}
               <div class="box box-success">
                 <div class="box-header with-border">
                   <h3 class="box-title">Semester 4</h3>
@@ -334,7 +355,8 @@
                   </div>
                 </div>
               </div>
-
+              {% endif %}
+              {% if TE_gpa.5 or BE_gpa.5 %}
               <div class="box box-success">
                 <div class="box-header with-border">
                   <h3 class="box-title">Semester 6</h3>
@@ -351,7 +373,8 @@
                   </div>
                 </div>
               </div>
-
+              {% endif %}
+              {% if BE_gpa.7 %}
               <div class="box box-success">
                 <div class="box-header with-border">
                   <h3 class="box-title">Semester 8</h3>
@@ -368,6 +391,7 @@
                   </div>
                 </div>
               </div>
+              {% endif %}
             </div>
         </div>
     </section>
@@ -378,15 +402,26 @@
 <script src="{% static "/plugins/chart.js/Chart.js" %}"></script>
 <script>
     var label_for_bar_chart = {{ sem_labels|safe }}
+    {% if FE_gpa %}
     var fe_gpa = {{ FE_gpa }}
+    {% endif %}
+    {% if SE_gpa %}
     var se_gpa = {{ SE_gpa }}
+    {% endif %}
+    {% if TE_gpa %}
     var te_gpa = {{ TE_gpa }}
+    {% endif %}
+    {% if BE_gpa %}
     var be_gpa = {{ BE_gpa }}
+    {% endif %}
+    {% if avg_gpa %}
     var avg_gpa = {{ avg_gpa }}
+    {% endif %}
     var label_for_line_graph = {{ months|safe }}
+    {% if internship_in_months %}
     var internship_in_months = {{ internship_in_months }}
+    {% endif %}
     var label_for_sem_bar_charts = ['FE', 'SE', 'TE', 'BE']
-    Chart.defaults.bar.scales.xAxes[0].categorySpacing = 4
 </script>
 <!-- iCheck for checkboxes and radio inputs -->
 <script>
@@ -401,10 +436,10 @@
     //--------------
 
     // Get context with jQuery - using jQuery's .get() method.
+    {% if internship_in_months %}
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
     // This will get the first returned node in the jQuery collection.
     var areaChart = new Chart(areaChartCanvas)
-
     var areaChartData = {
       labels  : label_for_line_graph,
       datasets: [
@@ -430,6 +465,7 @@
         // }
       ]
     }
+    {% endif %}
 
     var areaChartOptions = {
       //Boolean - If we should show the scale at all
@@ -468,9 +504,10 @@
       //Boolean - whether to make the chart responsive to window resizing
       responsive              : true
     }
-
+    {% if internship_in_months %}
     // //Create the line chart
     areaChart.Line(areaChartData, areaChartOptions)
+    {% endif %}
     //
     // //-------------
     // //- LINE CHART -
@@ -485,6 +522,7 @@
     //- PIE CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
+    {% if FE_interns or SE_interns or TE_interns or BE_interns %}
     var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
     var donutChart       = new Chart(donutChartCanvas)
     var DonutData        = [
@@ -513,6 +551,7 @@
         label    : 'BE'
       },
     ]
+    {% endif %}
     var donutOptions     = {
       //Boolean - Whether we should show a stroke on each segment
       segmentShowStroke    : true,
@@ -537,11 +576,13 @@
     }
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
+    {% if FE_interns or SE_interns or TE_interns or BE_interns %}
     donutChart.Doughnut(DonutData, donutOptions)
-
+    {% endif %}
     //-------------
     //- BAR CHART -
     //-------------
+    {% if avg_gpa %}
     var barChartCanvas                   = $('#barChart').get(0).getContext('2d')
     var barChart                         = new Chart(barChartCanvas)
     var barChartData = {
@@ -559,6 +600,7 @@
         }
       ]
     }
+    {% endif %}
     var barChartOptions                  = {
       //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
       scaleBeginAtZero        : true,
@@ -587,8 +629,10 @@
     }
     barChartOptions.maxBarThickness = 20
     barChartOptions.datasetFill = false
+    {% if avg_gpa %}
     barChart.Bar(barChartData, barChartOptions)
-
+    {% endif %}
+    {% if skill1 or skill2 or skill3 %}
     var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
     var pieChart       = new Chart(pieChartCanvas)
     var PieData        = [
@@ -611,6 +655,7 @@
         label    : '{{skill3.0}}'
       }
     ]
+    {% endif %}
     var pieOptions     = {
       //Boolean - Whether we should show a stroke on each segment
       segmentShowStroke    : true,
@@ -635,8 +680,10 @@
     }
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
+    {% if skill1 or skill2 or skill3 %}
     pieChart.Pie(PieData, pieOptions)
-
+    {% endif %}
+    {% if FE_gpa.0 or FE_gpa.1 %}
     var barChartCanvas                   = $('#FEAllSemBarChart').get(0).getContext('2d')
     var barChart                         = new Chart(barChartCanvas)
     var barChartData = {
@@ -655,7 +702,8 @@
       ]
     }
     barChart.Bar(barChartData, barChartOptions)
-
+    {% endif %}
+    {% if SE_gpa.0 or SE_gpa.1 or SE_gpa.2 or SE_gpa.3 or SE_gpa.4 %}
     var barChartCanvas                   = $('#SEAllSemBarChart').get(0).getContext('2d')
     var barChart                         = new Chart(barChartCanvas)
     var barChartData = {
@@ -674,7 +722,8 @@
       ]
     }
     barChart.Bar(barChartData, barChartOptions)
-
+    {% endif %}
+    {% if TE_gpa.0 or TE_gpa.1 or TE_gpa.2 or TE_gpa.3 or TE_gpa.4 or TE_gpa.5 %}
     var barChartCanvas                   = $('#TEAllSemBarChart').get(0).getContext('2d')
     var barChart                         = new Chart(barChartCanvas)
     var barChartData = {
@@ -694,7 +743,8 @@
     }
 
     barChart.Bar(barChartData, barChartOptions)
-
+    {% endif %}
+    {% if BE_gpa.0 or BE_gpa.1 or BE_gpa.2 or BE_gpa.3 or BE_gpa.4 or BE_gpa.5 or BE_gpa.6 or BE_gpa.7 %}
     var barChartCanvas                   = $('#BEAllSemBarChart').get(0).getContext('2d')
     var barChart                         = new Chart(barChartCanvas)
     var barChartData = {
@@ -713,8 +763,8 @@
       ]
     }
     barChart.Bar(barChartData, barChartOptions)
-
-
+    {% endif %}
+    {% if FE_gpa.0 or SE_gpa.0 or TE_gpa.0 or BE_gpa.0 %}
     var barChartCanvas                   = $('#Sem1BarChart').get(0).getContext('2d')
     var barChart                         = new Chart(barChartCanvas)
     var barChartData = {
@@ -733,7 +783,8 @@
       ]
     }
     barChart.Bar(barChartData, barChartOptions)
-
+    {% endif %}
+    {% if FE_gpa.1 or SE_gpa.1 or TE_gpa.1 or BE_gpa.1 %}
     var barChartCanvas                   = $('#Sem2BarChart').get(0).getContext('2d')
     var barChart                         = new Chart(barChartCanvas)
     var barChartData = {
@@ -752,7 +803,8 @@
       ]
     }
     barChart.Bar(barChartData, barChartOptions)
-
+    {% endif %}
+    {% if SE_gpa.2 or TE_gpa.2 or BE_gpa.2 %}
     var barChartCanvas                   = $('#Sem3BarChart').get(0).getContext('2d')
     var barChart                         = new Chart(barChartCanvas)
     var barChartData = {
@@ -771,7 +823,8 @@
       ]
     }
     barChart.Bar(barChartData, barChartOptions)
-
+    {% endif %}
+    {% if SE_gpa.3 or TE_gpa.3 or BE_gpa.3 %}
     var barChartCanvas                   = $('#Sem4BarChart').get(0).getContext('2d')
     var barChart                         = new Chart(barChartCanvas)
     var barChartData = {
@@ -790,7 +843,8 @@
       ]
     }
     barChart.Bar(barChartData, barChartOptions)
-
+    {% endif %}
+    {% if TE_gpa.4 or BE_gpa.4 %}
     var barChartCanvas                   = $('#Sem5BarChart').get(0).getContext('2d')
     var barChart                         = new Chart(barChartCanvas)
     var barChartData = {
@@ -809,7 +863,8 @@
       ]
     }
     barChart.Bar(barChartData, barChartOptions)
-
+    {% endif %}
+    {% if TE_gpa.5 or BE_gpa.5 %}
     var barChartCanvas                   = $('#Sem6BarChart').get(0).getContext('2d')
     var barChart                         = new Chart(barChartCanvas)
     var barChartData = {
@@ -828,7 +883,8 @@
       ]
     }
     barChart.Bar(barChartData, barChartOptions)
-
+    {% endif %}
+    {% if BE_gpa.6 %}
     var barChartCanvas                   = $('#Sem7BarChart').get(0).getContext('2d')
     var barChart                         = new Chart(barChartCanvas)
     var barChartData = {
@@ -847,7 +903,8 @@
       ]
     }
     barChart.Bar(barChartData, barChartOptions)
-
+    {% endif %}
+    {% if BE_gpa.7 %}
     var barChartCanvas                   = $('#Sem8BarChart').get(0).getContext('2d')
     var barChart                         = new Chart(barChartCanvas)
     var barChartData = {
@@ -866,6 +923,7 @@
       ]
     }
     barChart.Bar(barChartData, barChartOptions)
+    {% endif %}
   })
 
 
