@@ -24,7 +24,13 @@
 {% block content %}
     <!-- Content Header (Page header) -->
         <section class="content">
-
+          <div class="box box-header with-border">
+            <form action="/search/" method="post" role="form">
+              {% csrf_token %}
+              <input type="text" name="searchany" placeholder="Search">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
           <div class="row">
             <div class="col-md-12">
                   <div class="box box-solid">
@@ -85,8 +91,8 @@
                   <!-- /.box -->
             </div>
           </div>
-          {% for result in result %}
           <div class="row">
+            {% for result in result %}
             <div class="col-md-4">
               <div class="box box-widget widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
@@ -127,16 +133,18 @@
                     </div>
               </div>
             </div>
+            {% endfor %}
           </div>
-          {% endfor %}
+          {% if projects %}
           <hr/>
-          {% for project in projects %}
+          {% endif %}
           <div class="row">
+            {% for project in projects %}
             <div class="col-md-4">
                 <!-- Widget: user widget style 1 -->
                 <div class="box box-widget widget-userser-2">
                   <!-- Add the bg color to the header using any of the bg-* classes -->
-                  <div class="pad widget-user-header bg-yellow">  
+                  <div class="pad widget-user-header bg-yellow">
                     <!-- /.widget-user-image -->
                     <h3 class="widget-user-username">{{ project.student_profile.Sap_Id }}</h3>
                     <h5 class="widget-user-desc">{{ project.ProjName }}</h5>
@@ -146,13 +154,173 @@
                       <li>{{ project.ProjURL }}</li>
                       <li> {{ project.skill }}</li>
                       <li>{{ project.ProjDesc }}</li>
+                      <li><a href="{% url 'user_profile:project' project.id  %}">View</a></li>
                     </ul>
                   </div>
                 </div>
                 <!-- /.widget-user -->
               </div>
+              {% endfor %}
             </div>
-          {% endfor %}
+            {% if beprojects %}
+            <hr/>
+            {% endif %}
+            <div class="row">
+              {% for project in beprojects %}
+              <div class="col-md-4">
+                  <!-- Widget: user widget style 1 -->
+                  <div class="box box-widget widget-userser-2">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="pad widget-user-header bg-yellow">
+                      <!-- /.widget-user-image -->
+                      <h3 class="widget-user-username">{{ project.student_profile.Sap_Id }}</h3>
+                      <h5 class="widget-user-desc">{{ project.ProjName }}</h5>
+                    </div>
+                    <div class="box-footer no-padding">
+                      <ul class="pad nav nav-stacked">
+                        <li>{{ project.ProjURL }}</li>
+                        <li> {{ project.skill }}</li>
+                        <li>{{ project.ProjDesc }}</li>
+                        <li><a href="{% url 'user_profile:beproject' project.id  %}">View</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- /.widget-user -->
+                </div>
+                {% endfor %}
+              </div>
+              {% if hackathons %}
+              <hr/>
+              {% endif %}
+            <div class="row">
+              {% for hackathon in hackathons %}
+              <div class="col-md-4">
+                  <!-- Widget: user widget style 1 -->
+                  <div class="box box-widget widget-userser-2">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="pad widget-user-header bg-yellow">
+                      <!-- /.widget-user-image -->
+                      <h3 class="widget-user-username">{{ hackathon.student_profile.Sap_Id }}</h3>
+                      <h5 class="widget-user-desc">{{ hackathon.CompetitionName }}</h5>
+                    </div>
+                    <div class="box-footer no-padding">
+                      <ul class="pad nav nav-stacked">
+                        <li>{{ hackathon.URL }}</li>
+                        <li>{{ project.ProjDesc }}</li>
+                        <li><a href="{% url 'user_profile:hackathon' hackathon.id  %}">View</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- /.widget-user -->
+                </div>
+                {% endfor %}
+              </div>
+              {% if internships %}
+              <hr/>
+              {% endif %}
+              <div class="row">
+                {% for internship in internships %}
+                <div class="col-md-4">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-userser-2">
+                      <!-- Add the bg color to the header using any of the bg-* classes -->
+                      <div class="pad widget-user-header bg-yellow">
+                        <!-- /.widget-user-image -->
+                        <h3 class="widget-user-username">{{ internship.employee.Sap_Id }}</h3>
+                        <h5 class="widget-user-desc">{{ internship.company }}</h5>
+                      </div>
+                      <div class="box-footer no-padding">
+                        <ul class="pad nav nav-stacked">
+                          <li>{{ internship.Position }}</li>
+                          <li> {{ internship.Loc }}</li>
+                          <li>{{ internship.desc }}</li>
+                          <li><a href="{% url 'user_profile:internship' internship.id  %}">View</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- /.widget-user -->
+                  </div>
+                  {% endfor %}
+                </div>
+                {% if committees %}
+                <hr/>
+                {% endif %}
+                <div class="row">
+                  {% for committee in committees %}
+                  <div class="col-md-4">
+                      <!-- Widget: user widget style 1 -->
+                      <div class="box box-widget widget-userser-2">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="pad widget-user-header bg-yellow">
+                          <!-- /.widget-user-image -->
+                          <h3 class="widget-user-username">{{ committee.employee.Sap_Id }}</h3>
+                          <h5 class="widget-user-desc">{{ committee.OrganisationName }}</h5>
+                        </div>
+                        <div class="box-footer no-padding">
+                          <ul class="pad nav nav-stacked">
+                            <li>{{ committee.YourPosition }}</li>
+                            <li>{{ committee.Desc }}</li>
+                            <li><a href="{% url 'user_profile:committee' committee.id  %}">View</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                      <!-- /.widget-user -->
+                    </div>
+                    {% endfor %}
+                  </div>
+                  {% if researchpapers %}
+                  <hr/>
+                  {% endif %}
+                  <div class="row">
+                    {% for researchpaper in researchpapers %}
+                    <div class="col-md-4">
+                        <!-- Widget: user widget style 1 -->
+                        <div class="box box-widget widget-userser-2">
+                          <!-- Add the bg color to the header using any of the bg-* classes -->
+                          <div class="pad widget-user-header bg-yellow">
+                            <!-- /.widget-user-image -->
+                            <h3 class="widget-user-username">{{ researchpaper.student.Sap_Id }}</h3>
+                            <h5 class="widget-user-desc">{{ researchpaper.Title }}</h5>
+                          </div>
+                          <div class="box-footer no-padding">
+                            <ul class="pad nav nav-stacked">
+                              <li>{{ researchpaper.Publication }}</li>
+                              <li> {{ researchpaper.LinkToPaper }}</li>
+                              <li>{{ researchpaper.Desc }}</li>
+                              <li><a href="{% url 'user_profile:researchpaper' researchpaper.id  %}">View</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <!-- /.widget-user -->
+                      </div>
+                      {% endfor %}
+                    </div>
+                    {% if extracurricular %}
+                    <hr/>
+                    {% endif %}
+                    <div class="row">
+                      {% for extra in extracurricular %}
+                      <div class="col-md-4">
+                          <!-- Widget: user widget style 1 -->
+                          <div class="box box-widget widget-userser-2">
+                            <!-- Add the bg color to the header using any of the bg-* classes -->
+                            <div class="pad widget-user-header bg-yellow">
+                              <!-- /.widget-user-image -->
+                              <h3 class="widget-user-username">{{ extra.student.Sap_Id }}</h3>
+                              <h5 class="widget-user-desc">{{ extra.name }}</h5>
+                            </div>
+                            <div class="box-footer no-padding">
+                              <ul class="pad nav nav-stacked">
+                                <li>{{ extra.achievements }}</li>
+                                <li>{{ extra.desc }}</li>
+                                <li><a href="{% url 'user_profile:extracurricular' extra.id  %}">View</a></li>
+                              </ul>
+                            </div>
+                          </div>
+                          <!-- /.widget-user -->
+                        </div>
+                        {% endfor %}
+                      </div>
         </section>
     <!-- /.content -->
 {% endblock %}

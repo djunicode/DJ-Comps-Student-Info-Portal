@@ -11,12 +11,13 @@ from simple_history.models import HistoricalRecords
 
 
 class StudentProfile(models.Model):
-    student = models.OneToOneField(User, on_delete=models.CASCADE)
+    student = models.OneToOneField(User, on_delete=models.CASCADE, related_name='stud')
     first_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=True, null=True)
     Sap_Id = models.BigIntegerField(
         validators=[MaxValueValidator(99999999999),
                     MinValueValidator(10000000000)], blank=True, null=True)
+    sap = models.CharField(max_length=50, blank=True, null=True)
     department = models.CharField(max_length=50, blank=True, null=True)
     photo = models.FileField(blank=True, null=True)
     github_id = models.CharField(max_length=50, null=True, blank=True)
@@ -71,6 +72,7 @@ class Education(models.Model):
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
     sem8_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    history = HistoricalRecords()
 
 
 class KT(models.Model):
@@ -94,6 +96,8 @@ class TeacherProfile(models.Model):
     Sap_Id = models.BigIntegerField(
         validators=[MaxValueValidator(99999999999),
                     MinValueValidator(10000000000)], blank=True, null=True)
+    first_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
     department = models.CharField(max_length=50, blank=True, null=True)
     photo = models.FileField(blank=True, null=True)
     bio = models.CharField(max_length=200, blank=True, null=True)
@@ -124,7 +128,7 @@ class Experience(models.Model):
 
 
 class Hackathon(models.Model):
-    student_profile = models.ForeignKey(StudentProfile)
+    student_profile = models.ForeignKey(StudentProfile, related_name="hackathon")
     CompetitionName = models.CharField(max_length=50, blank=True, null=True)
     Date = models.DateField(blank=True, null=True)
     Desc = models.CharField(max_length=500, blank=True, null=True)
@@ -141,7 +145,7 @@ class Hackathon(models.Model):
 
 
 class Skill(models.Model):
-    user_profile = models.ForeignKey(StudentProfile)
+    user_profile = models.ForeignKey(StudentProfile, related_name="skill")
     skill = models.CharField(max_length=50)
     history = HistoricalRecords()
 
@@ -253,3 +257,21 @@ class BeProject(models.Model):
 
     def __str__(self):
         return str(self.ProjName)
+
+
+class ExtraCurricular(models.Model):
+    student = models.ForeignKey(StudentProfile, related_name='extracurricular')
+    name = models.CharField(max_length=50, null=True, blank=True)
+    desc = models.CharField(max_length=500, null=True, blank=True)
+    achievements = models.CharField(max_length=500, null=True, blank=True)
+    date = models.DateField(("Date"), default=datetime.date.today)
+    Certificate = models.FileField(null=True, blank=True)
+    image1 = models.FileField(null=True, blank=True)
+    image2 = models.FileField(null=True, blank=True)
+    image3 = models.FileField(null=True, blank=True)
+    image4 = models.FileField(null=True, blank=True)
+    image5 = models.FileField(null=True, blank=True)
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return str(self.name)

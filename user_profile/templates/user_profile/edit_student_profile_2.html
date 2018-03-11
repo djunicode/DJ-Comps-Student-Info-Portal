@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 {% load staticfiles %}
 
@@ -17,12 +18,15 @@
   <![endif]-->
 {% endblock %}
   <!-- Google Font -->
+
+
+
 {% block content %}
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Edit Profile Page
-        <small> Pass Student NAME HERE</small>
+        <small>{{student_profile.first_name}} {{student_profile.last_name}}</small>
       </h1>
 
     </section>
@@ -34,7 +38,6 @@
       <!-- <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Title</h3>
-
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
                     title="Collapse">
@@ -104,7 +107,7 @@
                             <label for="Sap_Id" class="col-sm-2 control-label">Sap_Id</label>
 
                             <div class="col-sm-8">
-                              <input type="number" class="form-control" id="Sap_Id" name="Sap_Id" value="{{student_profile.student.username}}">
+                              <input type="number" class="form-control" id="Sap_Id" name="Sap_Id" value="{{student_profile.Sap_Id}}">
                             </div>
                           </div>
                           <div class="form-group">
@@ -140,23 +143,23 @@
                             </label>
                             <div class="col-sm-8">
                               <label>
-                                <input type="radio" name="year" class="flat-red" checked>&nbsp;FE
+                                <input type="radio" name="year" class="flat-red" value="FE">&nbsp;FE
                               </label>
                               <label>
-                                <input type="radio" name="year" class="flat-red">&nbsp;SE
+                                <input type="radio" name="year" class="flat-red" value="SE">&nbsp;SE
                               </label>
                               <label>
-                                <input type="radio" name="year" class="flat-red">&nbsp;TE
+                                <input type="radio" name="year" class="flat-red" value="TE">&nbsp;TE
                               </label>
                               <label>
-                                <input type="radio" name="year" class="flat-red">&nbsp;BE
+                                <input type="radio" name="year" class="flat-red" value="BE">&nbsp;BE
                               </label>
                             </div>
                           </div>
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">
-                          <button type="submit" class="btn btn-default">Cancel</button>
+
                           <button type="button" class="btn btn-info pull-right" onClick="submitBasicInfo();">Submit</button>
                         </div>
                         <!-- /.box-footer -->
@@ -174,13 +177,14 @@
                 <div id="AcadsData" class="panel-collapse collapse">
                       <!-- /.box-header -->
                       <!-- form start -->
-                      <form id="Acadamic" class="form-horizontal">
+                      <form id="AcademicInfo" class="form-horizontal" action="/edit_academic_info/{{student_profile.id}}">
+                        {% csrf_token %}
                         <div class="box-body">
                           <div class="form-group">
                             <label for="sem1_gpa" class="col-sm-2 control-label">Sem 1 GPA</label>
 
                             <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem1_gpa" name="sem1_gpa" placeholder="Sem 1 GPA">
+                              <input type="number" class="form-control" id="sem1_gpa" name="sem1_gpa" value={{acads.sem1_gpa}}>
                             </div>
                           </div>
 
@@ -188,7 +192,7 @@
                             <label for="sem2_gpa" class="col-sm-2 control-label">Sem 2 GPA</label>
 
                             <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem2_gpa" name="sem2_gpa" placeholder="Sem 2 GPA">
+                              <input type="number" class="form-control" id="sem2_gpa" name="sem2_gpa" value={{acads.sem2_gpa}}>
                             </div>
                           </div>
 
@@ -196,7 +200,7 @@
                             <label for="sem3_gpa" class="col-sm-2 control-label">Sem 3 GPA</label>
 
                             <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem3_gpa" name="sem3_gpa" placeholder="Sem 3 GPA">
+                              <input type="number" class="form-control" id="sem3_gpa" name="sem3_gpa" value={{acads.sem3_gpa}}>
                             </div>
                           </div>
 
@@ -204,7 +208,7 @@
                             <label for="sem4_gpa" class="col-sm-2 control-label">Sem 4 GPA</label>
 
                             <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem4_gpa" name="sem4_gpa" placeholder="Sem 4 GPA">
+                              <input type="number" class="form-control" id="sem4_gpa" name="sem4_gpa" value={{acads.sem4_gpa}}>
                             </div>
                           </div>
 
@@ -212,7 +216,7 @@
                             <label for="sem5_gpa" class="col-sm-2 control-label">Sem 5 GPA</label>
 
                             <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem5_gpa" name="sem5_gpa" placeholder="Sem 5 GPA">
+                              <input type="number" class="form-control" id="sem5_gpa" name="sem5_gpa" value={{acads.sem5_gpa}}>
                             </div>
                           </div>
 
@@ -220,7 +224,7 @@
                             <label for="sem6_gpa" class="col-sm-2 control-label">Sem 6 GPA</label>
 
                             <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem6_gpa" name="sem6_gpa" placeholder="Sem 6 GPA">
+                              <input type="number" class="form-control" id="sem6_gpa" name="sem6_gpa" value={{acads.sem6_gpa}}>
                             </div>
                           </div>
 
@@ -228,7 +232,7 @@
                             <label for="sem7_gpa" class="col-sm-2 control-label">Sem 7 GPA</label>
 
                             <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem7_gpa" name="sem7_gpa" placeholder="Sem 7 GPA">
+                              <input type="number" class="form-control" id="sem7_gpa" name="sem7_gpa" value={{acads.sem7_gpa}}>
                             </div>
                           </div>
 
@@ -236,7 +240,7 @@
                             <label for="sem8_gpa" class="col-sm-2 control-label">Sem 8 GPA</label>
 
                             <div class="col-sm-8">
-                              <input type="number" class="form-control" id="sem8_gpa" name="sem8_gpa" placeholder="Sem 8 GPA">
+                              <input type="number" class="form-control" id="sem8_gpa" name="sem8_gpa" value={{acads.sem8_gpa}}>
                             </div>
                           </div>
                           <div class="form-group">
@@ -273,18 +277,715 @@
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">
-                          <button type="submit" class="btn btn-default">Cancel</button>
-                          <button type="button" class="btn btn-info pull-right" onClick="submitAcadamic();">Submit</button>
+
+                          <button type="button" class="btn btn-info pull-right" onClick="submitAcademic();">Submit</button>
                         </div>
                         <!-- /.box-footer -->
                       </form>
-                </div>
+                    </div>
+                  </div>
+
+                      <div class="panel box box-primary">
+                        <div class="box-header with-border">
+                          <h4 class="box-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#SkillData">
+                              Skills
+                            </a>
+                          </h4>
+                        </div>
+                      <div id="SkillData" class="panel-collapse collapse ">
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <form id="SkillInfo" class="form-horizontal" action="/edit_skill_info/{{student_profile.id}}">
+                              {% csrf_token %}
+                              <div class="box-body">
+                                <div class="form-group">
+                                  <label for="skill" class="col-sm-2 control-label"> Skills</label>
+
+                                  <div class="col-sm-8">
+                                    <input type="text" name="skill" class="form-control" id="skill">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="box-footer">
+
+                                <button type="button" class="btn btn-info pull-right" onClick="submitSkill();">Submit</button>
+                              </div>
+                            </form>
+
+                            {% for skill in skill_list %}
+                            <form id="SkillInfo" class="form-horizontal" action="/delete_skill_info/{{skill.id}}">
+                              {% csrf_token %}
+                              <div class="box-body">
+                                <div class="form-group">
+                                  <label for="skill" class="col-sm-2 control-label"> Skills</label>
+
+                                  <div class="col-sm-8">
+                                    <p type="text" name="skill" class="form-control" id="skill">{{skill.skill}}</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="box-footer">
+
+                                <button type="submit" class="btn btn-info pull-right">Delete</button>
+                              </div>
+                            </form>
+                            {% endfor %}
+                          </div>
+                        </div>
+
+
+
+
+                          <div class="panel box box-primary">
+                            <div class="box-header with-border">
+                              <h4 class="box-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#HackathonData">
+                                  Hackathons
+                                </a>
+                              </h4>
+                            </div>
+                          <div id="HackathonData" class="panel-collapse collapse ">
+                                <!-- /.box-header -->
+                                <!-- form start -->
+                                <form id="HackathonInfo" class="form-horizontal" action="/edit_hackathon_info/{{student_profile.id}}">
+                                  {% csrf_token %}
+                                  <div class="box-body">
+                                    <div class="form-group">
+                                      <label for="name" class="col-sm-2 control-label"> CompetitionName</label>
+
+                                      <div class="col-sm-8">
+                                        <input type="text" name="name" class="form-control" id="name">
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                                      <div class="col-sm-8">
+                                        <input type="text"  name="description" class="form-control" id="description">
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label for="url" class="col-sm-2 control-label"> URL</label>
+
+                                      <div class="col-sm-8">
+                                        <input type="url" name="url" class="form-control" id="url">
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label for="date" class="col-sm-2 control-label"> Date</label>
+
+                                      <div class="col-sm-8">
+                                        <input type="date" name="date" class="form-control" id="date">
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="box-footer">
+
+                                    <button id="addHackathon" type="button" class="btn btn-info pull-right" onClick="submitHackathon();">Submit</button>
+                                  </div>
+                                </form>
+
+
+
+                                {% for hackathon in hackathon_list%}
+                                <form id="Hackathon" class="form-horizontal" method="POST" action="/delete_hackathon_info/{{hackathon.id}}">
+                                  {% csrf_token %}
+                                  <div class="box-body">
+                                    <div class="form-group">
+                                      <label for="name" class="col-sm-2 control-label"> CompetitionName</label>
+
+                                      <div class="col-sm-8">
+                                        <p name="name" class="form-control" id="name">{{hackathon.CompetitionName}}</p>
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                                      <div class="col-sm-8">
+                                        <p  name="description" class="form-control" id="description">{{hackathon.Desc}}</p>
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label for="url" class="col-sm-2 control-label"> URL</label>
+
+                                      <div class="col-sm-8">
+                                        <p name="url" class="form-control" id="url">{{hackathon.URL}}</p>
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label for="date" class="col-sm-2 control-label"> Date</label>
+
+                                      <div class="col-sm-8">
+                                        <p name="date" class="form-control" id="date">{{hackathon.Date}}</p>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="box-footer">
+
+                                    <button type="submit" class="btn btn-info pull-right">Delete</button>
+                                  </div>
+                                </form>
+                                {% endfor %}
+                              </div>
+                            </div>
+
+
+
+
+                            <div class="panel box box-primary">
+                              <div class="box-header with-border">
+                                <h4 class="box-title">
+                                  <a data-toggle="collapse" data-parent="#accordion" href="#ProjectData">
+                                    Projects
+                                  </a>
+                                </h4>
+                              </div>
+                            <div id="ProjectData" class="panel-collapse collapse ">
+                                  <!-- /.box-header -->
+                                  <!-- form start -->
+                                  <form id="ProjectInfo" class="form-horizontal" action="/edit_project_info/{{student_profile.id}}">
+                                    {% csrf_token %}
+                                    <div class="box-body">
+                                      <div class="form-group">
+                                        <label for="name" class="col-sm-2 control-label"> Project Name</label>
+
+                                        <div class="col-sm-8">
+                                          <input type="text" name="name" class="form-control" id="name">
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                                        <div class="col-sm-8">
+                                          <input type="text" name="description" class="form-control" id="description">
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="url" class="col-sm-2 control-label"> URL</label>
+
+                                        <div class="col-sm-8">
+                                          <input type="url" name="url" class="form-control" id="url">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="skill" class="col-sm-2 control-label"> Skill</label>
+
+                                        <div class="col-sm-8">
+                                          <input type="text" name="skill" class="form-control" id="skill">
+                                        </div>
+                                      </div>
+                                      <!--label for="image" class="col-sm-2 control-label"> Image</label-->
+                                      <!--input type="file" name="pic" accept="image/*" id="image"-->
+                                    </div>
+                                    <div class="box-footer">
+
+                                      <button type="button" class="btn btn-info pull-right" onClick="submitProject();">Submit</button>
+                                    </div>
+                                  </form>
+
+                                    {% for project in project_list %}
+                                    <form id="Project" class="form-horizontal" action="/delete_project_info/{{project.id}}">
+                                      {% csrf_token %}
+                                      <div class="box-body">
+                                        <div class="form-group">
+                                          <label for="name" class="col-sm-2 control-label"> Project Name</label>
+
+                                          <div class="col-sm-8">
+                                            <p name="name" class="form-control" id="name">{{project.ProjName}}</p>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                                          <div class="col-sm-8">
+                                            <p name="description" class="form-control" id="description">{{project.ProjDesc}}</p>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="url" class="col-sm-2 control-label"> URL</label>
+
+                                          <div class="col-sm-8">
+                                            <p name="url" class="form-control" id="url">{{project.ProjURL}}</p>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="skill" class="col-sm-2 control-label"> Skill</label>
+
+                                          <div class="col-sm-8">
+                                            <p name="skill" class="form-control" id="skill">{{project.skill.skill}}</p>
+                                          </div>
+                                        </div>
+
+                                      </div>
+
+                                      <div class="box-footer">
+
+                                        <button type="submit" class="btn btn-info pull-right" >Delete</button>
+                                      </div>
+                                    </form>
+
+                                      {% endfor %}
+
+                                </div>
+                              </div>
+
+
+                              <div class="panel box box-primary">
+                                <div class="box-header with-border">
+                                  <h4 class="box-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#InternshipData">
+                                      Internships
+                                    </a>
+                                  </h4>
+                                </div>
+                              <div id="InternshipData" class="panel-collapse collapse ">
+                                    <!-- /.box-header -->
+                                    <!-- form start -->
+                                    <form id="InternshipInfo" class="form-horizontal" action="/delete_internship_info/{{internship.id}}">
+                                      {% csrf_token %}
+                                      <div class="box-body">
+                                        <div class="form-group">
+                                          <label for="name" class="col-sm-2 control-label"> Company Name</label>
+
+                                          <div class="col-sm-8">
+                                            <input type="text" name="name" class="form-control" id="name">
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                                          <div class="col-sm-8">
+                                            <input type="text" name="description" class="form-control" id="description">
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="position" class="col-sm-2 control-label"> Position</label>
+
+                                          <div class="col-sm-8">
+                                            <input type="text" name="position" class="form-control" id="position">
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="location" class="col-sm-2 control-label"> Location</label>
+
+                                          <div class="col-sm-8">
+                                            <input type="text" name="location" class="form-control" id="location">
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="dateFrom" class="col-sm-2 control-label"> From</label>
+
+                                          <div class="col-sm-8">
+                                            <input type="date" name="dateFrom" class="form-control" id="dateFrom">
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="dateTo" class="col-sm-2 control-label"> To</label>
+
+                                          <div class="col-sm-8">
+                                            <input type="date" name="dateTo" class="form-control" id="dateTo">
+                                          </div>
+                                        </div>
+                                      </div>
+
+
+
+                                      <div class="box-footer">
+
+                                        <button type="button" class="btn btn-info pull-right" onClick="submitInternship();">Submit</button>
+                                      </div>
+
+                                    </form>
+                                    {% for internship in internship_list %}
+                                    <form id="Internship" class="form-horizontal" action="/delete_internship_info/{{internship.id}}">
+                                      {% csrf_token %}
+                                      <div class="box-body">
+                                        <div class="form-group">
+                                          <label for="name" class="col-sm-2 control-label"> Company Name</label>
+
+                                          <div class="col-sm-8">
+                                            <p name="name" class="form-control" id="name">{{internship.company}}</p>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                                          <div class="col-sm-8">
+                                            <p name="description" class="form-control" id="description">{{internship.desc}}</p>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="position" class="col-sm-2 control-label"> Position</label>
+
+                                          <div class="col-sm-8">
+                                            <p name="position" class="form-control" id="position">{{internship.Position}}</p>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="location" class="col-sm-2 control-label"> Location</label>
+
+                                          <div class="col-sm-8">
+                                            <p name="location" class="form-control" id="location">{{internship.loc}}</p>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="dateFrom" class="col-sm-2 control-label"> From</label>
+
+                                          <div class="col-sm-8">
+                                            <p name="dateFrom" class="form-control" id="dateFrom">{{internship.From}}</p>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="dateTo" class="col-sm-2 control-label"> To</label>
+
+                                          <div class="col-sm-8">
+                                            <p name="dateTo" class="form-control" id="dateTo">{{internship.To}}</p>
+                                          </div>
+                                        </div>
+                                      </div>
+
+
+
+                                      <div class="box-footer">
+
+                                        <button type="submit" class="btn btn-info pull-right">Delete</button>
+                                      </div>
+
+                                    </form>
+                                    {% endfor %}
+                                  </div>
+                                </div>
+
+
+                                <div class="panel box box-primary">
+                                  <div class="box-header with-border">
+                                    <h4 class="box-title">
+                                      <a data-toggle="collapse" data-parent="#accordion" href="#CommitteeData">
+                                        Committee's
+                                      </a>
+                                    </h4>
+                                  </div>
+                                <div id="CommitteeData" class="panel-collapse collapse ">
+                                      <!-- /.box-header -->
+                                      <!-- form start -->
+                                      <form id="CommitteeInfo" class="form-horizontal" action="/edit_committee_info/{{student_profile.id}}">
+                                        {% csrf_token %}
+                                        <div class="box-body">
+                                          <div class="form-group">
+                                            <label for="name" class="col-sm-2 control-label"> Organisation Name</label>
+
+                                            <div class="col-sm-8">
+                                              <input type="text" name="name" class="form-control" id="name">
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                                            <div class="col-sm-8">
+                                              <input type="text" name="description" class="form-control" id="description">
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label for="position" class="col-sm-2 control-label"> Position</label>
+
+                                            <div class="col-sm-8">
+                                              <input type="text" name="position" class="form-control" id="position">
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label for="location" class="col-sm-2 control-label"> Location</label>
+
+                                            <div class="col-sm-8">
+                                              <input type="text" name="location" class="form-control" id="location" required>
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label for="dateFrom" class="col-sm-2 control-label"> From</label>
+
+                                            <div class="col-sm-8">
+                                              <input type="date" name="dateFrom" class="form-control" id="dateFrom">
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label for="dateTo" class="col-sm-2 control-label"> To</label>
+
+                                            <div class="col-sm-8">
+                                              <input type="date" name="dateTo" class="form-control" id="dateTo">
+                                            </div>
+                                          </div>
+                                        </div>
+
+
+                                        <div class="box-footer">
+
+                                          <button type="button" class="btn btn-info pull-right" onClick="submitCommittee();">Submit</button>
+                                        </div>
+
+                                      </form>
+
+                                      {% for committee in committee_list %}
+                                      <form id="Committee" class="form-horizontal" action="/delete_committee_info/{{committee.id}}">
+                                        {% csrf_token %}
+                                        <div class="box-body">
+                                          <div class="form-group">
+                                            <label for="name" class="col-sm-2 control-label"> Organisation Name</label>
+
+                                            <div class="col-sm-8">
+                                              <p name="name" class="form-control" id="name">{{committee.Organisation}}</p>
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                                            <div class="col-sm-8">
+                                              <p name="description" class="form-control" id="description">{{committee.Desc}}</p>
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label for="position" class="col-sm-2 control-label"> Position</label>
+
+                                            <div class="col-sm-8">
+                                              <p name="position" class="form-control" id="position">{{committee.YourPosition}}</p>
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label for="location" class="col-sm-2 control-label"> Location</label>
+
+                                            <div class="col-sm-8">
+                                              <p name="location" class="form-control" id="location">{{committee.Loc}}</p>
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label for="dateFrom" class="col-sm-2 control-label"> From</label>
+
+                                            <div class="col-sm-8">
+                                              <p name="dateFrom" class="form-control" id="dateFrom">{{committee.dateFrom}}</p>
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label for="dateTo" class="col-sm-2 control-label"> To</label>
+
+                                            <div class="col-sm-8">
+                                              <p name="dateTo" class="form-control" id="dateTo">{{committee.dateTo}}</p>
+                                            </div>
+                                          </div>
+                                        </div>
+
+
+                                        <div class="box-footer">
+
+                                          <button type="submit" class="btn btn-info pull-right">Delete</button>
+                                        </div>
+
+                                      </form>
+                                      {% endfor %}
+
+                                    </div>
+                                  </div>
+
+                                  <div class="panel box box-primary">
+                                    <div class="box-header with-border">
+                                      <h4 class="box-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#BeProjectData">
+                                          BE Project
+                                        </a>
+                                      </h4>
+                                    </div>
+                                  <div id="BeProjectData" class="panel-collapse collapse ">
+                                        <!-- /.box-header -->
+                                        <!-- form start -->
+                                        <form id="BeProjectInfo" class="form-horizontal" action="/edit_beproject_info/{{student_profile.id}}">
+                                          {% csrf_token %}
+                                          <div class="box-body">
+                                            <div class="form-group">
+                                              <label for="name" class="col-sm-2 control-label"> Project Name</label>
+
+                                              <div class="col-sm-8">
+                                                <input type="text" name="name" class="form-control" id="name" value={{beproject.ProjName}}>
+                                              </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                              <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                                              <div class="col-sm-8">
+                                                <input type="text" name="description" class="form-control" id="description" value={{beproject.ProjDesc}}>
+                                              </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                              <label for="url" class="col-sm-2 control-label"> URL</label>
+
+                                              <div class="col-sm-8">
+                                                <input type="url" name="url" class="form-control" id="url" value={{beproject.ProjURL}}>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <div class="box-footer">
+
+                                            <button type="button" class="btn btn-info pull-right" onClick="submitBEProject();">Submit</button>
+                                          </div>
+
+                                        </form>
+                                      </div>
+                                    </div>
+
+
+                                    <div class="panel box box-primary">
+                                      <div class="box-header with-border">
+                                        <h4 class="box-title">
+                                          <a data-toggle="collapse" data-parent="#accordion" href="#ResearchPaperData">
+                                            Research Paper
+                                          </a>
+                                        </h4>
+                                      </div>
+                                    <div id="ResearchPaperData" class="panel-collapse collapse ">
+                                          <!-- /.box-header -->
+                                          <!-- form start -->
+                                          <form id="ResearchPaperInfo" class="form-horizontal" action="/edit_research_paper_info/{{student_profile.id}}">
+                                            {% csrf_token %}
+                                            <div class="box-body">
+                                              <div class="form-group">
+                                                <label for="name" class="col-sm-2 control-label"> Name</label>
+
+                                                <div class="col-sm-8">
+                                                  <input type="text" name="name" class="form-control" id="name">
+                                                </div>
+                                              </div>
+
+                                              <div class="form-group">
+                                                <label for="name" class="col-sm-2 control-label"> Publication</label>
+
+                                                <div class="col-sm-8">
+                                                  <input type="text" name="publication" class="form-control" id="publication">
+                                                </div>
+                                              </div>
+
+                                              <div class="form-group">
+                                                <label for="name" class="col-sm-2 control-label"> Date of Publication</label>
+
+                                                <div class="col-sm-8">
+                                                  <input type="date" name="date" class="form-control" id="date">
+                                                </div>
+                                              </div>
+
+                                              <div class="form-group">
+                                                <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                                                <div class="col-sm-8">
+                                                  <input type="text" name="description" class="form-control" id="description">
+                                                </div>
+                                              </div>
+
+                                              <div class="form-group">
+                                                <label for="url" class="col-sm-2 control-label"> Link to Paper</label>
+
+                                                <div class="col-sm-8">
+                                                  <input type="url" name="url" class="form-control" id="url">
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="box-footer">
+
+                                              <button type="button" class="btn btn-info pull-right" onClick="submitResearchPaper();">Submit</button>
+
+                                          </div>
+                                          </form>
+
+                                          {%for researchpaper in researchpaper_list %}
+                                          <form id="ResearchPaper" class="form-horizontal" action="/delete_researchpaper_info/{{researchpaper.id}}">
+                                            {% csrf_token %}
+                                            <div class="box-body">
+                                              <div class="form-group">
+                                                <label for="name" class="col-sm-2 control-label"> Name</label>
+
+                                                <div class="col-sm-8">
+                                                  <p name="name" class="form-control" id="name">{{researchpaper.Title}}</p>
+                                                </div>
+                                              </div>
+
+                                              <div class="form-group">
+                                                <label for="name" class="col-sm-2 control-label"> Publication</label>
+
+                                                <div class="col-sm-8">
+                                                  <p name="publication" class="form-control" id="publication">{{researchpaper.Publication}}</p>
+                                                </div>
+                                              </div>
+
+                                              <div class="form-group">
+                                                <label for="name" class="col-sm-2 control-label"> Date of Publication</label>
+
+                                                <div class="col-sm-8">
+                                                  <p name="date" class="form-control" id="date">{{researchpaper.DateOfPublication}}</p>
+                                                </div>
+                                              </div>
+
+                                              <div class="form-group">
+                                                <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                                                <div class="col-sm-8">
+                                                  <p name="description" class="form-control" id="description">{{researchpaper.Desc}}</p>
+                                                </div>
+                                              </div>
+
+                                              <div class="form-group">
+                                                <label for="url" class="col-sm-2 control-label"> Link to Paper</label>
+
+                                                <div class="col-sm-8">
+                                                  <p name="url" class="form-control" id="url">{{researchpaper.LinkToPaper}}</p>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="box-footer">
+
+                                              <button type="submit" class="btn btn-info pull-right" >Delete</button>
+
+                                          </div>
+                                          </form>
+                                          {% endfor %}
+                                        </div>
+                                      </div>
+
+
               </div>
             </div>
           </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
+          <!-- /.box -->
 
     </section>
     <!-- /.content -->
@@ -295,8 +996,8 @@
 <script src="{% static "/plugins/iCheck/icheck.min.js" %}"></script>
 <script>
   $(function () {
-
     //iCheck for checkbox and radio inputs
+
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
       checkboxClass: 'icheckbox_minimal-blue',
       radioClass   : 'iradio_minimal-blue'
@@ -312,7 +1013,6 @@
       radioClass   : 'iradio_flat-green'
     })
 });
-
 </script>
 
 <script>
@@ -324,13 +1024,619 @@
         console.log(url);
       });
     }
-    
-    function submitAcadamic(){
-      var data = $('#Acadamic').serialize();
-      $.post( "#", data, function( data, status ) {
-        console.log("The Data Sent is: " + data);
+
+    function submitAcademic(){
+      var data = $('#AcademicInfo').serialize();
+      var url = "/edit_academic_info/{{student_profile.id}}";
+      $.post( url, data, function( data, status ) {
+        //console.log("The Data Sent is: " + data);
+        console.log(url)
       });
     }
+
+    function submitHackathon(){
+      var data = $('#HackathonInfo').serialize();
+      var url = "/edit_hackathon_info/{{student_profile.id}}";
+      $.post( url, data, function( data, status ) {
+        //console.log("The Data Sent is: " + data);
+        console.log(url)
+      });
+        setTimeout(add_hackathon, 500);
+
+            }
+
+            function add_hackathon(){
+              $.getJSON("/edit_hackathon_info/{{student_profile.id}}", function(data){
+
+                console.log(data)
+                var obj = JSON.parse(JSON.stringify(data));
+
+                var div = document.getElementById("HackathonData");
+
+                var box = document.createElement('div');
+                box.setAttribute("class", "box-body");
+
+
+                var footer = document.createElement('div');
+                footer.setAttribute("class", "box-footer");
+                var f = document.createElement('form');
+                var d1 = document.createElement('div');
+                d1.setAttribute("class", "form-group");
+                var d2 = document.createElement('div');
+                d2.setAttribute("class", "form-group");
+                var d3 = document.createElement('div');
+                d3.setAttribute("class", "form-group");
+                var d4 = document.createElement('div');
+                d4.setAttribute("class", "form-group");
+                var innerdiv1 = document.createElement('div');
+                var innerdiv2 = document.createElement('div');
+                var innerdiv3 = document.createElement('div');
+                var innerdiv4 = document.createElement('div');
+                innerdiv1.setAttribute("class", "col-sm-8");
+                innerdiv2.setAttribute("class", "col-sm-8");
+                innerdiv3.setAttribute("class", "col-sm-8");
+                innerdiv4.setAttribute("class", "col-sm-8");
+
+                var l1 = document.createElement('label');
+                var l2 = document.createElement('label');
+                var l3 = document.createElement('label');
+                var l4 = document.createElement('label');
+                var p1 = document.createElement('p');
+                var p2 = document.createElement('p');
+                var p3 = document.createElement('p');
+                var p4 = document.createElement('p');
+                var b = document.createElement('button');
+                l1.setAttribute("class", "col-sm-2 control-label");
+                p1.setAttribute("class", "form-control");
+                l2.setAttribute("class", "col-sm-2 control-label");
+                p2.setAttribute("class", "form-control");
+                l3.setAttribute("class", "col-sm-2 control-label");
+                p3.setAttribute("class", "form-control");
+                l4.setAttribute("class", "col-sm-2 control-label");
+                p4.setAttribute("class", "form-control");
+                p1.append(obj.CompetitionName);
+                p2.append(obj.Desc);
+                p3.append(obj.url);
+                p4.append(obj.Date);
+                innerdiv1.append(p1);
+                innerdiv2.append(p2);
+                innerdiv3.append(p3);
+                innerdiv4.append(p4);
+                b.append('Delete');
+                b.setAttribute("type", "submit");
+                b.setAttribute("class", "btn btn-info pull-right");
+                f.setAttribute("action", "/delete_hackathon_info/".concat(obj.id));
+                f.setAttribute("method", "POST");
+                f.setAttribute("class", "form-horizontal");
+                l1.append('Competition Name');
+                l2.append('Desc');
+                l3.append('URL');
+                l4.append('Date')
+                d1.append(l1, innerdiv1);
+                d2.append(l2, innerdiv2);
+                d3.append(l3, innerdiv3);
+                d4.append(l4, innerdiv4);
+                var inputElem = document.createElement('input');
+                inputElem.type = 'hidden';
+                inputElem.name = 'csrfmiddlewaretoken';
+                inputElem.value = '{{ csrf_token }}';
+                f.appendChild(inputElem);
+                footer.append(b);
+                //f.append("{% csrf_token%}");
+                box.append(d1,d2,d3,d4);
+                f.append(box, footer);
+                div.append(f);
+              });
+            }
+
+    function submitInternship(){
+      var data = $('#InternshipInfo').serialize();
+      var url = "/edit_internship_info/{{student_profile.id}}";
+
+      $.post( url, data, function( data, status ) {
+        //console.log("The Data Sent is: " + data);
+        console.log(url)
+
+      });
+        setTimeout(add_internship, 500);
+    }
+
+
+    function add_internship(){
+      $.getJSON("/edit_internship_info/{{student_profile.id}}", function(data){
+
+        console.log(data)
+        var obj = JSON.parse(JSON.stringify(data));
+
+        var div = document.getElementById("InternshipData");
+
+        var box = document.createElement('div');
+        box.setAttribute("class", "box-body");
+
+
+        var footer = document.createElement('div');
+        footer.setAttribute("class", "box-footer");
+        var f = document.createElement('form');
+        var d1 = document.createElement('div');
+        d1.setAttribute("class", "form-group");
+        var d2 = document.createElement('div');
+        d2.setAttribute("class", "form-group");
+        var d3 = document.createElement('div');
+        d3.setAttribute("class", "form-group");
+        var d4 = document.createElement('div');
+        d4.setAttribute("class", "form-group");
+        var d5 = document.createElement('div');
+        d5.setAttribute("class", "form-group");
+        var d6 = document.createElement('div');
+        d6  .setAttribute("class", "form-group");
+        var innerdiv1 = document.createElement('div');
+        var innerdiv2 = document.createElement('div');
+        var innerdiv3 = document.createElement('div');
+        var innerdiv4 = document.createElement('div');
+        var innerdiv5 = document.createElement('div');
+        var innerdiv6 = document.createElement('div');
+
+        innerdiv1.setAttribute("class", "col-sm-8");
+        innerdiv2.setAttribute("class", "col-sm-8");
+        innerdiv3.setAttribute("class", "col-sm-8");
+        innerdiv4.setAttribute("class", "col-sm-8");
+        innerdiv5.setAttribute("class", "col-sm-8");
+        innerdiv6.setAttribute("class", "col-sm-8");
+        var l1 = document.createElement('label');
+        var l2 = document.createElement('label');
+        var l3 = document.createElement('label');
+        var l4 = document.createElement('label');
+        var l5 = document.createElement('label');
+        var l6 = document.createElement('label');
+        var p1 = document.createElement('p');
+        var p2 = document.createElement('p');
+        var p3 = document.createElement('p');
+        var p4 = document.createElement('p');
+        var p6 = document.createElement('p');
+        var p5 = document.createElement('p');
+        var b = document.createElement('button');
+        l1.setAttribute("class", "col-sm-2 control-label");
+        p1.setAttribute("class", "form-control");
+        l2.setAttribute("class", "col-sm-2 control-label");
+        p2.setAttribute("class", "form-control");
+        l3.setAttribute("class", "col-sm-2 control-label");
+        p3.setAttribute("class", "form-control");
+        l4.setAttribute("class", "col-sm-2 control-label");
+        p4.setAttribute("class", "form-control");
+        l5.setAttribute("class", "col-sm-2 control-label");
+        p5.setAttribute("class", "form-control");
+        l6.setAttribute("class", "col-sm-2 control-label");
+        p6.setAttribute("class", "form-control");
+        p1.append(obj.company);
+        p2.append(obj.desc);
+        p3.append(obj.Position);
+        p4.append(obj.Loc);
+        p5.append(obj.From);
+        p6.append(obj.To);
+        innerdiv1.append(p1);
+        innerdiv2.append(p2);
+        innerdiv3.append(p3);
+        innerdiv4.append(p4);
+        innerdiv5.append(p5);
+        innerdiv6.append(p6);
+        b.append('Delete');
+        b.setAttribute("type", "submit");
+        b.setAttribute("class", "btn btn-info pull-right");
+        f.setAttribute("action", "/delete_internship_info/".concat(obj.id));
+        f.setAttribute("method", "POST");
+        f.setAttribute("class", "form-horizontal");
+        l1.append('Company Name');
+        l2.append('Description');
+        l3.append('Position');
+        l4.append('Location');
+        l5.append("From");
+        l6.append("To")
+        d1.append(l1, innerdiv1);
+        d2.append(l2, innerdiv2);
+        d3.append(l3, innerdiv3);
+        d4.append(l4, innerdiv4);
+        d5.append(l5, innerdiv5);
+        d6.append(l6, innerdiv6);
+        var inputElem = document.createElement('input');
+        inputElem.type = 'hidden';
+        inputElem.name = 'csrfmiddlewaretoken';
+        inputElem.value = '{{ csrf_token }}';
+        f.appendChild(inputElem);
+        footer.append(b);
+        //f.append("{% csrf_token%}");
+        box.append(d1,d2,d3,d4,d5,d6);
+        f.append(box, footer);
+        div.append(f);
+      });
+    }
+
+
+    function submitCommittee(){
+      var data = $('#CommitteeInfo').serialize();
+      var url = "/edit_committee_info/{{student_profile.id}}";
+      $.post( url, data, function( data, status ) {
+        //console.log("The Data Sent is: " + data);
+        console.log(url)
+      });
+      setTimeout(add_committee, 500);
+    }
+
+    function add_committee(){
+      $.getJSON("/edit_committee_info/{{student_profile.id}}", function(data){
+
+        console.log(data)
+        var obj = JSON.parse(JSON.stringify(data));
+
+        var div = document.getElementById("CommitteeData");
+
+        var box = document.createElement('div');
+        box.setAttribute("class", "box-body");
+
+
+        var footer = document.createElement('div');
+        footer.setAttribute("class", "box-footer");
+        var f = document.createElement('form');
+        var d1 = document.createElement('div');
+        d1.setAttribute("class", "form-group");
+        var d2 = document.createElement('div');
+        d2.setAttribute("class", "form-group");
+        var d3 = document.createElement('div');
+        d3.setAttribute("class", "form-group");
+        var d4 = document.createElement('div');
+        d4.setAttribute("class", "form-group");
+        var d5 = document.createElement('div');
+        d5.setAttribute("class", "form-group");
+        var d6 = document.createElement('div');
+        d6  .setAttribute("class", "form-group");
+        var innerdiv1 = document.createElement('div');
+        var innerdiv2 = document.createElement('div');
+        var innerdiv3 = document.createElement('div');
+        var innerdiv4 = document.createElement('div');
+        var innerdiv5 = document.createElement('div');
+        var innerdiv6 = document.createElement('div');
+
+        innerdiv1.setAttribute("class", "col-sm-8");
+        innerdiv2.setAttribute("class", "col-sm-8");
+        innerdiv3.setAttribute("class", "col-sm-8");
+        innerdiv4.setAttribute("class", "col-sm-8");
+        innerdiv5.setAttribute("class", "col-sm-8");
+        innerdiv6.setAttribute("class", "col-sm-8");
+        var l1 = document.createElement('label');
+        var l2 = document.createElement('label');
+        var l3 = document.createElement('label');
+        var l4 = document.createElement('label');
+        var l5 = document.createElement('label');
+        var l6 = document.createElement('label');
+        var p1 = document.createElement('p');
+        var p2 = document.createElement('p');
+        var p3 = document.createElement('p');
+        var p4 = document.createElement('p');
+        var p6 = document.createElement('p');
+        var p5 = document.createElement('p');
+        var b = document.createElement('button');
+        l1.setAttribute("class", "col-sm-2 control-label");
+        p1.setAttribute("class", "form-control");
+        l2.setAttribute("class", "col-sm-2 control-label");
+        p2.setAttribute("class", "form-control");
+        l3.setAttribute("class", "col-sm-2 control-label");
+        p3.setAttribute("class", "form-control");
+        l4.setAttribute("class", "col-sm-2 control-label");
+        p4.setAttribute("class", "form-control");
+        l5.setAttribute("class", "col-sm-2 control-label");
+        p5.setAttribute("class", "form-control");
+        l6.setAttribute("class", "col-sm-2 control-label");
+        p6.setAttribute("class", "form-control");
+        p1.append(obj.OrganisationName);
+        p2.append(obj.Desc);
+        p3.append(obj.YourPosition);
+        p4.append(obj.Loc);
+        p5.append(obj.dateFrom);
+        p6.append(obj.dateTo);
+        innerdiv1.append(p1);
+        innerdiv2.append(p2);
+        innerdiv3.append(p3);
+        innerdiv4.append(p4);
+        innerdiv5.append(p5);
+        innerdiv6.append(p6);
+        b.append('Delete');
+        b.setAttribute("type", "submit");
+        b.setAttribute("class", "btn btn-info pull-right");
+        f.setAttribute("action", "/delete_committee_info/".concat(obj.id));
+        f.setAttribute("method", "POST");
+        f.setAttribute("class", "form-horizontal");
+        l1.append('Organisation Name');
+        l2.append('Description');
+        l3.append('Position');
+        l4.append('Location');
+        l5.append("From");
+        l6.append("To")
+        d1.append(l1, innerdiv1);
+        d2.append(l2, innerdiv2);
+        d3.append(l3, innerdiv3);
+        d4.append(l4, innerdiv4);
+        d5.append(l5, innerdiv5);
+        d6.append(l6, innerdiv6);
+        var inputElem = document.createElement('input');
+        inputElem.type = 'hidden';
+        inputElem.name = 'csrfmiddlewaretoken';
+        inputElem.value = '{{ csrf_token }}';
+        f.appendChild(inputElem);
+        footer.append(b);
+        //f.append("{% csrf_token%}");
+        box.append(d1,d2,d3,d4,d5,d6);
+        f.append(box, footer);
+        div.append(f);
+      });
+    }
+
+    function submitProject(){
+      var data = $('#ProjectInfo').serialize();
+      var url = "/edit_project_info/{{student_profile.id}}";
+      $.post( url, data, function( data, status ) {
+        //console.log("The Data Sent is: " + data);
+        console.log(url)
+      });
+      setTimeout(add_project, 500);
+      setTimeout(add_skill, 500);
+    }
+    function add_project(){
+      $.getJSON("/edit_project_info/{{student_profile.id}}", function(data){
+
+        console.log(data)
+        var obj = JSON.parse(JSON.stringify(data));
+
+        var div = document.getElementById("ProjectData");
+
+        var box = document.createElement('div');
+        box.setAttribute("class", "box-body");
+
+
+        var footer = document.createElement('div');
+        footer.setAttribute("class", "box-footer");
+        var f = document.createElement('form');
+        var d1 = document.createElement('div');
+        d1.setAttribute("class", "form-group");
+        var d2 = document.createElement('div');
+        d2.setAttribute("class", "form-group");
+        var d3 = document.createElement('div');
+        d3.setAttribute("class", "form-group");
+        var d4 = document.createElement('div');
+        d4.setAttribute("class", "form-group");
+        var d5 = document.createElement('div');
+        d5.setAttribute("class", "form-group");
+        var innerdiv1 = document.createElement('div');
+        var innerdiv2 = document.createElement('div');
+        var innerdiv3 = document.createElement('div');
+        var innerdiv4 = document.createElement('div');
+        innerdiv1.setAttribute("class", "col-sm-8");
+        innerdiv2.setAttribute("class", "col-sm-8");
+        innerdiv3.setAttribute("class", "col-sm-8");
+        innerdiv4.setAttribute("class", "col-sm-8");
+        var l1 = document.createElement('label');
+        var l2 = document.createElement('label');
+        var l3 = document.createElement('label');
+        var l4 = document.createElement('label');
+        var p1 = document.createElement('p');
+        var p2 = document.createElement('p');
+        var p3 = document.createElement('p');
+        var p4 = document.createElement('p');
+        var b = document.createElement('button');
+        l1.setAttribute("class", "col-sm-2 control-label");
+        p1.setAttribute("class", "form-control");
+        l2.setAttribute("class", "col-sm-2 control-label");
+        p2.setAttribute("class", "form-control");
+        l3.setAttribute("class", "col-sm-2 control-label");
+        p3.setAttribute("class", "form-control");
+        l4.setAttribute("class", "col-sm-2 control-label");
+        p4.setAttribute("class", "form-control");
+        p1.append(obj.ProjName);
+        p2.append(obj.ProjDesc);
+        p3.append(obj.ProjURL);
+        p4.append(obj.Skill);
+        innerdiv1.append(p1);
+        innerdiv2.append(p2);
+        innerdiv3.append(p3);
+        innerdiv4.append(p4);
+        b.append('Delete');
+        b.setAttribute("type", "submit");
+        b.setAttribute("class", "btn btn-info pull-right");
+        f.setAttribute("action", "/delete_project_info/".concat(obj.id));
+        f.setAttribute("method", "POST");
+        f.setAttribute("class", "form-horizontal");
+        l1.append('Competition Name');
+        l2.append('Desc');
+        l3.append('URL');
+        l4.append('Skill');
+        d1.append(l1, innerdiv1);
+        d2.append(l2, innerdiv2);
+        d3.append(l3, innerdiv3);
+        d4.append(l4, innerdiv4);
+        var inputElem = document.createElement('input');
+        inputElem.type = 'hidden';
+        inputElem.name = 'csrfmiddlewaretoken';
+        inputElem.value = '{{ csrf_token }}';
+        f.appendChild(inputElem);
+        footer.append(b);
+        //f.append("{% csrf_token%}");
+        box.append(d1,d2,d3,d4);
+        f.append(box, footer);
+        div.append(f);
+      });
+    }
+
+    function submitBEProject(){
+      var data = $('#BeProjectInfo').serialize();
+      var url = "/edit_beproject_info/{{student_profile.id}}";
+      $.post( url, data, function( data, status ) {
+        //console.log("The Data Sent is: " + data);
+        console.log(url)
+      });
+    }
+
+    function submitSkill(){
+      var data = $('#SkillInfo').serialize();
+      var url = "/edit_skill_info/{{student_profile.id}}";
+      $.post( url, data, function( data, status ) {
+        //console.log("The Data Sent is: " + data);
+        console.log(url)
+      });
+      setTimeout(add_skill, 500);
+    }
+
+    function add_skill(){
+      $.getJSON("/edit_skill_info/{{student_profile.id}}", function(data){
+
+        console.log(data)
+        var obj = JSON.parse(JSON.stringify(data));
+
+        var div = document.getElementById("SkillData");
+        var box = document.createElement('div');
+        box.setAttribute("class", "box-body");
+
+
+        var footer = document.createElement('div');
+        footer.setAttribute("class", "box-footer");
+        var f = document.createElement('form');
+        f.setAttribute("action", "/delete_skill_info/".concat(obj.id));
+        f.setAttribute("method", "POST");
+        f.setAttribute("class", "form-horizontal")
+        var d1 = document.createElement('div');
+        d1.setAttribute("class", "form-group");
+        var innerdiv1 = document.createElement('div');
+        innerdiv1.setAttribute("class", "col-sm-8");
+        var l1 = document.createElement('label');
+        var p1 = document.createElement('p');
+        var b = document.createElement('button');
+        l1.setAttribute("class", "col-sm-2 control-label");
+        l1.append("Skill");
+        p1.append(obj.skill);
+        innerdiv1.append(p1)
+        p1.setAttribute("class", "form-control");
+        b.setAttribute("type", "submit");
+        b.setAttribute("class", "btn btn-info pull-right");
+        b.append("Delete");
+        d1.append(l1, innerdiv1);
+        var inputElem = document.createElement('input');
+        inputElem.type = 'hidden';
+        inputElem.name = 'csrfmiddlewaretoken';
+        inputElem.value = '{{ csrf_token }}';
+        f.appendChild(inputElem);
+        footer.append(b);
+        //f.append("{% csrf_token%}");
+        box.append(d1);
+        f.append(box, footer);
+        div.append(f);
+
+      });
+    }
+
+        function submitResearchPaper(){
+          var data = $('#ResearchPaperInfo').serialize();
+          var url = "/edit_research_paper_info/{{student_profile.id}}";
+          $.post( url, data, function( data, status ) {
+            //console.log("The Data Sent is: " + data);
+            console.log(url)
+          });
+          setTimeout(add_reseachpaper, 500);
+        }
+        function add_reseachpaper(){
+          $.getJSON("/edit_research_paper_info/{{student_profile.id}}", function(data){
+
+            console.log(data)
+            var obj = JSON.parse(JSON.stringify(data));
+
+            var div = document.getElementById("ResearchPaperData");
+
+            var box = document.createElement('div');
+            box.setAttribute("class", "box-body");
+
+
+            var footer = document.createElement('div');
+            footer.setAttribute("class", "box-footer");
+            var f = document.createElement('form');
+            var d1 = document.createElement('div');
+            d1.setAttribute("class", "form-group");
+            var d2 = document.createElement('div');
+            d2.setAttribute("class", "form-group");
+            var d3 = document.createElement('div');
+            d3.setAttribute("class", "form-group");
+            var d4 = document.createElement('div');
+            d4.setAttribute("class", "form-group");
+            var d5 = document.createElement('div');
+            d5.setAttribute("class", "form-group");
+            var innerdiv1 = document.createElement('div');
+            var innerdiv2 = document.createElement('div');
+            var innerdiv3 = document.createElement('div');
+            var innerdiv4 = document.createElement('div');
+            var innerdiv5 = document.createElement('div');
+            innerdiv1.setAttribute("class", "col-sm-8");
+            innerdiv2.setAttribute("class", "col-sm-8");
+            innerdiv3.setAttribute("class", "col-sm-8");
+            innerdiv4.setAttribute("class", "col-sm-8");
+            innerdiv5.setAttribute("class", "col-sm-8");
+            var l1 = document.createElement('label');
+            var l2 = document.createElement('label');
+            var l3 = document.createElement('label');
+            var l4 = document.createElement('label');
+            var l5 = document.createElement('label');
+            var p1 = document.createElement('p');
+            var p2 = document.createElement('p');
+            var p3 = document.createElement('p');
+            var p4 = document.createElement('p');
+            var p5 = document.createElement('p');
+            var b = document.createElement('button');
+            l1.setAttribute("class", "col-sm-2 control-label");
+            p1.setAttribute("class", "form-control");
+            l2.setAttribute("class", "col-sm-2 control-label");
+            p2.setAttribute("class", "form-control");
+            l3.setAttribute("class", "col-sm-2 control-label");
+            p3.setAttribute("class", "form-control");
+            l4.setAttribute("class", "col-sm-2 control-label");
+            p4.setAttribute("class", "form-control");
+            l5.setAttribute("class", "col-sm-2 control-label");
+            p5.setAttribute("class", "form-control");
+            p1.append(obj.Title);
+            p2.append(obj.Publication);
+            p3.append(obj.DateOfPublication);
+            p4.append(obj.Desc);
+            p5.append(obj.LinkToPaper);
+            innerdiv1.append(p1);
+            innerdiv2.append(p2);
+            innerdiv3.append(p3);
+            innerdiv4.append(p4);
+            innerdiv5.append(p5);
+            b.append('Delete');
+            b.setAttribute("type", "submit");
+            b.setAttribute("class", "btn btn-info pull-right");
+            f.setAttribute("action", "/delete_researchpaper_info/".concat(obj.id));
+            f.setAttribute("method", "POST");
+            f.setAttribute("class", "form-horizontal");
+            l1.append('Name');
+            l2.append('Publication');
+            l3.append('Date of Publication');
+            l4.append('Description')
+            l5.append('Link to Paper')
+            d1.append(l1, innerdiv1);
+            d2.append(l2, innerdiv2);
+            d3.append(l3, innerdiv3);
+            d4.append(l4, innerdiv4);
+            d5.append(l5, innerdiv5);
+            var inputElem = document.createElement('input');
+            inputElem.type = 'hidden';
+            inputElem.name = 'csrfmiddlewaretoken';
+            inputElem.value = '{{ csrf_token }}';
+            f.appendChild(inputElem);
+            footer.append(b);
+            //f.append("{% csrf_token%}");
+            box.append(d1,d2,d3,d4,d5);
+            f.append(box, footer);
+            div.append(f);
+          });
+        }
+
 </script>
+
+<script>
+
 
 {% endblock %}

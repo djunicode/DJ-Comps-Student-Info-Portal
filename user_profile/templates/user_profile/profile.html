@@ -13,6 +13,7 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 {% endblock %}
+
   <!-- Google Font -->
 {% block content %}
     <!-- Content Header (Page header) -->
@@ -38,10 +39,13 @@
                               <b>Projects</b> <a class="pull-right">{{ projects|length }}</a>
                            </li>
                            <li class="list-group-item">
-                              <b>Extra-Curricular</b> <a class="pull-right">{{ committe|length }}</a>
+                              <b>Committees</b> <a class="pull-right">{{ committe|length }}</a>
                            </li>
                            <li class="list-group-item">
                               <b>CGPA</b> <a class="pull-right">{{ student.cgpa }}</a>
+                           </li>
+                           <li class="list-group-item">
+                              <b>Extra-Curricular</b> <a class="pull-right">{{ extracurricular|length }}</a>
                            </li>
                         </ul>
                      </div>
@@ -75,11 +79,12 @@
                      <li><a href="#Skills" data-toggle="tab">Skills</a></li>
                      <li><a href="#Internship" data-toggle="tab">Internship</a></li>
                      <li><a href="#Projects" data-toggle="tab">Projects</a></li>
-                     <li><a href="#Extra-Curricular" data-toggle="tab">Extra-Curricular</a></li>
+                     <li><a href="#Committee" data-toggle="tab">Committees</a></li>
                      <li><a href="#Grades" data-toggle="tab">Grades</a></li>
                      <li><a href="#BeProj" data-toggle="tab">BE Project</a></li>
                      <li><a href="#paper" data-toggle="tab">Research Paper</a></li>
                      <li><a href="#hackathon" data-toggle="tab">Hackathon</a></li>
+                     <li><a href="#Extra-Curricular" data-toggle="tab">Extra Curricular</a></li>
                   </ul>
                   <div class="tab-content">
                     <div class="active tab-pane" id="about">
@@ -106,11 +111,12 @@
 
                        </div>
                        <div class="row">
+                         {% if gpa_list %}
                          <div class="col-md-12">
                            <!-- LINE CHART -->
                            <div class="box box-info">
                              <div class="box-header with-border">
-                               <h3 class="box-title">Line Chart</h3>
+                               <h3 class="box-title">Semester Wise GPA</h3>
 
                                <div class="box-tools pull-right">
                                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -127,12 +133,14 @@
                            </div>
                            <!-- /.box -->
                          </div>
+                         {% endif %}
                            <!-- BAR CHART -->
+                          {% if projectskill_stats %}
                          <div class="col-md-offset-2 col-md-8">
 
                            <div class="box box-danger">
                              <div class="box-header with-border">
-                               <h3 class="box-title">Donut Chart</h3>
+                               <h3 class="box-title">Projects based on Skills</h3>
 
                                <div class="box-tools pull-right">
                                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -147,6 +155,7 @@
                            </div>
 
                          </div>
+                         {% endif %}
                        </div>
                        <!-- /.post -->
                     </div>
@@ -200,9 +209,11 @@
                                    <dt> Certificate</dt>
                                    <dd> :  <img  src="{{ intern.Certificate.url }}">  </dd>
                                     {% endif %}
+                                    {% if intern.image1 %}
                                     <dt> Screenshot</dt> :
                                     <dd>
                                     <img src="{{ intern.image1.url }}">
+                                    {% endif %}
                                     {% if intern.image2 %}
                                     <img src="{{ intern.image2.url }}">
                                     {% endif %}
@@ -217,7 +228,7 @@
                                     {% endif %}
                                     </dd>
 
-                                </dl>
+                                </dl><br>
                                   {% endfor %}
                               </div>
                            </div>
@@ -249,9 +260,11 @@
                                     {% endif %}
                                     <dt>Skill </dt>
                                     <dd>: {{ intern.skill }}</dd>
+                                    {% if intern.image1 %}
                                     <dt> Screenshot</dt> :
                                     <dd>
-                                    <img src="{{ intern.image1.url }}">
+                                      <img src="{{ intern.image1.url }}">
+                                      {% endif %}
                                     {% if intern.image2  %}
                                     <img src="{{ intern.image2.url }}">
                                     {% endif %}
@@ -266,19 +279,19 @@
                                     {% endif %}
                                     </dd>
 
-                                </dl>
+                                </dl><br>
                                   {% endfor %}
                               </div>
                            </div>
                         </div>
                         <!-- /.post -->
                      </div>
-                     <div class="tab-pane" id="Extra-Curricular">
+                     <div class="tab-pane" id="Committee">
                        <div class="post">
                           <!-- /.user-block -->
                           <div class="box">
                              <div class="box-header with-border">
-                               <h3 class="box-title">Extra-Curricular</h3>
+                               <h3 class="box-title">Committee</h3>
                              </div>
                              <!-- /.box-header -->
                              <div class="box-body">
@@ -307,9 +320,11 @@
                                   <dt> Certificate</dt>
                                   <dd> :  <img  src="{{ intern.Certificate.url }}">  </dd>
                                    {% endif %}
+                                   {% if intern.image1 %}
                                    <dt> Screenshot</dt> :
                                    <dd>
-                                   <img src="{{ intern.image1.url }}">
+                                     <img src="{{ intern.image1.url }}">
+                                     {% endif %}
                                    {% if intern.image2  %}
                                    <img src="{{ intern.image2.url }}">
                                    {% endif %}
@@ -324,7 +339,7 @@
                                    {% endif %}
                                    </dd>
 
-                               </dl>
+                               </dl><br>
                                  {% endfor %}
                              </div>
                           </div>
@@ -343,7 +358,7 @@
                               {% for x in gpa_list %}
                               {% if x != None %}
                                 Semester  {{forloop.counter}} - {{x}} <br>
-                              {% endif %}
+                              {% endif %}<br>
                               {% endfor %}
                               <!-- /.box-body -->
                            </div>
@@ -381,9 +396,11 @@
                                           {% endfor %}
                                     </dd>
                                     {% endif %}
+                                    {% if intern.image1 %}
                                     <dt> Screenshot</dt> :
                                     <dd>
-                                    <img src="{{ intern.image1.url }}">
+                                      <img src="{{ intern.image1.url }}">
+                                      {% endif %}
                                     {% if intern.image2  %}
                                     <img src="{{ intern.image2.url }}">
                                     {% endif %}
@@ -398,7 +415,7 @@
                                     {% endif %}
                                     </dd>
 
-                                </dl>
+                                </dl><br>
                                   {% endfor %}
                               </div>
                            </div>
@@ -438,9 +455,11 @@
                                       <dt>Teacher</dt>
                                       <dd> : {{ intern.Published_under }}  </dd>
                                     {% endif %}
+                                    {% if intern.image1 %}
                                     <dt> Screenshot</dt> :
                                     <dd>
-                                    <img src="{{ intern.image1.url }}">
+                                      <img src="{{ intern.image1.url }}">
+                                      {% endif %}
                                     {% if intern.image2  %}
                                     <img src="{{ intern.image2.url }}">
                                     {% endif %}
@@ -455,7 +474,7 @@
                                     {% endif %}
                                     </dd>
 
-                                </dl>
+                                </dl><br>
                                   {% endfor %}
                               </div>
                            </div>
@@ -485,9 +504,11 @@
                                       <dt>Date</dt>
                                       <dd> : {{ intern.Date }}  </dd>
                                     {% endif %}
+                                    {% if intern.image1 %}
                                     <dt> Screenshot</dt> :
                                     <dd>
-                                    <img src="{{ intern.image1.url }}">
+                                      <img src="{{ intern.image1.url }}">
+                                      {% endif %}
                                     {% if intern.image2  %}
                                     <img src="{{ intern.image2.url }}">
                                     {% endif %}
@@ -503,6 +524,60 @@
                                     </dd>
 
                                 </dl>
+                                <br>
+                                  {% endfor %}
+                              </div>
+                           </div>
+                        </div>
+                        <!-- /.post -->
+                     </div>
+                     <div class="tab-pane" id="Extra-Curricular">
+                        <!-- Post -->
+                        <div class="post">
+                           <!-- /.user-block -->
+                           <div class="box">
+                              <div class="box-header with-border">
+                                <h3 class="box-title">Extra-Curricular</h3>
+                              </div>
+                              <!-- /.box-header -->
+                              <div class="box-body">
+                                  {% for intern in extracurricular %}
+                                  <dl class="dl-horizontal">
+
+                                    <dt>Name </dt>
+                                    <dd>: {{ intern.name }} </dd>
+                                    <dt>Achievements </dt>
+                                    <dd>: {{ intern.achievements }}</dd>
+                                    {% if intern.date %}
+                                      <dt>Date </dt>
+                                      <dd> : {{ intern.date }}  </dd>
+                                    {% endif %}
+                                      <dt>Description </dt>
+                                      <dd>: {{ intern.desc }}  </dd>
+                                    {% if intern.Certificate  %}
+                                   <dt> Certificate</dt>
+                                   <dd> :  <img  src="{{ intern.Certificate.url }}">  </dd>
+                                    {% endif %}
+                                    {% if intern.image1 %}
+                                    <dt> Screenshot</dt> :
+                                    <dd>
+                                    <img src="{{ intern.image1.url }}">
+                                    {% endif %}
+                                    {% if intern.image2 %}
+                                    <img src="{{ intern.image2.url }}">
+                                    {% endif %}
+                                    {% if intern.image3%}
+                                    <img src="{{ intern.image3.url }}">
+                                    {% endif %}
+                                    {% if intern.image4 %}
+                                    <img src="{{ intern.image4.url }}">
+                                    {% endif %}
+                                    {% if intern.image5 %}
+                                    <img src="{{ intern.image5.url }}">
+                                    {% endif %}
+                                    </dd>
+
+                                </dl><br>
                                   {% endfor %}
                               </div>
                            </div>
