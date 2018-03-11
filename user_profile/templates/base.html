@@ -65,43 +65,41 @@
       </a>
 
       <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <!-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
-              {% if 'student' in request.path %}
-		<span class="hidden-xs">{{ student.first_name }} {{ student.last_name }} </span>
-  {% else %}
-  <span class="hidden-xs">xyz </span>
-  {% endif %}
-            </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
+          <ul class="nav navbar-nav">
+            <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <!-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
 
-                <p>
-                  {{ student.Sap_Id }}
-                  <small>{{ student.year }}</small>
-                </p>
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="{% url 'user_profile:show_edit_studentprofile' %}" class="btn btn-default btn-flat">Edit Profile</a>
-                </div>
-                <div class="pull-right">
-                  <a href="{% url 'user_profile:logout_student' %}" class="btn btn-default btn-flat">Sign out</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <!-- Control Sidebar Toggle Button -->
-          <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
-        </ul>
-      </div>
+      <span class="hidden-xs">{{ student.first_name }} {{ student.last_name }} </span>
+
+              </a>
+              <ul class="dropdown-menu">
+                <!-- User image -->
+                <li class="user-header">
+
+                  <p>
+                    {{ student.Sap_Id }}
+                    <small>{{ student.year }}</small>
+                  </p>
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                  <div class="pull-left">
+                    <a href="{% url 'user_profile:show_edit_studentprofile' %}" class="btn btn-default btn-flat">Edit Profile</a>
+                  </div>
+                  <div class="pull-right">
+                    <a href="{% url 'user_profile:logout_student' %}" class="btn btn-default btn-flat">Sign out</a>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <!-- Control Sidebar Toggle Button -->
+            <li>
+              <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+            </li>
+          </ul>
+        </div>
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->

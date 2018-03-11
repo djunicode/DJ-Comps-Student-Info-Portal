@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from .models import (StudentProfile, TeacherProfile, Internship, Project, Committee, ResearchPaper, BeProject,
                      Hackathon, Skill, Education, ExtraCurricular, KT)
 from .models import (HistoricalInternship, HistoricalProject, HistoricalCommittee, HistoricalResearchPaper,
-                     HistoricalBeProject, HistoricalHackathon, HistoricalEducation)
+                     HistoricalBeProject, HistoricalHackathon, HistoricalEducation, HistoricalExtraCurricular)
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -151,6 +151,7 @@ def register_teacher(request):
                     teacher=user, Sap_Id=Sap_Id, first_name=first_name,
                     last_name=last_name)
                 teacher.save()
+                auth_login(request, user)
                 teacher_profile_url = '/teacherdashboard/'
                 return HttpResponseRedirect(teacher_profile_url)
         else:
@@ -897,55 +898,105 @@ def notifs(request):
     print("HI")
     print(education)
 
+    extra = {}
+    for student in StudentProfile.objects.all():
+        extra[student.Sap_Id] = []
+        for ex in student.extracurricular.all():
+            a = []
+            a.append(ex)
+            cmp1 = []
+            cmp2 = []
+            count = 0
+            c1 = ex.history.all().count()
+            if c1 == 1:
+                break
+            for x in ex.history.all():
+                b = x.history_date
+                k = HistoricalExtraCurricular.objects.get(history_date=b)
+                if count == 0:
+                    a.append(b)
+                    cmp1.append(k.name)
+                    cmp1.append(k.desc)
+                    cmp1.append(k.achievements)
+                    cmp1.append(k.date)
+                    cmp1.append(k.Certificate)
+                    cmp1.append(k.image1)
+                if count == 1:
+                    cmp2.append(k.name)
+                    cmp2.append(k.desc)
+                    cmp2.append(k.achievements)
+                    cmp2.append(k.date)
+                    cmp2.append(k.Certificate)
+                    cmp2.append(k.image1)
+                if count == 2:
+                    break
+                count = count + 1
+            if cmp1[0] != cmp2[0]:
+                a.append('Name')
+            if cmp1[1] != cmp2[1]:
+                a.append('Description')
+            if cmp1[2] != cmp2[2]:
+                a.append('Achievements')
+            if cmp1[3] != cmp2[3]:
+                a.append('Certificate')
+            if cmp1[4] != cmp2[4]:
+                a.append('Image')
+            if len(a) != 2:
+                extra[student.Sap_Id].append(a)
+    print("HI")
+    print(extra)
+
     return render(request, 'user_profile/notifs.html', {'listed': listed, 'projects': projects,
                                                         'beprojects': beprojects, 'education': education,
                                                         'committee': committee, 'hackathon': hackathon,
-                                                        'researchpaper': researchpaper})
+                                                        'researchpaper': researchpaper, 'extra': extra})
 
 
 def student_list(request):
-    if StudentProfile.objects.get(student=request.user):
+    try:
+        teacher = TeacherProfile.objects.get(teacher=request.user)
+    except ObjectDoesNotExist:
         stud = '/login/student/'
         return HttpResponseRedirect(stud)
-    else:
-        most_common_to_take = 3
-        skills = Skill.objects.all()
-        list_of_skills = [skill.skill for skill in skills]
-        most_frequent = collections.Counter(
-            list_of_skills).most_common(most_common_to_take)
-        skillss = [skill[0] for skill in most_frequent]
-        if request.method == 'POST':
-            if request.POST.get('searchany'):
-                return searchany(request, skillss)
-            else:
-                year = request.POST.getlist('year[]')
-                skills = request.POST.getlist('skills[]')
-                # gpa = request.POST.getlist('gpa_list[]')
-
-                print(year)
-                print(skills)
-                # print(gpa_list)
-                if year and skills:
-                    result = StudentProfile.objects.filter(year__in=year).filter(
-                        skill__skill__in=skills).distinct()
-                    projects = Project.objects.filter(
-                        skill__skill__in=skills).distinct()
-                elif year:
-                    result = StudentProfile.objects.filter(year__in=year)
-                    projects = []
-                elif skills:
-                    result = StudentProfile.objects.filter(
-                        skill__skill__in=skills).distinct()
-                    projects = Project.objects.filter(
-                        skill__skill__in=skills).distinct()
-                else:
-                    result = []
-                    projects = []
-                print(result, "res")
-                return render(request, 'user_profile/filter.html', {'result': result, 'skills': skillss,
-                              'projects': projects})
+    print(teacher)
+    most_common_to_take = 3
+    skills = Skill.objects.all()
+    list_of_skills = [skill.skill for skill in skills]
+    most_frequent = collections.Counter(
+        list_of_skills).most_common(most_common_to_take)
+    skillss = [skill[0] for skill in most_frequent]
+    if request.method == 'POST':
+        if request.POST.get('searchany'):
+            return searchany(request, skillss)
         else:
-            return render(request, 'user_profile/filter.html', {'skills': skillss})
+            year = request.POST.getlist('year[]')
+            skills = request.POST.getlist('skills[]')
+            # gpa = request.POST.getlist('gpa_list[]')
+
+            print(year)
+            print(skills)
+            # print(gpa_list)
+            if year and skills:
+                result = StudentProfile.objects.filter(year__in=year).filter(
+                    skill__skill__in=skills).distinct()
+                projects = Project.objects.filter(
+                    skill__skill__in=skills).distinct()
+            elif year:
+                result = StudentProfile.objects.filter(year__in=year)
+                projects = []
+            elif skills:
+                result = StudentProfile.objects.filter(
+                    skill__skill__in=skills).distinct()
+                projects = Project.objects.filter(
+                    skill__skill__in=skills).distinct()
+            else:
+                result = []
+                projects = []
+            print(result, "res")
+            return render(request, 'user_profile/filter.html', {'result': result, 'skills': skillss,
+                          'projects': projects})
+    else:
+        return render(request, 'user_profile/filter.html', {'skills': skillss})
 
 
 def average(a):
@@ -954,141 +1005,143 @@ def average(a):
 
 
 def teacher_dashboard(request):
-    if StudentProfile.objects.get(student=request.user):
+    try:
+        teacher = TeacherProfile.objects.get(teacher=request.user)
+    except ObjectDoesNotExist:
         stud = '/login/student/'
         return HttpResponseRedirect(stud)
-    else:
-        context = {}
-        # calculating most common skills
-        most_common_to_take = 3
-        skills = Skill.objects.all()
-        list_of_skills = [skill.skill for skill in skills]
-        most_frequent_skills = collections.Counter(
-            list_of_skills).most_common(most_common_to_take)
-        for i, skill in enumerate(most_frequent_skills):
-            context['skill' + str(i + 1)] = skill
-        print(most_frequent_skills)
-        # calculating year-wise internship stats
-        internship_objects = Internship.objects.all()
-        intern_stats = [
-            internship.employee.year for internship in internship_objects]
-        intern_stats = collections.Counter(intern_stats)
-        print(intern_stats.items())
-        context['FE_interns'] = intern_stats['FE']
-        context['SE_interns'] = intern_stats['SE']
-        context['TE_interns'] = intern_stats['TE']
-        context['BE_interns'] = intern_stats['BE']
-        # internship line graph
-        internship_in_months = []
-        context['internship_in_months'] = []
-        for internship in internship_objects:
-            internship_in_months.append(internship.From.month)
-        internship_in_months = collections.Counter(internship_in_months)
-        print(internship_in_months)
-        months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        context['months'] = months
-        for month in months:
-            if months.index(month) + 1 in internship_in_months.keys():
-                context['internship_in_months'].append(internship_in_months[months.index(month) + 1])
-            else:
-                context['internship_in_months'].append(0)
-        # list of all pointers
-        sem1_list = [education.sem1_gpa for education in Education.objects.all(
-        ) if education.sem1_gpa is not None]
-        # sem1_list = filter(None, sem1_list)
-        sem2_list = [education.sem2_gpa for education in Education.objects.all(
-        ) if education.sem2_gpa is not None]
-        sem3_list = [education.sem3_gpa for education in Education.objects.all(
-        ) if education.sem3_gpa is not None]
-        sem4_list = [education.sem4_gpa for education in Education.objects.all(
-        ) if education.sem4_gpa is not None]
-        sem5_list = [education.sem5_gpa for education in Education.objects.all(
-        ) if education.sem5_gpa is not None]
-        sem6_list = [education.sem6_gpa for education in Education.objects.all(
-        ) if education.sem6_gpa is not None]
-        sem7_list = [education.sem7_gpa for education in Education.objects.all(
-        ) if education.sem7_gpa is not None]
-        sem8_list = [education.sem8_gpa for education in Education.objects.all(
-        ) if education.sem8_gpa is not None]
-        sem1_list = float(sum(sem1_list) / len(sem1_list)) if len(sem1_list) != 0 else []
-        sem2_list = float(sum(sem2_list) / len(sem2_list)) if len(sem2_list) != 0 else []
-        sem3_list = float(sum(sem3_list) / len(sem3_list)) if len(sem3_list) != 0 else []
-        sem4_list = float(sum(sem4_list) / len(sem4_list)) if len(sem4_list) != 0 else []
-        sem5_list = float(sum(sem5_list) / len(sem5_list)) if len(sem5_list) != 0 else []
-        sem6_list = float(sum(sem6_list) / len(sem6_list)) if len(sem6_list) != 0 else []
-        sem7_list = float(sum(sem7_list) / len(sem7_list)) if len(sem7_list) != 0 else []
-        sem8_list = float(sum(sem8_list) / len(sem8_list)) if len(sem8_list) != 0 else []
-        print("Hi")
-        print(sem1_list, sem2_list, sem3_list, sem4_list,
-              sem5_list, sem6_list, sem7_list, sem8_list)
-        context['avg_gpa'] = [sem1_list, sem2_list, sem3_list, sem4_list, sem5_list, sem6_list, sem7_list, sem8_list]
-        context['sem_labels'] = ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6', 'Sem 7', 'Sem 8']
-        # batch wise pointers
-        FE_gpa_objects = Education.objects.filter(student_profile__year='FE')
-        SE_gpa_objects = Education.objects.filter(student_profile__year='SE')
-        TE_gpa_objects = Education.objects.filter(student_profile__year='TE')
-        BE_gpa_objects = Education.objects.filter(student_profile__year='BE')
-        print(FE_gpa_objects, SE_gpa_objects, TE_gpa_objects, BE_gpa_objects)
-        FE_gpa = {'sem1': [], 'sem2': []}
-        SE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': []}
-        TE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': [], 'sem5': [], 'sem6': []}
-        BE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': [], 'sem5': [], 'sem6': [], 'sem7': [], 'sem8': []}
-        for edu in FE_gpa_objects:
-            FE_gpa['sem1'].append(edu.sem1_gpa if edu.sem1_gpa is not None else 0)
-            FE_gpa['sem2'].append(edu.sem2_gpa if edu.sem2_gpa is not None else 0)
-        for edu in SE_gpa_objects:
-            SE_gpa['sem1'].append(edu.sem1_gpa if edu.sem1_gpa is not None else 0)
-            SE_gpa['sem2'].append(edu.sem2_gpa if edu.sem2_gpa is not None else 0)
-            SE_gpa['sem3'].append(edu.sem3_gpa if edu.sem3_gpa is not None else 0)
-            SE_gpa['sem4'].append(edu.sem4_gpa if edu.sem4_gpa is not None else 0)
-        for edu in TE_gpa_objects:
-            TE_gpa['sem1'].append(edu.sem1_gpa if edu.sem1_gpa is not None else 0)
-            TE_gpa['sem2'].append(edu.sem2_gpa if edu.sem2_gpa is not None else 0)
-            TE_gpa['sem3'].append(edu.sem3_gpa if edu.sem3_gpa is not None else 0)
-            TE_gpa['sem4'].append(edu.sem4_gpa if edu.sem4_gpa is not None else 0)
-            TE_gpa['sem5'].append(edu.sem5_gpa if edu.sem5_gpa is not None else 0)
-            TE_gpa['sem6'].append(edu.sem6_gpa if edu.sem6_gpa is not None else 0)
-        for edu in BE_gpa_objects:
-            BE_gpa['sem1'].append(edu.sem1_gpa if edu.sem1_gpa is not None else 0)
-            BE_gpa['sem2'].append(edu.sem2_gpa if edu.sem2_gpa is not None else 0)
-            BE_gpa['sem3'].append(edu.sem3_gpa if edu.sem3_gpa is not None else 0)
-            BE_gpa['sem4'].append(edu.sem4_gpa if edu.sem4_gpa is not None else 0)
-            BE_gpa['sem5'].append(edu.sem5_gpa if edu.sem5_gpa is not None else 0)
-            BE_gpa['sem6'].append(edu.sem6_gpa if edu.sem6_gpa is not None else 0)
-            BE_gpa['sem7'].append(edu.sem7_gpa if edu.sem7_gpa is not None else 0)
-            BE_gpa['sem8'].append(edu.sem8_gpa if edu.sem8_gpa is not None else 0)
-        # there's probably a better way to do this
-        context['FE_gpa'] = [average(FE_gpa['sem1']), average(FE_gpa['sem2'])]
-        context['SE_gpa'] = [average(SE_gpa['sem1']), average(SE_gpa['sem2']),
-                             average(SE_gpa['sem3']), average(SE_gpa['sem4'])]
-        context['TE_gpa'] = [average(TE_gpa['sem1']), average(TE_gpa['sem2']),
-                             average(TE_gpa['sem3']), average(TE_gpa['sem4']),
-                             average(TE_gpa['sem5']), average(TE_gpa['sem6'])]
-        context['BE_gpa'] = [average(BE_gpa['sem1']), average(BE_gpa['sem2']),
-                             average(BE_gpa['sem3']), average(BE_gpa['sem4']),
-                             average(BE_gpa['sem5']), average(BE_gpa['sem6']),
-                             average(BE_gpa['sem7']), average(BE_gpa['sem8'])]
-        print(context['FE_gpa'])
-        # internship time stamps
-        intern_dates = [format(internship.From, 'U')
-                        for internship in Internship.objects.all()]
-        intern_dates.sort()
-        intern_date = [int(x) - int(intern_dates[0]) for x in intern_dates]
-        print(intern_dates)
-        print(intern_date)
-        total_regs = StudentProfile.objects.all().count()
-        total_intern = Internship.objects.all().count()
-        cgpa1 = [pointer.cgpa for pointer in StudentProfile.objects.all(
-        ) if pointer.cgpa is not None]
-        context['total_regs'] = total_regs
-        cgpa1 = float(sum(cgpa1) / len(cgpa1)) if len(cgpa1) != 0 else []
-        context['cgpa1'] = cgpa1
-        context['total_intern'] = total_intern
-        kt = KT.objects.all().count()
-        kt_perc = (float)((kt * 100) / total_regs)
-        context['kt_perc'] = kt_perc
-        # return HttpResponse(intern_stats)
-        return render(request, 'user_profile/teacherprofile.html', context)
+    context = {}
+    print(teacher)
+    # calculating most common skills
+    most_common_to_take = 3
+    skills = Skill.objects.all()
+    list_of_skills = [skill.skill for skill in skills]
+    most_frequent_skills = collections.Counter(
+        list_of_skills).most_common(most_common_to_take)
+    for i, skill in enumerate(most_frequent_skills):
+        context['skill' + str(i + 1)] = skill
+    print(most_frequent_skills)
+    # calculating year-wise internship stats
+    internship_objects = Internship.objects.all()
+    intern_stats = [
+        internship.employee.year for internship in internship_objects]
+    intern_stats = collections.Counter(intern_stats)
+    print(intern_stats.items())
+    context['FE_interns'] = intern_stats['FE']
+    context['SE_interns'] = intern_stats['SE']
+    context['TE_interns'] = intern_stats['TE']
+    context['BE_interns'] = intern_stats['BE']
+    # internship line graph
+    internship_in_months = []
+    context['internship_in_months'] = []
+    for internship in internship_objects:
+        internship_in_months.append(internship.From.month)
+    internship_in_months = collections.Counter(internship_in_months)
+    print(internship_in_months)
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    context['months'] = months
+    for month in months:
+        if months.index(month) + 1 in internship_in_months.keys():
+            context['internship_in_months'].append(internship_in_months[months.index(month) + 1])
+        else:
+            context['internship_in_months'].append(0)
+    # list of all pointers
+    sem1_list = [education.sem1_gpa for education in Education.objects.all(
+    ) if education.sem1_gpa is not None]
+    # sem1_list = filter(None, sem1_list)
+    sem2_list = [education.sem2_gpa for education in Education.objects.all(
+    ) if education.sem2_gpa is not None]
+    sem3_list = [education.sem3_gpa for education in Education.objects.all(
+    ) if education.sem3_gpa is not None]
+    sem4_list = [education.sem4_gpa for education in Education.objects.all(
+    ) if education.sem4_gpa is not None]
+    sem5_list = [education.sem5_gpa for education in Education.objects.all(
+    ) if education.sem5_gpa is not None]
+    sem6_list = [education.sem6_gpa for education in Education.objects.all(
+    ) if education.sem6_gpa is not None]
+    sem7_list = [education.sem7_gpa for education in Education.objects.all(
+    ) if education.sem7_gpa is not None]
+    sem8_list = [education.sem8_gpa for education in Education.objects.all(
+    ) if education.sem8_gpa is not None]
+    sem1_list = float(sum(sem1_list) / len(sem1_list)) if len(sem1_list) != 0 else []
+    sem2_list = float(sum(sem2_list) / len(sem2_list)) if len(sem2_list) != 0 else []
+    sem3_list = float(sum(sem3_list) / len(sem3_list)) if len(sem3_list) != 0 else []
+    sem4_list = float(sum(sem4_list) / len(sem4_list)) if len(sem4_list) != 0 else []
+    sem5_list = float(sum(sem5_list) / len(sem5_list)) if len(sem5_list) != 0 else []
+    sem6_list = float(sum(sem6_list) / len(sem6_list)) if len(sem6_list) != 0 else []
+    sem7_list = float(sum(sem7_list) / len(sem7_list)) if len(sem7_list) != 0 else []
+    sem8_list = float(sum(sem8_list) / len(sem8_list)) if len(sem8_list) != 0 else []
+    print("Hi")
+    print(sem1_list, sem2_list, sem3_list, sem4_list,
+          sem5_list, sem6_list, sem7_list, sem8_list)
+    context['avg_gpa'] = [sem1_list, sem2_list, sem3_list, sem4_list, sem5_list, sem6_list, sem7_list, sem8_list]
+    context['sem_labels'] = ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6', 'Sem 7', 'Sem 8']
+    # batch wise pointers
+    FE_gpa_objects = Education.objects.filter(student_profile__year='FE')
+    SE_gpa_objects = Education.objects.filter(student_profile__year='SE')
+    TE_gpa_objects = Education.objects.filter(student_profile__year='TE')
+    BE_gpa_objects = Education.objects.filter(student_profile__year='BE')
+    print(FE_gpa_objects, SE_gpa_objects, TE_gpa_objects, BE_gpa_objects)
+    FE_gpa = {'sem1': [], 'sem2': []}
+    SE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': []}
+    TE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': [], 'sem5': [], 'sem6': []}
+    BE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': [], 'sem5': [], 'sem6': [], 'sem7': [], 'sem8': []}
+    for edu in FE_gpa_objects:
+        FE_gpa['sem1'].append(edu.sem1_gpa if edu.sem1_gpa is not None else 0)
+        FE_gpa['sem2'].append(edu.sem2_gpa if edu.sem2_gpa is not None else 0)
+    for edu in SE_gpa_objects:
+        SE_gpa['sem1'].append(edu.sem1_gpa if edu.sem1_gpa is not None else 0)
+        SE_gpa['sem2'].append(edu.sem2_gpa if edu.sem2_gpa is not None else 0)
+        SE_gpa['sem3'].append(edu.sem3_gpa if edu.sem3_gpa is not None else 0)
+        SE_gpa['sem4'].append(edu.sem4_gpa if edu.sem4_gpa is not None else 0)
+    for edu in TE_gpa_objects:
+        TE_gpa['sem1'].append(edu.sem1_gpa if edu.sem1_gpa is not None else 0)
+        TE_gpa['sem2'].append(edu.sem2_gpa if edu.sem2_gpa is not None else 0)
+        TE_gpa['sem3'].append(edu.sem3_gpa if edu.sem3_gpa is not None else 0)
+        TE_gpa['sem4'].append(edu.sem4_gpa if edu.sem4_gpa is not None else 0)
+        TE_gpa['sem5'].append(edu.sem5_gpa if edu.sem5_gpa is not None else 0)
+        TE_gpa['sem6'].append(edu.sem6_gpa if edu.sem6_gpa is not None else 0)
+    for edu in BE_gpa_objects:
+        BE_gpa['sem1'].append(edu.sem1_gpa if edu.sem1_gpa is not None else 0)
+        BE_gpa['sem2'].append(edu.sem2_gpa if edu.sem2_gpa is not None else 0)
+        BE_gpa['sem3'].append(edu.sem3_gpa if edu.sem3_gpa is not None else 0)
+        BE_gpa['sem4'].append(edu.sem4_gpa if edu.sem4_gpa is not None else 0)
+        BE_gpa['sem5'].append(edu.sem5_gpa if edu.sem5_gpa is not None else 0)
+        BE_gpa['sem6'].append(edu.sem6_gpa if edu.sem6_gpa is not None else 0)
+        BE_gpa['sem7'].append(edu.sem7_gpa if edu.sem7_gpa is not None else 0)
+        BE_gpa['sem8'].append(edu.sem8_gpa if edu.sem8_gpa is not None else 0)
+    # there's probably a better way to do this
+    context['FE_gpa'] = [average(FE_gpa['sem1']), average(FE_gpa['sem2'])]
+    context['SE_gpa'] = [average(SE_gpa['sem1']), average(SE_gpa['sem2']),
+                         average(SE_gpa['sem3']), average(SE_gpa['sem4'])]
+    context['TE_gpa'] = [average(TE_gpa['sem1']), average(TE_gpa['sem2']),
+                         average(TE_gpa['sem3']), average(TE_gpa['sem4']),
+                         average(TE_gpa['sem5']), average(TE_gpa['sem6'])]
+    context['BE_gpa'] = [average(BE_gpa['sem1']), average(BE_gpa['sem2']),
+                         average(BE_gpa['sem3']), average(BE_gpa['sem4']),
+                         average(BE_gpa['sem5']), average(BE_gpa['sem6']),
+                         average(BE_gpa['sem7']), average(BE_gpa['sem8'])]
+    print(context['FE_gpa'])
+    # internship time stamps
+    intern_dates = [format(internship.From, 'U')
+                    for internship in Internship.objects.all()]
+    intern_dates.sort()
+    intern_date = [int(x) - int(intern_dates[0]) for x in intern_dates]
+    print(intern_dates)
+    print(intern_date)
+    total_regs = StudentProfile.objects.all().count()
+    total_intern = Internship.objects.all().count()
+    cgpa1 = [pointer.cgpa for pointer in StudentProfile.objects.all(
+    ) if pointer.cgpa is not None]
+    context['total_regs'] = total_regs
+    cgpa1 = float(sum(cgpa1) / len(cgpa1)) if len(cgpa1) != 0 else []
+    context['cgpa1'] = cgpa1
+    context['total_intern'] = total_intern
+    kt = KT.objects.all().count()
+    kt_perc = (float)((kt * 100) / total_regs)
+    context['kt_perc'] = kt_perc
+    # return HttpResponse(intern_stats)
+    return render(request, 'user_profile/teacherprofile.html', context)
 
 
 def education_graphs():
