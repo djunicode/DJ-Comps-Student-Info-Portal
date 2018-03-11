@@ -1121,7 +1121,6 @@ def edit_hackathon_info(request, id):
     if request.method == 'POST':
         student_profile = StudentProfile.objects.get(id=id)
         hackathon = Hackathon.objects.create(student_profile=student_profile)
-
         # hackathon = Hackathon.objects.get(student_profile_id=id)
         hackathon.CompetitionName = request.POST.get('HackathonName')
         hackathon.Date = request.POST.get('HackathonDate')
@@ -1135,8 +1134,7 @@ def edit_hackathon_info(request, id):
         print("sdsdsdsd")
         return HttpResponseRedirect('')
     else:
-
-        data = Hackathon.objects.last()
+	data = Hackathon.objects.last()
         return JsonResponse({"CompetitionName": data.CompetitionName, "Date": data.Date, "Desc": data.Desc,
                              "id": data.id, "url": data.URL})
 
