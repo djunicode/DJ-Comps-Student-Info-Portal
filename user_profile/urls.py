@@ -15,8 +15,6 @@ urlpatterns = [
     url(r'^logout/recruiter/$', views.logout_recruiter, name='logout_recruiter'),
     url(r'^student_profile/(\d+)$',
         views.student_profile, name='student_profile'),
-    url(r'^student/editprofile/(?P<sapid>[0-9]+)/$',
-        views.student_editprofile, name='student_editprofile'),
     url(r'^notifications/$', views.notifs, name='notifs'),
     url(r'^search/$', views.student_list, name='student_list'),
     url(r'^teacherdashboard/$', views.teacher_dashboard),
