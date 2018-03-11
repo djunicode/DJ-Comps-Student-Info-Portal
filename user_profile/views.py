@@ -19,6 +19,10 @@ from django.core.exceptions import ObjectDoesNotExist
 import datetime
 
 
+def homepage(request):
+    return render(request, 'index.html')
+
+
 def show_rollingform(request):
     return render(request, 'user_profile/edit_student_profile.html')
 
