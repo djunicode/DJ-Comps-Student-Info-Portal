@@ -949,6 +949,8 @@ def notifs(request):
                 extra[student.Sap_Id].append(a)
     print("HI")
     print(extra)
+    print("YO")
+    print(listed)
 
     return render(request, 'user_profile/notifs.html', {'listed': listed, 'projects': projects,
                                                         'beprojects': beprojects, 'education': education,
