@@ -17,7 +17,7 @@ urlpatterns = [
         views.student_profile, name='student_profile'),
     url(r'^notifications/$', views.notifs, name='notifs'),
     url(r'^search/$', views.student_list, name='student_list'),
-    url(r'^teacherdashboard/$', views.teacher_dashboard),
+    url(r'^teacherdashboard/$', views.teacher_dashboard, name='teacher_dashboard'),
     url(r'^search/$', views.student_list, name='student_list'),
     url(r'^internship/(\d+)$', views.internship, name='internship'),
     url(r'^hackathon/(\d+)$', views.hackathon, name='hackathon'),
