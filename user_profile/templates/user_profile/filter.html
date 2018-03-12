@@ -30,68 +30,19 @@
   <![endif]-->
 {% endblock %}
   <!-- Google Font -->
-
-  {% block nav %}
-  <nav class="navbar navbar-static-top">
-        <!-- Sidebar toggle button-->
-
-        <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
-              <!-- User Account: style can be found in dropdown.less -->
-              <li class="dropdown user user-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <!-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
-
-        <span class="hidden-xs">{{ teacher.first_name }} {{ teacher.last_name }} </span>
-
-                </a>
-                <ul class="dropdown-menu">
-                  <!-- User image -->
-                  <li class="user-header">
-
-                    <p>
-                      {{ teacher.Sap_Id }}
-                    </p>
-                  </li>
-                  <!-- Menu Footer-->
-                  <li class="user-footer">
-                    <div class="pull-left">
-                      <a href="{% url 'user_profile:teacher_dashboard' %}" class="btn btn-default btn-flat">Dashboard</a>
-                    </div>
-                    <div class="pull-left">
-                      <a href="{% url 'user_profile:notifs' %}" class="btn btn-default btn-flat">Notifications</a>
-                    </div>
-                    <div class="pull-left">
-                      <a href="{% url 'user_profile:logout_teacher' %}" class="btn btn-default btn-flat">Sign out</a>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-              <!-- Control Sidebar Toggle Button -->
-              <li>
-                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-              </li>
-            </ul>
-          </div>
-      </nav>
-  {% endblock %}
-
-
-
 {% block content %}
     <!-- Content Header (Page header) -->
-        <section class="content">
+      <section class="content">
           <div class="box box-header with-border">
             <form action="/search/" method="post" role="form">
               {% csrf_token %}
               <input type="text" name="searchany" placeholder="Search">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-
           </div>
           <div class="row">
             <div class="col-md-12">
-                        <form method="post" action="/search/" role="form">
+                <form method="post" action="/search/" role="form">
                   <div class="box box-solid">
                     <div class="box-header with-border">
                       <h3 class="box-title">Filter</h3>
@@ -146,10 +97,11 @@
                     </div>
                     <!-- /.box-body -->
                   </div>
-                        </form>
+                </form>
                   <!-- /.box -->
             </div>
           </div>
+
           {% if result %}
             <div class="box box-solid">
               <div class="box-header with-border">
@@ -157,7 +109,7 @@
               </div>
               <div class="box-body">
                 <div class="row">
-                  <div class="modal fade" id="modal-default">
+                  <div class="modal fade" id="modal-Student">
                     <div class="modal-dialog">
                        <div class="modal-content">
                           <div class="modal-header">
@@ -170,7 +122,7 @@
                             <div class="box">
                                <!-- /.box-header -->
                                <div class="box-body">
-                                  <table id="example2" class="table table-bordered table-hover">
+                                  <table id="studenttable" class="table table-bordered table-hover">
                                      <thead>
                                         <tr>
                                            <th>Name</th>
@@ -255,152 +207,547 @@
                 </div>
               </div>
               <div class="box-footer">
-                <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#modal-default">
+                <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#modal-Student">
                   Show Tabular form
                 </button>
               </div>
             </div>
           {% endif %}
-          {% if projects %}
+
           <hr/>
-          {% endif %}
-          <div class="row">
-            {% for project in projects %}
-            <div class="col-md-4">
-                <!-- Widget: user widget style 1 -->
-                <div class="box box-widget widget-userser-2">
-                  <!-- Add the bg color to the header using any of the bg-* classes -->
-                  <div class="pad widget-user-header bg-yellow">
-                    <!-- /.widget-user-image -->
-                    <h3 class="widget-user-username">{{ project.student_profile.Sap_Id }}</h3>
-                    <h5 class="widget-user-desc">{{ project.ProjName }}</h5>
-                  </div>
-                  <div class="box-footer no-padding">
-                    <ul class="pad nav nav-stacked">
-                      <li>{{ project.ProjURL }}</li>
-                      <li> {{ project.skill }}</li>
-                      <li>{{ project.ProjDesc }}</li>
-                      <li><a href="{% url 'user_profile:project' project.id  %}">View</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <!-- /.widget-user -->
+          {% if projects %}
+            <div class="box box-solid">
+              <div class="box-header with-border">
+                <h3 class="box-title">Projects</h3>
               </div>
-              {% endfor %}
-            </div>
-            {% if beprojects %}
-            <hr/>
-            {% endif %}
-            <div class="row">
-              {% for project in beprojects %}
-              <div class="col-md-4">
-                  <!-- Widget: user widget style 1 -->
-                  <div class="box box-widget widget-userser-2">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="pad widget-user-header bg-yellow">
-                      <!-- /.widget-user-image -->
-                      <h3 class="widget-user-username">{{ project.student_profile.Sap_Id }}</h3>
-                      <h5 class="widget-user-desc">{{ project.ProjName }}</h5>
+              <div class="box-body">
+                <div class="row">
+                  <div class="modal fade" id="modal-Project">
+                    <div class="modal-dialog">
+                       <div class="modal-content">
+                          <div class="modal-header">
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span></button>
+                             <h4 class="modal-title">Projects</h4>
+                             <button id="dlProj" type="button" class="btn btn-primary pull-right">Download</button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="box">
+                               <!-- /.box-header -->
+                               <div class="box-body">
+                                  <table id="projtable" class="table table-bordered table-hover">
+                                     <thead>
+                                        <tr>
+                                           <th>Project Name</th>
+                                           <th>Sap Id Of Student</th>
+                                           <th>Skills involved</th>
+                                           <th>Description</th>
+                                        </tr>
+                                     </thead>
+                                     <tbody>
+                                      {% for project in projects %}
+                                        <tr>
+                                           <td>{{ project.ProjName }}</td>
+                                           <td>{{ project.student_profile.Sap_Id }}</td>
+                                           <td>{{ project.skill }}</td>
+                                           <td>{{ project.ProjDesc }}</td>
+                                        </tr>
+                                      {% endfor %}
+                                    </tbody>
+                                     <tfoot>
+                                        <tr>
+                                            <th>Project Name</th>
+                                           <th>Sap Id Of Student</th>
+                                           <th>Skills involved</th>
+                                           <th>Description</th>
+                                        </tr>
+                                     </tfoot>
+                                  </table>
+                                  <br/>
+                               </div>
+                               <!-- /.box-body -->
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                          </div>
+                       </div>
+                       <!-- /.modal-content -->
                     </div>
-                    <div class="box-footer no-padding">
-                      <ul class="pad nav nav-stacked">
-                        <li>{{ project.ProjURL }}</li>
-                        <li> {{ project.skill }}</li>
-                        <li>{{ project.ProjDesc }}</li>
-                        <li><a href="{% url 'user_profile:beproject' project.id  %}">View</a></li>
-                      </ul>
-                    </div>
+                        <!-- /.modal-dialog -->
                   </div>
-                  <!-- /.widget-user -->
-                </div>
-                {% endfor %}
-              </div>
-              {% if hackathons %}
-              <hr/>
-              {% endif %}
-            <div class="row">
-              {% for hackathon in hackathons %}
-              <div class="col-md-4">
-                  <!-- Widget: user widget style 1 -->
-                  <div class="box box-widget widget-userser-2">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="pad widget-user-header bg-yellow">
-                      <!-- /.widget-user-image -->
-                      <h3 class="widget-user-username">{{ hackathon.student_profile.Sap_Id }}</h3>
-                      <h5 class="widget-user-desc">{{ hackathon.CompetitionName }}</h5>
-                    </div>
-                    <div class="box-footer no-padding">
-                      <ul class="pad nav nav-stacked">
-                        <li>{{ hackathon.URL }}</li>
-                        <li>{{ project.ProjDesc }}</li>
-                        <li><a href="{% url 'user_profile:hackathon' hackathon.id  %}">View</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <!-- /.widget-user -->
-                </div>
-                {% endfor %}
-              </div>
-              {% if internships %}
-              <hr/>
-              {% endif %}
-              <div class="row">
-                {% for internship in internships %}
+              {% for project in projects %}
                 <div class="col-md-4">
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-userser-2">
                       <!-- Add the bg color to the header using any of the bg-* classes -->
                       <div class="pad widget-user-header bg-yellow">
                         <!-- /.widget-user-image -->
-                        <h3 class="widget-user-username">{{ internship.employee.Sap_Id }}</h3>
-                        <h5 class="widget-user-desc">{{ internship.company }}</h5>
+                        <h3 class="widget-user-username">{{ project.student_profile.Sap_Id }}</h3>
+                        <h5 class="widget-user-desc">{{ project.ProjName }}</h5>
                       </div>
                       <div class="box-footer no-padding">
                         <ul class="pad nav nav-stacked">
-                          <li>{{ internship.Position }}</li>
-                          <li> {{ internship.Loc }}</li>
-                          <li>{{ internship.desc }}</li>
-                          <li><a href="{% url 'user_profile:internship' internship.id  %}">View</a></li>
+                          <li>{{ project.ProjURL }}</li>
+                          <li> {{ project.skill }}</li>
+                          <li>{{ project.ProjDesc }}</li>
+                          <li><a href="{% url 'user_profile:project' project.id  %}">View</a></li>
                         </ul>
                       </div>
                     </div>
                     <!-- /.widget-user -->
-                  </div>
-                  {% endfor %}
                 </div>
-                {% if committees %}
-                <hr/>
-                {% endif %}
+              {% endfor %}
+                </div>
+              </div>
+              <div class="box-footer">
+                <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#modal-Project">
+                  Show Tabular form
+                </button>
+              </div>
+            </div>
+          {% endif %}
+
+          <hr/>
+          {% if beprojects %}
+            <div class="box box-solid">
+              <div class="box-header with-border">
+                <h3 class="box-title">BE PROJECTS</h3>
+              </div>
+              <div class="box-body">
                 <div class="row">
-                  {% for committee in committees %}
-                  <div class="col-md-4">
-                      <!-- Widget: user widget style 1 -->
-                      <div class="box box-widget widget-userser-2">
-                        <!-- Add the bg color to the header using any of the bg-* classes -->
-                        <div class="pad widget-user-header bg-yellow">
-                          <!-- /.widget-user-image -->
-                          <h3 class="widget-user-username">{{ committee.employee.Sap_Id }}</h3>
-                          <h5 class="widget-user-desc">{{ committee.OrganisationName }}</h5>
-                        </div>
-                        <div class="box-footer no-padding">
-                          <ul class="pad nav nav-stacked">
-                            <li>{{ committee.YourPosition }}</li>
-                            <li>{{ committee.Desc }}</li>
-                            <li><a href="{% url 'user_profile:committee' committee.id  %}">View</a></li>
-                          </ul>
-                        </div>
+                  <div class="modal fade" id="modal-BEProject">
+                      <div class="modal-dialog">
+                         <div class="modal-content">
+                            <div class="modal-header">
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                               <span aria-hidden="true">&times;</span></button>
+                               <h4 class="modal-title">BE Projects</h4>
+                               <button id="dlBEProj" type="button" class="btn btn-primary pull-right">Download</button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="box">
+                                 <!-- /.box-header -->
+                                 <div class="box-body">
+                                    <table id="BEprojtable" class="table table-bordered table-hover">
+                                       <thead>
+                                          <tr>
+                                             <th>Project Name</th>
+                                             <th>Sap Id Of Student</th>
+                                             <th>Skills involved</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                        {% for project in projects %}
+                                          <tr>
+                                             <td>{{ project.ProjName }}</td>
+                                             <td>{{ project.student_profile.Sap_Id }}</td>
+                                             <td>{{ project.skill }}</td>
+                                             <td>{{ project.ProjDesc }}</td>
+                                          </tr>
+                                        {% endfor %}
+                                      </tbody>
+                                       <tfoot>
+                                          <tr>
+                                              <th>Project Name</th>
+                                             <th>Sap Id Of Student</th>
+                                             <th>Skills involved</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </tfoot>
+                                    </table>
+                                    <br/>
+                                 </div>
+                                 <!-- /.box-body -->
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                               <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                            </div>
+                         </div>
+                         <!-- /.modal-content -->
                       </div>
-                      <!-- /.widget-user -->
-                    </div>
-                    {% endfor %}
+                          <!-- /.modal-dialog -->
                   </div>
-                  {% if researchpapers %}
-                  <hr/>
-                  {% endif %}
-                  <div class="row">
-                    {% for researchpaper in researchpapers %}
+                  {% for project in beprojects %}
                     <div class="col-md-4">
                         <!-- Widget: user widget style 1 -->
+                        <div class="box box-widget widget-userser-2">
+                          <!-- Add the bg color to the header using any of the bg-* classes -->
+                          <div class="pad widget-user-header bg-yellow">
+                            <!-- /.widget-user-image -->
+                            <h3 class="widget-user-username">{{ project.student_profile.Sap_Id }}</h3>
+                            <h5 class="widget-user-desc">{{ project.ProjName }}</h5>
+                          </div>
+                          <div class="box-footer no-padding">
+                            <ul class="pad nav nav-stacked">
+                              <li>{{ project.ProjURL }}</li>
+                              <li> {{ project.skill }}</li>
+                              <li>{{ project.ProjDesc }}</li>
+                              <li><a href="{% url 'user_profile:beproject' project.id  %}">View</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <!-- /.widget-user -->
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="box-footer">
+                <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#modal-BEProject">
+                  Show Tabular form
+                </button>
+              </div>
+            </div>
+          {% endif %}
+
+          <hr/>
+          {% if hackathons %}
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Hackathons</h3>
+                </div>
+                <div class="box-body">
+                  <div class="row">
+                    <div class="modal fade" id="modal-hackathon">
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span></button>
+                                 <h4 class="modal-title">Hackathons</h4>
+                                 <button id="dlhackathon" type="button" class="btn btn-primary pull-right">Download</button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="box">
+                                   <!-- /.box-header -->
+                                   <div class="box-body">
+                                      <table id="Hackathontable" class="table table-bordered table-hover">
+                                         <thead>
+                                            <tr>
+                                               <th>Competition Name</th>
+                                               <th>Sap Id Of Student</th>
+                                               <th>Description</th>
+                                            </tr>
+                                         </thead>
+                                         <tbody>
+                                          {% for project in projects %}
+                                            <tr>
+                                               <td>{{ hackathon.CompetitionName }}</td>
+                                               <td>{{ hackathon.student_profile.Sap_Id }}</td>
+                                               <td>{{ hackathon.ProjDesc }}</td>
+                                            </tr>
+                                          {% endfor %}
+                                        </tbody>
+                                         <tfoot>
+                                            <tr>
+                                              <th>Competition Name</th>
+                                              <th>Sap Id Of Student</th>
+                                              <th>Description</th>
+                                            </tr>
+                                         </tfoot>
+                                      </table>
+                                      <br/>
+                                   </div>
+                                   <!-- /.box-body -->
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                              </div>
+                           </div>
+                           <!-- /.modal-content -->
+                        </div>
+                            <!-- /.modal-dialog -->
+                    </div>
+                    {% for hackathon in hackathons %}
+                      <div class="col-md-4">
+                        <!-- Widget: user widget style 1 -->
+                        <div class="box box-widget widget-userser-2">
+                          <!-- Add the bg color to the header using any of the bg-* classes -->
+                          <div class="pad widget-user-header bg-yellow">
+                            <!-- /.widget-user-image -->
+                            <h3 class="widget-user-username">{{ hackathon.student_profile.Sap_Id }}</h3>
+                            <h5 class="widget-user-desc">{{ hackathon.CompetitionName }}</h5>
+                          </div>
+                          <div class="box-footer no-padding">
+                            <ul class="pad nav nav-stacked">
+                              <li>{{ hackathon.URL }}</li>
+                              <li>{{ project.ProjDesc }}</li>
+                              <li><a href="{% url 'user_profile:hackathon' hackathon.id  %}">View</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <!-- /.widget-user -->
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="box-footer">
+                  <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#modal-hackathon">
+                    Show Tabular form
+                  </button>
+                </div>
+            </div>
+          {% endif %}
+
+          <hr/>
+          {% if internships %}
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Internships</h3>
+                </div>
+                <div class="box-body">
+                  <div class="row">
+                    <div class="modal fade" id="modal-intern">
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span></button>
+                                 <h4 class="modal-title">Internships</h4>
+                                 <button id="dlintern" type="button" class="btn btn-primary pull-right">Download</button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="box">
+                                   <!-- /.box-header -->
+                                   <div class="box-body">
+                                      <table id="Internshiptable" class="table table-bordered table-hover">
+                                         <thead>
+                                            <tr>
+                                               <th>Organization Name</th>
+                                               <th>Sap Id Of Student</th>
+                                               <th>Role/Position</th>
+                                               <th>Location</th>
+                                               <th>Description</th>
+                                            </tr>
+                                         </thead>
+                                         <tbody>
+                                          {% for internship in internships %}
+                                            <tr>
+                                               <td>{{ internship.company }}</td>
+                                               <td>{{ internship.employee.Sap_Id }}</td>
+                                               <td>{{ internship.Position }}</td>
+                                               <td>{{ internship.Loc }}</td>
+                                               <td>{{ internship.desc }}</td>
+                                            </tr>
+                                          {% endfor %}
+                                         </tbody>
+                                         <tfoot>
+                                            <tr>
+                                               <th>Organization Name</th>
+                                               <th>Sap Id Of Student</th>
+                                               <th>Role/Position</th>
+                                               <th>Location</th>
+                                               <th>Description</th>
+                                            </tr>
+                                         </tfoot>
+                                      </table>
+                                      <br/>
+                                   </div>
+                                   <!-- /.box-body -->
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                              </div>
+                           </div>
+                           <!-- /.modal-content -->
+                        </div>
+                            <!-- /.modal-dialog -->
+                    </div>
+                    {% for internship in internships %}
+                      <div class="col-md-4">
+                        <!-- Widget: user widget style 1 -->
+                        <div class="box box-widget widget-userser-2">
+                          <!-- Add the bg color to the header using any of the bg-* classes -->
+                          <div class="pad widget-user-header bg-yellow">
+                            <!-- /.widget-user-image -->
+                            <h3 class="widget-user-username">{{ internship.employee.Sap_Id }}</h3>
+                            <h5 class="widget-user-desc">{{ internship.company }}</h5>
+                          </div>
+                          <div class="box-footer no-padding">
+                            <ul class="pad nav nav-stacked">
+                              <li>{{ internship.Position }}</li>
+                              <li> {{ internship.Loc }}</li>
+                              <li>{{ internship.desc }}</li>
+                              <li><a href="{% url 'user_profile:internship' internship.id  %}">View</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <!-- /.widget-user -->
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="box-footer">
+                  <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#modal-intern">
+                    Show Tabular form
+                  </button>
+                </div>
+            </div>
+          {% endif %}
+
+          <hr/>
+          {% if committees %}
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Committees</h3>
+                </div>
+                <div class="box-body">
+                  <div class="row">
+                    <div class="modal fade" id="modal-committee">
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span></button>
+                                 <h4 class="modal-title">Committees</h4>
+                                 <button id="dlcommittee" type="button" class="btn btn-primary pull-right">Download</button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="box">
+                                   <!-- /.box-header -->
+                                   <div class="box-body">
+                                      <table id="CommitteeTable" class="table table-bordered table-hover">
+                                         <thead>
+                                            <tr>
+                                               <th>Committee Name</th>
+                                               <th>Sap Id Of Student</th>
+                                               <th>Role/Position</th>
+                                               <th>Description</th>
+                                            </tr>
+                                         </thead>
+                                         <tbody>
+                                          {% for internship in internships %}
+                                            <tr>
+                                               <td>{{ committee.OrganisationName }}</td>
+                                               <td>{{ committee.employee.Sap_Id }}</td>
+                                               <td>{{ committee.YourPosition }}</td>
+                                               <td>{{ committee.Desc }}</td>
+                                            </tr>
+                                          {% endfor %}
+                                        </tbody>
+                                         <tfoot>
+                                            <tr>
+                                               <th>Committee Name</th>
+                                               <th>Sap Id Of Student</th>
+                                               <th>Role/Position</th>
+                                               <th>Description</th>
+                                            </tr>
+                                         </tfoot>
+                                      </table>
+                                      <br/>
+                                   </div>
+                                   <!-- /.box-body -->
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                              </div>
+                           </div>
+                           <!-- /.modal-content -->
+                        </div>
+                            <!-- /.modal-dialog -->
+                    </div>
+                    {% for committee in committees %}
+                      <div class="col-md-4">
+                          <!-- Widget: user widget style 1 -->
+                          <div class="box box-widget widget-userser-2">
+                            <!-- Add the bg color to the header using any of the bg-* classes -->
+                            <div class="pad widget-user-header bg-yellow">
+                              <!-- /.widget-user-image -->
+                              <h3 class="widget-user-username">{{ committee.employee.Sap_Id }}</h3>
+                              <h5 class="widget-user-desc">{{ committee.OrganisationName }}</h5>
+                            </div>
+                            <div class="box-footer no-padding">
+                              <ul class="pad nav nav-stacked">
+                                <li>{{ committee.YourPosition }}</li>
+                                <li>{{ committee.Desc }}</li>
+                                <li><a href="{% url 'user_profile:committee' committee.id  %}">View</a></li>
+                              </ul>
+                            </div>
+                          </div>
+                          <!-- /.widget-user -->
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="box-footer">
+                  <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#modal-committee">
+                    Show Tabular form
+                  </button>
+                </div>
+            </div>
+          {% endif %}
+
+          <hr/>
+          {% if researchpapers %}
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Research Paper</h3>
+                </div>
+                <div class="box-body">
+                  <div class="row">
+                    <div class="modal fade" id="modal-researchpaper">
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span></button>
+                                 <h4 class="modal-title">Research Papers</h4>
+                                 <button id="dlresearch" type="button" class="btn btn-primary pull-right">Download</button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="box">
+                                   <!-- /.box-header -->
+                                   <div class="box-body">
+                                      <table id="ResearchTable" class="table table-bordered table-hover">
+                                         <thead>
+                                            <tr>
+                                               <th>Committee Name</th>
+                                               <th>Sap Id Of Student</th>
+                                               <th>Role/Position</th>
+                                               <th>Description</th>
+                                            </tr>
+                                         </thead>
+                                         <tbody>
+                                          {% for internship in internships %}
+                                            <tr>
+                                               <td>{{ researchpaper.Title }}</td>
+                                               <td>{{ researchpaper.student.Sap_Id }}</td>
+                                               <td>{{ researchpaper.Publication }}</td>
+                                               <td>{{ researchpaper.Desc }}</td>
+                                            </tr>
+                                          {% endfor %}
+                                        </tbody>
+                                         <tfoot>
+                                            <tr>
+                                               <th>Research Paper Ttile</th>
+                                               <th>Sap Id Of Student</th>
+                                               <th>Publication</th>
+                                               <th>Description</th>
+                                            </tr>
+                                         </tfoot>
+                                      </table>
+                                      <br/>
+                                   </div>
+                                   <!-- /.box-body -->
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                              </div>
+                           </div>
+                           <!-- /.modal-content -->
+                        </div>
+                            <!-- /.modal-dialog -->
+                    </div>
+
+                    {% for researchpaper in researchpapers %}
+                      <div class="col-md-4">
+                          <!-- Widget: user widget style 1 -->
                         <div class="box box-widget widget-userser-2">
                           <!-- Add the bg color to the header using any of the bg-* classes -->
                           <div class="pad widget-user-header bg-yellow">
@@ -417,36 +764,112 @@
                             </ul>
                           </div>
                         </div>
-                        <!-- /.widget-user -->
+                          <!-- /.widget-user -->
                       </div>
-                      {% endfor %}
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="box-footer">
+                  <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#modal-researchpaper">
+                    Show Tabular form
+                  </button>
+                </div>
+            </div>
+          {% endif %}
+
+          <hr/>
+          {% if extracurricular %}
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Extra Curricular</h3>
+                </div>
+                <div class="box-body">
+                  <div class="row">
+                    <div class="modal fade" id="modal-extracurricular">
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span></button>
+                                 <h4 class="modal-title">Extra Curricular</h4>
+                                 <button id="dlextracurricular" type="button" class="btn btn-primary pull-right">Download</button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="box">
+                                   <!-- /.box-header -->
+                                   <div class="box-body">
+                                      <table id="ExtracurricularTable" class="table table-bordered table-hover">
+                                         <thead>
+                                            <tr>
+                                               <th>Activity Name</th>
+                                               <th>Sap Id Of Student</th>
+                                               <th>Achievements</th>
+                                               <th>Description</th>
+                                            </tr>
+                                         </thead>
+                                         <tbody>
+                                          {% for internship in internships %}
+                                            <tr>
+                                               <td>{{ extra.name }}</td>
+                                               <td>{{ extra.student.Sap_Id }}</td>
+                                               <td>{{ extra.achievements }}</td>
+                                               <td>{{ extra.desc }}</td>
+                                            </tr>
+                                          {% endfor %}
+                                        </tbody>
+                                         <tfoot>
+                                            <tr>
+                                               <th>Activity Name</th>
+                                               <th>Sap Id Of Student</th>
+                                               <th>Achievements</th>
+                                               <th>Description</th>
+                                            </tr>
+                                         </tfoot>
+                                      </table>
+                                      <br/>
+                                   </div>
+                                   <!-- /.box-body -->
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                              </div>
+                           </div>
+                           <!-- /.modal-content -->
+                        </div>
+                            <!-- /.modal-dialog -->
                     </div>
-                    {% if extracurricular %}
-                    <hr/>
-                    {% endif %}
-                    <div class="row">
-                      {% for extra in extracurricular %}
+
+                    {% for extra in extracurricular %}
                       <div class="col-md-4">
                           <!-- Widget: user widget style 1 -->
-                          <div class="box box-widget widget-userser-2">
-                            <!-- Add the bg color to the header using any of the bg-* classes -->
-                            <div class="pad widget-user-header bg-yellow">
-                              <!-- /.widget-user-image -->
-                              <h3 class="widget-user-username">{{ extra.student.Sap_Id }}</h3>
-                              <h5 class="widget-user-desc">{{ extra.name }}</h5>
-                            </div>
-                            <div class="box-footer no-padding">
-                              <ul class="pad nav nav-stacked">
-                                <li>{{ extra.achievements }}</li>
-                                <li>{{ extra.desc }}</li>
-                                <li><a href="{% url 'user_profile:extracurricular' extra.id  %}">View</a></li>
-                              </ul>
-                            </div>
+                        <div class="box box-widget widget-userser-2">
+                          <!-- Add the bg color to the header using any of the bg-* classes -->
+                          <div class="pad widget-user-header bg-yellow">
+                            <!-- /.widget-user-image -->
+                            <h3 class="widget-user-username">{{ extra.student.Sap_Id }}</h3>
+                            <h5 class="widget-user-desc">{{ extra.name }}</h5>
                           </div>
-                          <!-- /.widget-user -->
+                          <div class="box-footer no-padding">
+                            <ul class="pad nav nav-stacked">
+                              <li>{{ extra.achievements }}</li>
+                              <li>{{ extra.desc }}</li>
+                              <li><a href="{% url 'user_profile:extracurricular' extra.id  %}">View</a></li>
+                            </ul>
+                          </div>
                         </div>
-                        {% endfor %}
+                        <!-- /.widget-user -->
                       </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="box-footer">
+                  <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#modal-extracurricular">
+                    Show Tabular form
+                  </button>
+                </div>
+            </div>
+          {% endif %}
       </section>
     <!-- /.content -->
 {% endblock %}
@@ -457,7 +880,7 @@
 
 <script src="{% static "/build/js/jquery.dataTables.min.js" %}"></script>
 <script src="{% static "/build/js/dataTables.bootstrap.min.js" %}"></script>
-<script src="{% static "/build/js/tabletocsv.js" %}"></script>
+<script src="{% static "/build/js/  tabletocsv.js" %}"></script>
 <script>
   $(function () {
 
@@ -479,11 +902,38 @@
 });
 
 </script>
-
 <script>
   $("#dl").click(function(){
     //$("#tab").table2csv('output', {appendTo: '#out'});
-    $("#example2").table2csv();
+    $("#studenttable").table2csv();
+  })
+  $("#dlProj").click(function(){
+    //$("#tab").table2csv('output', {appendTo: '#out'});
+    $("#projtable").table2csv();
+  })
+  $("#dlBEProj").click(function(){
+    //$("#tab").table2csv('output', {appendTo: '#out'});
+    $("#BEprojtable").table2csv();
+  })
+  $("#dlhackathon").click(function(){
+    //$("#tab").table2csv('output', {appendTo: '#out'});
+    $("#Hackathontable").table2csv();
+  })
+  $("#dlresearch").click(function(){
+    //$("#tab").table2csv('output', {appendTo: '#out'});
+    $("#ResearchTable").table2csv();
+  })
+  $("#dlcommittee").click(function(){
+    //$("#tab").table2csv('output', {appendTo: '#out'});
+    $("#CommitteeTable").table2csv();
+  })
+  $("#dlextracurricular").click(function(){
+    //$("#tab").table2csv('output', {appendTo: '#out'});
+    $("#ExtracurricularTable").table2csv();
+  })
+  $("#dlintern").click(function(){
+    //$("#tab").table2csv('output', {appendTo: '#out'});
+    $("#Internshiptable").table2csv();
   })
 </script>
 
