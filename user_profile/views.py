@@ -75,7 +75,7 @@ def user_login(request):
             student_profile = StudentProfile.objects.get(student=request.user)
             student_profile_url = '/student_profile/' + str(student_profile.id)
             return HttpResponseRedirect(student_profile_url)
-        except:
+        except Exception as e:
             teacher_profile_url = '/teacherdashboard/'
             return HttpResponseRedirect(teacher_profile_url)
     else:
@@ -798,7 +798,8 @@ def notifs(request):
     return render(request, 'user_profile/notifs.html', {'listed': listed, 'projects': projects,
                                                         'beprojects': beprojects, 'education': education,
                                                         'committee': committee, 'hackathon': hackathon,
-                                                        'researchpaper': researchpaper, 'extra': extra, 'teacher':teacher})
+                                                        'researchpaper': researchpaper, 'extra': extra,
+                                                        'teacher': teacher})
 
 
 def student_list(request):
