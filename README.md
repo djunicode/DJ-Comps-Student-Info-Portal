@@ -31,3 +31,29 @@ Parth Mehta, Sanika Potdar, Kushal Doshi, Vishesh Vohra
 
 ### Back End Developers
 Ayush Kothari, Sarvesh Joglekar, Siddhant Soni
+
+
+### To run this repo on your local:
+
+<b>Create a virtual environment using python 3.6</b>
+
+<b>Creating the database - Make sure you have Postgres installed on your machine. Follow the below steps in terminal after installing Postgres</b>
+1. sudo su - postgres
+2. psql
+3. CREATE DATABASE info_portal;
+4. CREATE xyz myprojectuser WITH PASSWORD 'abc@123';
+5. ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
+6. ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
+7. ALTER ROLE myprojectuser SET timezone TO 'UTC';
+8. GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;
+9. \q
+10. exit
+
+<b>Install all the dependencies of the project</b>
+pip3 install -r requirements.txt
+
+
+<b>To run the project</b>
+1. python manage.py makemigrations
+2. python manage.py migrate
+3. python manage.py runserver
