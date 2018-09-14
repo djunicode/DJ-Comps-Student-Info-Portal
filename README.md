@@ -38,25 +38,25 @@ Ayush Kothari, Sarvesh Joglekar, Siddhant Soni
 - **Create a virtual environment using python 3.6**
 
 - **Creating the database - Make sure you have Postgres installed on your machine. Follow the below steps in terminal after installing Postgres**
-```sudo su - postgres```
-```psql```
-```CREATE DATABASE info_portal;```
-```CREATE xyz myprojectuser WITH PASSWORD 'abc@123';```
-```ALTER ROLE myprojectuser SET client_encoding TO 'utf8';```
-```ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';```
-```ALTER ROLE myprojectuser SET timezone TO 'UTC';```
-```GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;```
-```\q```
-```exit```
+1. ```sudo su - postgres```
+2. ```psql```
+3. ```CREATE DATABASE info_portal;```
+4. ```CREATE xyz myprojectuser WITH PASSWORD 'abc@123';```
+5. ```ALTER ROLE myprojectuser SET client_encoding TO 'utf8';```
+6. ```ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';```
+7. ```ALTER ROLE myprojectuser SET timezone TO 'UTC';```
+8. ```GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;```
+9. ```\q```
+10. ```exit```
 
 - **Install all the dependencies of the project**
 pip3 install -r requirements.txt
 
 
 - **To run the project**
-```python manage.py makemigrations```
-```python manage.py migrate```
-```python manage.py runserver```
+1. ```python manage.py makemigrations```
+2. ```python manage.py migrate```
+3. ```python manage.py runserver```
 
 ### Screenshots
 
