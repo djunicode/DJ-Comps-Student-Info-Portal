@@ -33,7 +33,9 @@ Parth Mehta, Sanika Potdar, Kushal Doshi, Vishesh Vohra
 Ayush Kothari, Sarvesh Joglekar, Siddhant Soni
 
 
-### To run this repo on your local:
+
+
+# To run this repo on your local:
 
 - **Create a virtual environment using python 3.6**
 
