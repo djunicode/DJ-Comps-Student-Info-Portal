@@ -71,9 +71,13 @@ def register(request):
 
 def user_login(request):
     if request.user.is_authenticated:
-        student_profile = StudentProfile.objects.get(student=request.user)
-        student_profile_url = '/student_profile/' + str(student_profile.id)
-        return HttpResponseRedirect(student_profile_url)
+        try:
+            student_profile = StudentProfile.objects.get(student=request.user)
+            student_profile_url = '/student_profile/' + str(student_profile.id)
+            return HttpResponseRedirect(student_profile_url)
+        except Exception as e:
+            teacher_profile_url = '/teacherdashboard/'
+            return HttpResponseRedirect(teacher_profile_url)
     else:
         if request.method == 'POST':
             username = request.POST.get('username', '')
@@ -790,11 +794,12 @@ def notifs(request):
     print(extra)
     print("YO")
     print(listed)
-
+    teacher = TeacherProfile.objects.get(teacher=request.user)
     return render(request, 'user_profile/notifs.html', {'listed': listed, 'projects': projects,
                                                         'beprojects': beprojects, 'education': education,
                                                         'committee': committee, 'hackathon': hackathon,
-                                                        'researchpaper': researchpaper, 'extra': extra})
+                                                        'researchpaper': researchpaper, 'extra': extra,
+                                                        'teacher': teacher})
 
 
 def student_list(request):
