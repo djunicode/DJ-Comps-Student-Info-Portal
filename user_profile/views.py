@@ -311,6 +311,11 @@ def student_profile(request, id):
 
 def searchany(request, skillss):
     context = {}
+    try:
+        teacher = TeacherProfile.objects.get(teacher=request.user)
+    except ObjectDoesNotExist:
+        stud = '/login/student/'
+        return HttpResponseRedirect(stud)
     if request.method == 'POST':
         searchquery = request.POST.get('searchany')
         # queryset=StudentProfile.objects.filter(department__trigram_similar=searchquery)
@@ -364,6 +369,7 @@ def searchany(request, skillss):
         context['committees'] = committees
         context['researchpapers'] = researchpapers
         context['extracurricular'] = extracurricular
+        context['teacher'] = teacher
         return render(request, 'user_profile/filter.html', context)
     else:
         return render(request, 'user_profile/filter.html', {})
@@ -843,6 +849,7 @@ def student_list(request):
                 result = []
                 projects = []
             # print(result, "res")
+            print(teacher)
             return render(request, 'user_profile/filter.html', {'result': result, 'skills': skillss,
                           'projects': projects, 'teacher': teacher})
     else:
