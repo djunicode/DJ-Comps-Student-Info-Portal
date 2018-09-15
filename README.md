@@ -43,16 +43,16 @@ Ayush Kothari, Sarvesh Joglekar, Siddhant Soni
 1. ```sudo su - postgres```
 2. ```psql```
 3. ```CREATE DATABASE info_portal;```
-4. ```CREATE xyz myprojectuser WITH PASSWORD 'abc@123';```
-5. ```ALTER ROLE myprojectuser SET client_encoding TO 'utf8';```
-6. ```ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';```
-7. ```ALTER ROLE myprojectuser SET timezone TO 'UTC';```
-8. ```GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;```
+4. ```CREATE USER xyz WITH PASSWORD 'abc@123';```
+5. ```ALTER ROLE xyz SET client_encoding TO 'utf8';```
+6. ```ALTER ROLE xyz SET default_transaction_isolation TO 'read committed';```
+7. ```ALTER ROLE xyz SET timezone TO 'UTC';```
+8. ```GRANT ALL PRIVILEGES ON DATABASE info_portal TO xyz;```
 9. ```\q```
 10. ```exit```
 
 - **Install all the dependencies of the project**
-pip3 install -r requirements.txt
+```pip3 install -r requirements.txt```
 
 
 - **To run the project**
