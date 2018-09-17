@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block css %}
-  <title>BE Projects</title>
+  <title>Internships</title>
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 
@@ -64,42 +64,44 @@
 <section class="content">
   <div class="box">
      <div class="box-header with-border">
-       <h3 class="box-title">BE-Project</h3>
+       <h3 class="box-title">Internships</h3>
      </div>
      <!-- /.box-header -->
      <div class="box-body">
          <dl class="dl-horizontal">
 
-           <dt>Name</dt>
-           <dd>: {{ intern.ProjName }} </dd>
-           <dt>URL </dt>
-           <dd>: {{ intern.ProjURL }} </dd>
-           <dt>Description </dt>
-           <dd>: {{ intern.ProjDesc }}</dd>
-           {% if intern.projectUnderTeacher %}
-             <dt>Teacher</dt>
-             <dd> : {{ intern.projectUnderTeacher }}  </dd>
+           <dt>Company </dt>
+           <dd>: {{ intern.company }} </dd>
+           <dt>Position </dt>
+           <dd>: {{ intern.Position }} </dd>
+           <dt>Company Location </dt>
+           <dd>: {{ intern.Loc }}</dd>
+           {% if intern.From %}
+             <dt>Date Started </dt>
+             <dd> : {{ intern.From }}  </dd>
            {% endif %}
-           {% if intern.teammates.all %}
-           <dt>Teammates </dt>
-           <dd>:
-                 {% for x in intern.teammates.all %}
-                       {{ x.Sap_Id }}
-                 {% endfor %}
-           </dd>
+           {% if intern.To %}
+             <dt>Date To </dt>
+             <dd>: {{ intern.To }}  </dd>
+           {% endif %}
+             <dt>Description </dt>
+             <dd>: {{ intern.desc }}  </dd>
+           {% if intern.Certificate  %}
+          <dt> Certificate</dt>
+          <dd> :  <img  src="{{ intern.Certificate.url }}">  </dd>
            {% endif %}
            {% if intern.image1 %}
            <dt> Screenshot</dt> :
            <dd>
-             <img src="{{ intern.image1.url }}">
-             {% endif %}
-           {% if intern.image2  %}
+           <img src="{{ intern.image1.url }}">
+           {% endif %}
+           {% if intern.image2 %}
            <img src="{{ intern.image2.url }}">
            {% endif %}
-           {% if intern.image3  %}
+           {% if intern.image3%}
            <img src="{{ intern.image3.url }}">
            {% endif %}
-           {% if intern.image4  %}
+           {% if intern.image4 %}
            <img src="{{ intern.image4.url }}">
            {% endif %}
            {% if intern.image5 %}

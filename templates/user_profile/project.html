@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block css %}
-  <title>BE Projects</title>
+  <title>Projects</title>
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 
@@ -64,7 +64,7 @@
 <section class="content">
   <div class="box">
      <div class="box-header with-border">
-       <h3 class="box-title">BE-Project</h3>
+       <h3 class="box-title">Projects</h3>
      </div>
      <!-- /.box-header -->
      <div class="box-body">
@@ -80,14 +80,8 @@
              <dt>Teacher</dt>
              <dd> : {{ intern.projectUnderTeacher }}  </dd>
            {% endif %}
-           {% if intern.teammates.all %}
-           <dt>Teammates </dt>
-           <dd>:
-                 {% for x in intern.teammates.all %}
-                       {{ x.Sap_Id }}
-                 {% endfor %}
-           </dd>
-           {% endif %}
+           <dt>Skill </dt>
+           <dd>: {{ intern.skill }}</dd>
            {% if intern.image1 %}
            <dt> Screenshot</dt> :
            <dd>
@@ -102,7 +96,7 @@
            {% if intern.image4  %}
            <img src="{{ intern.image4.url }}">
            {% endif %}
-           {% if intern.image5 %}
+           {% if intern.image5  %}
            <img src="{{ intern.image5.url }}">
            {% endif %}
            </dd>
