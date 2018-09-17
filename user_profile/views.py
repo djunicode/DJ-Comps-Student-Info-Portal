@@ -266,7 +266,7 @@ def student_profile(request, id):
 
         except Education.DoesNotExist:
             gpa_list = []
-            print(gpa_list)
+            # print(gpa_list)
 
         if Project.objects.filter(student_profile=student).exists():
             color = ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de']
@@ -281,7 +281,7 @@ def student_profile(request, id):
                 colors = color[i]
                 i = i + 1
                 project_skills.append({'label': key, 'value': value, 'color': colors, 'highlight': colors})
-            print(project_skills)
+            # print(project_skills)
         else:
             project_skills = {}
 
@@ -311,6 +311,11 @@ def student_profile(request, id):
 
 def searchany(request, skillss):
     context = {}
+    try:
+        teacher = TeacherProfile.objects.get(teacher=request.user)
+    except ObjectDoesNotExist:
+        stud = '/login/student/'
+        return HttpResponseRedirect(stud)
     if request.method == 'POST':
         searchquery = request.POST.get('searchany')
         # queryset=StudentProfile.objects.filter(department__trigram_similar=searchquery)
@@ -327,7 +332,7 @@ def searchany(request, skillss):
         # bio_vector = SearchVector('bio')
         result = list(StudentProfile.objects.annotate(
             search=dept_vector).filter(search=searchquery))
-        print(result, 'result')
+        # print(result, 'result')
         skills = Skill.objects.annotate(
             search=skill_vector).filter(search=searchquery)
         result.extend(list(StudentProfile.objects.filter(skill__in=skills).distinct()))
@@ -364,6 +369,7 @@ def searchany(request, skillss):
         context['committees'] = committees
         context['researchpapers'] = researchpapers
         context['extracurricular'] = extracurricular
+        context['teacher'] = teacher
         return render(request, 'user_profile/filter.html', context)
     else:
         return render(request, 'user_profile/filter.html', {})
@@ -457,7 +463,7 @@ def notifs(request):
                     cmp2.append(k.ProjDesc)
                     cmp2.append(k.image1)
                     cmp2.append(k.projectUnderTeacher)
-                    print(k.projectUnderTeacher)
+                    # print(k.projectUnderTeacher)
                     cmp2.append(k.skill)
                 if count == 2:
                     break
@@ -476,7 +482,7 @@ def notifs(request):
                 a.append('Skill')
             if len(a) != 2:
                 projects[student.Sap_Id].append(a)
-        print(projects)
+        # print(projects)
 
         # Dictionary for storing beprojects changes with key as Sap_Id
         beprojects = {}
@@ -522,7 +528,7 @@ def notifs(request):
                     a.append('Teacher')
                 if len(a) != 2:
                     beprojects[student.Sap_Id].append(a)
-        print(beprojects)
+        # print(beprojects)
 
         # Dictionary for storing committee changes with key as Sap_Id
         committee = {}
@@ -685,7 +691,7 @@ def notifs(request):
                 a.append('Image')
             if len(a) != 2:
                 hackathon[student.Sap_Id].append(a)
-    print(hackathon)
+    # print(hackathon)
 
     education = {}
     for student in StudentProfile.objects.all():
@@ -742,8 +748,8 @@ def notifs(request):
                 a.append('Sem 8 Cgpa')
             if len(a) != 2:
                 education[student.Sap_Id].append(a)
-    print("HI")
-    print(education)
+    # print("HI")
+    # print(education)
 
     extra = {}
     for student in StudentProfile.objects.all():
@@ -808,7 +814,7 @@ def student_list(request):
     except ObjectDoesNotExist:
         stud = '/login/student/'
         return HttpResponseRedirect(stud)
-    print(teacher)
+    # print(teacher)
     most_common_to_take = 3
     skills = Skill.objects.all()
     list_of_skills = [skill.skill for skill in skills]
@@ -823,8 +829,8 @@ def student_list(request):
             skills = request.POST.getlist('skills[]')
             # gpa = request.POST.getlist('gpa_list[]')
 
-            print(year)
-            print(skills)
+            # print(year)
+            # print(skills)
             # print(gpa_list)
             if year and skills:
                 result = StudentProfile.objects.filter(year__in=year).filter(
@@ -842,7 +848,8 @@ def student_list(request):
             else:
                 result = []
                 projects = []
-            print(result, "res")
+            # print(result, "res")
+            print(teacher)
             return render(request, 'user_profile/filter.html', {'result': result, 'skills': skillss,
                           'projects': projects, 'teacher': teacher})
     else:
@@ -864,7 +871,7 @@ def teacher_dashboard(request):
         return HttpResponseRedirect(stud)
     context = {}
     context['teacher'] = teacher
-    print(teacher)
+    # print(teacher)
     # calculating most common skills
     most_common_to_take = 3
     skills = Skill.objects.all()
@@ -873,13 +880,13 @@ def teacher_dashboard(request):
         list_of_skills).most_common(most_common_to_take)
     for i, skill in enumerate(most_frequent_skills):
         context['skill' + str(i + 1)] = skill
-    print(most_frequent_skills)
+    # print(most_frequent_skills)
     # calculating year-wise internship stats
     internship_objects = Internship.objects.all()
     intern_stats = [
         internship.employee.year for internship in internship_objects]
     intern_stats = collections.Counter(intern_stats)
-    print(intern_stats.items())
+    # print(intern_stats.items())
     context['FE_interns'] = intern_stats['FE']
     context['SE_interns'] = intern_stats['SE']
     context['TE_interns'] = intern_stats['TE']
@@ -890,7 +897,7 @@ def teacher_dashboard(request):
     for internship in internship_objects:
         internship_in_months.append(internship.From.month)
     internship_in_months = collections.Counter(internship_in_months)
-    print(internship_in_months)
+    # print(internship_in_months)
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     context['months'] = months
     for month in months:
@@ -924,9 +931,9 @@ def teacher_dashboard(request):
     sem6_list = float(sum(sem6_list) / len(sem6_list)) if len(sem6_list) != 0 else []
     sem7_list = float(sum(sem7_list) / len(sem7_list)) if len(sem7_list) != 0 else []
     sem8_list = float(sum(sem8_list) / len(sem8_list)) if len(sem8_list) != 0 else []
-    print("Hi")
-    print(sem1_list, sem2_list, sem3_list, sem4_list,
-          sem5_list, sem6_list, sem7_list, sem8_list)
+    # print("Hi")
+    # print(sem1_list, sem2_list, sem3_list, sem4_list,
+    # sem5_list, sem6_list, sem7_list, sem8_list)
     context['avg_gpa'] = [sem1_list, sem2_list, sem3_list, sem4_list, sem5_list, sem6_list, sem7_list, sem8_list]
     context['sem_labels'] = ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6', 'Sem 7', 'Sem 8']
     # batch wise pointers
@@ -934,7 +941,7 @@ def teacher_dashboard(request):
     SE_gpa_objects = Education.objects.filter(student_profile__year='SE')
     TE_gpa_objects = Education.objects.filter(student_profile__year='TE')
     BE_gpa_objects = Education.objects.filter(student_profile__year='BE')
-    print(FE_gpa_objects, SE_gpa_objects, TE_gpa_objects, BE_gpa_objects)
+    # print(FE_gpa_objects, SE_gpa_objects, TE_gpa_objects, BE_gpa_objects)
     FE_gpa = {'sem1': [], 'sem2': []}
     SE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': []}
     TE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': [], 'sem5': [], 'sem6': []}
@@ -974,14 +981,14 @@ def teacher_dashboard(request):
                          average(BE_gpa['sem3']), average(BE_gpa['sem4']),
                          average(BE_gpa['sem5']), average(BE_gpa['sem6']),
                          average(BE_gpa['sem7']), average(BE_gpa['sem8'])]
-    print(context['FE_gpa'])
+    # print(context['FE_gpa'])
     # internship time stamps
     intern_dates = [format(internship.From, 'U')
                     for internship in Internship.objects.all()]
     intern_dates.sort()
-    intern_date = [int(x) - int(intern_dates[0]) for x in intern_dates]
-    print(intern_dates)
-    print(intern_date)
+    # intern_date = [int(x) - int(intern_dates[0]) for x in intern_dates]
+    # print(intern_dates)
+    # print(intern_date)
     total_regs = StudentProfile.objects.all().count()
     total_intern = Internship.objects.all().count()
     cgpa1 = [pointer.cgpa for pointer in StudentProfile.objects.all(
@@ -1071,12 +1078,13 @@ def edit_basic_info(request, id):
         student_profile.first_name = request.POST.get('fname')
         student_profile.last_name = request.POST.get('lname')
         student_profile.department = request.POST.get('department')
-        print(request.POST.get('gender'))
+        # print(request.POST.get('gender'))
         if (request.POST.get('gender') is not None):
             student_profile.gender = request.POST.get('gender')
         if (request.POST.get('year') is not None):
             student_profile.year = request.POST.get('year')
         student_profile.mobileNo = request.POST.get('mobileNo')
+        student_profile.photo = request.FILES.get('photo')
         student_profile.save()
         return HttpResponse('done')
 
@@ -1114,9 +1122,9 @@ def edit_skill_info(request, id):
         student_profile = StudentProfile.objects.get(id=id)
         skill = Skill.objects.create(user_profile=student_profile)
         skill.skill = request.POST.get('skill')
-        print(request.POST.get('skill'))
+        # print(request.POST.get('skill'))
         skill.save()
-        print('.....')
+        # print('.....')
         return HttpResponseRedirect('')
     else:
         data = Skill.objects.last()
@@ -1125,6 +1133,8 @@ def edit_skill_info(request, id):
 
 def edit_hackathon_info(request, id):
     if request.method == 'POST':
+        print(request.POST)
+        print(request.FILES)
         student_profile = StudentProfile.objects.get(id=id)
         hackathon = Hackathon.objects.create(student_profile=student_profile)
         # hackathon = Hackathon.objects.get(student_profile_id=id)
@@ -1132,12 +1142,17 @@ def edit_hackathon_info(request, id):
         hackathon.Date = request.POST.get('HackathonDate')
         hackathon.Desc = request.POST.get('HackathonDescription')
         hackathon.URL = request.POST.get('HackathonUrl')
+        hackathon.image1 = request.FILES.get('image1')
+        hackathon.image2 = request.FILES.get('image2')
+        hackathon.image3 = request.FILES.get('image3')
+        hackathon.image4 = request.FILES.get('image4')
+        hackathon.image5 = request.FILES.get('image5')
         hackathon.save()
         # number = "9833175929"
         # message = "THE STUDENT " + str(student_profile.first_name) + " has added the Hackathon " \
         #     + hackathon.CompetitionName + " to his profile"
         # send_sms(message, number)
-        print("sdsdsdsd")
+        # print("sdsdsdsd")
         return HttpResponseRedirect('')
     else:
         data = Hackathon.objects.last()
@@ -1154,9 +1169,11 @@ def edit_project_info(request, id):
         project.ProjURL = request.POST.get('ProjectUrl')
         project.ProjName = request.POST.get('ProjectName')
         project.ProjDesc = request.POST.get('ProjectDescription')
-        # image1 = request.FILES.get('image')
-        # print(request.FILES.get('image'))
-        # project.image1 = image1
+        project.image1 = request.FILES.get('image1')
+        project.image2 = request.FILES.get('image2')
+        project.image3 = request.FILES.get('image3')
+        project.image4 = request.FILES.get('image4')
+        project.image5 = request.FILES.get('image5')
         project.skill = skill
         project.save()
         skill.save()
@@ -1178,6 +1195,12 @@ def edit_internship_info(request, id):
         internship.Loc = request.POST.get('InternshipLocation')
         internship.From = request.POST.get('InternshipFrom')
         internship.To = request.POST.get('InternshipTo')
+        internship.Certificate = request.FILES.get('certificate')
+        internship.image1 = request.FILES.get('image1')
+        internship.image2 = request.FILES.get('image2')
+        internship.image3 = request.FILES.get('image3')
+        internship.image4 = request.FILES.get('image4')
+        internship.image5 = request.FILES.get('image5')
         internship.save()
         return HttpResponse('done')
     else:
@@ -1196,6 +1219,12 @@ def edit_committee_info(request, id):
         committee.Loc = request.POST.get('CommitteeLocation')
         committee.dateFrom = request.POST.get('CommitteeFrom')
         committee.dateTo = request.POST.get('CommitteeTo')
+        committee.Certificate = request.FILES.get('certificate')
+        committee.image1 = request.FILES.get('image1')
+        committee.image2 = request.FILES.get('image2')
+        committee.image3 = request.FILES.get('image3')
+        committee.image4 = request.FILES.get('image4')
+        committee.image5 = request.FILES.get('image5')
         committee.save()
         return HttpResponse('done')
     else:
@@ -1214,6 +1243,11 @@ def edit_research_paper_info(request, id):
         paper.DateOfPublication = request.POST.get('ResearchPaperDate')
         paper.Desc = request.POST.get('ResearchPaperDescription')
         paper.LinkToPaper = request.POST.get('ResearchPaperUrl')
+        paper.image1 = request.FILES.get('image1')
+        paper.image2 = request.FILES.get('image2')
+        paper.image3 = request.FILES.get('image3')
+        paper.image4 = request.FILES.get('image4')
+        paper.image5 = request.FILES.get('image5')
         paper.save()
         return HttpResponse('done')
     else:
@@ -1231,6 +1265,12 @@ def edit_extra_info(request, id):
         extra.desc = request.POST.get('ExtraDescription')
         extra.achievements = request.POST.get('ExtraAchievements')
         extra.date = request.POST.get('ExtraDate')
+        extra.Certificate = request.FILES.get('certificate')
+        extra.image1 = request.FILES.get('image1')
+        extra.image2 = request.FILES.get('image2')
+        extra.image3 = request.FILES.get('image3')
+        extra.image4 = request.FILES.get('image4')
+        extra.image5 = request.FILES.get('image5')
         extra.save()
         return HttpResponse('done')
     else:
@@ -1250,6 +1290,11 @@ def edit_beproject_info(request, id):
         proj.ProjName = request.POST.get('BEProjectName')
         proj.ProjURL = request.POST.get('BEProjectUrl')
         proj.ProjDesc = request.POST.get('BEProjectDescription')
+        proj.image1 = request.FILES.get('image1')
+        proj.image2 = request.FILES.get('image2')
+        proj.image3 = request.FILES.get('image3')
+        proj.image4 = request.FILES.get('image4')
+        proj.image5 = request.FILES.get('image5')
         proj.save()
         return HttpResponse('done')
 
