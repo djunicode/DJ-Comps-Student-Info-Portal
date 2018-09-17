@@ -85,13 +85,18 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user:
                 if user.is_active:
-                    auth_login(request, user)
                     # return render(request, 'user_profile/profile.html', {})
-                    student_profile = StudentProfile.objects.get(
-                        student=request.user)
-                    student_profile_url = '/student_profile/' + \
-                        str(student_profile.id)
-                    return HttpResponseRedirect(student_profile_url)
+                    auth_login(request, user)
+                    try:
+                        student_profile = StudentProfile.objects.get(
+                            student=request.user)
+                        student_profile_url = '/student_profile/' + \
+                            str(student_profile.id)
+                        return HttpResponseRedirect(student_profile_url)
+                    except Exception as e:
+                        print(e)
+                        teacher_profile_url = '/login/teacher/'
+                        return HttpResponseRedirect(teacher_profile_url)
                 else:
                     error = 'Your account is disabled.'
                     return render(request, 'user_profile/login.html', {'error': error})
@@ -180,8 +185,15 @@ def user_login_teacher(request):
             if user:
                 if user.is_active:
                     auth_login(request, user)
-                    teacher_profile_url = '/teacherdashboard/'
-                    return HttpResponseRedirect(teacher_profile_url)
+                    try:
+                        student_profile = TeacherProfile.objects.get(teacher=request.user)
+                        print(student_profile)
+                        teacher_profile_url = '/teacherdashboard/'
+                        return HttpResponseRedirect(teacher_profile_url)
+                    except Exception as e:
+                        print(e)
+                        student_profile_url = '/login/student/'
+                        return HttpResponseRedirect(student_profile_url)
                 else:
                     error = 'Your account is disabled.'
                     return render(request, 'user_profile/teacher_login.html', {'error': error})
@@ -234,7 +246,15 @@ def student_profile(request, id):
         # student = get_object_or_404(StudentProfile, Sap_Id=sapid)
         # line chart of marks
         # gpa_list = [gpa for gpa in student.education.all()[0].__dict__.values()]
-
+        try:
+            logedin_user = TeacherProfile.objects.get(teacher=request.user)
+            flag = 0
+            print(logedin_user)
+            print(flag)
+        except ObjectDoesNotExist:
+            flag = 1
+            logedin_user = StudentProfile.objects.get(id=id)
+            print(flag)
         student = StudentProfile.objects.get(id=id)
         try:
             education = Education.objects.get(student_profile=student)
@@ -303,7 +323,7 @@ def student_profile(request, id):
                        'internship': internship, 'projects': projects, 'committe': committe,
                        'researchpaper': researchpaper, 'beproj': beproj, 'skill': skill,
                        'hackathon': hackathon, 'student': student, 'sem_labels': sem_labels,
-                       'extracurricular': extracurricular})
+                       'extracurricular': extracurricular, 'flag': flag, 'logedin_user': logedin_user})
     else:
         login = '/login/student/'
         return HttpResponseRedirect(login)
@@ -1045,31 +1065,37 @@ def extracurricular(request, extracurricularid):
 
 def show_edit_studentprofile(request):
     if request.user.is_authenticated:
-        student_profile = StudentProfile.objects.get(student=request.user)
-        hackathon = Hackathon.objects.filter(student_profile=student_profile)
-        project = Project.objects.filter(student_profile=student_profile)
-        committee = Committee.objects.filter(employee=student_profile)
-        researchpaper = ResearchPaper.objects.filter(student=student_profile)
-        internship = Internship.objects.filter(employee=student_profile)
         try:
-            beproject = BeProject.objects.get(student=student_profile)
+            teacher = TeacherProfile.objects.get(teacher=request.user)
+            print(teacher)
+            teacher_profile_url = '/teacherdashboard/'
+            return HttpResponseRedirect(teacher_profile_url)
         except ObjectDoesNotExist:
-            beproject = BeProject.objects.create(student=student_profile)
-        try:
-            acads = Education.objects.get(student_profile=student_profile)
-        except ObjectDoesNotExist:
-            acads = Education.objects.create(student_profile=student_profile)
-        skill = Skill.objects.filter(user_profile=student_profile)
-        skill_list = []
-        for s in skill:
-            if s.skill != '':
-                skill_list.append(s)
-        context = {'student_profile': student_profile, 'hackathon_list': hackathon, 'project_list': project,
-                   'committee_list': committee, 'beproject': beproject, 'researchpaper_list': researchpaper,
-                   'internship_list': internship, 'acads': acads, 'skill_list': skill_list}
-        return render(request, 'user_profile/edit_student_profile_2.html', context)
-    else:
-        return HttpResponseRedirect('/login/student/')
+            student_profile = StudentProfile.objects.get(student=request.user)
+            hackathon = Hackathon.objects.filter(student_profile=student_profile)
+            project = Project.objects.filter(student_profile=student_profile)
+            committee = Committee.objects.filter(employee=student_profile)
+            researchpaper = ResearchPaper.objects.filter(student=student_profile)
+            internship = Internship.objects.filter(employee=student_profile)
+            try:
+                beproject = BeProject.objects.get(student=student_profile)
+            except ObjectDoesNotExist:
+                beproject = BeProject.objects.create(student=student_profile)
+            try:
+                acads = Education.objects.get(student_profile=student_profile)
+            except ObjectDoesNotExist:
+                acads = Education.objects.create(student_profile=student_profile)
+            skill = Skill.objects.filter(user_profile=student_profile)
+            skill_list = []
+            for s in skill:
+                if s.skill != '':
+                    skill_list.append(s)
+            context = {'student_profile': student_profile, 'hackathon_list': hackathon, 'project_list': project,
+                       'committee_list': committee, 'beproject': beproject, 'researchpaper_list': researchpaper,
+                       'internship_list': internship, 'acads': acads, 'skill_list': skill_list}
+            return render(request, 'user_profile/edit_student_profile_2.html', context)
+        else:
+            return HttpResponseRedirect('/login/student/')
 
 
 def edit_basic_info(request, id):
@@ -1085,6 +1111,7 @@ def edit_basic_info(request, id):
             student_profile.year = request.POST.get('year')
         student_profile.mobileNo = request.POST.get('mobileNo')
         student_profile.photo = request.FILES.get('photo')
+        student_profile.cgpa = request.POST.get('cgpa')
         student_profile.save()
         return HttpResponse('done')
 
