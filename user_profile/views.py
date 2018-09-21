@@ -86,10 +86,10 @@ def user_login(request):
             if user:
                 if user.is_active:
                     # return render(request, 'user_profile/profile.html', {})
-                    auth_login(request, user)
                     try:
                         student_profile = StudentProfile.objects.get(
-                            student=request.user)
+                            student=user)
+                        auth_login(request, user)
                         student_profile_url = '/student_profile/' + \
                             str(student_profile.id)
                         return HttpResponseRedirect(student_profile_url)
@@ -184,9 +184,9 @@ def user_login_teacher(request):
             user = authenticate(username=username, password=password)
             if user:
                 if user.is_active:
-                    auth_login(request, user)
                     try:
-                        student_profile = TeacherProfile.objects.get(teacher=request.user)
+                        student_profile = TeacherProfile.objects.get(teacher=user)
+                        auth_login(request, user)
                         print(student_profile)
                         teacher_profile_url = '/teacherdashboard/'
                         return HttpResponseRedirect(teacher_profile_url)
