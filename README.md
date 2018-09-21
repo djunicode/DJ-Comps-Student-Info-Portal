@@ -37,7 +37,9 @@ Ayush Kothari, Sarvesh Joglekar, Siddhant Soni
 
 # To run this repo on your local:
 
+
 - **Create a virtual environment using python 3.6**
+
 
 - **Creating the database - Make sure you have Postgres installed on your machine. Follow the below steps in terminal after installing Postgres**
 1. ```sudo su - postgres```
@@ -50,6 +52,10 @@ Ayush Kothari, Sarvesh Joglekar, Siddhant Soni
 8. ```GRANT ALL PRIVILEGES ON DATABASE info_portal TO xyz;```
 9. ```\q```
 10. ```exit```
+
+- **CLone the Repository**
+1. ```git clone https://github.com/djunicode/DJ-Comps-Student-Info-Portal```
+2. ```cd path_to_repo```
 
 - **Install all the dependencies of the project**
 ```pip3 install -r requirements.txt```
