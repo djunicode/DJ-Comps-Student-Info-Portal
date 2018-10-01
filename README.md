@@ -39,7 +39,8 @@ Ayush Kothari, Sarvesh Joglekar, Siddhant Soni
 
 
 - **Create a virtual environment using python 3.6**
-
+1. ```virtualenv -p python3 venv```
+2. ```source venv/bin/activate```
 
 - **Creating the database - Make sure you have Postgres installed on your machine. Follow the below steps in terminal after installing Postgres**
 1. ```sudo su - postgres```
@@ -53,7 +54,7 @@ Ayush Kothari, Sarvesh Joglekar, Siddhant Soni
 9. ```\q```
 10. ```exit```
 
-- **CLone the Repository**
+- **Clone the Repository**
 1. ```git clone https://github.com/djunicode/DJ-Comps-Student-Info-Portal```
 2. ```cd path_to_repo```
 
