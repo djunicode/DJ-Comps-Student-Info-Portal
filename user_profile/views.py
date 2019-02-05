@@ -46,7 +46,12 @@ def register(request):
             if User.objects.filter(username=username).exists():
                 error = 'The Sap_id is already in use by another account.'
                 return render(request, 'user_profile/registration.html', {'error': error})
-
+            elif len(Sap_Id)<11:
+                error = 'The Sap_id should be 11 digits long.'
+                return render(request, 'user_profile/registration.html', {'error': error})
+            elif len(password)<8:
+                error = 'The Password should be 8 characters long.'
+                return render(request, 'user_profile/registration.html', {'error': error})
             else:
                 user = User.objects.create_user(username=username, email=email)
                 user.set_password(password)
@@ -123,7 +128,12 @@ def register_teacher(request):
             if User.objects.filter(username=username).exists():
                 error = 'The Sap_id is already in use by another account.'
                 return render(request, 'user_profile/registration_teacher.html', {'error': error})
-
+            elif len(Sap_Id)<11:
+                error = 'The Sap_id should be 11 digits long.'
+                return render(request, 'user_profile/registration_teacher.html', {'error': error})
+            elif len(password)<8:
+                error = 'The Password should be 8 characters long.'
+                return render(request, 'user_profile/registration_teacher.html', {'error': error})
             else:
                 user = User.objects.create_user(username=username, email=email)
                 user.set_password(password)

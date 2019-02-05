@@ -40,23 +40,23 @@
     <form id="register" action="{% url 'user_profile:register_teacher'%}" method="post">
       {% csrf_token %}
       <div class="form-group has-feedback">
-        <input id="sap" type="text" class="form-control" placeholder="SAP ID" name="Sap_Id">
+        <input required id="sap" type="text" class="form-control" placeholder="SAP ID" name="Sap_Id">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input id="sap" type="text" class="form-control" placeholder="First Name" name="first_name">
+        <input required id="sap" type="text" class="form-control" placeholder="First Name" name="first_name">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input id="sap" type="text" class="form-control" placeholder="Last Name" name="last_name">
+        <input required id="sap" type="text" class="form-control" placeholder="Last Name" name="last_name">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email-ID" name="email">
+        <input required type="email" class="form-control" placeholder="Email-ID" name="email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password" name="password">
+        <input required type="password" class="form-control" placeholder="Password" name="password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
