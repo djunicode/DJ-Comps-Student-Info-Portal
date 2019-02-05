@@ -1176,7 +1176,8 @@ def edit_hackathon_info(request, id):
         hackathon = Hackathon.objects.create(student_profile=student_profile)
         # hackathon = Hackathon.objects.get(student_profile_id=id)
         hackathon.CompetitionName = request.POST.get('HackathonName')
-        hackathon.Date = request.POST.get('HackathonDate')
+        if request.POST.get('HackathonDate') != '':
+            hackathon.Date = request.POST.get('HackathonDate')
         hackathon.Desc = request.POST.get('HackathonDescription')
         hackathon.URL = request.POST.get('HackathonUrl')
         hackathon.image1 = request.FILES.get('image1')
@@ -1225,13 +1226,17 @@ def edit_internship_info(request, id):
     if request.method == 'POST':
         student_profile = StudentProfile.objects.get(id=id)
         internship = Internship.objects.create(employee=student_profile)
-
+        print("HI")
         internship.company = request.POST.get('InternshipName')
+        print(request.POST.get('InternshipName'))
         internship.desc = request.POST.get('InternshipDescription')
+        print(request.POST.get('InternshipDescription'))
         internship.Position = request.POST.get('InternshipPosition')
         internship.Loc = request.POST.get('InternshipLocation')
-        internship.From = request.POST.get('InternshipFrom')
-        internship.To = request.POST.get('InternshipTo')
+        if request.POST.get('InternshipFrom') != '':
+            internship.From = request.POST.get('InternshipFrom')
+        if request.POST.get('InternshipTo') != '':
+            internship.To = request.POST.get('InternshipTo')
         internship.Certificate = request.FILES.get('certificate')
         internship.image1 = request.FILES.get('image1')
         internship.image2 = request.FILES.get('image2')
@@ -1239,6 +1244,7 @@ def edit_internship_info(request, id):
         internship.image4 = request.FILES.get('image4')
         internship.image5 = request.FILES.get('image5')
         internship.save()
+        print(internship.company)
         return HttpResponse('done')
     else:
         data = Internship.objects.last()
@@ -1250,18 +1256,23 @@ def edit_committee_info(request, id):
     if request.method == 'POST':
         student_profile = StudentProfile.objects.get(id=id)
         committee = Committee.objects.create(employee=student_profile)
+        print("HI")
         committee.OrganisationName = request.POST.get('CommitteeName')
+        print(request.POST.get('CommitteeName'))
         committee.YourPosition = request.POST.get('CommitteePosition')
         committee.Desc = request.POST.get('CommitteeDescription')
         committee.Loc = request.POST.get('CommitteeLocation')
-        committee.dateFrom = request.POST.get('CommitteeFrom')
-        committee.dateTo = request.POST.get('CommitteeTo')
+        if request.POST.get('CommitteeFrom') != '':
+            committee.dateFrom = request.POST.get('CommitteeFrom')
+        if request.POST.get('CommitteeTo') != '':
+            committee.dateTo = request.POST.get('CommitteeTo')
         committee.Certificate = request.FILES.get('certificate')
         committee.image1 = request.FILES.get('image1')
         committee.image2 = request.FILES.get('image2')
         committee.image3 = request.FILES.get('image3')
         committee.image4 = request.FILES.get('image4')
         committee.image5 = request.FILES.get('image5')
+        print("Yo")
         committee.save()
         return HttpResponse('done')
     else:
@@ -1277,7 +1288,8 @@ def edit_research_paper_info(request, id):
         paper = ResearchPaper.objects.create(student=student_profile)
         paper.Title = request.POST.get('ResearchPaperName')
         paper.Publication = request.POST.get('ResearchPaperPublication')
-        paper.DateOfPublication = request.POST.get('ResearchPaperDate')
+        if request.POST.get('ResearchPaperDated') != '':
+            paper.DateOfPublication = request.POST.get('ResearchPaperDate')
         paper.Desc = request.POST.get('ResearchPaperDescription')
         paper.LinkToPaper = request.POST.get('ResearchPaperUrl')
         paper.image1 = request.FILES.get('image1')
@@ -1301,7 +1313,8 @@ def edit_extra_info(request, id):
         extra.name = request.POST.get('ExtraName')
         extra.desc = request.POST.get('ExtraDescription')
         extra.achievements = request.POST.get('ExtraAchievements')
-        extra.date = request.POST.get('ExtraDate')
+        if request.POST.get('ExtraDate') != '':
+            extra.date = request.POST.get('ExtraDate')
         extra.Certificate = request.FILES.get('certificate')
         extra.image1 = request.FILES.get('image1')
         extra.image2 = request.FILES.get('image2')
