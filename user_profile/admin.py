@@ -1,8 +1,8 @@
 from django.contrib import admin
 from .models import TeacherProfile
 from .models import Hackathon, Committee, ResearchPaper, BeProject, Internship
-from .models import Project, StudentProfile, Skill, Recruiter, KT
-from .models import Education, ExtraCurricular
+from .models import Project, StudentProfile, Skill, Recruiter, KT, Subject
+from .models import Education, ExtraCurricular, TermTest, SubjectMarks
 from simple_history.admin import SimpleHistoryAdmin
 
 
@@ -19,3 +19,6 @@ admin.site.register(Project, SimpleHistoryAdmin)
 admin.site.register(Education)
 admin.site.register(ExtraCurricular)
 admin.site.register(KT)
+admin.site.register(TermTest)
+admin.site.register(Subject)
+admin.site.register(SubjectMarks)

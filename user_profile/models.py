@@ -7,6 +7,7 @@ from django.core.validators import MaxValueValidator
 from django.db.models.signals import m2m_changed
 from django.core.exceptions import ValidationError
 from simple_history.models import HistoricalRecords
+from django.contrib.postgres.fields import JSONField
 # import django_filters
 
 
@@ -53,25 +54,77 @@ class Recruiter(models.Model):
     recruiter = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
+class Subject(models.Model):
+    SEM_CHOICES = (
+        ("SEM1", "Semester 1"),
+        ("SEM2", "Semester 2"),
+        ("SEM3", "Semester 3"),
+        ("SEM4", "Semester 4"),
+        ("SEM5", "Semester 5"),
+        ("SEM6", "Semester 6"),
+        ("SEM7", "Semester 7"),
+        ("SEM8", "Semester 8"),
+    )
+    name = models.CharField(max_length=100)
+    sem = models.CharField(max_length=20, choices=SEM_CHOICES)
+
+    def __str__(self):
+        return str(self.sem) + str(self.name)
+
+
+class TermTest(models.Model):
+    tt_name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return str(self.tt_name)
+
+
+class SubjectMarks(models.Model):
+    tt = models.ForeignKey(TermTest, related_name='subject')
+    subject = models.ForeignKey(Subject)
+    marks = models.DecimalField(
+        max_digits=4, decimal_places=2,
+        validators=[MaxValueValidator(0),
+                    MinValueValidator(20)], blank=True, null=True)
+
+    def __str__(self):
+        return str(self.tt.tt_name) + str(self.subject)
+
 class Education(models.Model):
     student_profile = models.ForeignKey(
         StudentProfile, related_name='education')
     sem1_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem1_tt1 = models.ForeignKey(TermTest, related_name='sem1_tt1', null=True)
+    sem1_tt2 = models.ForeignKey(TermTest, related_name='sem1_tt2', null=True)
     sem2_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem2_tt1 = models.ForeignKey(TermTest, related_name='sem2_tt1', null=True)
+    sem2_tt2 = models.ForeignKey(TermTest, related_name='sem2_tt2', null=True)
     sem3_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem3_tt1 = models.ForeignKey(TermTest, related_name='sem3_tt1', null=True)
+    sem3_tt2 = models.ForeignKey(TermTest, related_name='sem3_tt2', null=True)
     sem4_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem4_tt1 = models.ForeignKey(TermTest, related_name='sem4_tt1', null=True)
+    sem4_tt2 = models.ForeignKey(TermTest, related_name='sem4_tt2', null=True)
     sem5_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem5_tt1 = models.ForeignKey(TermTest, related_name='sem5_tt1', null=True)
+    sem5_tt2 = models.ForeignKey(TermTest, related_name='sem5_tt2', null=True)
     sem6_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem6_tt1 = models.ForeignKey(TermTest, related_name='sem6_tt1', null=True)
+    sem6_tt2 = models.ForeignKey(TermTest, related_name='sem6_tt2', null=True)
     sem7_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem7_tt1 = models.ForeignKey(TermTest, related_name='sem7_tt1', null=True)
+    sem7_tt2 = models.ForeignKey(TermTest, related_name='sem7_tt2', null=True)
     sem8_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+    sem8_tt1 = models.ForeignKey(TermTest, related_name='sem8_tt1', null=True)
+    sem8_tt2 = models.ForeignKey(TermTest, related_name='sem8_tt2', null=True)
     history = HistoricalRecords()
 
 
