@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from .models import (StudentProfile, TeacherProfile, Internship, Project, Committee, ResearchPaper, BeProject,
-                     Hackathon, Skill, Education, ExtraCurricular, KT)
+                     Hackathon, Skill, Education, ExtraCurricular, KT, Subject, SubjectMarks, TermTest)
 from .models import (HistoricalInternship, HistoricalProject, HistoricalCommittee, HistoricalResearchPaper,
                      HistoricalBeProject, HistoricalHackathon, HistoricalEducation, HistoricalExtraCurricular)
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -1085,6 +1085,151 @@ def show_edit_studentprofile(request):
                 acads = Education.objects.get(student_profile=student_profile)
             except ObjectDoesNotExist:
                 acads = Education.objects.create(student_profile=student_profile)
+            if not acads.sem1_tt1:
+                print('karega')
+                t = TermTest.objects.create(tt_name='sem1_tt1')
+                for subj in Subject.objects.filter(sem='SEM1'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem1_tt1 = t
+                acads.save()
+            if not acads.sem1_tt2:
+                t = TermTest.objects.create(tt_name='sem1_tt2')
+                for subj in Subject.objects.filter(sem='SEM1'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem1_tt2 = t
+                acads.save()
+            if not acads.sem2_tt1:
+                t = TermTest.objects.create(tt_name='sem2_tt1')
+                for subj in Subject.objects.filter(sem='SEM2'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem2_tt1 = t
+                acads.save()
+            if not acads.sem2_tt2:
+                t = TermTest.objects.create(tt_name='sem2_tt2')
+                for subj in Subject.objects.filter(sem='SEM2'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem2_tt2 = t
+                acads.save()
+            if not acads.sem3_tt1:
+                t = TermTest.objects.create(tt_name='sem3_tt1')
+                for subj in Subject.objects.filter(sem='SEM3'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem3_tt1 = t
+                acads.save()
+            if not acads.sem3_tt2:
+                t = TermTest.objects.create(tt_name='sem3_tt2')
+                for subj in Subject.objects.filter(sem='SEM3'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem3_tt2 = t
+                acads.save()
+            if not acads.sem4_tt1:
+                t = TermTest.objects.create(tt_name='sem4_tt1')
+                for subj in Subject.objects.filter(sem='SEM4'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem4_tt1 = t
+                acads.save()
+            if not acads.sem4_tt2:
+                t = TermTest.objects.create(tt_name='sem4_tt2')
+                for subj in Subject.objects.filter(sem='SEM4'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem4_tt2 = t
+                acads.save()
+            if not acads.sem5_tt1:
+                t = TermTest.objects.create(tt_name='sem5_tt1')
+                for subj in Subject.objects.filter(sem='SEM5'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem5_tt1 = t
+                acads.save()
+            if not acads.sem5_tt2:
+                t = TermTest.objects.create(tt_name='sem5_tt2')
+                for subj in Subject.objects.filter(sem='SEM5'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem5_tt2 = t
+                acads.save()
+            if not acads.sem6_tt1:
+                t = TermTest.objects.create(tt_name='sem6_tt1')
+                for subj in Subject.objects.filter(sem='SEM6'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem6_tt1 = t
+                acads.save()
+            if not acads.sem6_tt2:
+                t = TermTest.objects.create(tt_name='sem6_tt2')
+                for subj in Subject.objects.filter(sem='SEM6'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem6_tt2 = t
+                acads.save()
+            if not acads.sem7_tt1:
+                t = TermTest.objects.create(tt_name='sem7_tt1')
+                for subj in Subject.objects.filter(sem='SEM7'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem7_tt1 = t
+                acads.save()
+            if not acads.sem7_tt2:
+                t = TermTest.objects.create(tt_name='sem7_tt2')
+                for subj in Subject.objects.filter(sem='SEM7'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem7_tt2 = t
+                acads.save()
+            if not acads.sem8_tt1:
+                t = TermTest.objects.create(tt_name='sem8_tt1')
+                for subj in Subject.objects.filter(sem='SEM8'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem8_tt1 = t
+                acads.save()
+            if not acads.sem8_tt2:
+                t = TermTest.objects.create(tt_name='sem8_tt2')
+                for subj in Subject.objects.filter(sem='SEM8'):
+                    s = SubjectMarks()
+                    s.tt = t
+                    s.subject = subj
+                    s.save()
+                acads.sem8_tt2 = t
+                acads.save()
             skill = Skill.objects.filter(user_profile=student_profile)
             skill_list = []
             for s in skill:
@@ -1123,6 +1268,7 @@ def edit_academic_info(request, id):
             education = Education.objects.get(student_profile=student_profile)
         except ObjectDoesNotExist:
             education = Education.objects.create(student_profile=student_profile)
+        print(request.POST)
         if ((request.POST.get('sem1_gpa')) != ''):
             education.sem1_gpa = request.POST.get('sem1_gpa')
         if ((request.POST.get('sem2_gpa')) != ''):
@@ -1139,6 +1285,102 @@ def edit_academic_info(request, id):
             education.sem7_gpa = request.POST.get('sem7_gpa')
         if ((request.POST.get('sem8_gpa')) != ''):
             education.sem8_gpa = request.POST.get('sem8_gpa')
+        for subj in education.sem1_tt1.subject.all():
+            marks = request.POST.get('sem1_tt1_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem1_tt2.subject.all():
+            marks = request.POST.get('sem1_tt2_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem2_tt1.subject.all():
+            marks = request.POST.get('sem2_tt1_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem2_tt2.subject.all():
+            marks = request.POST.get('sem2_tt2_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem3_tt1.subject.all():
+            marks = request.POST.get('sem3_tt1_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem3_tt2.subject.all():
+            marks = request.POST.get('sem3_tt2_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem4_tt1.subject.all():
+            marks = request.POST.get('sem4_tt1_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem4_tt2.subject.all():
+            marks = request.POST.get('sem4_tt2_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem5_tt1.subject.all():
+            marks = request.POST.get('sem5_tt1_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem5_tt2.subject.all():
+            marks = request.POST.get('sem5_tt2_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem6_tt1.subject.all():
+            marks = request.POST.get('sem6_tt1_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem6_tt2.subject.all():
+            marks = request.POST.get('sem6_tt2_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem7_tt1.subject.all():
+            marks = request.POST.get('sem7_tt1_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem7_tt2.subject.all():
+            marks = request.POST.get('sem7_tt2_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem8_tt1.subject.all():
+            marks = request.POST.get('sem8_tt1_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
+        for subj in education.sem8_tt2.subject.all():
+            marks = request.POST.get('sem8_tt2_' + str(subj.subject.name))
+            if marks != '':
+                subj.marks = marks
+                print(subj)
+                subj.save()
         student_profile.subject_semester = request.POST.get('kt')
         education.save()
         return HttpResponse('done')
