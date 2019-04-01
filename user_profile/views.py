@@ -16,7 +16,8 @@ from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 import collections
 from django.utils.dateformat import format
 from django.core.exceptions import ObjectDoesNotExist
-import datetime
+from datetime import datetime
+from datetime import timedelta
 import os
 import requests
 
@@ -339,8 +340,7 @@ def searchany(request, skillss):
     if request.method == 'POST':
         searchquery = request.POST.get('searchany')
         # queryset=StudentProfile.objects.filter(department__trigram_similar=searchquery)
-        dept_vector = SearchVector('first_name', 'last_name', 'department', 'bio', 'year',
-                                   'mobileNo', 'github_id', 'sap')
+        dept_vector = SearchVector('first_name', 'last_name', 'department', 'bio', 'year', 'mobileNo', 'github_id', 'sap')
         skill_vector = SearchVector('skill')
         hackathon_vector = SearchVector('CompetitionName', 'Desc', 'URL')
         internship_vector = SearchVector('company', 'Position', 'Loc', 'desc')
@@ -842,8 +842,21 @@ def student_list(request):
         list_of_skills).most_common(most_common_to_take)
     skillss = [skill[0] for skill in most_frequent]
     if request.method == 'POST':
-        if request.POST.get('searchany'):
-            return searchany(request, skillss)
+        if request.POST.get('month'):
+            month=request.POST.get('month')
+            print(month)
+            if month:
+                month = datetime.strptime(month,'%Y-%m-%d')
+                last=month+timedelta(days=30)
+                internship_monthly = Internship.objects.filter(From__range=[month,last])
+                extracurricular_monthly = ExtraCurricular.objects.filter(date__range=[month,last])
+                hackathon_monthly = Hackathon.objects.filter(Date__range=[month,last])
+                print(internship_monthly)
+                print(hackathon_monthly)
+                print(extracurricular_monthly)
+                return render(request, 'user_profile/filter.html', {'internship_monthly': internship_monthly,'hackathon_monthly': hackathon_monthly,'extracurricular_monthly': extracurricular_monthly})
+            else:
+                return searchany(request, skillss)
         else:
             year = request.POST.getlist('year[]')
             skills = request.POST.getlist('skills[]')
@@ -869,7 +882,7 @@ def student_list(request):
                 result = []
                 projects = []
             # print(result, "res")
-            print(teacher)
+            #print(teacher)
             return render(request, 'user_profile/filter.html', {'result': result, 'skills': skillss,
                           'projects': projects, 'teacher': teacher})
     else:
