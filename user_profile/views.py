@@ -349,6 +349,7 @@ def searchany(request, skillss):
         return HttpResponseRedirect(stud)
     if request.method == 'POST':
         searchquery = request.POST.get('searchany')
+        print('searchany: {}'.format(searchquery))
         # queryset=StudentProfile.objects.filter(department__trigram_similar=searchquery)
         dept_vector = SearchVector('first_name', 'last_name', 'department', 'bio', 'year', 'mobileNo', 'github_id', 'sap')
         skill_vector = SearchVector('skill')
@@ -852,6 +853,7 @@ def student_list(request):
         list_of_skills).most_common(most_common_to_take)
     skillss = [skill[0] for skill in most_frequent]
     if request.method == 'POST':
+        print("opst")
         if request.POST.get('month'):
             month=request.POST.get('month')
             print(month)
@@ -864,9 +866,12 @@ def student_list(request):
                 print(internship_monthly)
                 print(hackathon_monthly)
                 print(extracurricular_monthly)
-                return render(request, 'user_profile/filter.html', {'internship_monthly': internship_monthly,'hackathon_monthly': hackathon_monthly,'extracurricular_monthly': extracurricular_monthly})
+                return render(request, 'user_profile/filter.html', {'internship_monthly': internship_monthly,'hackathon_monthly': hackathon_monthly,'extracurricular_monthly': extracurricular_monthly, 'teacher':TeacherProfile.objects.get(teacher=request.user)})
             else:
+                print("else")
                 return searchany(request, skillss)
+        elif request.POST.get('searchany'):
+            return searchany(request, skillss)
         else:
             year = request.POST.getlist('year[]')
             skills = request.POST.getlist('skills[]')
@@ -914,7 +919,7 @@ def teacher_dashboard(request):
         return HttpResponseRedirect(stud)
     context = {}
     context['teacher'] = teacher
-    # print(teacher)
+    print(teacher)
     # calculating most common skills
     most_common_to_take = 3
     skills = Skill.objects.all()
