@@ -183,7 +183,7 @@ class Experience(models.Model):
 class Hackathon(models.Model):
     student_profile = models.ForeignKey(StudentProfile, related_name="hackathon")
     CompetitionName = models.CharField(max_length=50, blank=True, null=True)
-    Date = models.DateField(blank=True, null=True)
+    Date = models.DateField(("Date"), default=datetime.date.today)
     Desc = models.CharField(max_length=500, blank=True, null=True)
     URL = models.TextField(validators=[URLValidator()], null=True, blank=True)
     image1 = models.FileField(blank=True, null=True)
