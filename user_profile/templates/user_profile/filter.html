@@ -5,8 +5,6 @@
 <title>Filter Search</title>
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="{% static "/dist/css/skins/all-skins.min.css" %}">
-
   <link rel="stylesheet" href="{% static "/build/css/dataTables.bootstrap.min.css" %}">
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="{% static "/plugins/iCheck/all.css" %}">
@@ -43,7 +41,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <!-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
 
-        <span class="hidden-xs">{{ teacher.first_name }} {{ teacher.last_name }} </span>
+        <span>{{ teacher.first_name }} {{ teacher.last_name }} </span>
 
                 </a>
                 <ul class="dropdown-menu">
@@ -85,7 +83,10 @@
             <form action="/search/" method="post" role="form">
               {% csrf_token %}
               <input type="text" name="searchany" placeholder="Search">
-                <button type="submit" class="btn btn-primary">Submit</button>
+              <input type="text" name="month" placeholder="Select month and year" onfocus="(this.type='date')">
+                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                <button type="submit" class="btn btn-primary" id="month">View Monthly Data</button>
+                <button type="button" class="btn btn-primary" id="month_download">Download Monthly Data</button>
             </form>
           </div>
           <div class="row">
@@ -150,6 +151,54 @@
             </div>
           </div>
 
+          {% if internship_monthly %}
+            <table id="monthly" class="table table-bordered table-hover">
+               <thead>
+                  <tr>
+                     <th>Name</th>
+                     <th>Sap Id</th>
+                     <th>Year</th>
+                     <th>Hackathon/Internship/ExtraCurricular</th>
+                     <th>Date</th>
+                     <!-- <th>Details</th> -->
+                  </tr>
+               </thead>
+               <tbody>
+                {% for result in internship_monthly %}
+                  <tr>
+                     <td>{{ result.employee.first_name }} {{ result.employee.last_name }}</td>
+                     <td>{{ result.employee.Sap_Id }}</td>
+                     <td>{{ result.employee.year }}</td>
+                     <td>{{ result.company}}</td>
+                     <td>{{ result.From}} to {{result.To}}</td>
+                     <!-- <td></td> -->
+                  </tr>
+                {% endfor %}
+                {% for result in hackathon_monthly %}
+                  <tr>
+                     <td>{{ result.student_profile.first_name }} {{ result.student_profile.last_name }}</td>
+                     <td>{{ result.student_profile.Sap_Id }}</td>
+                     <td>{{ result.student_profile.year }}</td>
+                     <td>{{ result.CompetitionName}}</td>
+                     <td>{{ result.Date}}</td>
+                     <!-- <td></td> -->
+                  </tr>
+                {% endfor %}
+                {% for result in extracurricular_monthly %}
+                  <tr>
+                     <td>{{ result.student.first_name }} {{ result.student.last_name }}</td>
+                     <td>{{ result.student.Sap_Id }}</td>
+                     <td>{{ result.student.year }}</td>
+                     <td>{{ result.name}}</td>
+                     <td>{{ result.date}}</td>
+                     <!-- <td></td> -->
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% endif %}
+
+
           {% if result %}
             <div class="box box-solid">
               <div class="box-header with-border">
@@ -189,14 +238,14 @@
                                         </tr>
                                       {% endfor %}
                                     </tbody>
-                                     <tfoot>
+                                     <!-- <tfoot>
                                         <tr>
                                            <th>Name</th>
                                            <th>Sap Id</th>
                                            <th>Year</th>
                                            <th>CGPA</th>
                                         </tr>
-                                     </tfoot>
+                                     </tfoot> -->
                                   </table>
                                   <br/>
                                </div>
@@ -302,14 +351,14 @@
                                         </tr>
                                       {% endfor %}
                                     </tbody>
-                                     <tfoot>
+                                     <!-- <tfoot>
                                         <tr>
                                             <th>Project Name</th>
                                            <th>Sap Id Of Student</th>
                                            <th>Skills involved</th>
                                            <th>Description</th>
                                         </tr>
-                                     </tfoot>
+                                     </tfoot> -->
                                   </table>
                                   <br/>
                                </div>
@@ -396,14 +445,14 @@
                                           </tr>
                                         {% endfor %}
                                       </tbody>
-                                       <tfoot>
+                                       <!-- <tfoot>
                                           <tr>
                                               <th>Project Name</th>
                                              <th>Sap Id Of Student</th>
                                              <th>Skills involved</th>
                                              <th>Description</th>
                                           </tr>
-                                       </tfoot>
+                                       </tfoot> -->
                                     </table>
                                     <br/>
                                  </div>
@@ -488,13 +537,13 @@
                                             </tr>
                                           {% endfor %}
                                         </tbody>
-                                         <tfoot>
+                                         <!-- <tfoot>
                                             <tr>
                                               <th>Competition Name</th>
                                               <th>Sap Id Of Student</th>
                                               <th>Description</th>
                                             </tr>
-                                         </tfoot>
+                                         </tfoot> -->
                                       </table>
                                       <br/>
                                    </div>
@@ -582,7 +631,7 @@
                                             </tr>
                                           {% endfor %}
                                          </tbody>
-                                         <tfoot>
+                                         <!-- <tfoot>
                                             <tr>
                                                <th>Organization Name</th>
                                                <th>Sap Id Of Student</th>
@@ -590,7 +639,7 @@
                                                <th>Location</th>
                                                <th>Description</th>
                                             </tr>
-                                         </tfoot>
+                                         </tfoot> -->
                                       </table>
                                       <br/>
                                    </div>
@@ -677,14 +726,14 @@
                                             </tr>
                                           {% endfor %}
                                         </tbody>
-                                         <tfoot>
+                                         <!-- <tfoot>
                                             <tr>
                                                <th>Committee Name</th>
                                                <th>Sap Id Of Student</th>
                                                <th>Role/Position</th>
                                                <th>Description</th>
                                             </tr>
-                                         </tfoot>
+                                         </tfoot> -->
                                       </table>
                                       <br/>
                                    </div>
@@ -770,14 +819,14 @@
                                             </tr>
                                           {% endfor %}
                                         </tbody>
-                                         <tfoot>
+                                         <!-- <tfoot>
                                             <tr>
                                                <th>Research Paper Ttile</th>
                                                <th>Sap Id Of Student</th>
                                                <th>Publication</th>
                                                <th>Description</th>
                                             </tr>
-                                         </tfoot>
+                                         </tfoot> -->
                                       </table>
                                       <br/>
                                    </div>
@@ -865,14 +914,14 @@
                                             </tr>
                                           {% endfor %}
                                         </tbody>
-                                         <tfoot>
+                                         <!-- <tfoot>
                                             <tr>
                                                <th>Activity Name</th>
                                                <th>Sap Id Of Student</th>
                                                <th>Achievements</th>
                                                <th>Description</th>
                                             </tr>
-                                         </tfoot>
+                                         </tfoot> -->
                                       </table>
                                       <br/>
                                    </div>
@@ -982,6 +1031,10 @@
   $("#dlintern").click(function(){
     //$("#tab").table2csv('output', {appendTo: '#out'});
     $("#Internshiptable").table2csv();
+  })
+  $("#month_download").click(function(){
+    //$("#tab").table2csv('output', {appendTo: '#out'});
+    $("#monthly").table2csv();
   })
 </script>
 
