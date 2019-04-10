@@ -336,6 +336,173 @@
                                 </label>
                               </div>
                             </div>
+                            <div class="form-group">
+                              <label for="sem" class="col-sm-2 control-label">
+                                Term Test
+                              </label>
+                              <div class="col-sm-8">
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="sem1" value="sem1">
+                                  <label class="form-check-label">&nbsp;Sem 1</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="sem2" value="sem2">
+                                  <label class="form-check-label">&nbsp;Sem 2</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="sem3" value="sem3">
+                                  <label class="form-check-label">&nbsp;Sem 3</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="sem4" value="sem4">
+                                  <label class="form-check-label">&nbsp;Sem 4</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="sem5" value="sem5">
+                                  <label class="form-check-label">&nbsp;Sem 5</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="sem6" value="sem6">
+                                  <label class="form-check-label">&nbsp;Sem 6</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="sem7" value="sem7">
+                                  <label class="form-check-label">&nbsp;Sem 7</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="sem8" value="sem8">
+                                  <label class="form-check-label">&nbsp;Sem 8</label>
+                                </div>
+                              </div>
+                            </div>
+                            {% for subj in acads.sem1_tt1.subject.all %}
+                            <div class="form-group sem1" style="display:none;">
+                              <label for="sem1_tt1" class="col-sm-2 control-label">Test 1 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem1_tt1" name="sem1_tt1_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem1_tt2.subject.all %}
+                            <div class="form-group sem1" style="display:none;">
+                              <label for="sem1_tt2" class="col-sm-2 control-label">Test 2 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem1_tt2" name="sem1_tt2_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem2_tt1.subject.all %}
+                            <div class="form-group sem2" style="display:none;">
+                              <label for="sem2_tt1" class="col-sm-2 control-label">Test 1 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem2_tt1" name="sem2_tt1_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem2_tt2.subject.all %}
+                            <div class="form-group sem2" style="display:none;">
+                              <label for="sem2_tt2" class="col-sm-2 control-label">Test 2 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem2_tt2" name="sem2_tt2_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem3_tt1.subject.all %}
+                            <div class="form-group sem3" style="display:none;">
+                              <label for="sem3_tt1" class="col-sm-2 control-label">Test 1 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem3_tt1" name="sem3_tt1_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem3_tt2.subject.all %}
+                            <div class="form-group sem3" style="display:none;">
+                              <label for="sem3_tt2" class="col-sm-2 control-label">Test 2 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem3_tt2" name="sem3_tt2_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem4_tt1.subject.all %}
+                            <div class="form-group sem4" style="display:none;">
+                              <label for="sem4_tt1" class="col-sm-2 control-label">Test 1 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem4_tt1" name="sem4_tt1_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem4_tt2.subject.all %}
+                            <div class="form-group sem4" style="display:none;">
+                              <label for="sem4_tt2" class="col-sm-2 control-label">Test 2 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem4_tt2" name="sem4_tt2_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem5_tt1.subject.all %}
+                            <div class="form-group sem5" style="display:none;">
+                              <label for="sem5_tt1" class="col-sm-2 control-label">Test 1 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem5_tt1" name="sem5_tt1_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem5_tt2.subject.all %}
+                            <div class="form-group sem5" style="display:none;">
+                              <label for="sem5_tt2" class="col-sm-2 control-label">Test 2 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem5_tt2" name="sem5_tt2_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem6_tt1.subject.all %}
+                            <div class="form-group sem6" style="display:none;">
+                              <label for="sem6_tt1" class="col-sm-2 control-label">Test 1 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem6_tt1" name="sem6_tt1_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem6_tt2.subject.all %}
+                            <div class="form-group sem6" style="display:none;">
+                              <label for="sem6_tt2" class="col-sm-2 control-label">Test 2 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem6_tt2" name="sem6_tt2_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem7_tt1.subject.all %}
+                            <div class="form-group sem7" style="display:none;">
+                              <label for="sem7_tt1" class="col-sm-2 control-label">Test 1 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem7_tt1" name="sem7_tt1_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem7_tt2.subject.all %}
+                            <div class="form-group sem7" style="display:none;">
+                              <label for="sem7_tt2" class="col-sm-2 control-label">Test 2 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem7_tt2" name="sem7_tt2_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem8_tt1.subject.all %}
+                            <div class="form-group sem8" style="display:none;">
+                              <label for="sem8_tt1" class="col-sm-2 control-label">Test 1 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem8_tt1" name="sem8_tt1_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {% for subj in acads.sem8_tt2.subject.all %}
+                            <div class="form-group sem8" style="display:none;">
+                              <label for="sem8_tt2" class="col-sm-2 control-label">Test 2 {{subj.subject.name}}</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" id="sem8_tt2" name="sem8_tt2_{{subj.subject.name}}" value={{subj.marks}}>
+                              </div>
+                            </div>
+                            {% endfor %}
                           </div>
                           <!-- /.box-body -->
                           <div class="box-footer">
@@ -1447,6 +1614,13 @@
   <!-- iCheck for checkboxes and radio inputs -->
   <script src="{% static "/plugins/iCheck/icheck.min.js" %}"></script>
   <script>
+    $(document).ready(function() {
+      $("input[name$='inlineRadioOptions']").click(function() {
+          var test = $(this).val();
+          $("div[class*='sem']").hide();
+          $("div." + test).show();
+      });
+    });
     $(function () {
       //iCheck for checkbox and radio inputs
       $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
@@ -1500,7 +1674,7 @@
 
 
   function submitAcademic(){
-  if($('#sem1_gpa').val()===''&&$('#sem2_gpa').val()===''&&$('#sem3_gpa').val()===''&&$('#sem4_gpa').val()===''&&$('#sem5_gpa').val()===''&&$('#sem6_gpa').val()===''&&$('#sem7_gpa').val()===''&&$('#sem8_gpa').val()==='')
+  if($('#sem1_gpa').val()===''&&$('#sem2_gpa').val()===''&&$('#sem3_gpa').val()===''&&$('#sem4_gpa').val()===''&&$('#sem5_gpa').val()===''&&$('#sem6_gpa').val()===''&&$('#sem7_gpa').val()===''&&$('#sem8_gpa').val()===''&&$('#sem1').val()===''&&$('#sem2').val()===''&&$('#sem3').val()===''&&$('#sem4').val()===''&&$('#sem5').val()===''&&$('#sem6').val()===''&&$('#sem7').val()===''&&$('#sem8').val()==='')
     {
       alert("Please enter some data");
     }
