@@ -214,6 +214,11 @@ class Internship(models.Model):
     From = models.DateField(("Date"), default=datetime.date.today)
     To = models.DateField(("Date"), default=datetime.date.today)
     desc = models.CharField(max_length=500, blank=True, null=True)
+    stipend_options = (
+        ("Paid", "Paid"),
+        ("Unpaid", "Unpaid"),
+    )
+    stipend = models.CharField(max_length=6, choices=stipend_options, blank=True, null=True)
     Certificate = models.FileField(blank=True, null=True)
     image1 = models.FileField(blank=True, null=True)
     image2 = models.FileField(blank=True, null=True)
@@ -278,6 +283,13 @@ class ResearchPaper(models.Model):
     Desc = models.CharField(max_length=500, null=True, blank=True)
     LinkToPaper = models.TextField(validators=[URLValidator()], blank=True, null=True)
     PaperId = models.CharField(max_length=50, null=True, blank=True)
+    ISBN = models.CharField(max_length=50, null=True, blank=True)
+    status_codes = (
+        ("Published", "Published"),
+        ("In Proceedings", "In Proceedings"),
+        ("Submitted", "Submitted"),
+    )
+    status = models.CharField(max_length=20, choices=status_codes, blank=True, null=True)
     Published_under = models.ForeignKey(
         TeacherProfile, blank=True, null=True, related_name="verifiedpaper")
     image1 = models.FileField(null=True, blank=True)
@@ -306,6 +318,7 @@ class BeProject(models.Model):
     image3 = models.FileField(null=True, blank=True)
     image4 = models.FileField(null=True, blank=True)
     image5 = models.FileField(null=True, blank=True)
+    project_report = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
 
     def __str__(self):
@@ -328,3 +341,19 @@ class ExtraCurricular(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+
+class CompetitiveExams(models.Model):
+    student = models.ForeignKey(StudentProfile, related_name='competitiveexams')
+    gre_score = models.CharField(max_length=10, null=True, blank=True)
+    toefl_score = models.CharField(max_length=10, null=True, blank=True)
+    cat_score = models.CharField(max_length=10, null=True, blank=True)
+    gate_score = models.CharField(max_length=10, null=True, blank=True)
+
+
+class Admit(models.Model):
+    student = models.ForeignKey(StudentProfile, related_name='admit')
+    college_name = models.CharField(max_length=50, null=True, blank=True)
+    masters_field = models.CharField(max_length=50, null=True, blank=True)
+    college_location = models.CharField(max_length=50, null=True, blank=True)
+    selected = models.BooleanField(blank=True)
