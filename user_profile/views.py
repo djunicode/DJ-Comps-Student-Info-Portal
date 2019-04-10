@@ -1357,7 +1357,9 @@ def delete_hackathon_info(request, id):
 
 def delete_project_info(request, id):
         project = Project.objects.get(id=id)
+        skill = project.skill
         project.delete()
+        skill.delete()
         return HttpResponseRedirect('/editprofile/')
 
 
