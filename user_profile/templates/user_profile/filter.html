@@ -83,7 +83,8 @@
             <form action="/search/" method="post" role="form">
               {% csrf_token %}
               <input type="text" name="searchany" placeholder="Search">
-              <input type="text" name="month" placeholder="Select month and year" onfocus="(this.type='date')">
+              <input type="text" name="start_date" placeholder="Select Start Date" onfocus="(this.type='date')">
+              <input type="text" name="last_date" placeholder="Select End Date" onfocus="(this.type='date')">
                 <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
                 <button type="submit" class="btn btn-primary" id="month">View Monthly Data</button>
                 <button type="button" class="btn btn-primary" id="month_download">Download Monthly Data</button>

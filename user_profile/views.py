@@ -853,22 +853,17 @@ def student_list(request):
         list_of_skills).most_common(most_common_to_take)
     skillss = [skill[0] for skill in most_frequent]
     if request.method == 'POST':
-        print("opst")
-        if request.POST.get('month'):
-            month=request.POST.get('month')
-            print(month)
-            if month:
-                month = datetime.strptime(month,'%Y-%m-%d')
-                last=month+timedelta(days=30)
-                internship_monthly = Internship.objects.filter(From__range=[month,last])
-                extracurricular_monthly = ExtraCurricular.objects.filter(date__range=[month,last])
-                hackathon_monthly = Hackathon.objects.filter(Date__range=[month,last])
-                print(internship_monthly)
-                print(hackathon_monthly)
-                print(extracurricular_monthly)
+        if request.POST.get('start_date'):
+            start_date=request.POST.get('start_date')
+            end_date=request.POST.get('end_date')
+            if start_date and end_date:
+                start_date = datetime.strptime(start_date,'%Y-%m-%d')
+                last_date = datetime.strptime(last_date,'%Y-%m-%d')
+                internship_monthly = Internship.objects.filter(From__range=[start_date,last_date])
+                extracurricular_monthly = ExtraCurricular.objects.filter(date__range=[start_date,last_date])
+                hackathon_monthly = Hackathon.objects.filter(Date__range=[start_date,last_date])
                 return render(request, 'user_profile/filter.html', {'internship_monthly': internship_monthly,'hackathon_monthly': hackathon_monthly,'extracurricular_monthly': extracurricular_monthly, 'teacher':TeacherProfile.objects.get(teacher=request.user)})
             else:
-                print("else")
                 return searchany(request, skillss)
         elif request.POST.get('searchany'):
             return searchany(request, skillss)
