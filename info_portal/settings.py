@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'info_portal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'aayush',
+        'NAME': 'info_portal',
         'USER': 'xyz',
         'PASSWORD': 'abc@123',
         'HOST': 'localhost',
