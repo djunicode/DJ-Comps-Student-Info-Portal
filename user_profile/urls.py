@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^searchany/', views.searchany, name='searchany'),
     url(r'^editprofile', views.show_edit_studentprofile, name='show_edit_studentprofile'),
     url(r'^edit_basic_info/(\d+)$', views.edit_basic_info),
+    url(r'^edit_competitive_exams/(\d+)$', views.edit_competitive_exams),
     url(r'^edit_academic_info/(\d+)$', views.edit_academic_info),
     url(r'^edit_skill_info/(\d+)$', views.edit_skill_info),
     url(r'^edit_hackathon_info/(\d+)$', views.edit_hackathon_info),
@@ -45,4 +46,6 @@ urlpatterns = [
     url(r'^delete_researchpaper_info/(\d+)$', views.delete_researchpaper_info),
     url(r'^delete_extra_info/(\d+)$', views.delete_extra_info),
     url(r'^edit_extra_info/(\d+)$', views.edit_extra_info),
+    url(r'^delete_admit_info/(\d+)$', views.delete_admit_info),
+    url(r'^edit_admit_info/(\d+)$', views.edit_admit_info),
 ]

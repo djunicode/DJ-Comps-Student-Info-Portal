@@ -283,7 +283,7 @@ class ResearchPaper(models.Model):
     Desc = models.CharField(max_length=500, null=True, blank=True)
     LinkToPaper = models.TextField(validators=[URLValidator()], blank=True, null=True)
     PaperId = models.CharField(max_length=50, null=True, blank=True)
-    ISBN = models.CharField(max_length=50, null=True, blank=True)
+    isbn = models.CharField(max_length=50, null=True, blank=True)
     status_codes = (
         ("Published", "Published"),
         ("In Proceedings", "In Proceedings"),
@@ -349,6 +349,8 @@ class CompetitiveExams(models.Model):
     toefl_score = models.CharField(max_length=10, null=True, blank=True)
     cat_score = models.CharField(max_length=10, null=True, blank=True)
     gate_score = models.CharField(max_length=10, null=True, blank=True)
+    gmat_score = models.CharField(max_length=10, null=True, blank=True)
+    mhcet_score = models.CharField(max_length=10, null=True, blank=True)
 
 
 class Admit(models.Model):
@@ -356,4 +358,4 @@ class Admit(models.Model):
     college_name = models.CharField(max_length=50, null=True, blank=True)
     masters_field = models.CharField(max_length=50, null=True, blank=True)
     college_location = models.CharField(max_length=50, null=True, blank=True)
-    selected = models.BooleanField(blank=True)
+    selected = models.CharField(max_length=50, null=True, blank=True)

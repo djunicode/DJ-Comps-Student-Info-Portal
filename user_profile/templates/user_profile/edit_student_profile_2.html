@@ -129,6 +129,7 @@
                         <!-- form start -->
                         <form id="BasicInfo" class="form-horizontal" action="/edit_basic_info/{{student_profile.id}}">
                           {% csrf_token %}
+                          <input type='hidden' name='csrfmiddlewaretoken' value='{{csrf_token}}'>
                           <div class="box-body">
                             <div id="BasicInfoSubmission" style="display:none;" class="alert alert-success" role="alert">
 
@@ -888,6 +889,21 @@
                                           </div>
 
                                           <div class="form-group">
+                                            <label for="Gender" class="col-sm-2 control-label">
+                                              Gender
+                                            </label>
+                                            <div class="col-sm-8">
+                                              <label>
+                                                <input type="radio" name="stipend" class="flat-red" value="Paid">&nbsp;Paid
+                                              </label>
+                                              <label>
+                                                <input type="radio" name="stipend" class="flat-red" value="Unpaid">&nbsp;Unpaid
+                                              </label>
+                                            </div>
+                                          </div>
+
+
+                                          <div class="form-group">
                                             <label for="position" class="col-sm-2 control-label"> Position</label>
 
                                             <div class="col-sm-8">
@@ -1003,6 +1019,14 @@
 
                                             <div class="col-sm-8">
                                               <p name="location" class="form-control no-border" id="location">{{internship.Loc}}</p>
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label for="stipend" class="col-sm-2 control-label">Stipend</label>
+
+                                            <div class="col-sm-8">
+                                              <p name="stipend" class="form-control no-border" id="name">{{internship.stipend}}</p>
                                             </div>
                                           </div>
 
@@ -1291,6 +1315,13 @@
                                                 </div>
                                               </div>
                                             </div>
+                                            <div class="form-group">
+                                              <label for="image" class="col-sm-2 control-label"> Project Report</label>
+
+                                              <div class="col-sm-8">
+                                                <input type="file" name="project_report" class="form-control" id="project_report">
+                                              </div>
+                                            </div>
 
                                             <div class="box-footer">
 
@@ -1328,6 +1359,32 @@
                                                 </div>
 
                                                 <div class="form-group">
+                                                  <label for="description" class="col-sm-2 control-label"> ISBN</label>
+
+                                                  <div class="col-sm-8">
+                                                    <input type="text" name="isbn" class="form-control" id="isbn">
+                                                  </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                  <label for="Status" class="col-sm-2 control-label">
+                                                    Status
+                                                  </label>
+                                                  <div class="col-sm-8">
+                                                    <label>
+                                                      <input type="radio" name="status" class="flat-red" value="Published">&nbsp;Published
+                                                    </label>
+                                                    <label>
+                                                      <input type="radio" name="status" class="flat-red" value="In Proceedings">&nbsp;In Proceedings
+                                                    </label>
+                                                    <label>
+                                                      <input type="radio" name="status" class="flat-red" value="Submitted">&nbsp;Submitted
+                                                    </label>
+                                                  </div>
+                                                </div>
+
+
+                                                <div class="form-group">
                                                   <label for="name" class="col-sm-2 control-label"> Publication</label>
 
                                                   <div class="col-sm-8">
@@ -1358,6 +1415,8 @@
                                                     <input type="url" name="ResearchPaperUrl" class="form-control" id="ResearchPaperUrl">
                                                   </div>
                                                 </div>
+
+
                                                 <div class="form-group">
                                                   <label for="image" class="col-sm-2 control-label"> Image 1</label>
 
@@ -1430,6 +1489,21 @@
                                                 </div>
 
                                                 <div class="form-group">
+                                                  <label for="isbn" class="col-sm-2 control-label"> ISBN</label>
+
+                                                  <div class="col-sm-8">
+                                                    <p name="isbn" class="form-control no-border" id="date">{{researchpaper.isbn}}</p>
+                                                  </div>
+                                                </div>
+                                                <div class="form-group">
+                                                  <label for="status" class="col-sm-2 control-label">Status</label>
+
+                                                  <div class="col-sm-8">
+                                                    <p name="status" class="form-control no-border" id="date">{{researchpaper.status}}</p>
+                                                  </div>
+                                                </div>
+
+                                                <div class="form-group">
                                                   <label for="description" class="col-sm-2 control-label"> Description</label>
 
                                                   <div class="col-sm-8">
@@ -1454,7 +1528,6 @@
                                             {% endfor %}
                                           </div>
                                         </div>
-
 
                                         <div class="panel box box-primary">
                                           <div class="box-header with-border">
@@ -1601,6 +1674,231 @@
                                           </div>
 
 
+                                        <div class="panel box box-primary">
+                                          <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                              <a data-toggle="collapse" data-parent="#accordion" href="#CompetitiveExams">
+                                                CompetitiveExams
+                                              </a>
+                                            </h4>
+                                          </div>
+                                        <div id="CompetitiveExams" class="panel-collapse collapse ">
+                                              <!-- /.box-header -->
+                                              <!-- form start -->
+                                              <form id="CompetitiveExamsInfo" class="form-horizontal" action="/edit_competitive_exams/{{student_profile.id}}">
+
+                                                <div class="box-body">
+                                                  <div id="CompetitiveExamsSubmission" style="display:none;" class="alert alert-success" role="alert">
+
+                                                    <div id="CompetitiveExamsSubmissionContent"></div></div>
+                                                  <div class="form-group">
+                                                    <label for="name" class="col-sm-2 control-label"> GRE Score</label>
+
+                                                    <div class="col-sm-8">
+                                                      <input type="text" name="gre_score" class="form-control" id="gre_score" value="{{competitive_exam.gre_score}}">
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label for="name" class="col-sm-2 control-label"> TOEFL score</label>
+
+                                                    <div class="col-sm-8">
+                                                      <input type="text" name="toefl_score" class="form-control" id="toefl_score" value="{{competitive_exam.toefl_score}}">
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label for="name" class="col-sm-2 control-label"> GMAT score</label>
+
+                                                    <div class="col-sm-8">
+                                                      <input type="text" name="gmat_score" class="form-control" id="gmat_score" value="{{competitive_exam.gmat_score}}">
+                                                    </div>
+                                                  </div>
+                                                  <div id="CompetitiveExamsSubmissionContent"></div></div>
+                                                <div class="form-group">
+                                                  <label for="name" class="col-sm-2 control-label"> CAT Score</label>
+
+                                                  <div class="col-sm-8">
+                                                    <input type="text" name="cat_score" class="form-control" id="cat_score" value="{{competitive_exam.cat_score}}">
+                                                  </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                  <label for="name" class="col-sm-2 control-label"> GATE score</label>
+
+                                                  <div class="col-sm-8">
+                                                    <input type="text" name="gate_score" class="form-control" id="gate_score" value="{{competitive_exam.gate_score}}">
+                                                  </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                  <label for="name" class="col-sm-2 control-label"> MHCET score</label>
+
+                                                  <div class="col-sm-8">
+                                                    <input type="text" name="mhcet_score" class="form-control" id="mhcet_score" value="{{competitive_exam.mhcet_score}}">
+                                                  </div>
+                                                </div>
+
+
+
+                                                <div class="box-footer">
+
+                                                  <button type="button" class="btn btn-info pull-right" onClick="submitComp();">Submit</button>
+
+                                              </div>
+                                              </form>
+
+                                              <!-- {% for extra in extra_list %}
+                                              <form id="Extra" class="form-horizontal" action="/delete_competitive_exams/{{extra.id}}">
+                                                {% csrf_token %}
+                                                <div class="box-body">
+                                                  <div class="form-group">
+                                                    <label for="name" class="col-sm-2 control-label"> Name</label>
+
+                                                    <div class="col-sm-8">
+                                                      <p name="name" class="form-control no-border" id="name">{{extra.name}}</p>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label for="name" class="col-sm-2 control-label"> Description</label>
+
+                                                    <div class="col-sm-8">
+                                                      <p name="publication" class="form-control no-border" id="description">{{extra.desc}}</p>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label for="name" class="col-sm-2 control-label"> Date</label>
+
+                                                    <div class="col-sm-8">
+                                                      <p name="date" class="form-control no-border" id="date">{{extra.date}}</p>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label for="description" class="col-sm-2 control-label"> Achievements</label>
+
+                                                    <div class="col-sm-8">
+                                                      <p name="description" class="form-control no-border" id="achievements">{{extra.achievements}}</p>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="box-footer">
+
+                                                  <button type="submit" class="btn btn-info pull-right" >Delete</button>
+
+                                              </div>
+                                              </form>
+                                              {% endfor %} -->
+                                            </div>
+                                          </div>
+
+
+
+                                          <div class="panel box box-primary">
+                                          <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                              <a data-toggle="collapse" data-parent="#accordion" href="#AdmitData">
+                                                Admit
+                                              </a>
+                                            </h4>
+                                          </div>
+                                        <div id="AdmitData" class="panel-collapse collapse ">
+                                              <!-- /.box-header -->
+                                              <!-- form start -->
+                                              <form id="AdmitInfo" class="form-horizontal" action="/edit_admit_info/{{student_profile.id}}">
+                                                {% csrf_token %}
+                                                <div class="box-body">
+                                                  <div id="AdmitSubmission" style="display:none;" class="alert alert-success" role="alert">
+
+                                                    <div id="AdmitSubmissionContent"></div></div>
+                                                  <div class="form-group">
+                                                    <label for="name" class="col-sm-2 control-label"> College</label>
+
+                                                    <div class="col-sm-8">
+                                                      <input type="text" name="college_name" class="form-control" id="college_name">
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label for="name" class="col-sm-2 control-label"> Field</label>
+
+                                                    <div class="col-sm-8">
+                                                      <input type="text" name="masters_field" class="form-control" id="masters_field">
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label for="name" class="col-sm-2 control-label"> Location</label>
+
+                                                    <div class="col-sm-8">
+                                                      <input type="text" name="college_location" class="form-control" id="college_location">
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label for="name" class="col-sm-2 control-label"> Selected</label>
+
+                                                    <div class="col-sm-8">
+                                                      <input type="text" name="selected" class="form-control" id="selected">
+                                                    </div>
+                                                  </div>
+
+                                                </div>
+                                                <div class="box-footer">
+
+                                                  <button type="button" class="btn btn-info pull-right" onClick="submitAdmit();">Submit</button>
+
+                                              </div>
+                                              </form>
+
+                                              {% for extra in admit %}
+                                              <form id="Extra" class="form-horizontal" action="/delete_admit_info/{{extra.id}}">
+                                                {% csrf_token %}
+                                                <div class="box-body">
+                                                  <div class="form-group">
+                                                    <label for="name" class="col-sm-2 control-label"> College</label>
+
+                                                    <div class="col-sm-8">
+                                                      <p name="college_name" class="form-control no-border" id="name">{{extra.college_name}}</p>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label for="name" class="col-sm-2 control-label"> Field</label>
+
+                                                    <div class="col-sm-8">
+                                                      <p name="masters_field" class="form-control no-border" id="description">{{extra.masters_field}}</p>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="box-body">
+                                                    <div class="form-group">
+                                                      <label for="name" class="col-sm-2 control-label"> Location</label>
+
+                                                      <div class="col-sm-8">
+                                                        <p name="college_location" class="form-control no-border" id="name">{{extra.college_location}}</p>
+                                                      </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                      <label for="name" class="col-sm-2 control-label"> Selected</label>
+
+                                                      <div class="col-sm-8">
+                                                        <p name="selected" class="form-control no-border" id="description">{{extra.selected}}</p>
+                                                      </div>
+                                                    </div>
+
+                                                  <button type="submit" class="btn btn-info pull-right" >Delete</button>
+
+                                              </div>
+                                              </form>
+                                              {% endfor %}
+                                            </div>
+                                          </div>
+
+
                 </div>
               </div>
             </div>
@@ -1613,6 +1911,7 @@
   {% block js %}
   <!-- iCheck for checkboxes and radio inputs -->
   <script src="{% static "/plugins/iCheck/icheck.min.js" %}"></script>
+  <script src="{% static "/csrf.js" %}"></script>
   <script>
     $(document).ready(function() {
       $("input[name$='inlineRadioOptions']").click(function() {
@@ -1671,6 +1970,35 @@
 
 
   }
+
+function submitComp(){
+  var data = new FormData($('#CompetitiveExamsInfo')[0]);
+  console.log(data);
+  var url = "/edit_competitive_exams/{{student_profile.id}}";
+  $.ajaxSetup({
+  headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+  $.ajax({
+    url: url,
+    data : data,
+    type: 'POST',
+    processData: false,
+    contentType: false,
+  });
+
+  setTimeout(function() {
+    var x = document.getElementById('CompetitiveExamsSubmission');
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+  }, 3000);
+  myFunction('CompetitiveExamsSubmission');
+  //$('#SkillSubmission').addClass('alert alert-success alert-ible').slideDown().show();
+  $('#CompetitiveExamsSubmissionContent').html('<h2>Successful!</h2>');
+  //$('#modal').modal('show');
+}
 
 
   function submitAcademic(){
@@ -2621,7 +2949,133 @@
                 });
               }
 
+
+              function submitAdmit(){
+              //  if($('#sem1_gpa').val()===''&&$('#sem2_gpa').val()===''&&$('#sem3_gpa').val()===''&&$('#sem4_gpa').val()===''&&$('#sem5_gpa').val()===''&&$('#sem6_gpa').val()===''&&$('#sem7_gpa').val()===''&&$('#sem8_gpa').val()==='')
+                var data = new FormData($('#AdmitInfo')[0]);
+                console.log(data);
+                var url = "/edit_admit_info/{{student_profile.id}}";
+                $.ajaxSetup({
+                headers: { "X-CSRFToken": '{{csrf_token}}' }
+                });
+
+                $.ajax({
+                  url: url,
+                  data: data,
+                  type: 'POST',
+                  processData: false,
+                  contentType: false,
+                });
+                  setTimeout(add_admit, 500);
+                  $('#college_name').val('');
+                  $('#masters_field').val('');
+                  $('#college_location').val('');
+                  $('#selected').val('');
+
+
+                  setTimeout(function() {
+                    var x = document.getElementById('AdmitSubmission');
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    } else {
+                        x.style.display = "none";
+                    }
+                  }, 3000);
+                  myFunction('AdmitSubmission');
+                  //$('#SkillSubmission').addClass('alert alert-success alert-ible').slideDown().show();
+                  $('#AdmitSubmissionContent').html('<h2>Successful!</h2>');
+                  //$('#modal').modal('show');
+
+
+                }
+
+                function add_admit(){
+                $.getJSON("/edit_admit_info/{{student_profile.id}}", function(data){
+
+                  console.log(data)
+                  var obj = JSON.parse(JSON.stringify(data));
+
+                  var div = document.getElementById("AdmitData");
+
+                  var box = document.createElement('div');
+                  box.setAttribute("class", "box-body");
+
+
+                  var footer = document.createElement('div');
+                  footer.setAttribute("class", "box-footer");
+                  var f = document.createElement('form');
+                  var d1 = document.createElement('div');
+                  d1.setAttribute("class", "form-group");
+                  var d2 = document.createElement('div');
+                  d2.setAttribute("class", "form-group");
+                  var d3 = document.createElement('div');
+                  d3.setAttribute("class", "form-group");
+                  var d4 = document.createElement('div');
+                  d4.setAttribute("class", "form-group");
+                  var innerdiv1 = document.createElement('div');
+                  var innerdiv2 = document.createElement('div');
+                  var innerdiv3 = document.createElement('div');
+                  var innerdiv4 = document.createElement('div');
+                  innerdiv1.setAttribute("class", "col-sm-8");
+                  innerdiv2.setAttribute("class", "col-sm-8");
+                  innerdiv3.setAttribute("class", "col-sm-8");
+                  innerdiv4.setAttribute("class", "col-sm-8");
+
+                  var l1 = document.createElement('label');
+                  var l2 = document.createElement('label');
+                  var l3 = document.createElement('label');
+                  var l4 = document.createElement('label');
+                  var p1 = document.createElement('p');
+                  var p2 = document.createElement('p');
+                  var p3 = document.createElement('p');
+                  var p4 = document.createElement('p');
+                  var b = document.createElement('button');
+                  l1.setAttribute("class", "col-sm-2 control-label");
+                  p1.setAttribute("class", "form-control no-border");
+                  l2.setAttribute("class", "col-sm-2 control-label");
+                  p2.setAttribute("class", "form-control no-border");
+                  l3.setAttribute("class", "col-sm-2 control-label");
+                  p3.setAttribute("class", "form-control no-border");
+                  l4.setAttribute("class", "col-sm-2 control-label");
+                  p4.setAttribute("class", "form-control no-border");
+                  p1.append(obj.college_name);
+                  p2.append(obj.masters_field);
+                  p3.append(obj.college_location);
+                  p4.append(obj.selected);
+                  innerdiv1.append(p1);
+                  innerdiv2.append(p2);
+                  innerdiv3.append(p3);
+                  innerdiv4.append(p4);
+                  b.append('Delete');
+                  b.setAttribute("type", "submit");
+                  b.setAttribute("class", "btn btn-info pull-right");
+                  f.setAttribute("action", "/delete_admit_info/".concat(obj.id));
+                  f.setAttribute("method", "POST");
+                  f.setAttribute("class", "form-horizontal");
+                  l1.append('College Name');
+                  l2.append('Field');
+                  l3.append('Location');
+                  l4.append('Did you select this college?')
+                  d1.append(l1, innerdiv1);
+                  d2.append(l2, innerdiv2);
+                  d3.append(l3, innerdiv3);
+                  d4.append(l4, innerdiv4);
+                  var inputElem = document.createElement('input');
+                  inputElem.type = 'hidden';
+                  inputElem.name = 'csrfmiddlewaretoken';
+                  inputElem.value = '{{ csrf_token }}';
+                  f.appendChild(inputElem);
+                  footer.append(b);
+                  //f.append("{% csrf_token%}");
+                  box.append(d1,d2,d3,d4);
+                  f.append(box, footer);
+                  div.append(f);
+                });
+              }
+
+
       </script>
+
 
       <script>
 

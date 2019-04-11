@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from .models import (StudentProfile, TeacherProfile, Internship, Project, Committee, ResearchPaper, BeProject,
-                     Hackathon, Skill, Education, ExtraCurricular, KT, Subject, SubjectMarks, TermTest)
+                     Hackathon, Skill, Education, ExtraCurricular, KT, Subject, SubjectMarks, TermTest,
+                     CompetitiveExams, Admit)
 from .models import (HistoricalInternship, HistoricalProject, HistoricalCommittee, HistoricalResearchPaper,
                      HistoricalBeProject, HistoricalHackathon, HistoricalEducation, HistoricalExtraCurricular)
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -325,6 +326,8 @@ def student_profile(request, id):
         hackathon = Hackathon.objects.filter(student_profile=student)
         skill = Skill.objects.filter(user_profile=student)
         extracurricular = ExtraCurricular.objects.filter(student=student)
+        competitive = CompetitiveExams.objects.filter(student=student)
+        msadmit = Admit.objects.filter(student=student)
 
         for x, i in enumerate(gpa_list):
             sem_labels.append("Sem " + str(x + 1))
@@ -334,7 +337,8 @@ def student_profile(request, id):
                        'internship': internship, 'projects': projects, 'committe': committe,
                        'researchpaper': researchpaper, 'beproj': beproj, 'skill': skill,
                        'hackathon': hackathon, 'student': student, 'sem_labels': sem_labels,
-                       'extracurricular': extracurricular, 'flag': flag, 'logedin_user': logedin_user})
+                       'extracurricular': extracurricular, 'flag': flag, 'logedin_user': logedin_user,
+                       'competitive':competitive, 'msadmit': msadmit})
     else:
         login = '/login/student/'
         return HttpResponseRedirect(login)
@@ -1100,6 +1104,7 @@ def show_edit_studentprofile(request):
             committee = Committee.objects.filter(employee=student_profile)
             researchpaper = ResearchPaper.objects.filter(student=student_profile)
             internship = Internship.objects.filter(employee=student_profile)
+            admit = Admit.objects.filter(student=student_profile)
             try:
                 beproject = BeProject.objects.get(student=student_profile)
             except ObjectDoesNotExist:
@@ -1108,6 +1113,10 @@ def show_edit_studentprofile(request):
                 acads = Education.objects.get(student_profile=student_profile)
             except ObjectDoesNotExist:
                 acads = Education.objects.create(student_profile=student_profile)
+            try:
+                competitive_exam = CompetitiveExams.objects.get(student=student_profile)
+            except ObjectDoesNotExist:
+                competitive_exam = CompetitiveExams.objects.create(student=student_profile)
             if not acads.sem1_tt1:
                 print('karega')
                 t = TermTest.objects.create(tt_name='sem1_tt1')
@@ -1260,10 +1269,31 @@ def show_edit_studentprofile(request):
                     skill_list.append(s)
             context = {'student_profile': student_profile, 'hackathon_list': hackathon, 'project_list': project,
                        'committee_list': committee, 'beproject': beproject, 'researchpaper_list': researchpaper,
-                       'internship_list': internship, 'acads': acads, 'skill_list': skill_list}
+                       'internship_list': internship, 'acads': acads, 'skill_list': skill_list,
+                       'competitive_exam':competitive_exam, 'admit':admit}
             return render(request, 'user_profile/edit_student_profile_2.html', context)
         else:
             return HttpResponseRedirect('/login/student/')
+
+
+def edit_competitive_exams(request, id):
+    print("aayush")
+    if request.method == 'POST':
+        print("aayush")
+        student_profile = StudentProfile.objects.get(id=id)
+        try:
+            competitive_exam = CompetitiveExams.objects.get(student=student_profile)
+        except:
+            competitive_exam = CompetitiveExams.objects.create(student=student_profile)
+        competitive_exam.gre_score = request.POST.get('gre_score')
+        competitive_exam.cat_score = request.POST.get('cat_score')
+        competitive_exam.gate_score = request.POST.get('gate_score')
+        competitive_exam.gmat_score = request.POST.get('gmat_score')
+        competitive_exam.toefl_score = request.FILES.get('toefl_score')
+        competitive_exam.mhcet_score = request.POST.get('mhcet_score')
+        competitive_exam.save()
+        print("done")
+        return HttpResponse('done')
 
 
 def edit_basic_info(request, id):
@@ -1483,6 +1513,7 @@ def edit_internship_info(request, id):
         internship = Internship.objects.create(employee=student_profile)
         print("HI")
         internship.company = request.POST.get('InternshipName')
+        internship.stipend = request.POST.get('stipend')
         print(request.POST.get('InternshipName'))
         internship.desc = request.POST.get('InternshipDescription')
         print(request.POST.get('InternshipDescription'))
@@ -1539,13 +1570,14 @@ def edit_committee_info(request, id):
 
 def edit_research_paper_info(request, id):
     if request.method == 'POST':
+        print("aayush")
         student_profile = StudentProfile.objects.get(id=id)
         paper = ResearchPaper.objects.create(student=student_profile)
         paper.Title = request.POST.get('ResearchPaperName')
         paper.Publication = request.POST.get('ResearchPaperPublication')
-        if request.POST.get('ResearchPaperDated') != '':
-            paper.DateOfPublication = request.POST.get('ResearchPaperDate')
         paper.Desc = request.POST.get('ResearchPaperDescription')
+        paper.isbn = request.POST.get('isbn')
+        paper.status = request.POST.get('status')
         paper.LinkToPaper = request.POST.get('ResearchPaperUrl')
         paper.image1 = request.FILES.get('image1')
         paper.image2 = request.FILES.get('image2')
@@ -1553,6 +1585,7 @@ def edit_research_paper_info(request, id):
         paper.image4 = request.FILES.get('image4')
         paper.image5 = request.FILES.get('image5')
         paper.save()
+        print(paper.status)
         return HttpResponse('done')
     else:
         data = ResearchPaper.objects.last()
@@ -1600,8 +1633,25 @@ def edit_beproject_info(request, id):
         proj.image3 = request.FILES.get('image3')
         proj.image4 = request.FILES.get('image4')
         proj.image5 = request.FILES.get('image5')
+        proj.project_report = request.FILES.get('project_report')
         proj.save()
         return HttpResponse('done')
+
+def edit_admit_info(request, id):
+    if request.method == 'POST':
+        student_profile = StudentProfile.objects.get(id=id)
+        extra = Admit.objects.create(student=student_profile)
+        extra.college_name = request.POST.get('college_name')
+        extra.masters_field = request.POST.get('masters_field')
+        extra.college_location = request.POST.get('college_location')
+        extra.selected = request.POST.get('selected')
+        extra.save()
+        return HttpResponse('done')
+    else:
+        data = Admit.objects.last()
+        return JsonResponse({"college_name": data.college_name, "masters_field": data.masters_field,
+                             "college_location": data.college_location, "selected": data.selected,
+                             "id": data.id})
 
 
 def delete_hackathon_info(request, id):
@@ -1644,6 +1694,11 @@ def delete_skill_info(request, id):
 
 def delete_extra_info(request, id):
         extra = ExtraCurricular.objects.get(id=id)
+        extra.delete()
+        return HttpResponseRedirect('/editprofile/')
+
+def delete_admit_info(request, id):
+        extra = Admit.objects.get(id=id)
         extra.delete()
         return HttpResponseRedirect('/editprofile/')
 

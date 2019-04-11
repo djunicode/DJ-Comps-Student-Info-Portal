@@ -80,9 +80,12 @@
     <!-- Content Header (Page header) -->
       <section class="content">
           <div class="box box-header with-border">
+            <div class="box box-header with-border">
+            
             <form action="/search/" method="post" role="form">
               {% csrf_token %}
               <input type="text" name="searchany" placeholder="Search">
+                <button type="submit" class="btn btn-primary">Submit</button>
               <input type="text" name="start_date" placeholder="Select Start Date" onfocus="(this.type='date')">
               <input type="text" name="last_date" placeholder="Select End Date" onfocus="(this.type='date')">
                 <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
@@ -268,9 +271,11 @@
                           <h3 class="widget-user-username"> {{ result.first_name }} {{ result.last_name }}</h3>
                           <h5 class="widget-user-desc">{{ result.Sap_Id }}</h5>
                         </div>
+                        {% if result.photo %}
                         <div class="widget-user-image">
                           <img class="img-circle" src="{{ result.photo.url }}" alt="User Avatar">
                         </div>
+                        {% endif %}
                         <div class="box-footer">
                           <div class="row">
                             <div class="col-sm-4 border-right">
