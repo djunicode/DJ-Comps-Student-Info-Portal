@@ -1722,3 +1722,19 @@ def send_sms(message, number):
     #
     And also remember, rudresh is the best (DUH)
     '''
+
+def filters_adv(request):
+    internship = Internship.objects.all()
+    projects = Project.objects.all()
+    committe = Committee.objects.all()
+    researchpaper = ResearchPaper.objects.all()
+    beproj = BeProject.objects.all()
+    hackathon = Hackathon.objects.all()
+    extracurricular = ExtraCurricular.objects.all()
+    user = request.user
+    logedin_user = TeacherProfile.objects.get(teacher=user)
+
+    return render(request, 'user_profile/filter_adv.html',
+                  {'internship': internship, 'projects': projects, 'committe': committe,
+                   'researchpaper': researchpaper, 'beproj': beproj, 'logedin_user':logedin_user,
+                   'hackathon': hackathon, 'extracurricular': extracurricular})

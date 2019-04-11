@@ -81,7 +81,7 @@
       <section class="content">
           <div class="box box-header with-border">
             <div class="box box-header with-border">
-            
+
             <form action="/search/" method="post" role="form">
               {% csrf_token %}
               <input type="text" name="searchany" placeholder="Search">
@@ -92,6 +92,9 @@
                 <button type="submit" class="btn btn-primary" id="month">View Monthly Data</button>
                 <button type="button" class="btn btn-primary" id="month_download">Download Monthly Data</button>
             </form>
+            <div class="pull-left">
+              <a href="{% url 'user_profile:filters_adv' %}" class="btn btn-primary btn-flat">Category Filters</a>
+            </div>
           </div>
           <div class="row">
             <div class="col-md-12">
