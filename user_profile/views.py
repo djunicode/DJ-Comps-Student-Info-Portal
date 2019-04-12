@@ -859,8 +859,8 @@ def student_list(request):
     if request.method == 'POST':
         if request.POST.get('start_date'):
             start_date=request.POST.get('start_date')
-            end_date=request.POST.get('end_date')
-            if start_date and end_date:
+            last_date=request.POST.get('last_date')
+            if start_date and last_date:
                 start_date = datetime.strptime(start_date,'%Y-%m-%d')
                 last_date = datetime.strptime(last_date,'%Y-%m-%d')
                 internship_monthly = Internship.objects.filter(From__range=[start_date,last_date])
