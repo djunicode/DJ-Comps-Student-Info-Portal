@@ -142,6 +142,9 @@ def register_teacher(request):
             elif len(password)<8:
                 error = 'The Password should be 8 characters long.'
                 return render(request, 'user_profile/registration_teacher.html', {'error': error})
+            elif email.split('@')[1] != 'djsce.ac.in':
+                error = 'Please provide an email address with domain djsce.ac.in'
+                return render(request, 'user_profile/registration_teacher.html', {'error': error})
             else:
                 user = User.objects.create_user(username=username, email=email)
                 user.set_password(password)
