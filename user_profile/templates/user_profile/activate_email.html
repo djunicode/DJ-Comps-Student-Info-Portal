@@ -1,0 +1,5 @@
+{% autoescape off %}
+Hello {{ first_name }} {{ last_name }},
+Please click on the link to confirm your registration on Student Info Portal,
+http://{{ domain }}{% url 'user_profile:activate' uidb64=uid token=token %}
+{% endautoescape %}

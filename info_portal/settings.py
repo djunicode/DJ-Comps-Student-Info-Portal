@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'info_portal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'aayush',
+        'NAME': 'info_portal',
         'USER': 'xyz',
         'PASSWORD': 'abc@123',
         'HOST': 'localhost',
@@ -136,3 +136,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 ELASTICSEARCH_URL = 'localhost'
+
+#Change for email
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'emailaddress@here.com'
+EMAIL_HOST_PASSWORD = 'passwordhere'
+EMAIL_PORT = 587

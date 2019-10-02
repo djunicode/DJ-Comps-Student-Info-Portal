@@ -8,6 +8,8 @@ urlpatterns = [
     url(r'^login/student/$', views.user_login, name='user_login'),
     url(r'^register/teacher/$', views.register_teacher, name='register_teacher'),
     url(r'^login/teacher/$', views.user_login_teacher, name='user_login_teacher'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.activate, name='activate'),
     url(r'^logout/student/$', views.logout_student, name='logout_student'),
     url(r'^logout/teacher/$', views.logout_teacher, name='logout_teacher'),
     url(r'^login/recruiter/$', views.user_login_recruiter,
