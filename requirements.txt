@@ -1,5 +1,5 @@
 flake8
-Django==1.11.8
+Django==2.2.24
 psycopg2>=2.7.3.2
 django-simple-history
 requests==2.18.4
