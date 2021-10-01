@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'user_profile',
     'simple_history',
+    'six',
 ]
 
 
@@ -81,14 +82,20 @@ WSGI_APPLICATION = 'info_portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'info_portal',
+#         'USER': 'xyz',
+#         'PASSWORD': 'abc@123',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'info_portal',
-        'USER': 'xyz',
-        'PASSWORD': 'abc@123',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -129,6 +136,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 STATIC_URL = '/static/'
 
 
@@ -143,3 +152,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'emailaddress@here.com'
 EMAIL_HOST_PASSWORD = 'passwordhere'
 EMAIL_PORT = 587
+
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

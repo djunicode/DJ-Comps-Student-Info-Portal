@@ -80,8 +80,8 @@ class TermTest(models.Model):
 
 
 class SubjectMarks(models.Model):
-    tt = models.ForeignKey(TermTest, related_name='subject')
-    subject = models.ForeignKey(Subject)
+    tt = models.ForeignKey(TermTest, related_name='subject', on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     marks = models.DecimalField(
         max_digits=4, decimal_places=2,
         validators=[MaxValueValidator(0),
@@ -92,39 +92,39 @@ class SubjectMarks(models.Model):
 
 class Education(models.Model):
     student_profile = models.ForeignKey(
-        StudentProfile, related_name='education')
+        StudentProfile, related_name='education', on_delete=models.CASCADE)
     sem1_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem1_tt1 = models.ForeignKey(TermTest, related_name='sem1_tt1', null=True)
-    sem1_tt2 = models.ForeignKey(TermTest, related_name='sem1_tt2', null=True)
+    sem1_tt1 = models.ForeignKey(TermTest, related_name='sem1_tt1', null=True, on_delete=models.CASCADE)
+    sem1_tt2 = models.ForeignKey(TermTest, related_name='sem1_tt2', null=True, on_delete=models.CASCADE)
     sem2_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem2_tt1 = models.ForeignKey(TermTest, related_name='sem2_tt1', null=True)
-    sem2_tt2 = models.ForeignKey(TermTest, related_name='sem2_tt2', null=True)
+    sem2_tt1 = models.ForeignKey(TermTest, related_name='sem2_tt1', null=True, on_delete=models.CASCADE)
+    sem2_tt2 = models.ForeignKey(TermTest, related_name='sem2_tt2', null=True, on_delete=models.CASCADE)
     sem3_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem3_tt1 = models.ForeignKey(TermTest, related_name='sem3_tt1', null=True)
-    sem3_tt2 = models.ForeignKey(TermTest, related_name='sem3_tt2', null=True)
+    sem3_tt1 = models.ForeignKey(TermTest, related_name='sem3_tt1', null=True, on_delete=models.CASCADE)
+    sem3_tt2 = models.ForeignKey(TermTest, related_name='sem3_tt2', null=True, on_delete=models.CASCADE)
     sem4_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem4_tt1 = models.ForeignKey(TermTest, related_name='sem4_tt1', null=True)
-    sem4_tt2 = models.ForeignKey(TermTest, related_name='sem4_tt2', null=True)
+    sem4_tt1 = models.ForeignKey(TermTest, related_name='sem4_tt1', null=True, on_delete=models.CASCADE)
+    sem4_tt2 = models.ForeignKey(TermTest, related_name='sem4_tt2', null=True, on_delete=models.CASCADE)
     sem5_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem5_tt1 = models.ForeignKey(TermTest, related_name='sem5_tt1', null=True)
-    sem5_tt2 = models.ForeignKey(TermTest, related_name='sem5_tt2', null=True)
+    sem5_tt1 = models.ForeignKey(TermTest, related_name='sem5_tt1', null=True, on_delete=models.CASCADE)
+    sem5_tt2 = models.ForeignKey(TermTest, related_name='sem5_tt2', null=True, on_delete=models.CASCADE)
     sem6_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem6_tt1 = models.ForeignKey(TermTest, related_name='sem6_tt1', null=True)
-    sem6_tt2 = models.ForeignKey(TermTest, related_name='sem6_tt2', null=True)
+    sem6_tt1 = models.ForeignKey(TermTest, related_name='sem6_tt1', null=True, on_delete=models.CASCADE)
+    sem6_tt2 = models.ForeignKey(TermTest, related_name='sem6_tt2', null=True, on_delete=models.CASCADE)
     sem7_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem7_tt1 = models.ForeignKey(TermTest, related_name='sem7_tt1', null=True)
-    sem7_tt2 = models.ForeignKey(TermTest, related_name='sem7_tt2', null=True)
+    sem7_tt1 = models.ForeignKey(TermTest, related_name='sem7_tt1', null=True, on_delete=models.CASCADE)
+    sem7_tt2 = models.ForeignKey(TermTest, related_name='sem7_tt2', null=True, on_delete=models.CASCADE)
     sem8_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem8_tt1 = models.ForeignKey(TermTest, related_name='sem8_tt1', null=True)
-    sem8_tt2 = models.ForeignKey(TermTest, related_name='sem8_tt2', null=True)
+    sem8_tt1 = models.ForeignKey(TermTest, related_name='sem8_tt1', null=True, on_delete=models.CASCADE)
+    sem8_tt2 = models.ForeignKey(TermTest, related_name='sem8_tt2', null=True, on_delete=models.CASCADE)
     history = HistoricalRecords()
 
 
@@ -141,7 +141,7 @@ class KT(models.Model):
         ("SEM8", "Semester 8"),
     )
     subject_semester = models.CharField(max_length=20, choices=SEM_CHOICES)
-    education = models.ForeignKey(Education, related_name='kt')
+    education = models.ForeignKey(Education, related_name='kt', on_delete=models.CASCADE)
 
 
 class TeacherProfile(models.Model):
@@ -181,7 +181,7 @@ class Experience(models.Model):
 
 
 class Hackathon(models.Model):
-    student_profile = models.ForeignKey(StudentProfile, related_name="hackathon")
+    student_profile = models.ForeignKey(StudentProfile, related_name="hackathon", on_delete=models.CASCADE)
     CompetitionName = models.CharField(max_length=50, blank=True, null=True)
     Date = models.DateField(("Date"), default=datetime.date.today)
     Desc = models.CharField(max_length=500, blank=True, null=True)
@@ -198,7 +198,7 @@ class Hackathon(models.Model):
 
 
 class Skill(models.Model):
-    user_profile = models.ForeignKey(StudentProfile, related_name="skill")
+    user_profile = models.ForeignKey(StudentProfile, related_name="skill", on_delete=models.CASCADE)
     skill = models.CharField(max_length=50)
     history = HistoricalRecords()
 
@@ -207,7 +207,7 @@ class Skill(models.Model):
 
 
 class Internship(models.Model):
-    employee = models.ForeignKey(StudentProfile, related_name="internships")
+    employee = models.ForeignKey(StudentProfile, related_name="internships", on_delete=models.CASCADE)
     company = models.CharField(max_length=50, blank=True, null=True)
     Position = models.CharField(max_length=50, blank=True, null=True)
     Loc = models.CharField(max_length=50, blank=True, null=True)
@@ -233,14 +233,14 @@ class Internship(models.Model):
 
 class Project(models.Model):
     student_profile = models.ForeignKey(
-        StudentProfile, related_name="projects")
+        StudentProfile, related_name="projects", on_delete=models.CASCADE)
     ProjName = models.CharField(max_length=50, blank=True, null=True)
     ProjURL = models.TextField(validators=[URLValidator()], blank=True, null=True)
     ProjDesc = models.CharField(max_length=500, blank=True, null=True)
     projectUnderTeacher = models.ForeignKey(
-        TeacherProfile, blank=True, related_name="verifiedprojects", null=True)
+        TeacherProfile, blank=True, related_name="verifiedprojects", null=True, on_delete=models.CASCADE)
     skill = models.ForeignKey(
-        Skill, related_name="projectskills", blank=True, null=True)
+        Skill, related_name="projectskills", blank=True, null=True, on_delete=models.CASCADE)
     image1 = models.FileField(blank=True, null=True)
     image2 = models.FileField(blank=True, null=True,)
     image3 = models.FileField(blank=True, null=True,)
@@ -253,7 +253,7 @@ class Project(models.Model):
 
 
 class Committee(models.Model):
-    employee = models.ForeignKey(StudentProfile, related_name="committee")
+    employee = models.ForeignKey(StudentProfile, related_name="committee", on_delete=models.CASCADE)
     OrganisationName = models.CharField(max_length=50, blank=True, null=True)
     YourPosition = models.CharField(max_length=50, blank=True, null=True)
     Loc = models.CharField(max_length=50, blank=True, null=True)
@@ -275,7 +275,7 @@ class Committee(models.Model):
 
 
 class ResearchPaper(models.Model):
-    student = models.ForeignKey(StudentProfile, related_name="researchpaper")
+    student = models.ForeignKey(StudentProfile, related_name="researchpaper", on_delete=models.CASCADE)
     Title = models.CharField(max_length=50, null=True, blank=True)
     Publication = models.CharField(max_length=100, null=True, blank=True)
     DateOfPublication = models.DateField(
@@ -291,7 +291,7 @@ class ResearchPaper(models.Model):
     )
     status = models.CharField(max_length=20, choices=status_codes, blank=True, null=True)
     Published_under = models.ForeignKey(
-        TeacherProfile, blank=True, null=True, related_name="verifiedpaper")
+        TeacherProfile, blank=True, null=True, related_name="verifiedpaper", on_delete=models.CASCADE)
     image1 = models.FileField(null=True, blank=True)
     image2 = models.FileField(null=True, blank=True)
     image3 = models.FileField(null=True, blank=True)
@@ -304,7 +304,7 @@ class ResearchPaper(models.Model):
 
 
 class BeProject(models.Model):
-    student = models.ForeignKey(StudentProfile, related_name='beprojects')
+    student = models.ForeignKey(StudentProfile, related_name='beprojects', on_delete=models.CASCADE)
     ProjName = models.CharField(max_length=50, null=True, blank=True)
     ProjURL = models.TextField(validators=[URLValidator()], null=True, blank=True)
     ProjDesc = models.CharField(max_length=500, null=True, blank=True)
@@ -312,7 +312,7 @@ class BeProject(models.Model):
         StudentProfile, related_name='beteammate', blank=True)
     projectUnderTeacher = models.ForeignKey(
         TeacherProfile, blank=True, null=True,
-        related_name="verifiedbeprojects")
+        related_name="verifiedbeprojects", on_delete=models.CASCADE)
     image1 = models.FileField(null=True, blank=True)
     image2 = models.FileField(null=True, blank=True)
     image3 = models.FileField(null=True, blank=True)
@@ -326,7 +326,7 @@ class BeProject(models.Model):
 
 
 class ExtraCurricular(models.Model):
-    student = models.ForeignKey(StudentProfile, related_name='extracurricular')
+    student = models.ForeignKey(StudentProfile, related_name='extracurricular', on_delete=models.CASCADE)
     name = models.CharField(max_length=50, null=True, blank=True)
     desc = models.CharField(max_length=500, null=True, blank=True)
     achievements = models.CharField(max_length=500, null=True, blank=True)
@@ -344,7 +344,7 @@ class ExtraCurricular(models.Model):
 
 
 class CompetitiveExams(models.Model):
-    student = models.ForeignKey(StudentProfile, related_name='competitiveexams')
+    student = models.ForeignKey(StudentProfile, related_name='competitiveexams', on_delete=models.CASCADE)
     gre_score = models.CharField(max_length=10, null=True, blank=True)
     toefl_score = models.CharField(max_length=10, null=True, blank=True)
     cat_score = models.CharField(max_length=10, null=True, blank=True)
@@ -354,7 +354,7 @@ class CompetitiveExams(models.Model):
 
 
 class Admit(models.Model):
-    student = models.ForeignKey(StudentProfile, related_name='admit')
+    student = models.ForeignKey(StudentProfile, related_name='admit', on_delete=models.CASCADE)
     college_name = models.CharField(max_length=50, null=True, blank=True)
     masters_field = models.CharField(max_length=50, null=True, blank=True)
     college_location = models.CharField(max_length=50, null=True, blank=True)
