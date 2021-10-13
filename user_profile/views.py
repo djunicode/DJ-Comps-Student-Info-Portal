@@ -902,7 +902,7 @@ def student_list(request):
                 last_date = datetime.strptime(last_date,'%Y-%m-%d')
                 internship_monthly = Internship.objects.filter(From__range=[start_date,last_date])
                 extracurricular_monthly = ExtraCurricular.objects.filter(date__range=[start_date,last_date])
-                hackathon_monthly = Hackathon.objects.filter(Date__range=[start_date,last_date])
+                hackathon_monthly = Hackathon.objects.filter(StartDate__range=[start_date,last_date])
                 return render(request, 'user_profile/filter.html', {'internship_monthly': internship_monthly,'hackathon_monthly': hackathon_monthly,'extracurricular_monthly': extracurricular_monthly, 'teacher':TeacherProfile.objects.get(teacher=request.user)})
             else:
                 return searchany(request, skillss)
@@ -1504,7 +1504,7 @@ def edit_hackathon_info(request, id):
         # hackathon = Hackathon.objects.get(student_profile_id=id)
         hackathon.CompetitionName = request.POST.get('HackathonName')
         if request.POST.get('HackathonDate') != '':
-            hackathon.Date = request.POST.get('HackathonDate')
+            hackathon.StartDate = request.POST.get('HackathonDate')
         hackathon.Desc = request.POST.get('HackathonDescription')
         hackathon.URL = request.POST.get('HackathonUrl')
         hackathon.image1 = request.FILES.get('image1')
@@ -1521,7 +1521,7 @@ def edit_hackathon_info(request, id):
         return HttpResponseRedirect('')
     else:
         data = Hackathon.objects.last()
-        return JsonResponse({"CompetitionName": data.CompetitionName, "Date": data.Date, "Desc": data.Desc,
+        return JsonResponse({"CompetitionName": data.CompetitionName, "Date": data.StartDate, "Desc": data.Desc,
                              "id": data.id, "url": data.URL})
 
 

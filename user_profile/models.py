@@ -183,7 +183,8 @@ class Experience(models.Model):
 class Hackathon(models.Model):
     student_profile = models.ForeignKey(StudentProfile, related_name="hackathon", on_delete=models.CASCADE)
     CompetitionName = models.CharField(max_length=50, blank=True, null=True)
-    Date = models.DateField(("Date"), default=datetime.date.today)
+    StartDate = models.DateField(("StartDate"), default=datetime.date.today)
+    EndDate = models.DateField(("EndDate"), default=datetime.date.today)
     Desc = models.CharField(max_length=500, blank=True, null=True)
     URL = models.TextField(validators=[URLValidator()], null=True, blank=True)
     image1 = models.FileField(blank=True, null=True)
@@ -193,6 +194,8 @@ class Hackathon(models.Model):
     image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
     is_approved = models.BooleanField(default=False)
+    total_no_of_hours = models.IntegerField(default=0)
+
 
     def __str__(self):
         return str(self.CompetitionName)
