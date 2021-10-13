@@ -192,6 +192,7 @@ class Hackathon(models.Model):
     image4 = models.FileField(null=True, blank=True)
     image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.CompetitionName)
@@ -226,6 +227,7 @@ class Internship(models.Model):
     image4 = models.FileField(blank=True, null=True)
     image5 = models.FileField(blank=True, null=True)
     history = HistoricalRecords()
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.company)
@@ -247,6 +249,7 @@ class Project(models.Model):
     image4 = models.FileField(blank=True, null=True,)
     image5 = models.FileField(blank=True, null=True,)
     history = HistoricalRecords()
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.ProjName)
@@ -269,6 +272,7 @@ class Committee(models.Model):
     image4 = models.FileField(null=True, blank=True)
     image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.OrganisationName)
@@ -298,6 +302,7 @@ class ResearchPaper(models.Model):
     image4 = models.FileField(null=True, blank=True)
     image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.Title)
@@ -320,6 +325,7 @@ class BeProject(models.Model):
     image5 = models.FileField(null=True, blank=True)
     project_report = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.ProjName)
