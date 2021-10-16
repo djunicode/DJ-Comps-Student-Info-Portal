@@ -4,11 +4,36 @@ from django.contrib.auth.models import User
 from django.core.validators import URLValidator
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator
+from django.db.models.deletion import SET_NULL
 from django.db.models.signals import m2m_changed
 from django.core.exceptions import ValidationError
 from simple_history.models import HistoricalRecords
 from django.contrib.postgres.fields import JSONField
 # import django_filters
+
+class TeacherProfile(models.Model):
+    teacher = models.OneToOneField(User, on_delete=models.CASCADE)
+    Sap_Id = models.BigIntegerField(
+        validators=[MaxValueValidator(99999999999),
+                    MinValueValidator(10000000000)], blank=True, null=True)
+    first_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
+    department = models.CharField(max_length=50, blank=True, null=True)
+    photo = models.FileField(blank=True, null=True)
+    bio = models.CharField(max_length=200, blank=True, null=True)
+    GENDER_CHOICES = (
+        ("Male", "Male"),
+        ("Female", "Female"),
+    )
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, blank=True, null=True)
+
+    class Meta:
+        permissions = (
+            ("view_teacher", "Can see teacher profile"),
+        )
+
+    def __str__(self):
+        return str(self.Sap_Id)
 
 
 class StudentProfile(models.Model):
@@ -20,6 +45,7 @@ class StudentProfile(models.Model):
                     MinValueValidator(10000000000)], blank=True, null=True)
     sap = models.CharField(max_length=50, blank=True, null=True)
     department = models.CharField(max_length=50, blank=True, null=True)
+    mentor = models.ForeignKey(TeacherProfile,on_delete=SET_NULL, blank=True, null=True)
     photo = models.FileField(blank=True, null=True)
     github_id = models.CharField(max_length=50, null=True, blank=True)
     bio = models.CharField(max_length=200, blank=True, null=True)
@@ -97,34 +123,42 @@ class Education(models.Model):
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
     sem1_tt1 = models.ForeignKey(TermTest, related_name='sem1_tt1', null=True, on_delete=models.CASCADE)
     sem1_tt2 = models.ForeignKey(TermTest, related_name='sem1_tt2', null=True, on_delete=models.CASCADE)
+    sem1_marksheet = models.FileField(blank=True, null=True)
     sem2_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
     sem2_tt1 = models.ForeignKey(TermTest, related_name='sem2_tt1', null=True, on_delete=models.CASCADE)
     sem2_tt2 = models.ForeignKey(TermTest, related_name='sem2_tt2', null=True, on_delete=models.CASCADE)
+    sem2_marksheet = models.FileField(blank=True, null=True)
     sem3_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
     sem3_tt1 = models.ForeignKey(TermTest, related_name='sem3_tt1', null=True, on_delete=models.CASCADE)
     sem3_tt2 = models.ForeignKey(TermTest, related_name='sem3_tt2', null=True, on_delete=models.CASCADE)
+    sem3_marksheet = models.FileField(blank=True, null=True)
     sem4_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
     sem4_tt1 = models.ForeignKey(TermTest, related_name='sem4_tt1', null=True, on_delete=models.CASCADE)
     sem4_tt2 = models.ForeignKey(TermTest, related_name='sem4_tt2', null=True, on_delete=models.CASCADE)
+    sem4_marksheet = models.FileField(blank=True, null=True)
     sem5_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
     sem5_tt1 = models.ForeignKey(TermTest, related_name='sem5_tt1', null=True, on_delete=models.CASCADE)
     sem5_tt2 = models.ForeignKey(TermTest, related_name='sem5_tt2', null=True, on_delete=models.CASCADE)
+    sem5_marksheet = models.FileField(blank=True, null=True)
     sem6_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
     sem6_tt1 = models.ForeignKey(TermTest, related_name='sem6_tt1', null=True, on_delete=models.CASCADE)
     sem6_tt2 = models.ForeignKey(TermTest, related_name='sem6_tt2', null=True, on_delete=models.CASCADE)
+    sem6_marksheet = models.FileField(blank=True, null=True)
     sem7_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
     sem7_tt1 = models.ForeignKey(TermTest, related_name='sem7_tt1', null=True, on_delete=models.CASCADE)
     sem7_tt2 = models.ForeignKey(TermTest, related_name='sem7_tt2', null=True, on_delete=models.CASCADE)
+    sem7_marksheet = models.FileField(blank=True, null=True)
     sem8_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2)
     sem8_tt1 = models.ForeignKey(TermTest, related_name='sem8_tt1', null=True, on_delete=models.CASCADE)
     sem8_tt2 = models.ForeignKey(TermTest, related_name='sem8_tt2', null=True, on_delete=models.CASCADE)
+    sem8_marksheet = models.FileField(blank=True, null=True)
     history = HistoricalRecords()
 
 
@@ -142,32 +176,6 @@ class KT(models.Model):
     )
     subject_semester = models.CharField(max_length=20, choices=SEM_CHOICES)
     education = models.ForeignKey(Education, related_name='kt', on_delete=models.CASCADE)
-
-
-class TeacherProfile(models.Model):
-    teacher = models.OneToOneField(User, on_delete=models.CASCADE)
-    Sap_Id = models.BigIntegerField(
-        validators=[MaxValueValidator(99999999999),
-                    MinValueValidator(10000000000)], blank=True, null=True)
-    first_name = models.CharField(max_length=100, blank=True, null=True)
-    last_name = models.CharField(max_length=100, blank=True, null=True)
-    department = models.CharField(max_length=50, blank=True, null=True)
-    photo = models.FileField(blank=True, null=True)
-    bio = models.CharField(max_length=200, blank=True, null=True)
-    GENDER_CHOICES = (
-        ("Male", "Male"),
-        ("Female", "Female"),
-    )
-    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, blank=True, null=True)
-
-    class Meta:
-        permissions = (
-            ("view_teacher", "Can see teacher profile"),
-        )
-
-    def __str__(self):
-        return str(self.Sap_Id)
-
 
 '''
 class Experience(models.Model):
@@ -218,12 +226,22 @@ class Internship(models.Model):
     From = models.DateField(("Date"), default=datetime.date.today)
     To = models.DateField(("Date"), default=datetime.date.today)
     desc = models.CharField(max_length=500, blank=True, null=True)
+    how_options = (
+        ("In College", "In College"),
+        ("Out of College", "Out of College"),
+    )
+    how = models.CharField(max_length=16, choices=how_options, blank=True, null=True)
     stipend_options = (
         ("Paid", "Paid"),
         ("Unpaid", "Unpaid"),
     )
     stipend = models.CharField(max_length=6, choices=stipend_options, blank=True, null=True)
+    offer_letter = models.FileField(blank=True, null=True)
     Certificate = models.FileField(blank=True, null=True)
+    total_hours = models.CharField(max_length=10, null=True, blank=True)
+    evaluation_report_mentor = models.FileField(blank=True, null=True)
+    evaluation_report_supervisor = models.FileField(blank=True, null=True)
+    evaluation_report_self = models.FileField(blank=True, null=True)
     image1 = models.FileField(blank=True, null=True)
     image2 = models.FileField(blank=True, null=True)
     image3 = models.FileField(blank=True, null=True)
@@ -291,12 +309,17 @@ class ResearchPaper(models.Model):
     LinkToPaper = models.TextField(validators=[URLValidator()], blank=True, null=True)
     PaperId = models.CharField(max_length=50, null=True, blank=True)
     isbn = models.CharField(max_length=50, null=True, blank=True)
-    status_codes = (
-        ("Published", "Published"),
-        ("In Proceedings", "In Proceedings"),
-        ("Submitted", "Submitted"),
+    issn = models.CharField(max_length=50, null=True, blank=True)
+    proof_of_submission = models.FileField(null=True, blank=True)
+    project_mentor = models.CharField(max_length=100, null=True, blank=True)
+    duration_of_project = models.CharField(max_length=50, null=True, blank=True)
+    total_hours = models.CharField(max_length=10, null=True, blank=True)
+    research_type = (
+        ("Conference", "Conference"),
+        ("Journal", "Journal"),
+        ("Chapter", "Chapter"),
     )
-    status = models.CharField(max_length=20, choices=status_codes, blank=True, null=True)
+    type = models.CharField(max_length=20, choices=research_type, blank=True, null=True)
     Published_under = models.ForeignKey(
         TeacherProfile, blank=True, null=True, related_name="verifiedpaper", on_delete=models.CASCADE)
     image1 = models.FileField(null=True, blank=True)

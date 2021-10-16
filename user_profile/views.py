@@ -43,23 +43,28 @@ def register(request):
         student_profile_url = '/student_profile/' + str(student_profile.id)
         return HttpResponseRedirect(student_profile_url)
     else:
+        mentor_list = TeacherProfile.objects.all()
         if request.method == 'POST':
             username = request.POST.get('Sap_Id', '')
             password = request.POST.get('password', '')
             email = request.POST.get('email', '')
+            mentor = request.POST.get('mentor', '')
             Sap_Id = request.POST.get('Sap_Id', '')
             first_name = request.POST.get('first_name', '')
             last_name = request.POST.get('last_name', '')
 
             if User.objects.filter(username=username).exists():
                 error = 'The Sap_id is already in use by another account.'
-                return render(request, 'user_profile/registration.html', {'error': error})
+                return render(request, 'user_profile/registration.html', {'error': error,'mentor_list':mentor_list})
             elif len(Sap_Id)<11:
                 error = 'The Sap_id should be 11 digits long.'
-                return render(request, 'user_profile/registration.html', {'error': error})
+                return render(request, 'user_profile/registration.html', {'error': error,'mentor_list':mentor_list})
             elif len(password)<8:
                 error = 'The Password should be 8 characters long.'
-                return render(request, 'user_profile/registration.html', {'error': error})
+                return render(request, 'user_profile/registration.html', {'error': error,'mentor_list':mentor_list})
+            elif mentor=='':
+                error = 'Please choose a mentor'
+                return render(request, 'user_profile/registration.html', {'error': error,'mentor_list':mentor_list})
             else:
                 user = User.objects.create_user(username=username, email=email)
                 user.set_password(password)
@@ -70,16 +75,17 @@ def register(request):
                     content_type=content_type, codename='view_student')
                 user.user_permissions.add(permission)
                 sap = str(Sap_Id)
+                mentor = TeacherProfile.objects.get(Sap_Id=int(mentor))
                 student = StudentProfile.objects.create(
                     student=user, Sap_Id=Sap_Id, sap=sap, first_name=first_name,
-                    last_name=last_name)
+                    last_name=last_name,mentor=mentor)
                 student.save()
                 auth_login(request, user)
                 student_profile_url = '/student_profile/' + str(student.id)
                 return HttpResponseRedirect(student_profile_url)
                 # return render(request, 'user_profile/profile.html', {"student": student})
         else:
-            return render(request, 'user_profile/registration.html', {})
+            return render(request, 'user_profile/registration.html', {'mentor_list':mentor_list})
 
 
 def user_login(request):
@@ -107,7 +113,6 @@ def user_login(request):
                             str(student_profile.id)
                         return HttpResponseRedirect(student_profile_url)
                     except Exception as e:
-                        print(e)
                         teacher_profile_url = '/login/teacher/'
                         return HttpResponseRedirect(teacher_profile_url)
                 else:
@@ -148,6 +153,7 @@ def register_teacher(request):
             else:
                 user = User.objects.create_user(username=username, email=email)
                 user.set_password(password)
+                user.save()
                 content_type = ContentType.objects.get_for_model(
                     TeacherProfile)
                 permission = Permission.objects.get(
@@ -183,20 +189,20 @@ def register_teacher(request):
                     codename='delete_beproject', content_type=ct)
                 user.user_permissions.add(permission)
                 #Email stuff
-                user.is_active = False
-                user.save()
-                current_site = get_current_site(request)
-                mail_subject = 'Activate your account on Student Info Portal'
-                message = render_to_string('user_profile/activate_email.html', {
-                    'user': user,
-                    'first_name': first_name,
-                    'last_name': last_name,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token':account_activation_token.make_token(user),
-                })
-                email_message = EmailMessage(mail_subject, message, to=[email])
-                email_message.send()
+                # user.is_active = False
+                # user.save()
+                # current_site = get_current_site(request)
+                # mail_subject = 'Activate your account on Student Info Portal'
+                # message = render_to_string('user_profile/activate_email.html', {
+                #     'user': user,
+                #     'first_name': first_name,
+                #     'last_name': last_name,
+                #     'domain': current_site.domain,
+                #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                #     'token':account_activation_token.make_token(user),
+                # })
+                # email_message = EmailMessage(mail_subject, message, to=[email])
+                # email_message.send()
                 teacher = TeacherProfile.objects.create(
                     teacher=user, Sap_Id=Sap_Id, first_name=first_name,
                     last_name=last_name)
@@ -236,11 +242,9 @@ def user_login_teacher(request):
                     try:
                         student_profile = TeacherProfile.objects.get(teacher=user)
                         auth_login(request, user)
-                        print(student_profile)
                         teacher_profile_url = '/teacherdashboard/'
                         return HttpResponseRedirect(teacher_profile_url)
                     except Exception as e:
-                        print(e)
                         student_profile_url = '/login/student/'
                         return HttpResponseRedirect(student_profile_url)
                 else:
@@ -298,13 +302,13 @@ def student_profile(request, id):
         try:
             logedin_user = TeacherProfile.objects.get(teacher=request.user)
             flag = 0
-            print(logedin_user)
-            print(flag)
         except ObjectDoesNotExist:
             flag = 1
-            logedin_user = StudentProfile.objects.get(id=id)
-            print(flag)
-        student = StudentProfile.objects.get(id=id)
+            logedin_user = StudentProfile.objects.get(student=request.user)
+        if flag==1:
+            student = StudentProfile.objects.get(student=request.user)
+        else:
+            student = StudentProfile.objects.get(id=id)
         try:
             education = Education.objects.get(student_profile=student)
             sem1gpa = education.sem1_gpa
@@ -335,7 +339,6 @@ def student_profile(request, id):
 
         except Education.DoesNotExist:
             gpa_list = []
-            # print(gpa_list)
 
         if Project.objects.filter(student_profile=student).exists():
             color = ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de']
@@ -350,7 +353,6 @@ def student_profile(request, id):
                 colors = color[i]
                 i = i + 1
                 project_skills.append({'label': key, 'value': value, 'color': colors, 'highlight': colors})
-            # print(project_skills)
         else:
             project_skills = {}
 
@@ -380,7 +382,6 @@ def student_profile(request, id):
         login = '/login/student/'
         return HttpResponseRedirect(login)
 
-
 def searchany(request, skillss):
     context = {}
     try:
@@ -390,7 +391,6 @@ def searchany(request, skillss):
         return HttpResponseRedirect(stud)
     if request.method == 'POST':
         searchquery = request.POST.get('searchany')
-        print('searchany: {}'.format(searchquery))
         # queryset=StudentProfile.objects.filter(department__trigram_similar=searchquery)
         dept_vector = SearchVector('first_name', 'last_name', 'department', 'bio', 'year', 'mobileNo', 'github_id', 'sap')
         skill_vector = SearchVector('skill')
@@ -404,7 +404,6 @@ def searchany(request, skillss):
         # bio_vector = SearchVector('bio')
         result = list(StudentProfile.objects.annotate(
             search=dept_vector).filter(search=searchquery))
-        # print(result, 'result')
         skills = Skill.objects.annotate(
             search=skill_vector).filter(search=searchquery)
         result.extend(list(StudentProfile.objects.filter(skill__in=skills).distinct()))
@@ -431,7 +430,6 @@ def searchany(request, skillss):
             search=extracurricular_vector).filter(search=searchquery)
         result.extend(list(StudentProfile.objects.filter(extracurricular__in=extracurricular).distinct()))
         # StudentProfile.objects.annotate(search=skill_vector).filter(search=searchquery)
-        # print(s)
         context['result'] = result
         context['skills'] = skillss
         context['hackathons'] = hackathons
@@ -448,9 +446,12 @@ def searchany(request, skillss):
 
 
 def notifs(request):
+    # Dictionary for storing student list with key as Sap_Id
+    teacher = TeacherProfile.objects.get(teacher=request.user)
+    stu = StudentProfile.objects.filter(mentor=teacher)
     # Dictionary for storing internship changes with key as Sap_Id
     listed = {}
-    for student in StudentProfile.objects.all():
+    for student in StudentProfile.objects.filter(mentor=teacher):
         listed[student.Sap_Id] = []
         for internship in student.internships.all():
             a = []
@@ -535,7 +536,6 @@ def notifs(request):
                     cmp2.append(k.ProjDesc)
                     cmp2.append(k.image1)
                     cmp2.append(k.projectUnderTeacher)
-                    # print(k.projectUnderTeacher)
                     cmp2.append(k.skill)
                 if count == 2:
                     break
@@ -554,7 +554,6 @@ def notifs(request):
                 a.append('Skill')
             if len(a) != 2:
                 projects[student.Sap_Id].append(a)
-        # print(projects)
 
         # Dictionary for storing beprojects changes with key as Sap_Id
         beprojects = {}
@@ -600,7 +599,6 @@ def notifs(request):
                     a.append('Teacher')
                 if len(a) != 2:
                     beprojects[student.Sap_Id].append(a)
-        # print(beprojects)
 
         # Dictionary for storing committee changes with key as Sap_Id
         committee = {}
@@ -738,13 +736,13 @@ def notifs(request):
                 if count == 0:
                     a.append(b)
                     cmp1.append(k.CompetitionName)
-                    cmp1.append(k.Date)
+                    cmp1.append(k.StartDate)
                     cmp1.append(k.Desc)
                     cmp1.append(k.URL)
                     cmp1.append(k.image1)
                 if count == 1:
                     cmp2.append(k.CompetitionName)
-                    cmp2.append(k.Date)
+                    cmp2.append(k.StartDate)
                     cmp2.append(k.Desc)
                     cmp2.append(k.URL)
                     cmp2.append(k.image1)
@@ -763,7 +761,6 @@ def notifs(request):
                 a.append('Image')
             if len(a) != 2:
                 hackathon[student.Sap_Id].append(a)
-    # print(hackathon)
 
     education = {}
     for student in StudentProfile.objects.all():
@@ -820,8 +817,6 @@ def notifs(request):
                 a.append('Sem 8 Cgpa')
             if len(a) != 2:
                 education[student.Sap_Id].append(a)
-    # print("HI")
-    # print(education)
 
     extra = {}
     for student in StudentProfile.objects.all():
@@ -868,12 +863,8 @@ def notifs(request):
                 a.append('Image')
             if len(a) != 2:
                 extra[student.Sap_Id].append(a)
-    print("HI")
-    print(extra)
-    print("YO")
-    print(listed)
     teacher = TeacherProfile.objects.get(teacher=request.user)
-    return render(request, 'user_profile/notifs.html', {'listed': listed, 'projects': projects,
+    return render(request, 'user_profile/notifs.html', {'students':stu,'listed': listed, 'projects': projects,
                                                         'beprojects': beprojects, 'education': education,
                                                         'committee': committee, 'hackathon': hackathon,
                                                         'researchpaper': researchpaper, 'extra': extra,
@@ -886,7 +877,6 @@ def student_list(request):
     except ObjectDoesNotExist:
         stud = '/login/student/'
         return HttpResponseRedirect(stud)
-    # print(teacher)
     most_common_to_take = 3
     skills = Skill.objects.all()
     list_of_skills = [skill.skill for skill in skills]
@@ -913,9 +903,6 @@ def student_list(request):
             skills = request.POST.getlist('skills[]')
             # gpa = request.POST.getlist('gpa_list[]')
 
-            # print(year)
-            # print(skills)
-            # print(gpa_list)
             if year and skills:
                 result = StudentProfile.objects.filter(year__in=year).filter(
                     skill__skill__in=skills).distinct()
@@ -932,8 +919,6 @@ def student_list(request):
             else:
                 result = []
                 projects = []
-            # print(result, "res")
-            #print(teacher)
             return render(request, 'user_profile/filter.html', {'result': result, 'skills': skillss,
                           'projects': projects, 'teacher': teacher})
     else:
@@ -959,7 +944,6 @@ def teacher_dashboard(request):
             return render(request, 'user_profile/teacher_login.html', {'error': error})
         context = {}
         context['teacher'] = teacher
-        print(teacher)
         # calculating most common skills
         most_common_to_take = 3
         skills = Skill.objects.all()
@@ -968,13 +952,11 @@ def teacher_dashboard(request):
             list_of_skills).most_common(most_common_to_take)
         for i, skill in enumerate(most_frequent_skills):
             context['skill' + str(i + 1)] = skill
-        # print(most_frequent_skills)
         # calculating year-wise internship stats
         internship_objects = Internship.objects.all()
         intern_stats = [
             internship.employee.year for internship in internship_objects]
         intern_stats = collections.Counter(intern_stats)
-        # print(intern_stats.items())
         context['FE_interns'] = intern_stats['FE']
         context['SE_interns'] = intern_stats['SE']
         context['TE_interns'] = intern_stats['TE']
@@ -985,7 +967,6 @@ def teacher_dashboard(request):
         for internship in internship_objects:
             internship_in_months.append(internship.From.month)
         internship_in_months = collections.Counter(internship_in_months)
-        # print(internship_in_months)
         months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         context['months'] = months
         for month in months:
@@ -1019,9 +1000,6 @@ def teacher_dashboard(request):
         sem6_list = float(sum(sem6_list) / len(sem6_list)) if len(sem6_list) != 0 else []
         sem7_list = float(sum(sem7_list) / len(sem7_list)) if len(sem7_list) != 0 else []
         sem8_list = float(sum(sem8_list) / len(sem8_list)) if len(sem8_list) != 0 else []
-        # print("Hi")
-        # print(sem1_list, sem2_list, sem3_list, sem4_list,
-        # sem5_list, sem6_list, sem7_list, sem8_list)
         context['avg_gpa'] = [sem1_list, sem2_list, sem3_list, sem4_list, sem5_list, sem6_list, sem7_list, sem8_list]
         context['sem_labels'] = ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6', 'Sem 7', 'Sem 8']
         # batch wise pointers
@@ -1029,7 +1007,6 @@ def teacher_dashboard(request):
         SE_gpa_objects = Education.objects.filter(student_profile__year='SE')
         TE_gpa_objects = Education.objects.filter(student_profile__year='TE')
         BE_gpa_objects = Education.objects.filter(student_profile__year='BE')
-        # print(FE_gpa_objects, SE_gpa_objects, TE_gpa_objects, BE_gpa_objects)
         FE_gpa = {'sem1': [], 'sem2': []}
         SE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': []}
         TE_gpa = {'sem1': [], 'sem2': [], 'sem3': [], 'sem4': [], 'sem5': [], 'sem6': []}
@@ -1069,14 +1046,11 @@ def teacher_dashboard(request):
                             average(BE_gpa['sem3']), average(BE_gpa['sem4']),
                             average(BE_gpa['sem5']), average(BE_gpa['sem6']),
                             average(BE_gpa['sem7']), average(BE_gpa['sem8'])]
-        # print(context['FE_gpa'])
         # internship time stamps
         intern_dates = [format(internship.From, 'U')
                         for internship in Internship.objects.all()]
         intern_dates.sort()
         # intern_date = [int(x) - int(intern_dates[0]) for x in intern_dates]
-        # print(intern_dates)
-        # print(intern_date)
         total_regs = StudentProfile.objects.all().count()
         total_intern = Internship.objects.all().count()
         cgpa1 = [pointer.cgpa for pointer in StudentProfile.objects.all(
@@ -1086,7 +1060,10 @@ def teacher_dashboard(request):
         context['cgpa1'] = cgpa1
         context['total_intern'] = total_intern
         kt = KT.objects.all().count()
-        kt_perc = (float)((kt * 100) / total_regs)
+        if total_regs !=0:
+            kt_perc = (float)((kt * 100) / total_regs)
+        else:
+            kt_perc=0
         context['kt_perc'] = round(kt_perc, 2)
         # return HttpResponse(intern_stats)
         return render(request, 'user_profile/teacherprofile.html', context)
@@ -1136,7 +1113,6 @@ def show_edit_studentprofile(request):
     if request.user.is_authenticated:
         try:
             teacher = TeacherProfile.objects.get(teacher=request.user)
-            print(teacher)
             teacher_profile_url = '/teacherdashboard/'
             return HttpResponseRedirect(teacher_profile_url)
         except ObjectDoesNotExist:
@@ -1160,7 +1136,6 @@ def show_edit_studentprofile(request):
             except ObjectDoesNotExist:
                 competitive_exam = CompetitiveExams.objects.create(student=student_profile)
             if not acads.sem1_tt1:
-                print('karega')
                 t = TermTest.objects.create(tt_name='sem1_tt1')
                 for subj in Subject.objects.filter(sem='SEM1'):
                     s = SubjectMarks()
@@ -1319,9 +1294,7 @@ def show_edit_studentprofile(request):
 
 
 def edit_competitive_exams(request, id):
-    print("aayush")
     if request.method == 'POST':
-        print("aayush")
         student_profile = StudentProfile.objects.get(id=id)
         try:
             competitive_exam = CompetitiveExams.objects.get(student=student_profile)
@@ -1334,7 +1307,6 @@ def edit_competitive_exams(request, id):
         competitive_exam.toefl_score = request.FILES.get('toefl_score')
         competitive_exam.mhcet_score = request.POST.get('mhcet_score')
         competitive_exam.save()
-        print("done")
         return HttpResponse('done')
 
 
