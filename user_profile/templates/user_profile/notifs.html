@@ -84,6 +84,10 @@
               <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked">
                   <li class="active">
+                    <a Onclick="students()"><i class="fa fa-user"></i> Student List
+                    </a>
+                  </li>
+                  <li>
                     <a Onclick="internship()"><i class="fa fa-inbox"></i> Internships
                     </a>
                   </li>
@@ -118,6 +122,36 @@
             <!-- /. box -->
           </div>
          <!-- /.col -->
+         <div id="Student" class="col-md-9">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Students</h3>
+            </div>
+              <!-- /.box-header -->
+            <div class="box-body no-padding">
+
+              <div class="table-responsive mailbox-messages">
+                <table class="table table-hover table-striped">
+                  <tbody>
+                    {% for student in students %}
+                    <tr>
+                      <td class="mailbox-number">{{ forloop.counter }}</td>
+                      <td class="mailbox-name">{{ student.Sap_Id }} - {{ student.first_name }} {{ student.last_name }}</td>
+                      <td class="mailbox-name"><a href="{% url 'user_profile:student_profile' student.id %}">View Profile</a></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <!-- /.table -->
+              </div>
+              <!-- /.mail-box-messages -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer no-padding">
+            </div>
+          </div>
+        </div>
+
           <div id="Internship" class="col-md-9">
             <div class="box box-primary">
               <div class="box-header with-border">
@@ -423,9 +457,21 @@
 
   {% block js %}
     <script type="text/javascript">
-      window.onload = internship();
+      window.onload = students();
+
+      function students() {
+          $("#Student").show();
+          $("#Internship").hide();
+          $("#Projects").hide();
+          $("#Extra").hide();
+          $("#Grades").hide();
+          $("#BE").hide();
+          $("#Research").hide();
+          $("#Hackathons").hide();
+      }
 
       function internship() {
+          $("#Student").hide();
           $("#Internship").show();
           $("#Projects").hide();
           $("#Extra").hide();
@@ -436,6 +482,7 @@
       }
 
       function grades() {
+          $("#Student").hide();
           $("#Internship").hide();
           $("#Projects").hide();
           $("#Extra").hide();
@@ -446,6 +493,7 @@
       }
 
       function projects() {
+          $("#Student").hide();
           $("#Internship").hide();
           $("#Projects").show();
           $("#Extra").hide();
@@ -456,6 +504,7 @@
       }
 
       function beprojects() {
+          $("#Student").hide();
           $("#Internship").hide();
           $("#Projects").hide();
           $("#Extra").hide();
@@ -466,6 +515,7 @@
       }
 
       function research() {
+          $("#Student").hide();
           $("#Internship").hide();
           $("#Projects").hide();
           $("#Extra").hide();
@@ -476,6 +526,7 @@
       }
 
       function extra() {
+          $("#Student").hide();
           $("#Internship").hide();
           $("#Projects").hide();
           $("#Extra").show();
@@ -486,6 +537,7 @@
       }
 
       function hackathons() {
+          $("#Student").hide();
           $("#Internship").hide();
           $("#Projects").hide();
           $("#Extra").hide();
