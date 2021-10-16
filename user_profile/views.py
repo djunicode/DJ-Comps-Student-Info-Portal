@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from .models import (StudentProfile, TeacherProfile, Internship, Project, Committee, ResearchPaper, BeProject,
                      Hackathon, Skill, Education, ExtraCurricular, KT, Subject, SubjectMarks, TermTest,
-                     CompetitiveExams, Admit)
+                     CompetitiveExams, Admit, Image)
 from .models import (HistoricalInternship, HistoricalProject, HistoricalCommittee, HistoricalResearchPaper,
                      HistoricalBeProject, HistoricalHackathon, HistoricalEducation, HistoricalExtraCurricular)
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -1479,11 +1479,37 @@ def edit_hackathon_info(request, id):
             hackathon.StartDate = request.POST.get('HackathonDate')
         hackathon.Desc = request.POST.get('HackathonDescription')
         hackathon.URL = request.POST.get('HackathonUrl')
-        hackathon.image1 = request.FILES.get('image1')
-        hackathon.image2 = request.FILES.get('image2')
-        hackathon.image3 = request.FILES.get('image3')
-        hackathon.image4 = request.FILES.get('image4')
-        hackathon.image5 = request.FILES.get('image5')
+
+        image1 = request.FILES.get('image1')
+        if(image1):
+            new_image1 = Image.objects.create(image=image1, alt="")
+            hackathon.images = new_image1
+
+        image2 = request.FILES.get('image2')
+        if(image2):
+            new_image2 = Image.objects.create(image=image2, alt="")
+            hackathon.images = new_image2
+
+        image3 = request.FILES.get('image3')
+        if(image3):
+            new_image3 = Image.objects.create(image=image3, alt="")
+            hackathon.images = new_image3
+
+        image4 = request.FILES.get('image3')
+        if(image4):
+            new_image4 = Image.objects.create(image=image4, alt="")
+            hackathon.images = new_image4
+
+        image5 = request.FILES.get('image5')
+        if(image5):
+            new_image5 = Image.objects.create(image=image5, alt="")
+            hackathon.images = new_image5
+
+        # hackathon.image1 = request.FILES.get('image1')
+        # hackathon.image2 = request.FILES.get('image2')
+        # hackathon.image3 = request.FILES.get('image3')
+        # hackathon.image4 = request.FILES.get('image4')
+        # hackathon.image5 = request.FILES.get('image5')
         hackathon.save()
         # number = "9833175929"
         # message = "THE STUDENT " + str(student_profile.first_name) + " has added the Hackathon " \
