@@ -653,35 +653,27 @@ def notifs(request):
     # teacher = TeacherProfile.objects.get(teacher=request.user)
 
     context = {
-        "students":stu,
-        "teacher":teacher,
-        "extra_curricular":extra_curricular,
-        "grades":grades,
-
-        "internship_approved":internship_approved,
-        "internship_rejected":internship_rejected,
-        "internship_pending":internship_pending,
-
-        "project_approved":project_approved,
-        "project_rejected":project_rejected,
-        "project_pending":project_pending,
-
-        "BeProject_approved":BeProject_approved,
-        "BeProject_rejected":BeProject_rejected,
-        "BeProject_pending":BeProject_pending,
-
-        "ResearchPaper_approved":ResearchPaper_approved,
-        "ResearchPaper_rejected":ResearchPaper_rejected,
-        "ResearchPaper_pending":ResearchPaper_pending,
-
-        "Hackathon_approved":Hackathon_approved,
-        "Hackathon_rejected":Hackathon_rejected,
-        "Hackathon_pending":Hackathon_pending,
+        "students": stu,
+        "teacher": teacher,
+        "extra_curricular": extra_curricular,
+        "grades": grades,
+        "internship_approved": internship_approved,
+        "internship_rejected": internship_rejected,
+        "internship_pending": internship_pending,
+        "project_approved": project_approved,
+        "project_rejected": project_rejected,
+        "project_pending": project_pending,
+        "BeProject_approved": BeProject_approved,
+        "BeProject_rejected": BeProject_rejected,
+        "BeProject_pending": BeProject_pending,
+        "ResearchPaper_approved": ResearchPaper_approved,
+        "ResearchPaper_rejected": ResearchPaper_rejected,
+        "ResearchPaper_pending": ResearchPaper_pending,
+        "Hackathon_approved": Hackathon_approved,
+        "Hackathon_rejected": Hackathon_rejected,
+        "Hackathon_pending": Hackathon_pending,
     }
-    return render(
-        request,
-        "user_profile/notifs.html",context
-    )
+    return render(request, "user_profile/notifs.html", context)
 
 
 def student_list(request):
@@ -1637,3 +1629,25 @@ def filters_adv(request):
             "extracurricular": extracurricular,
         },
     )
+
+
+def internship_approved(request, id):
+    try:
+        internship = Internship.objects.get(id=id)
+    except Internship.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if internship.is_approved == None:
+        internship.is_approved = True
+        internship.save()
+    return redirect("user_profile:notifs")
+
+
+def internship_rejected(request, id):
+    try:
+        internship = Internship.objects.get(id=id)
+    except Internship.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if internship.is_approved == None:
+        internship.is_approved = False
+        internship.save()
+    return redirect("user_profile:notifs")
