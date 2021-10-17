@@ -257,12 +257,12 @@ class Hackathon(models.Model):
     EndDate = models.DateField(("EndDate"), default=datetime.date.today)
     Desc = models.TextField(blank=True, null=True)
     URL = models.URLField(null=True, blank=True)
-    images = models.ManyToManyField(Image)
-    # image1 = models.FileField(blank=True, null=True)
-    # image2 = models.FileField(null=True, blank=True)
-    # image3 = models.FileField(null=True, blank=True)
-    # image4 = models.FileField(null=True, blank=True)
-    # image5 = models.FileField(null=True, blank=True)
+    # images = models.ManyToManyField(Image)
+    image1 = models.FileField(blank=True, null=True)
+    image2 = models.FileField(null=True, blank=True)
+    image3 = models.FileField(null=True, blank=True)
+    image4 = models.FileField(null=True, blank=True)
+    image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
     total_no_of_hours = models.IntegerField(default=0)
@@ -310,13 +310,13 @@ class Internship(models.Model):
     evaluation_report_mentor = models.FileField(blank=True, null=True)
     evaluation_report_supervisor = models.FileField(blank=True, null=True)
     evaluation_report_self = models.FileField(blank=True, null=True)
-    images = models.ManyToManyField(Image)
+    # images = models.ManyToManyField(Image)
 
-    # image1 = models.FileField(blank=True, null=True)
-    # image2 = models.FileField(blank=True, null=True)
-    # image3 = models.FileField(blank=True, null=True)
-    # image4 = models.FileField(blank=True, null=True)
-    # image5 = models.FileField(blank=True, null=True)
+    image1 = models.FileField(blank=True, null=True)
+    image2 = models.FileField(blank=True, null=True)
+    image3 = models.FileField(blank=True, null=True)
+    image4 = models.FileField(blank=True, null=True)
+    image5 = models.FileField(blank=True, null=True)
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
 
@@ -346,13 +346,25 @@ class Project(models.Model):
         on_delete=models.CASCADE,
     )
 
-    images = models.ManyToManyField(Image)
+    # images = models.ManyToManyField(Image)
 
-    # image1 = models.FileField(blank=True, null=True)
-    # image2 = models.FileField(blank=True, null=True,)
-    # image3 = models.FileField(blank=True, null=True,)
-    # image4 = models.FileField(blank=True, null=True,)
-    # image5 = models.FileField(blank=True, null=True,)
+    image1 = models.FileField(blank=True, null=True)
+    image2 = models.FileField(
+        blank=True,
+        null=True,
+    )
+    image3 = models.FileField(
+        blank=True,
+        null=True,
+    )
+    image4 = models.FileField(
+        blank=True,
+        null=True,
+    )
+    image5 = models.FileField(
+        blank=True,
+        null=True,
+    )
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
 
@@ -371,13 +383,13 @@ class Committee(models.Model):
     dateTo = models.DateField(("Date"), default=datetime.date.today)
     Desc = models.TextField(blank=True, null=True)
     Certificate = models.FileField(null=True, blank=True)
-    images = models.ManyToManyField(Image)
+    # images = models.ManyToManyField(Image)
 
-    # image1 = models.FileField(blank=True, null=True)
-    # image2 = models.FileField(null=True, blank=True)
-    # image3 = models.FileField(null=True, blank=True)
-    # image4 = models.FileField(null=True, blank=True)
-    # image5 = models.FileField(null=True, blank=True)
+    image1 = models.FileField(blank=True, null=True)
+    image2 = models.FileField(null=True, blank=True)
+    image3 = models.FileField(null=True, blank=True)
+    image4 = models.FileField(null=True, blank=True)
+    image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
 
@@ -407,13 +419,13 @@ class ResearchPaper(models.Model):
         ("Chapter", "Chapter"),
     )
     type = models.CharField(max_length=20, choices=research_type, blank=True, null=True)
-    images = models.ManyToManyField(Image)
+    # images = models.ManyToManyField(Image)
 
-    # image1 = models.FileField(null=True, blank=True)
-    # image2 = models.FileField(null=True, blank=True)
-    # image3 = models.FileField(null=True, blank=True)
-    # image4 = models.FileField(null=True, blank=True)
-    # image5 = models.FileField(null=True, blank=True)
+    image1 = models.FileField(null=True, blank=True)
+    image2 = models.FileField(null=True, blank=True)
+    image3 = models.FileField(null=True, blank=True)
+    image4 = models.FileField(null=True, blank=True)
+    image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
 
@@ -438,13 +450,13 @@ class BeProject(models.Model):
         related_name="verifiedbeprojects",
         on_delete=models.CASCADE,
     )
-    images = models.ManyToManyField(Image)
+    # images = models.ManyToManyField(Image)
 
-    # image1 = models.FileField(null=True, blank=True)
-    # image2 = models.FileField(null=True, blank=True)
-    # image3 = models.FileField(null=True, blank=True)
-    # image4 = models.FileField(null=True, blank=True)
-    # image5 = models.FileField(null=True, blank=True)
+    image1 = models.FileField(null=True, blank=True)
+    image2 = models.FileField(null=True, blank=True)
+    image3 = models.FileField(null=True, blank=True)
+    image4 = models.FileField(null=True, blank=True)
+    image5 = models.FileField(null=True, blank=True)
     project_report = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
@@ -462,13 +474,13 @@ class ExtraCurricular(models.Model):
     achievements = models.CharField(max_length=500, null=True, blank=True)
     date = models.DateField(("Date"), default=datetime.date.today)
     Certificate = models.FileField(null=True, blank=True)
-    images = models.ManyToManyField(Image)
+    # images = models.ManyToManyField(Image)
 
-    # image1 = models.FileField(null=True, blank=True)
-    # image2 = models.FileField(null=True, blank=True)
-    # image3 = models.FileField(null=True, blank=True)
-    # image4 = models.FileField(null=True, blank=True)
-    # image5 = models.FileField(null=True, blank=True)
+    image1 = models.FileField(null=True, blank=True)
+    image2 = models.FileField(null=True, blank=True)
+    image3 = models.FileField(null=True, blank=True)
+    image4 = models.FileField(null=True, blank=True)
+    image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
 
     def __str__(self):
