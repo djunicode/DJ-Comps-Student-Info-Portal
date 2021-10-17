@@ -135,81 +135,33 @@ class Education(models.Model):
     sem1_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2
     )
-    sem1_tt1 = models.ForeignKey(
-        TermTest, related_name="sem1_tt1", null=True, on_delete=models.CASCADE
-    )
-    sem1_tt2 = models.ForeignKey(
-        TermTest, related_name="sem1_tt2", null=True, on_delete=models.CASCADE
-    )
     sem1_marksheet = models.FileField(blank=True, null=True)
     sem2_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2
-    )
-    sem2_tt1 = models.ForeignKey(
-        TermTest, related_name="sem2_tt1", null=True, on_delete=models.CASCADE
-    )
-    sem2_tt2 = models.ForeignKey(
-        TermTest, related_name="sem2_tt2", null=True, on_delete=models.CASCADE
     )
     sem2_marksheet = models.FileField(blank=True, null=True)
     sem3_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2
     )
-    sem3_tt1 = models.ForeignKey(
-        TermTest, related_name="sem3_tt1", null=True, on_delete=models.CASCADE
-    )
-    sem3_tt2 = models.ForeignKey(
-        TermTest, related_name="sem3_tt2", null=True, on_delete=models.CASCADE
-    )
     sem3_marksheet = models.FileField(blank=True, null=True)
     sem4_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2
-    )
-    sem4_tt1 = models.ForeignKey(
-        TermTest, related_name="sem4_tt1", null=True, on_delete=models.CASCADE
-    )
-    sem4_tt2 = models.ForeignKey(
-        TermTest, related_name="sem4_tt2", null=True, on_delete=models.CASCADE
     )
     sem4_marksheet = models.FileField(blank=True, null=True)
     sem5_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2
     )
-    sem5_tt1 = models.ForeignKey(
-        TermTest, related_name="sem5_tt1", null=True, on_delete=models.CASCADE
-    )
-    sem5_tt2 = models.ForeignKey(
-        TermTest, related_name="sem5_tt2", null=True, on_delete=models.CASCADE
-    )
     sem5_marksheet = models.FileField(blank=True, null=True)
     sem6_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2
-    )
-    sem6_tt1 = models.ForeignKey(
-        TermTest, related_name="sem6_tt1", null=True, on_delete=models.CASCADE
-    )
-    sem6_tt2 = models.ForeignKey(
-        TermTest, related_name="sem6_tt2", null=True, on_delete=models.CASCADE
     )
     sem6_marksheet = models.FileField(blank=True, null=True)
     sem7_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2
     )
-    sem7_tt1 = models.ForeignKey(
-        TermTest, related_name="sem7_tt1", null=True, on_delete=models.CASCADE
-    )
-    sem7_tt2 = models.ForeignKey(
-        TermTest, related_name="sem7_tt2", null=True, on_delete=models.CASCADE
-    )
     sem7_marksheet = models.FileField(blank=True, null=True)
     sem8_gpa = models.DecimalField(
         blank=True, null=True, default=None, max_digits=4, decimal_places=2
-    )
-    sem8_tt1 = models.ForeignKey(
-        TermTest, related_name="sem8_tt1", null=True, on_delete=models.CASCADE
-    )
-    sem8_tt2 = models.ForeignKey(
-        TermTest, related_name="sem8_tt2", null=True, on_delete=models.CASCADE
     )
     sem8_marksheet = models.FileField(blank=True, null=True)
     history = HistoricalRecords()

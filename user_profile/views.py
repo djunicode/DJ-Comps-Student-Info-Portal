@@ -580,437 +580,106 @@ def searchany(request, skillss):
 
 def notifs(request):
     # Dictionary for storing student list with key as Sap_Id
-    teacher = TeacherProfile.objects.get(teacher=request.user)
+    try:
+        teacher = TeacherProfile.objects.get(teacher=request.user)
+    except TeacherProfile.DoesNotExist:
+        return redirect("homepage")
+
     stu = StudentProfile.objects.filter(mentor=teacher)
-    # Dictionary for storing internship changes with key as Sap_Id
-    listed = {}
-    for student in StudentProfile.objects.filter(mentor=teacher):
-        listed[student.Sap_Id] = []
-        for internship in student.internships.all():
-            a = []
-            a.append(internship)
-            cmp1 = []
-            cmp2 = []
-            count = 0
-            c1 = internship.history.all().count()
-            if c1 == 1:
-                break
-            for x in internship.history.all():
-                b = x.history_date
-                k = HistoricalInternship.objects.get(history_date=b)
-                if count == 0:
-                    a.append(b)
-                    cmp1.append(k.company)
-                    cmp1.append(k.Position)
-                    cmp1.append(k.Loc)
-                    cmp1.append(k.From)
-                    cmp1.append(k.To)
-                    cmp1.append(k.desc)
-                    cmp1.append(k.Certificate)
-                    cmp1.append(k.image1)
-                if count == 1:
-                    cmp2.append(k.company)
-                    cmp2.append(k.Position)
-                    cmp2.append(k.Loc)
-                    cmp2.append(k.From)
-                    cmp2.append(k.To)
-                    cmp2.append(k.desc)
-                    cmp2.append(k.Certificate)
-                    cmp2.append(k.image1)
-                if count == 2:
-                    break
-                count = count + 1
-            if cmp1[0] != cmp2[0]:
-                a.append("company")
-            if cmp1[1] != cmp2[1]:
-                a.append("Position")
-            if cmp1[2] != cmp2[2]:
-                a.append("Loc")
-            if cmp1[3] != cmp2[3]:
-                a.append("Date Joined")
-            if cmp1[4] != cmp2[4]:
-                a.append("Date To")
-            if cmp1[5] != cmp2[5]:
-                a.append("Description")
-            if cmp1[6] != cmp2[6]:
-                a.append("Certificate")
-            if cmp1[7] != cmp2[7]:
-                a.append("Screenshot")
-            if len(a) != 2:
-                listed[student.Sap_Id].append(a)
+    # internship
+    internship_approved = Internship.objects.filter(
+        employee__mentor=teacher, is_approved=True
+    )
+    internship_rejected = Internship.objects.filter(
+        employee__mentor=teacher, is_approved=False
+    )
+    internship_pending = Internship.objects.filter(
+        employee__mentor=teacher, is_approved=None
+    )
 
-    # Dictionary for storing projects changes with key as Sap_Id
-    projects = {}
-    for student in StudentProfile.objects.all():
-        projects[student.Sap_Id] = []
-        for project in student.projects.all():
-            a = []
-            a.append(project)
-            cmp1 = []
-            cmp2 = []
-            count = 0
-            c1 = project.history.all().count()
-            if c1 == 1:
-                break
-            for x in project.history.all():
-                b = x.history_date
-                k = HistoricalProject.objects.get(history_date=b)
-                if count == 0:
-                    a.append(b)
-                    cmp1.append(k.ProjName)
-                    cmp1.append(k.ProjURL)
-                    cmp1.append(k.ProjDesc)
-                    cmp1.append(k.image1)
-                    cmp1.append(k.projectUnderTeacher)
-                    cmp1.append(k.skill)
-                if count == 1:
-                    cmp2.append(k.ProjName)
-                    cmp2.append(k.ProjURL)
-                    cmp2.append(k.ProjDesc)
-                    cmp2.append(k.image1)
-                    cmp2.append(k.projectUnderTeacher)
-                    cmp2.append(k.skill)
-                if count == 2:
-                    break
-                count = count + 1
-            if cmp1[0] != cmp2[0]:
-                a.append("Project Name")
-            if cmp1[1] != cmp2[1]:
-                a.append("Project URL")
-            if cmp1[2] != cmp2[2]:
-                a.append("Project Description")
-            if cmp1[3] != cmp2[3]:
-                a.append("Screenshot")
-            if cmp1[4] != cmp2[4]:
-                a.append("Project under Teacher")
-            if cmp1[5] != cmp2[5]:
-                a.append("Skill")
-            if len(a) != 2:
-                projects[student.Sap_Id].append(a)
+    # projects
+    project_approved = Project.objects.filter(
+        student_profile__mentor=teacher, is_approved=True
+    )
+    project_rejected = Project.objects.filter(
+        student_profile__mentor=teacher, is_approved=False
+    )
+    project_pending = Project.objects.filter(
+        student_profile__mentor=teacher, is_approved=None
+    )
 
-        # Dictionary for storing beprojects changes with key as Sap_Id
-        beprojects = {}
-        for student in StudentProfile.objects.all():
-            beprojects[student.Sap_Id] = []
-            for beproject in student.beprojects.all():
-                a = []
-                a.append(beproject)
-                cmp1 = []
-                cmp2 = []
-                count = 0
-                c1 = beproject.history.all().count()
-                if c1 == 1:
-                    break
-                for x in beproject.history.all():
-                    b = x.history_date
-                    k = HistoricalBeProject.objects.get(history_date=b)
-                    if count == 0:
-                        a.append(b)
-                        cmp1.append(k.ProjName)
-                        cmp1.append(k.ProjURL)
-                        cmp1.append(k.ProjDesc)
-                        cmp1.append(k.image1)
-                        cmp1.append(k.projectUnderTeacher)
-                    if count == 1:
-                        cmp2.append(k.ProjName)
-                        cmp2.append(k.ProjURL)
-                        cmp2.append(k.ProjDesc)
-                        cmp2.append(k.image1)
-                        cmp2.append(k.projectUnderTeacher)
-                    if count == 2:
-                        break
-                    count = count + 1
-                if cmp1[0] != cmp2[0]:
-                    a.append("Project Name")
-                if cmp1[1] != cmp2[1]:
-                    a.append("Project URL")
-                if cmp1[2] != cmp2[2]:
-                    a.append("Project Description")
-                if cmp1[3] != cmp2[3]:
-                    a.append("Screenshot")
-                if cmp1[4] != cmp2[4]:
-                    a.append("Teacher")
-                if len(a) != 2:
-                    beprojects[student.Sap_Id].append(a)
+    # Be Projects
+    BeProject_approved = BeProject.objects.filter(
+        student__mentor=teacher, is_approved=True
+    )
+    BeProject_rejected = BeProject.objects.filter(
+        student__mentor=teacher, is_approved=False
+    )
+    BeProject_pending = BeProject.objects.filter(
+        student__mentor=teacher, is_approved=None
+    )
 
-        # Dictionary for storing committee changes with key as Sap_Id
-        committee = {}
-        for student in StudentProfile.objects.all():
-            committee[student.Sap_Id] = []
-            for committe in student.committee.all():
-                a = []
-                a.append(committe)
-                cmp1 = []
-                cmp2 = []
-                count = 0
-                c1 = committe.history.all().count()
-                if c1 == 1:
-                    break
-                for x in committe.history.all():
-                    b = x.history_date
-                    k = HistoricalCommittee.objects.get(history_date=b)
-                    if count == 0:
-                        a.append(b)
-                        cmp1.append(k.OrganisationName)
-                        cmp1.append(k.YourPosition)
-                        cmp1.append(k.Loc)
-                        cmp1.append(k.dateFrom)
-                        cmp1.append(k.dateTo)
-                        cmp1.append(k.Desc)
-                        cmp1.append(k.Certificate)
-                        cmp1.append(k.image1)
-                    if count == 1:
-                        cmp2.append(k.OrganisationName)
-                        cmp2.append(k.YourPosition)
-                        cmp2.append(k.Loc)
-                        cmp2.append(k.dateFrom)
-                        cmp2.append(k.dateTo)
-                        cmp2.append(k.Desc)
-                        cmp2.append(k.Certificate)
-                        cmp2.append(k.image1)
-                    if count == 2:
-                        break
-                    count = count + 1
-                if cmp1[0] != cmp2[0]:
-                    a.append("Company")
-                if cmp1[1] != cmp2[1]:
-                    a.append("Position")
-                if cmp1[2] != cmp2[2]:
-                    a.append("Location")
-                if cmp1[3] != cmp2[3]:
-                    a.append("Date Joined")
-                if cmp1[4] != cmp2[4]:
-                    a.append("Date To")
-                if cmp1[5] != cmp2[5]:
-                    a.append("Description")
-                if cmp1[6] != cmp2[6]:
-                    a.append("Certificate")
-                if cmp1[7] != cmp2[7]:
-                    a.append("Screenshot")
-                if len(a) != 2:
-                    committee[student.Sap_Id].append(a)
+    # Research paper
+    ResearchPaper_approved = ResearchPaper.objects.filter(
+        student__mentor=teacher, is_approved=True
+    )
+    ResearchPaper_rejected = ResearchPaper.objects.filter(
+        student__mentor=teacher, is_approved=False
+    )
+    ResearchPaper_pending = ResearchPaper.objects.filter(
+        student__mentor=teacher, is_approved=None
+    )
 
-        # Dictionary for storing ResearchPaper changes with key as Sap_Id
-        researchpaper = {}
-        for student in StudentProfile.objects.all():
-            researchpaper[student.Sap_Id] = []
-            for research in student.researchpaper.all():
-                a = []
-                a.append(research)
-                cmp1 = []
-                cmp2 = []
-                count = 0
-                c1 = research.history.all().count()
-                if c1 == 1:
-                    break
-                for x in research.history.all():
-                    b = x.history_date
-                    k = HistoricalResearchPaper.objects.get(history_date=b)
-                    if count == 0:
-                        a.append(b)
-                        cmp1.append(k.Title)
-                        cmp1.append(k.Publication)
-                        cmp1.append(k.DateOfPublication)
-                        cmp1.append(k.Desc)
-                        cmp1.append(k.LinkToPaper)
-                        cmp1.append(k.Desc)
-                        cmp1.append(k.PaperId)
-                        cmp1.append(k.image1)
-                        cmp1.append(k.Published_under)
-                    if count == 1:
-                        cmp2.append(k.Title)
-                        cmp2.append(k.Publication)
-                        cmp2.append(k.DateOfPublication)
-                        cmp2.append(k.Desc)
-                        cmp2.append(k.LinkToPaper)
-                        cmp2.append(k.Desc)
-                        cmp2.append(k.PaperId)
-                        cmp2.append(k.image1)
-                        cmp2.append(k.Published_under)
-                    if count == 2:
-                        break
-                    count = count + 1
-                if cmp1[0] != cmp2[0]:
-                    a.append("Title")
-                if cmp1[1] != cmp2[1]:
-                    a.append("Publication")
-                if cmp1[2] != cmp2[2]:
-                    a.append("DateOfPublication")
-                if cmp1[3] != cmp2[3]:
-                    a.append("Description")
-                if cmp1[4] != cmp2[4]:
-                    a.append("LinkToPaper")
-                if cmp1[5] != cmp2[5]:
-                    a.append("Description")
-                if cmp1[6] != cmp2[6]:
-                    a.append("PaperId")
-                if cmp1[7] != cmp2[7]:
-                    a.append("Screenshot")
-                if cmp1[8] != cmp2[8]:
-                    a.append("Teacher")
-                if len(a) != 2:
-                    researchpaper[student.Sap_Id].append(a)
+    # Hackathon
+    Hackathon_approved = Hackathon.objects.filter(
+        student_profile__mentor=teacher, is_approved=True
+    )
+    Hackathon_rejected = Hackathon.objects.filter(
+        student_profile__mentor=teacher, is_approved=False
+    )
+    Hackathon_pending = Hackathon.objects.filter(
+        student_profile__mentor=teacher, is_approved=None
+    )
 
-    hackathon = {}
-    for student in StudentProfile.objects.all():
-        hackathon[student.Sap_Id] = []
-        for hack in student.hackathon.all():
-            a = []
-            a.append(hack)
-            cmp1 = []
-            cmp2 = []
-            count = 0
-            c1 = hack.history.all().count()
-            if c1 == 1:
-                break
-            for x in hack.history.all():
-                b = x.history_date
-                k = HistoricalHackathon.objects.get(history_date=b)
-                if count == 0:
-                    a.append(b)
-                    cmp1.append(k.CompetitionName)
-                    cmp1.append(k.StartDate)
-                    cmp1.append(k.Desc)
-                    cmp1.append(k.URL)
-                    cmp1.append(k.image1)
-                if count == 1:
-                    cmp2.append(k.CompetitionName)
-                    cmp2.append(k.StartDate)
-                    cmp2.append(k.Desc)
-                    cmp2.append(k.URL)
-                    cmp2.append(k.image1)
-                if count == 2:
-                    break
-                count = count + 1
-            if cmp1[0] != cmp2[0]:
-                a.append("Competition Name")
-            if cmp1[1] != cmp2[1]:
-                a.append("Date")
-            if cmp1[2] != cmp2[2]:
-                a.append("Description")
-            if cmp1[3] != cmp2[3]:
-                a.append("URL")
-            if cmp1[4] != cmp2[4]:
-                a.append("Image")
-            if len(a) != 2:
-                hackathon[student.Sap_Id].append(a)
+    # Extra Curricular
+    extra_curricular = ExtraCurricular.objects.filter(student__mentor=teacher)
 
-    education = {}
-    for student in StudentProfile.objects.all():
-        education[student.Sap_Id] = []
-        for edu in student.education.all():
-            a = []
-            a.append(edu)
-            cmp1 = []
-            cmp2 = []
-            count = 0
-            c1 = edu.history.all().count()
-            if c1 == 1:
-                break
-            for x in edu.history.all():
-                b = x.history_date
-                k = HistoricalEducation.objects.get(history_date=b)
-                if count == 0:
-                    a.append(b)
-                    cmp1.append(k.sem1_gpa)
-                    cmp1.append(k.sem2_gpa)
-                    cmp1.append(k.sem3_gpa)
-                    cmp1.append(k.sem4_gpa)
-                    cmp1.append(k.sem5_gpa)
-                    cmp1.append(k.sem6_gpa)
-                    cmp1.append(k.sem7_gpa)
-                    cmp1.append(k.sem8_gpa)
-                if count == 1:
-                    cmp2.append(k.sem1_gpa)
-                    cmp2.append(k.sem2_gpa)
-                    cmp2.append(k.sem3_gpa)
-                    cmp2.append(k.sem4_gpa)
-                    cmp2.append(k.sem5_gpa)
-                    cmp2.append(k.sem6_gpa)
-                    cmp2.append(k.sem7_gpa)
-                    cmp2.append(k.sem8_gpa)
-                if count == 2:
-                    break
-                count = count + 1
-            if cmp1[0] != cmp2[0]:
-                a.append("Sem 1 Cgpa")
-            if cmp1[1] != cmp2[1]:
-                a.append("Sem 2 Cgpa")
-            if cmp1[2] != cmp2[2]:
-                a.append("Sem 3 Cgpa")
-            if cmp1[3] != cmp2[3]:
-                a.append("Sem 4 Cgpa")
-            if cmp1[4] != cmp2[4]:
-                a.append("Sem 5 Cgpa")
-            if cmp1[5] != cmp2[5]:
-                a.append("Sem 6 Cgpa")
-            if cmp1[6] != cmp2[6]:
-                a.append("Sem 7 Cgpa")
-            if cmp1[7] != cmp2[7]:
-                a.append("Sem 8 Cgpa")
-            if len(a) != 2:
-                education[student.Sap_Id].append(a)
+    # grades
+    grades = Education.objects.filter(student_profile__mentor=teacher)
 
-    extra = {}
-    for student in StudentProfile.objects.all():
-        extra[student.Sap_Id] = []
-        for ex in student.extracurricular.all():
-            a = []
-            a.append(ex)
-            cmp1 = []
-            cmp2 = []
-            count = 0
-            c1 = ex.history.all().count()
-            if c1 == 1:
-                break
-            for x in ex.history.all():
-                b = x.history_date
-                k = HistoricalExtraCurricular.objects.get(history_date=b)
-                if count == 0:
-                    a.append(b)
-                    cmp1.append(k.name)
-                    cmp1.append(k.desc)
-                    cmp1.append(k.achievements)
-                    cmp1.append(k.date)
-                    cmp1.append(k.Certificate)
-                    cmp1.append(k.image1)
-                if count == 1:
-                    cmp2.append(k.name)
-                    cmp2.append(k.desc)
-                    cmp2.append(k.achievements)
-                    cmp2.append(k.date)
-                    cmp2.append(k.Certificate)
-                    cmp2.append(k.image1)
-                if count == 2:
-                    break
-                count = count + 1
-            if cmp1[0] != cmp2[0]:
-                a.append("Name")
-            if cmp1[1] != cmp2[1]:
-                a.append("Description")
-            if cmp1[2] != cmp2[2]:
-                a.append("Achievements")
-            if cmp1[3] != cmp2[3]:
-                a.append("Certificate")
-            if cmp1[4] != cmp2[4]:
-                a.append("Image")
-            if len(a) != 2:
-                extra[student.Sap_Id].append(a)
-    teacher = TeacherProfile.objects.get(teacher=request.user)
+    # teacher = TeacherProfile.objects.get(teacher=request.user)
+
+    context = {
+        "students":stu,
+        "teacher":teacher,
+        "extra_curricular":extra_curricular,
+        "grades":grades,
+
+        "internship_approved":internship_approved,
+        "internship_rejected":internship_rejected,
+        "internship_pending":internship_pending,
+
+        "project_approved":project_approved,
+        "project_rejected":project_rejected,
+        "project_pending":project_pending,
+
+        "BeProject_approved":BeProject_approved,
+        "BeProject_rejected":BeProject_rejected,
+        "BeProject_pending":BeProject_pending,
+
+        "ResearchPaper_approved":ResearchPaper_approved,
+        "ResearchPaper_rejected":ResearchPaper_rejected,
+        "ResearchPaper_pending":ResearchPaper_pending,
+
+        "Hackathon_approved":Hackathon_approved,
+        "Hackathon_rejected":Hackathon_rejected,
+        "Hackathon_pending":Hackathon_pending,
+    }
     return render(
         request,
         "user_profile/notifs.html",
         {
             "students": stu,
-            "listed": listed,
-            "projects": projects,
-            "beprojects": beprojects,
-            "education": education,
-            "committee": committee,
-            "hackathon": hackathon,
-            "researchpaper": researchpaper,
-            "extra": extra,
-            "teacher": teacher,
         },
     )
 
