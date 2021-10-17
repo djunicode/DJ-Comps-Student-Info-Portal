@@ -199,7 +199,7 @@ class Hackathon(models.Model):
     EndDate = models.DateField(("EndDate"), default=datetime.date.today)
     Desc = models.CharField(max_length=500, blank=True, null=True)
     URL = models.TextField(validators=[URLValidator()], null=True, blank=True)
-    images = models.ForeignKey("Image", on_delete=models.CASCADE, blank=True, null=True)
+    images = models.ManyToManyField(Image)
     # image1 = models.FileField(blank=True, null=True)
     # image2 = models.FileField(null=True, blank=True)
     # image3 = models.FileField(null=True, blank=True)
@@ -247,7 +247,7 @@ class Internship(models.Model):
     evaluation_report_mentor = models.FileField(blank=True, null=True)
     evaluation_report_supervisor = models.FileField(blank=True, null=True)
     evaluation_report_self = models.FileField(blank=True, null=True)
-    images = models.ForeignKey("Image", on_delete=models.CASCADE, blank=True, null=True)
+    images = models.ManyToManyField(Image)
 
     # image1 = models.FileField(blank=True, null=True)
     # image2 = models.FileField(blank=True, null=True)
@@ -272,7 +272,7 @@ class Project(models.Model):
     skill = models.ForeignKey(
         Skill, related_name="projectskills", blank=True, null=True, on_delete=models.CASCADE)
     
-    images = models.ForeignKey("Image", on_delete=models.CASCADE, blank=True, null=True)
+    images = models.ManyToManyField(Image)
 
     # image1 = models.FileField(blank=True, null=True)
     # image2 = models.FileField(blank=True, null=True,)
@@ -297,7 +297,7 @@ class Committee(models.Model):
         ("Date"), default=datetime.date.today)
     Desc = models.CharField(max_length=500, blank=True, null=True)
     Certificate = models.FileField(null=True, blank=True)
-    images = models.ForeignKey("Image", on_delete=models.CASCADE, blank=True, null=True)
+    images = models.ManyToManyField(Image)
 
     # image1 = models.FileField(blank=True, null=True)
     # image2 = models.FileField(null=True, blank=True)
@@ -334,7 +334,7 @@ class ResearchPaper(models.Model):
     type = models.CharField(max_length=20, choices=research_type, blank=True, null=True)
     Published_under = models.ForeignKey(
         TeacherProfile, blank=True, null=True, related_name="verifiedpaper", on_delete=models.CASCADE)
-    images = models.ForeignKey("Image", on_delete=models.CASCADE, blank=True, null=True)
+    images = models.ManyToManyField(Image)
 
     # image1 = models.FileField(null=True, blank=True)
     # image2 = models.FileField(null=True, blank=True)
@@ -358,7 +358,7 @@ class BeProject(models.Model):
     projectUnderTeacher = models.ForeignKey(
         TeacherProfile, blank=True, null=True,
         related_name="verifiedbeprojects", on_delete=models.CASCADE)
-    images = models.ForeignKey("Image", on_delete=models.CASCADE, blank=True, null=True)
+    images = models.ManyToManyField(Image)
 
     # image1 = models.FileField(null=True, blank=True)
     # image2 = models.FileField(null=True, blank=True)
@@ -380,7 +380,7 @@ class ExtraCurricular(models.Model):
     achievements = models.CharField(max_length=500, null=True, blank=True)
     date = models.DateField(("Date"), default=datetime.date.today)
     Certificate = models.FileField(null=True, blank=True)
-    images = models.ForeignKey("Image", on_delete=models.CASCADE, blank=True, null=True)
+    images = models.ManyToManyField(Image)
 
     # image1 = models.FileField(null=True, blank=True)
     # image2 = models.FileField(null=True, blank=True)
