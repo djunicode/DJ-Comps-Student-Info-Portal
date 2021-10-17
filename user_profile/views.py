@@ -596,6 +596,9 @@ def notifs(request):
     internship_pending = Internship.objects.filter(
         employee__mentor=teacher, is_approved=None
     )
+    for i in internship_approved:
+        if i.Certificate == "":
+            print(True)
 
     # projects
     project_approved = Project.objects.filter(
@@ -677,10 +680,7 @@ def notifs(request):
     }
     return render(
         request,
-        "user_profile/notifs.html",
-        {
-            "students": stu,
-        },
+        "user_profile/notifs.html",context
     )
 
 
@@ -1084,150 +1084,6 @@ def show_edit_studentprofile(request):
                 competitive_exam = CompetitiveExams.objects.create(
                     student=student_profile
                 )
-            if not acads.sem1_tt1:
-                t = TermTest.objects.create(tt_name="sem1_tt1")
-                for subj in Subject.objects.filter(sem="SEM1"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem1_tt1 = t
-                acads.save()
-            if not acads.sem1_tt2:
-                t = TermTest.objects.create(tt_name="sem1_tt2")
-                for subj in Subject.objects.filter(sem="SEM1"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem1_tt2 = t
-                acads.save()
-            if not acads.sem2_tt1:
-                t = TermTest.objects.create(tt_name="sem2_tt1")
-                for subj in Subject.objects.filter(sem="SEM2"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem2_tt1 = t
-                acads.save()
-            if not acads.sem2_tt2:
-                t = TermTest.objects.create(tt_name="sem2_tt2")
-                for subj in Subject.objects.filter(sem="SEM2"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem2_tt2 = t
-                acads.save()
-            if not acads.sem3_tt1:
-                t = TermTest.objects.create(tt_name="sem3_tt1")
-                for subj in Subject.objects.filter(sem="SEM3"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem3_tt1 = t
-                acads.save()
-            if not acads.sem3_tt2:
-                t = TermTest.objects.create(tt_name="sem3_tt2")
-                for subj in Subject.objects.filter(sem="SEM3"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem3_tt2 = t
-                acads.save()
-            if not acads.sem4_tt1:
-                t = TermTest.objects.create(tt_name="sem4_tt1")
-                for subj in Subject.objects.filter(sem="SEM4"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem4_tt1 = t
-                acads.save()
-            if not acads.sem4_tt2:
-                t = TermTest.objects.create(tt_name="sem4_tt2")
-                for subj in Subject.objects.filter(sem="SEM4"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem4_tt2 = t
-                acads.save()
-            if not acads.sem5_tt1:
-                t = TermTest.objects.create(tt_name="sem5_tt1")
-                for subj in Subject.objects.filter(sem="SEM5"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem5_tt1 = t
-                acads.save()
-            if not acads.sem5_tt2:
-                t = TermTest.objects.create(tt_name="sem5_tt2")
-                for subj in Subject.objects.filter(sem="SEM5"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem5_tt2 = t
-                acads.save()
-            if not acads.sem6_tt1:
-                t = TermTest.objects.create(tt_name="sem6_tt1")
-                for subj in Subject.objects.filter(sem="SEM6"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem6_tt1 = t
-                acads.save()
-            if not acads.sem6_tt2:
-                t = TermTest.objects.create(tt_name="sem6_tt2")
-                for subj in Subject.objects.filter(sem="SEM6"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem6_tt2 = t
-                acads.save()
-            if not acads.sem7_tt1:
-                t = TermTest.objects.create(tt_name="sem7_tt1")
-                for subj in Subject.objects.filter(sem="SEM7"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem7_tt1 = t
-                acads.save()
-            if not acads.sem7_tt2:
-                t = TermTest.objects.create(tt_name="sem7_tt2")
-                for subj in Subject.objects.filter(sem="SEM7"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem7_tt2 = t
-                acads.save()
-            if not acads.sem8_tt1:
-                t = TermTest.objects.create(tt_name="sem8_tt1")
-                for subj in Subject.objects.filter(sem="SEM8"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem8_tt1 = t
-                acads.save()
-            if not acads.sem8_tt2:
-                t = TermTest.objects.create(tt_name="sem8_tt2")
-                for subj in Subject.objects.filter(sem="SEM8"):
-                    s = SubjectMarks()
-                    s.tt = t
-                    s.subject = subj
-                    s.save()
-                acads.sem8_tt2 = t
-                acads.save()
             skill = Skill.objects.filter(user_profile=student_profile)
             skill_list = []
             for s in skill:
@@ -1247,8 +1103,8 @@ def show_edit_studentprofile(request):
                 "admit": admit,
             }
             return render(request, "user_profile/edit_student_profile_2.html", context)
-        else:
-            return HttpResponseRedirect("/login/student/")
+    else:
+        return HttpResponseRedirect("/login/student/")
 
 
 def edit_competitive_exams(request, id):

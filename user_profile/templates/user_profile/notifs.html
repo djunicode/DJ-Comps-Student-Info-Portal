@@ -70,7 +70,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-          <div class="col-md-3">
+          <div class="col-md-2">
 
             <div class="box box-solid">
               <div class="box-header with-border">
@@ -122,7 +122,7 @@
             <!-- /. box -->
           </div>
          <!-- /.col -->
-         <div id="Student" class="col-md-9">
+         <div id="Student" class="col-md-10">
           <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Students</h3>
@@ -133,6 +133,11 @@
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped">
                   <tbody>
+                    <thead>
+                      <th class="mailbox-number">Sr. No</th>
+                      <th class="mailbox-name">Student SAP and Name</th>
+                      <th class="mailbox-name">Profile Link</th>
+                    </thead>
                     {% for student in students %}
                     <tr>
                       <td class="mailbox-number">{{ forloop.counter }}</td>
@@ -152,37 +157,210 @@
           </div>
         </div>
 
-          <div id="Internship" class="col-md-9">
+          <div id="Internship" class="col-md-10">
             <div class="box box-primary">
               <div class="box-header with-border">
-                <h3 class="box-title">Internship</h3>
+                <h3 class="box-title">Pending Internships</h3>
               </div>
                 <!-- /.box-header -->
               <div class="box-body no-padding">
 
                 <div class="table-responsive mailbox-messages">
                   <table class="table table-hover table-striped">
-
-<tbody>
-              {% for key,value in listed.items %}
-                  {% for k in value %}
-
-                       <tr>
+                    <tbody>
+                      <thead>
+                        <th class="mailbox-number">Sr. No</th>
+                        <th class="mailbox-name">Student</th>
+                        <th class="mailbox-name">Company</th>
+                        <th class="mailbox-name">Position</th>
+                        <th class="mailbox-name">Duration</th>
+                        <th class="mailbox-number">Total Hours</th>
+                        <th class="mailbox-name">Stipend</th>
+                        <th class="mailbox-name">Certificate</th>
+                        <th class="mailbox-name">Offer Letter</th>
+                        <th class="mailbox-name">Evaluation Report (Mentor)</th>
+                        <th class="mailbox-name">Evaluation Report (Supervisor)</th>
+                        <th class="mailbox-name">Evaluation Report (Self)</th>
+                        <th class="mailbox-name">Action</th>
+                      </thead>
+                      {% for internship in internship_pending %}
+                      <tr>
                         <td class="mailbox-number">{{ forloop.counter }}</td>
-                        <td class="mailbox-name">{{ key }}</td>
-
-                        {% for x in k %}
-                        <td class="mailbox-subject">{{x}}&nbsp;
-                        </td>
-
-
-
-                  {% endfor %}
+                        <td class="mailbox-name">{{internship.employee.Sap_Id}} - {{internship.employee.first_name}} {{internship.employee.last_name}}</td>
+                        <td class="mailbox-name">{{ internship.company }}</td>
+                        <td class="mailbox-name">{{ internship.Position }}</td>
+                        <td class="mailbox-name">{{ internship.From }} - {{ internship.To }}</td>
+                        <td class="mailbox-number">{{ internship.total_hours }}</td>
+                        <td class="mailbox-name">{{ internship.stipend }}</td>
+                        {% ifequal internship.Certificate "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.Certificate.url}}">Certificate URL</a></td>
+                        {% endifequal %}
+                        {% ifequal internship.offer_letter "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.offer_letter.url}}">Offer Letter URL</a></td>
+                        {% endifequal %}
+                        {% ifequal internship.evaluation_report_mentor "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_mentor.url}}">Mentor Evaluation URL</a></td>                    
+                        {% endifequal %}
+                        {% ifequal internship.evaluation_report_supervisor "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_supervisor.url}}">Supervisor Evaluation URL</a></td>                        
+                        {% endifequal %}
+                        {% ifequal internship.evaluation_report_self "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self.url}}">Self Evaluation URL</a></td>                        
+                        {% endifequal %}
+                        <td class="mailbox-name"><a style="color:green" href=""><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;<a style="color:red" href=""><i class="fa fa-times" aria-hidden="true"></i></a></td>
                       </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  <!-- /.table -->
+                </div>
+                <!-- /.mail-box-messages -->
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer no-padding">
+              </div>
+            </div>
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">Accepted Internships</h3>
+              </div>
+                <!-- /.box-header -->
+              <div class="box-body no-padding">
 
-                    {% endfor %}
-                  {% endfor %}
-                  </tbody>
+                <div class="table-responsive mailbox-messages">
+                  <table class="table table-hover table-striped">
+                    <tbody>
+                      <thead>
+                        <th class="mailbox-number">Sr. No</th>
+                        <th class="mailbox-name">Student</th>
+                        <th class="mailbox-name">Company</th>
+                        <th class="mailbox-name">Position</th>
+                        <th class="mailbox-name">Duration</th>
+                        <th class="mailbox-number">Total Hours</th>
+                        <th class="mailbox-name">Stipend</th>
+                        <th class="mailbox-name">Certificate</th>
+                        <th class="mailbox-name">Offer Letter</th>
+                        <th class="mailbox-name">Evaluation Report (Mentor)</th>
+                        <th class="mailbox-name">Evaluation Report (Supervisor)</th>
+                        <th class="mailbox-name">Evaluation Report (Self)</th>
+                      </thead>
+                      {% for internship in internship_approved %}
+                      <tr>
+                        <td class="mailbox-number">{{ forloop.counter }}</td>
+                        <td class="mailbox-name">{{internship.employee.Sap_Id}} - {{internship.employee.first_name}} {{internship.employee.last_name}}</td>
+                        <td class="mailbox-name">{{ internship.company }}</td>
+                        <td class="mailbox-name">{{ internship.Position }}</td>
+                        <td class="mailbox-name">{{ internship.From }} - {{ internship.To }}</td>
+                        <td class="mailbox-number">{{ internship.total_hours }}</td>
+                        <td class="mailbox-name">{{ internship.stipend }}</td>
+                        {% ifequal internship.Certificate "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.Certificate.url}}">Certificate URL</a></td>
+                        {% endifequal %}
+                        {% ifequal internship.offer_letter "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.offer_letter.url}}">Offer Letter URL</a></td>
+                        {% endifequal %}
+                        {% ifequal internship.evaluation_report_mentor "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_mentor.url}}">Mentor Evaluation URL</a></td>                    
+                        {% endifequal %}
+                        {% ifequal internship.evaluation_report_supervisor "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_supervisor.url}}">Supervisor Evaluation URL</a></td>                        
+                        {% endifequal %}
+                        {% ifequal internship.evaluation_report_self "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self.url}}">Self Evaluation URL</a></td>                        
+                        {% endifequal %}
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  <!-- /.table -->
+                </div>
+                <!-- /.mail-box-messages -->
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer no-padding">
+              </div>
+            </div>
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">Rejected Internships</h3>
+              </div>
+                <!-- /.box-header -->
+              <div class="box-body no-padding">
+
+                <div class="table-responsive mailbox-messages">
+                  <table class="table table-hover table-striped">
+                    <tbody>
+                      <thead>
+                        <th class="mailbox-number">Sr. No</th>
+                        <th class="mailbox-name">Student</th>
+                        <th class="mailbox-name">Company</th>
+                        <th class="mailbox-name">Position</th>
+                        <th class="mailbox-name">Duration</th>
+                        <th class="mailbox-number">Total Hours</th>
+                        <th class="mailbox-name">Stipend</th>
+                        <th class="mailbox-name">Certificate</th>
+                        <th class="mailbox-name">Offer Letter</th>
+                        <th class="mailbox-name">Evaluation Report (Mentor)</th>
+                        <th class="mailbox-name">Evaluation Report (Supervisor)</th>
+                        <th class="mailbox-name">Evaluation Report (Self)</th>
+                      </thead>
+                      {% for internship in internship_rejected %}
+                      <tr>
+                        <td class="mailbox-number">{{ forloop.counter }}</td>
+                        <td class="mailbox-name">{{internship.employee.Sap_Id}} - {{internship.employee.first_name}} {{internship.employee.last_name}}</td>
+                        <td class="mailbox-name">{{ internship.company }}</td>
+                        <td class="mailbox-name">{{ internship.Position }}</td>
+                        <td class="mailbox-name">{{ internship.From }} - {{ internship.To }}</td>
+                        <td class="mailbox-number">{{ internship.total_hours }}</td>
+                        <td class="mailbox-name">{{ internship.stipend }}</td>
+                        {% ifequal internship.Certificate "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.Certificate.url}}">Certificate URL</a></td>
+                        {% endifequal %}
+                        {% ifequal internship.offer_letter "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.offer_letter.url}}">Offer Letter URL</a></td>
+                        {% endifequal %}
+                        {% ifequal internship.evaluation_report_mentor "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_mentor.url}}">Mentor Evaluation URL</a></td>                    
+                        {% endifequal %}
+                        {% ifequal internship.evaluation_report_supervisor "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_supervisor.url}}">Supervisor Evaluation URL</a></td>                        
+                        {% endifequal %}
+                        {% ifequal internship.evaluation_report_self "" %}
+                        <td class="mailbox-name">Not Uploaded</td>
+                        {% else %}
+                        <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self.url}}">Self Evaluation URL</a></td>                        
+                        {% endifequal %}
+                      </tr>
+                      {% endfor %}
+                    </tbody>
                   </table>
                   <!-- /.table -->
                 </div>
