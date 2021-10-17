@@ -18,7 +18,6 @@ from .models import (
     TermTest,
     CompetitiveExams,
     Admit,
-    Image,
 )
 from .models import (
     HistoricalInternship,
