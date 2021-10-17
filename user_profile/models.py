@@ -245,8 +245,7 @@ class Experience(models.Model):
 
 
 class Image(models.Model):
-    image = models.ImageField(upload_to="images/")
-    alt = models.CharField(max_length=255, blank=True)
+    image = models.ImageField(upload_to="images/", null=False, blank=False)
 
 
 class Hackathon(models.Model):
@@ -256,8 +255,8 @@ class Hackathon(models.Model):
     CompetitionName = models.CharField(max_length=50, blank=True, null=True)
     StartDate = models.DateField(("StartDate"), default=datetime.date.today)
     EndDate = models.DateField(("EndDate"), default=datetime.date.today)
-    Desc = models.CharField(max_length=500, blank=True, null=True)
-    URL = models.TextField(validators=[URLValidator()], null=True, blank=True)
+    Desc = models.TextField(blank=True, null=True)
+    URL = models.URLField(null=True, blank=True)
     images = models.ManyToManyField(Image)
     # image1 = models.FileField(blank=True, null=True)
     # image2 = models.FileField(null=True, blank=True)
@@ -289,10 +288,10 @@ class Internship(models.Model):
     )
     company = models.CharField(max_length=50, blank=True, null=True)
     Position = models.CharField(max_length=50, blank=True, null=True)
-    Loc = models.CharField(max_length=50, blank=True, null=True)
+    # Loc = models.CharField(max_length=50, blank=True, null=True)
     From = models.DateField(("Date"), default=datetime.date.today)
     To = models.DateField(("Date"), default=datetime.date.today)
-    desc = models.CharField(max_length=500, blank=True, null=True)
+    desc = models.TextField(blank=True, null=True)
     how_options = (
         ("In College", "In College"),
         ("Out of College", "Out of College"),
@@ -307,7 +306,7 @@ class Internship(models.Model):
     )
     offer_letter = models.FileField(blank=True, null=True)
     Certificate = models.FileField(blank=True, null=True)
-    total_hours = models.CharField(max_length=10, null=True, blank=True)
+    total_hours = models.IntegerField(default=0, null=True, blank=True)
     evaluation_report_mentor = models.FileField(blank=True, null=True)
     evaluation_report_supervisor = models.FileField(blank=True, null=True)
     evaluation_report_self = models.FileField(blank=True, null=True)
@@ -330,8 +329,8 @@ class Project(models.Model):
         StudentProfile, related_name="projects", on_delete=models.CASCADE
     )
     ProjName = models.CharField(max_length=50, blank=True, null=True)
-    ProjURL = models.TextField(validators=[URLValidator()], blank=True, null=True)
-    ProjDesc = models.CharField(max_length=500, blank=True, null=True)
+    ProjURL = models.URLField(blank=True, null=True)
+    ProjDesc = models.TextField(blank=True, null=True)
     projectUnderTeacher = models.ForeignKey(
         TeacherProfile,
         blank=True,
@@ -367,10 +366,10 @@ class Committee(models.Model):
     )
     OrganisationName = models.CharField(max_length=50, blank=True, null=True)
     YourPosition = models.CharField(max_length=50, blank=True, null=True)
-    Loc = models.CharField(max_length=50, blank=True, null=True)
+    # Loc = models.CharField(max_length=50, blank=True, null=True)
     dateFrom = models.DateField(("Date"), default=datetime.date.today)
     dateTo = models.DateField(("Date"), default=datetime.date.today)
-    Desc = models.CharField(max_length=500, blank=True, null=True)
+    Desc = models.TextField(blank=True, null=True)
     Certificate = models.FileField(null=True, blank=True)
     images = models.ManyToManyField(Image)
 
@@ -390,31 +389,24 @@ class ResearchPaper(models.Model):
     student = models.ForeignKey(
         StudentProfile, related_name="researchpaper", on_delete=models.CASCADE
     )
-    Title = models.CharField(max_length=50, null=True, blank=True)
-    Publication = models.CharField(max_length=100, null=True, blank=True)
+    Title = models.CharField(max_length=255, null=True, blank=True)
+    Publication = models.CharField(max_length=255, null=True, blank=True)
     DateOfPublication = models.DateField(("Date"), default=datetime.date.today)
-    Desc = models.CharField(max_length=500, null=True, blank=True)
-    LinkToPaper = models.TextField(validators=[URLValidator()], blank=True, null=True)
+    Desc = models.TextField(null=True, blank=True)
+    LinkToPaper = models.URLField(blank=True, null=True)
     PaperId = models.CharField(max_length=50, null=True, blank=True)
     isbn = models.CharField(max_length=50, null=True, blank=True)
     issn = models.CharField(max_length=50, null=True, blank=True)
     proof_of_submission = models.FileField(null=True, blank=True)
     project_mentor = models.CharField(max_length=100, null=True, blank=True)
-    duration_of_project = models.CharField(max_length=50, null=True, blank=True)
-    total_hours = models.CharField(max_length=10, null=True, blank=True)
+    duration_of_project = models.CharField(max_length=100, null=True, blank=True)
+    total_hours = models.IntegerField(default=0, null=True, blank=True)
     research_type = (
         ("Conference", "Conference"),
         ("Journal", "Journal"),
         ("Chapter", "Chapter"),
     )
     type = models.CharField(max_length=20, choices=research_type, blank=True, null=True)
-    Published_under = models.ForeignKey(
-        TeacherProfile,
-        blank=True,
-        null=True,
-        related_name="verifiedpaper",
-        on_delete=models.CASCADE,
-    )
     images = models.ManyToManyField(Image)
 
     # image1 = models.FileField(null=True, blank=True)
