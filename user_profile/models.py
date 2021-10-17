@@ -10,13 +10,17 @@ from django.db.models.signals import m2m_changed
 from django.core.exceptions import ValidationError
 from simple_history.models import HistoricalRecords
 from django.contrib.postgres.fields import JSONField
+
 # import django_filters
+
 
 class TeacherProfile(models.Model):
     teacher = models.OneToOneField(User, on_delete=models.CASCADE)
     Sap_Id = models.BigIntegerField(
-        validators=[MaxValueValidator(99999999999),
-                    MinValueValidator(10000000000)], blank=True, null=True)
+        validators=[MaxValueValidator(99999999999), MinValueValidator(10000000000)],
+        blank=True,
+        null=True,
+    )
     first_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=True, null=True)
     department = models.CharField(max_length=50, blank=True, null=True)
@@ -26,27 +30,31 @@ class TeacherProfile(models.Model):
         ("Male", "Male"),
         ("Female", "Female"),
     )
-    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, blank=True, null=True)
+    gender = models.CharField(
+        max_length=6, choices=GENDER_CHOICES, blank=True, null=True
+    )
 
     class Meta:
-        permissions = (
-            ("view_teacher", "Can see teacher profile"),
-        )
+        permissions = (("view_teacher", "Can see teacher profile"),)
 
     def __str__(self):
         return str(self.Sap_Id)
 
 
 class StudentProfile(models.Model):
-    student = models.OneToOneField(User, on_delete=models.CASCADE, related_name='stud')
+    student = models.OneToOneField(User, on_delete=models.CASCADE, related_name="stud")
     first_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=True, null=True)
     Sap_Id = models.BigIntegerField(
-        validators=[MaxValueValidator(99999999999),
-                    MinValueValidator(10000000000)], blank=True, null=True)
+        validators=[MaxValueValidator(99999999999), MinValueValidator(10000000000)],
+        blank=True,
+        null=True,
+    )
     sap = models.CharField(max_length=50, blank=True, null=True)
     department = models.CharField(max_length=50, blank=True, null=True)
-    mentor = models.ForeignKey(TeacherProfile,on_delete=SET_NULL, blank=True, null=True)
+    mentor = models.ForeignKey(
+        TeacherProfile, on_delete=SET_NULL, blank=True, null=True
+    )
     photo = models.FileField(blank=True, null=True)
     github_id = models.CharField(max_length=50, null=True, blank=True)
     bio = models.CharField(max_length=200, blank=True, null=True)
@@ -55,7 +63,8 @@ class StudentProfile(models.Model):
         ("Female", "Female"),
     )
     gender = models.CharField(
-        max_length=6, choices=GENDER_CHOICES, blank=True, null=True)
+        max_length=6, choices=GENDER_CHOICES, blank=True, null=True
+    )
     mobileNo = models.CharField(max_length=50, blank=True, null=True)
     YEAR_CHOICES = (
         ("FE", "First Year"),
@@ -63,18 +72,16 @@ class StudentProfile(models.Model):
         ("TE", "Third Year"),
         ("BE", "Final Year"),
     )
-    year = models.CharField(
-        max_length=20, choices=YEAR_CHOICES, blank=True, null=True)
+    year = models.CharField(max_length=20, choices=YEAR_CHOICES, blank=True, null=True)
     cgpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2
+    )
 
     class Meta:
-        permissions = (
-            ("view_student", "Can see student profile"),
-        )
+        permissions = (("view_student", "Can see student profile"),)
 
     def __str__(self):
-        return str(str(self.Sap_Id) + '   ' + str(self.id))
+        return str(str(self.Sap_Id) + "   " + str(self.id))
 
 
 class Recruiter(models.Model):
@@ -107,58 +114,103 @@ class TermTest(models.Model):
 
 
 class SubjectMarks(models.Model):
-    tt = models.ForeignKey(TermTest, related_name='subject', on_delete=models.CASCADE)
+    tt = models.ForeignKey(TermTest, related_name="subject", on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     marks = models.DecimalField(
-        max_digits=4, decimal_places=2,
-        validators=[MaxValueValidator(0),
-                    MinValueValidator(20)], blank=True, null=True)
+        max_digits=4,
+        decimal_places=2,
+        validators=[MaxValueValidator(0), MinValueValidator(20)],
+        blank=True,
+        null=True,
+    )
 
     def __str__(self):
         return str(self.tt.tt_name) + str(self.subject)
 
+
 class Education(models.Model):
     student_profile = models.ForeignKey(
-        StudentProfile, related_name='education', on_delete=models.CASCADE)
+        StudentProfile, related_name="education", on_delete=models.CASCADE
+    )
     sem1_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem1_tt1 = models.ForeignKey(TermTest, related_name='sem1_tt1', null=True, on_delete=models.CASCADE)
-    sem1_tt2 = models.ForeignKey(TermTest, related_name='sem1_tt2', null=True, on_delete=models.CASCADE)
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2
+    )
+    sem1_tt1 = models.ForeignKey(
+        TermTest, related_name="sem1_tt1", null=True, on_delete=models.CASCADE
+    )
+    sem1_tt2 = models.ForeignKey(
+        TermTest, related_name="sem1_tt2", null=True, on_delete=models.CASCADE
+    )
     sem1_marksheet = models.FileField(blank=True, null=True)
     sem2_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem2_tt1 = models.ForeignKey(TermTest, related_name='sem2_tt1', null=True, on_delete=models.CASCADE)
-    sem2_tt2 = models.ForeignKey(TermTest, related_name='sem2_tt2', null=True, on_delete=models.CASCADE)
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2
+    )
+    sem2_tt1 = models.ForeignKey(
+        TermTest, related_name="sem2_tt1", null=True, on_delete=models.CASCADE
+    )
+    sem2_tt2 = models.ForeignKey(
+        TermTest, related_name="sem2_tt2", null=True, on_delete=models.CASCADE
+    )
     sem2_marksheet = models.FileField(blank=True, null=True)
     sem3_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem3_tt1 = models.ForeignKey(TermTest, related_name='sem3_tt1', null=True, on_delete=models.CASCADE)
-    sem3_tt2 = models.ForeignKey(TermTest, related_name='sem3_tt2', null=True, on_delete=models.CASCADE)
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2
+    )
+    sem3_tt1 = models.ForeignKey(
+        TermTest, related_name="sem3_tt1", null=True, on_delete=models.CASCADE
+    )
+    sem3_tt2 = models.ForeignKey(
+        TermTest, related_name="sem3_tt2", null=True, on_delete=models.CASCADE
+    )
     sem3_marksheet = models.FileField(blank=True, null=True)
     sem4_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem4_tt1 = models.ForeignKey(TermTest, related_name='sem4_tt1', null=True, on_delete=models.CASCADE)
-    sem4_tt2 = models.ForeignKey(TermTest, related_name='sem4_tt2', null=True, on_delete=models.CASCADE)
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2
+    )
+    sem4_tt1 = models.ForeignKey(
+        TermTest, related_name="sem4_tt1", null=True, on_delete=models.CASCADE
+    )
+    sem4_tt2 = models.ForeignKey(
+        TermTest, related_name="sem4_tt2", null=True, on_delete=models.CASCADE
+    )
     sem4_marksheet = models.FileField(blank=True, null=True)
     sem5_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem5_tt1 = models.ForeignKey(TermTest, related_name='sem5_tt1', null=True, on_delete=models.CASCADE)
-    sem5_tt2 = models.ForeignKey(TermTest, related_name='sem5_tt2', null=True, on_delete=models.CASCADE)
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2
+    )
+    sem5_tt1 = models.ForeignKey(
+        TermTest, related_name="sem5_tt1", null=True, on_delete=models.CASCADE
+    )
+    sem5_tt2 = models.ForeignKey(
+        TermTest, related_name="sem5_tt2", null=True, on_delete=models.CASCADE
+    )
     sem5_marksheet = models.FileField(blank=True, null=True)
     sem6_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem6_tt1 = models.ForeignKey(TermTest, related_name='sem6_tt1', null=True, on_delete=models.CASCADE)
-    sem6_tt2 = models.ForeignKey(TermTest, related_name='sem6_tt2', null=True, on_delete=models.CASCADE)
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2
+    )
+    sem6_tt1 = models.ForeignKey(
+        TermTest, related_name="sem6_tt1", null=True, on_delete=models.CASCADE
+    )
+    sem6_tt2 = models.ForeignKey(
+        TermTest, related_name="sem6_tt2", null=True, on_delete=models.CASCADE
+    )
     sem6_marksheet = models.FileField(blank=True, null=True)
     sem7_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem7_tt1 = models.ForeignKey(TermTest, related_name='sem7_tt1', null=True, on_delete=models.CASCADE)
-    sem7_tt2 = models.ForeignKey(TermTest, related_name='sem7_tt2', null=True, on_delete=models.CASCADE)
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2
+    )
+    sem7_tt1 = models.ForeignKey(
+        TermTest, related_name="sem7_tt1", null=True, on_delete=models.CASCADE
+    )
+    sem7_tt2 = models.ForeignKey(
+        TermTest, related_name="sem7_tt2", null=True, on_delete=models.CASCADE
+    )
     sem7_marksheet = models.FileField(blank=True, null=True)
     sem8_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2)
-    sem8_tt1 = models.ForeignKey(TermTest, related_name='sem8_tt1', null=True, on_delete=models.CASCADE)
-    sem8_tt2 = models.ForeignKey(TermTest, related_name='sem8_tt2', null=True, on_delete=models.CASCADE)
+        blank=True, null=True, default=None, max_digits=4, decimal_places=2
+    )
+    sem8_tt1 = models.ForeignKey(
+        TermTest, related_name="sem8_tt1", null=True, on_delete=models.CASCADE
+    )
+    sem8_tt2 = models.ForeignKey(
+        TermTest, related_name="sem8_tt2", null=True, on_delete=models.CASCADE
+    )
     sem8_marksheet = models.FileField(blank=True, null=True)
     history = HistoricalRecords()
 
@@ -176,9 +228,12 @@ class KT(models.Model):
         ("SEM8", "Semester 8"),
     )
     subject_semester = models.CharField(max_length=20, choices=SEM_CHOICES)
-    education = models.ForeignKey(Education, related_name='kt', on_delete=models.CASCADE)
+    education = models.ForeignKey(
+        Education, related_name="kt", on_delete=models.CASCADE
+    )
 
-'''
+
+"""
 class Experience(models.Model):
     employee = models.ForeignKey(TeacherProfile, on_delete=models.CASCADE)
     companyName = models.CharField(max_length=50)
@@ -186,14 +241,18 @@ class Experience(models.Model):
     Location = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
     date = models.DateField(("Date"), default=datetime.date.today, blank=True)
-'''
+"""
+
+
 class Image(models.Model):
-    image = models.ImageField(upload_to = "images/")
+    image = models.ImageField(upload_to="images/")
     alt = models.CharField(max_length=255, blank=True)
 
 
 class Hackathon(models.Model):
-    student_profile = models.ForeignKey(StudentProfile, related_name="hackathon", on_delete=models.CASCADE)
+    student_profile = models.ForeignKey(
+        StudentProfile, related_name="hackathon", on_delete=models.CASCADE
+    )
     CompetitionName = models.CharField(max_length=50, blank=True, null=True)
     StartDate = models.DateField(("StartDate"), default=datetime.date.today)
     EndDate = models.DateField(("EndDate"), default=datetime.date.today)
@@ -206,16 +265,17 @@ class Hackathon(models.Model):
     # image4 = models.FileField(null=True, blank=True)
     # image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(null=True, blank=True, default=None)
     total_no_of_hours = models.IntegerField(default=0)
-
 
     def __str__(self):
         return str(self.CompetitionName)
 
 
 class Skill(models.Model):
-    user_profile = models.ForeignKey(StudentProfile, related_name="skill", on_delete=models.CASCADE)
+    user_profile = models.ForeignKey(
+        StudentProfile, related_name="skill", on_delete=models.CASCADE
+    )
     skill = models.CharField(max_length=50)
     history = HistoricalRecords()
 
@@ -224,7 +284,9 @@ class Skill(models.Model):
 
 
 class Internship(models.Model):
-    employee = models.ForeignKey(StudentProfile, related_name="internships", on_delete=models.CASCADE)
+    employee = models.ForeignKey(
+        StudentProfile, related_name="internships", on_delete=models.CASCADE
+    )
     company = models.CharField(max_length=50, blank=True, null=True)
     Position = models.CharField(max_length=50, blank=True, null=True)
     Loc = models.CharField(max_length=50, blank=True, null=True)
@@ -240,7 +302,9 @@ class Internship(models.Model):
         ("Paid", "Paid"),
         ("Unpaid", "Unpaid"),
     )
-    stipend = models.CharField(max_length=6, choices=stipend_options, blank=True, null=True)
+    stipend = models.CharField(
+        max_length=6, choices=stipend_options, blank=True, null=True
+    )
     offer_letter = models.FileField(blank=True, null=True)
     Certificate = models.FileField(blank=True, null=True)
     total_hours = models.CharField(max_length=10, null=True, blank=True)
@@ -255,7 +319,7 @@ class Internship(models.Model):
     # image4 = models.FileField(blank=True, null=True)
     # image5 = models.FileField(blank=True, null=True)
     history = HistoricalRecords()
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(null=True, blank=True, default=None)
 
     def __str__(self):
         return str(self.company)
@@ -263,15 +327,26 @@ class Internship(models.Model):
 
 class Project(models.Model):
     student_profile = models.ForeignKey(
-        StudentProfile, related_name="projects", on_delete=models.CASCADE)
+        StudentProfile, related_name="projects", on_delete=models.CASCADE
+    )
     ProjName = models.CharField(max_length=50, blank=True, null=True)
     ProjURL = models.TextField(validators=[URLValidator()], blank=True, null=True)
     ProjDesc = models.CharField(max_length=500, blank=True, null=True)
     projectUnderTeacher = models.ForeignKey(
-        TeacherProfile, blank=True, related_name="verifiedprojects", null=True, on_delete=models.CASCADE)
+        TeacherProfile,
+        blank=True,
+        related_name="verifiedprojects",
+        null=True,
+        on_delete=models.CASCADE,
+    )
     skill = models.ForeignKey(
-        Skill, related_name="projectskills", blank=True, null=True, on_delete=models.CASCADE)
-    
+        Skill,
+        related_name="projectskills",
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+    )
+
     images = models.ManyToManyField(Image)
 
     # image1 = models.FileField(blank=True, null=True)
@@ -280,21 +355,21 @@ class Project(models.Model):
     # image4 = models.FileField(blank=True, null=True,)
     # image5 = models.FileField(blank=True, null=True,)
     history = HistoricalRecords()
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(null=True, blank=True, default=None)
 
     def __str__(self):
         return str(self.ProjName)
 
 
 class Committee(models.Model):
-    employee = models.ForeignKey(StudentProfile, related_name="committee", on_delete=models.CASCADE)
+    employee = models.ForeignKey(
+        StudentProfile, related_name="committee", on_delete=models.CASCADE
+    )
     OrganisationName = models.CharField(max_length=50, blank=True, null=True)
     YourPosition = models.CharField(max_length=50, blank=True, null=True)
     Loc = models.CharField(max_length=50, blank=True, null=True)
-    dateFrom = models.DateField(
-        ("Date"), default=datetime.date.today)
-    dateTo = models.DateField(
-        ("Date"), default=datetime.date.today)
+    dateFrom = models.DateField(("Date"), default=datetime.date.today)
+    dateTo = models.DateField(("Date"), default=datetime.date.today)
     Desc = models.CharField(max_length=500, blank=True, null=True)
     Certificate = models.FileField(null=True, blank=True)
     images = models.ManyToManyField(Image)
@@ -305,18 +380,19 @@ class Committee(models.Model):
     # image4 = models.FileField(null=True, blank=True)
     # image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(null=True, blank=True, default=None)
 
     def __str__(self):
         return str(self.OrganisationName)
 
 
 class ResearchPaper(models.Model):
-    student = models.ForeignKey(StudentProfile, related_name="researchpaper", on_delete=models.CASCADE)
+    student = models.ForeignKey(
+        StudentProfile, related_name="researchpaper", on_delete=models.CASCADE
+    )
     Title = models.CharField(max_length=50, null=True, blank=True)
     Publication = models.CharField(max_length=100, null=True, blank=True)
-    DateOfPublication = models.DateField(
-        ("Date"), default=datetime.date.today)
+    DateOfPublication = models.DateField(("Date"), default=datetime.date.today)
     Desc = models.CharField(max_length=500, null=True, blank=True)
     LinkToPaper = models.TextField(validators=[URLValidator()], blank=True, null=True)
     PaperId = models.CharField(max_length=50, null=True, blank=True)
@@ -333,7 +409,12 @@ class ResearchPaper(models.Model):
     )
     type = models.CharField(max_length=20, choices=research_type, blank=True, null=True)
     Published_under = models.ForeignKey(
-        TeacherProfile, blank=True, null=True, related_name="verifiedpaper", on_delete=models.CASCADE)
+        TeacherProfile,
+        blank=True,
+        null=True,
+        related_name="verifiedpaper",
+        on_delete=models.CASCADE,
+    )
     images = models.ManyToManyField(Image)
 
     # image1 = models.FileField(null=True, blank=True)
@@ -342,22 +423,29 @@ class ResearchPaper(models.Model):
     # image4 = models.FileField(null=True, blank=True)
     # image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(null=True, blank=True, default=None)
 
     def __str__(self):
         return str(self.Title)
 
 
 class BeProject(models.Model):
-    student = models.ForeignKey(StudentProfile, related_name='beprojects', on_delete=models.CASCADE)
+    student = models.ForeignKey(
+        StudentProfile, related_name="beprojects", on_delete=models.CASCADE
+    )
     ProjName = models.CharField(max_length=50, null=True, blank=True)
     ProjURL = models.URLField(null=True, blank=True)
     ProjDesc = models.CharField(max_length=500, null=True, blank=True)
     teammates = models.ManyToManyField(
-        StudentProfile, related_name='beteammate', blank=True)
+        StudentProfile, related_name="beteammate", blank=True
+    )
     projectUnderTeacher = models.ForeignKey(
-        TeacherProfile, blank=True, null=True,
-        related_name="verifiedbeprojects", on_delete=models.CASCADE)
+        TeacherProfile,
+        blank=True,
+        null=True,
+        related_name="verifiedbeprojects",
+        on_delete=models.CASCADE,
+    )
     images = models.ManyToManyField(Image)
 
     # image1 = models.FileField(null=True, blank=True)
@@ -367,14 +455,16 @@ class BeProject(models.Model):
     # image5 = models.FileField(null=True, blank=True)
     project_report = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(null=True, blank=True, default=None)
 
     def __str__(self):
         return str(self.ProjName)
 
 
 class ExtraCurricular(models.Model):
-    student = models.ForeignKey(StudentProfile, related_name='extracurricular', on_delete=models.CASCADE)
+    student = models.ForeignKey(
+        StudentProfile, related_name="extracurricular", on_delete=models.CASCADE
+    )
     name = models.CharField(max_length=50, null=True, blank=True)
     desc = models.CharField(max_length=500, null=True, blank=True)
     achievements = models.CharField(max_length=500, null=True, blank=True)
@@ -394,7 +484,9 @@ class ExtraCurricular(models.Model):
 
 
 class CompetitiveExams(models.Model):
-    student = models.ForeignKey(StudentProfile, related_name='competitiveexams', on_delete=models.CASCADE)
+    student = models.ForeignKey(
+        StudentProfile, related_name="competitiveexams", on_delete=models.CASCADE
+    )
     gre_score = models.CharField(max_length=10, null=True, blank=True)
     toefl_score = models.CharField(max_length=10, null=True, blank=True)
     cat_score = models.CharField(max_length=10, null=True, blank=True)
@@ -404,7 +496,9 @@ class CompetitiveExams(models.Model):
 
 
 class Admit(models.Model):
-    student = models.ForeignKey(StudentProfile, related_name='admit', on_delete=models.CASCADE)
+    student = models.ForeignKey(
+        StudentProfile, related_name="admit", on_delete=models.CASCADE
+    )
     college_name = models.CharField(max_length=50, null=True, blank=True)
     masters_field = models.CharField(max_length=50, null=True, blank=True)
     college_location = models.CharField(max_length=50, null=True, blank=True)
