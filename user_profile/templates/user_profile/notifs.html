@@ -892,7 +892,7 @@
                   <td class="mailbox-name"><a target="_blank" href="{{ hackathon.Github_url }}">{{ hackathon.Github_url }}</a></td>
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:hackathon-approved' hackathon.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="{% url 'user_profile:hackathon-approved' hackathon.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:red" href="{% url 'user_profile:hackathon-rejected' hackathon.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -1033,7 +1033,7 @@
                   {% endifequal %}
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:be-project-approved' project.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="{% url 'user_profile:be-project-approved' project.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:red" href="{% url 'user_profile:be-project-rejected' project.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
                   </td>
                 </tr>
                 {% endfor %}

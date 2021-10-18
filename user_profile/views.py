@@ -1707,6 +1707,7 @@ def hackathon_rejected(request, id):
 
 # Project Views
 def project_approved(request, id):
+    print("BEFORE TRy")
     try:
         project = Project.objects.get(id=id)
     except Project.DoesNotExist:
@@ -1714,6 +1715,7 @@ def project_approved(request, id):
     if project.is_approved == None:
         project.is_approved = True
         project.save()
+        print("PROJECT APPROVED")
     return redirect("user_profile:notifs")
 
 def project_rejected(request, id):
