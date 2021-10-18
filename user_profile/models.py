@@ -344,7 +344,6 @@ class Committee(models.Model):
     # image4 = models.FileField(null=True, blank=True)
     # image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
-    is_approved = models.BooleanField(null=True, blank=True, default=None)
 
     def __str__(self):
         return str(self.OrganisationName)

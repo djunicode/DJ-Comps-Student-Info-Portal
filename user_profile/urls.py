@@ -31,9 +31,7 @@ urlpatterns = [
     url(r"^researchpaper/(\d+)$", views.researchpaper, name="researchpaper"),
     url(r"^extracurricular/(\d+)$", views.extracurricular, name="extracurricular"),
     url(r"^searchany/", views.searchany, name="searchany"),
-    url(
-        r"^editprofile", views.show_edit_studentprofile, name="show_edit_studentprofile"
-    ),
+    url(r"^editprofile", views.show_edit_studentprofile, name="show_edit_studentprofile"),
     url(r"^edit_basic_info/(\d+)$", views.edit_basic_info),
     url(r"^edit_competitive_exams/(\d+)$", views.edit_competitive_exams),
     url(r"^edit_academic_info/(\d+)$", views.edit_academic_info),
@@ -57,4 +55,16 @@ urlpatterns = [
     url(r"^filters_adv/$", views.filters_adv, name="filters_adv"),
     path("internship_approved/<int:id>", views.internship_approved, name="iapproved"),
     path("internship_rejected/<int:id>", views.internship_rejected, name="irejected"),
+
+    path("hackathon_approved/<int:id>", views.hackathon_approved, name="hackathon-approved"),
+    path("hackathon_rejected/<int:id>", views.hackathon_rejected, name="hackathon-rejected"),
+
+    path("project_approved/<int:id>", views.project_approved, name="project-approved"),
+    path("project_rejected/<int:id>", views.project_rejected, name="project-rejected"),
+
+    path("research_paper_approved/<int:id>", views.research_paper_approved, name="research-paper-approved"),
+    path("research_paper_rejected/<int:id>", views.research_paper_rejected, name="research-paper-rejected"),
+
+    path("be_project_approved/<int:id>", views.BE_project_approved, name="be-project-approved"),
+    path("be_project_rejected/<int:id>", views.BE_project_rejected, name="be-project-rejected"),
 ]

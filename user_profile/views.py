@@ -1661,7 +1661,7 @@ def filters_adv(request):
         },
     )
 
-
+# Internship Views
 def internship_approved(request, id):
     try:
         internship = Internship.objects.get(id=id)
@@ -1681,4 +1681,89 @@ def internship_rejected(request, id):
     if internship.is_approved == None:
         internship.is_approved = False
         internship.save()
+    return redirect("user_profile:notifs")
+
+# Hackathon Views
+def hackathon_approved(request, id):
+    try:
+        hackathon = Hackathon.objects.get(id=id)
+    except Hackathon.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if hackathon.is_approved == None:
+        hackathon.is_approved = True
+        hackathon.save()
+    return redirect("user_profile:notifs")
+
+
+def hackathon_rejected(request, id):
+    try:
+        hackathon = Hackathon.objects.get(id=id)
+    except Hackathon.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if hackathon.is_approved == None:
+        hackathon.is_approved = False
+        hackathon.save()
+    return redirect("user_profile:notifs")
+
+# Project Views
+def project_approved(request, id):
+    try:
+        project = Project.objects.get(id=id)
+    except Project.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if project.is_approved == None:
+        project.is_approved = True
+        project.save()
+    return redirect("user_profile:notifs")
+
+def project_rejected(request, id):
+    try:
+        project = Project.objects.get(id=id)
+    except Project.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if project.is_approved == None:
+        project.is_approved = False
+        project.save()
+    return redirect("user_profile:notifs")
+
+# Research Paper Views
+def research_paper_approved(request, id):
+    try:
+        research_paper = ResearchPaper.objects.get(id=id)
+    except ResearchPaper.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if research_paper.is_approved == None:
+        research_paper.is_approved = True
+        research_paper.save()
+    return redirect("user_profile:notifs")
+
+def research_paper_rejected(request, id):
+    try:
+        research_paper = ResearchPaper.objects.get(id=id)
+    except ResearchPaper.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if research_paper.is_approved == None:
+        research_paper.is_approved = False
+        research_paper.save()
+    return redirect("user_profile:notifs")
+
+# BE Project Views
+def BE_project_approved(request, id):
+    try:
+        BE_project = BeProject.objects.get(id=id)
+    except BeProject.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if BE_project.is_approved == None:
+        BE_project.is_approved = True
+        BE_project.save()
+    return redirect("user_profile:notifs")
+
+def BE_project_rejected(request, id):
+    try:
+        BE_project = BeProject.objects.get(id=id)
+    except BeProject.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if BE_project.is_approved == None:
+        BE_project.is_approved = False
+        BE_project.save()
     return redirect("user_profile:notifs")
