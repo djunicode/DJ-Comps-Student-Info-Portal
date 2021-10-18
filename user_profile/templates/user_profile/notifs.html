@@ -594,7 +594,7 @@
                   <th class="mailbox-name">Under Teacher</th>
                   <th class="mailbox-name">Skill</th>
                 </thead>
-                {% for project in project_approved %}
+                {% for project in project_rejected %}
                 <tr>
                   <td class="mailbox-number">{{ forloop.counter }}</td>
                   <td class="mailbox-name">{{project.student_profile.Sap_Id}} - {{project.student_profile.first_name}}
@@ -1065,7 +1065,6 @@
                   <th class="mailbox-name">Project Description</th>
                   <th class="mailbox-name">Under Teacher</th>
                   <th class="mailbox-name">Project Report</th>
-                  <th class="mailbox-name">Action</th>
                 </thead>
                 {% for project in BeProject_approved %}
                 <tr>
@@ -1112,7 +1111,6 @@
                   <th class="mailbox-name">Project Description</th>
                   <th class="mailbox-name">Under Teacher</th>
                   <th class="mailbox-name">Project Report</th>
-                  <th class="mailbox-name">Action</th>
                 </thead>
                 {% for project in BeProject_rejected %}
                 <tr>

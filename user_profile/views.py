@@ -417,7 +417,7 @@ def student_profile(request, id):
         if Project.objects.filter(student_profile=student).exists():
             color = ["#f56954", "#00a65a", "#f39c12", "#00c0ef", "#3c8dbc", "#d2d6de"]
             project_objects = Project.objects.filter(student_profile=student)
-            projectskill_stats = [project.skill.skill for project in project_objects]
+            projectskill_stats = [project.skill.skill for project in project_objects if project.skill is not None]
             projectskill_stats = dict(collections.Counter(projectskill_stats))
             project_skills = []
             i = 0
@@ -1707,7 +1707,6 @@ def hackathon_rejected(request, id):
 
 # Project Views
 def project_approved(request, id):
-    print("BEFORE TRy")
     try:
         project = Project.objects.get(id=id)
     except Project.DoesNotExist:
@@ -1715,7 +1714,6 @@ def project_approved(request, id):
     if project.is_approved == None:
         project.is_approved = True
         project.save()
-        print("PROJECT APPROVED")
     return redirect("user_profile:notifs")
 
 def project_rejected(request, id):
