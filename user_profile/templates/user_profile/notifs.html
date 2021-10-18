@@ -519,8 +519,8 @@
                   <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
                   <td class="mailbox-name">{{ project.skill }}</td>
                   <td class="mailbox-name">
-                    <a style="color:green" href="#"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:green" href="{% url 'user_profile:project-approved' project.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                    <a style="color:red" href="{% url 'user_profile:project-rejected' project.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -669,8 +669,8 @@
                   <td class="mailbox-name">{{ research_paper.duration_of_project }}</td>
                   <td class="mailbox-name">{{ research_paper.total_hours }}</td>
                   <td class="mailbox-name">
-                    <a style="color:green" href="#"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:green" href="{% url 'user_profile:research-paper-approved' research_paper.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                    <a style="color:red" href="{% url 'user_profile:research-paper-rejected' research_paper.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -891,8 +891,8 @@
                   <td class="mailbox-name"><a target="_blank" href="{{ hackathon.URL }}">{{ hackathon.URL }}</a></td>
                   <td class="mailbox-name"><a target="_blank" href="{{ hackathon.Github_url }}">{{ hackathon.Github_url }}</a></td>
                   <td class="mailbox-name">
-                    <a style="color:green" href="#"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:green" href="{% url 'user_profile:hackathon-approved' hackathon.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                    <a style="color:red" href="{% url 'user_profile:hackathon-approved' hackathon.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -1032,8 +1032,8 @@
                   </td>
                   {% endifequal %}
                   <td class="mailbox-name">
-                    <a style="color:green" href="#"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:green" href="{% url 'user_profile:be-project-approved' project.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                    <a style="color:red" href="{% url 'user_profile:be-project-approved' project.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
                   </td>
                 </tr>
                 {% endfor %}
