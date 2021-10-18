@@ -596,10 +596,7 @@ def notifs(request):
     internship_pending = Internship.objects.filter(
         employee__mentor=teacher, is_approved=None
     )
-    for i in internship_approved:
-        if i.Certificate == "":
-            print(True)
-
+    
     # projects
     project_approved = Project.objects.filter(
         student_profile__mentor=teacher, is_approved=True
@@ -649,6 +646,40 @@ def notifs(request):
 
     # grades
     grades = Education.objects.filter(student_profile__mentor=teacher)
+    g = []
+    for i in grades:
+        count=0
+        total=0
+        if i.sem1_gpa is not None:
+            total+=i.sem1_gpa
+            count+=1
+        if i.sem2_gpa is not None:
+            total+=i.sem2_gpa
+            count+=1
+        if i.sem3_gpa is not None:
+            total+=i.sem3_gpa
+            count+=1
+        if i.sem4_gpa is not None:
+            total+=i.sem4_gpa
+            count+=1
+        if i.sem5_gpa is not None:
+            total+=i.sem5_gpa
+            count+=1
+        if i.sem6_gpa is not None:
+            total+=i.sem6_gpa
+            count+=1
+        if i.sem7_gpa is not None:
+            total+=i.sem7_gpa
+            count+=1
+        if i.sem8_gpa is not None:
+            total+=i.sem8_gpa
+            count+=1
+        if count==0:
+            g.append([i,'Not Updated'])
+        else:
+            g.append([i,round(total/count, 2)])
+    grades = g
+
 
     # teacher = TeacherProfile.objects.get(teacher=request.user)
 
