@@ -1393,11 +1393,13 @@ def edit_internship_info(request, id):
         if request.POST.get("InternshipTo") != "":
             internship.To = request.POST.get("InternshipTo")
         internship.Certificate = request.FILES.get("certificate")
-        internship.image1 = request.FILES.get("image1")
-        internship.image2 = request.FILES.get("image2")
-        internship.image3 = request.FILES.get("image3")
-        internship.image4 = request.FILES.get("image4")
-        internship.image5 = request.FILES.get("image5")
+        internship.total_hours = request.POST.get("TotalHours")
+        internship.how = request.POST.get("how")
+
+
+        internship.evaluation_report_mentor = request.FILES.get("evaluation_report_mentor")
+        internship.evaluation_report_supervisor = request.FILES.get("evaluation_report_supervisor")
+        internship.evaluation_report_self = request.FILES.get("evaluation_report_self")
         internship.save()
         print(internship.company)
         return HttpResponse("done")

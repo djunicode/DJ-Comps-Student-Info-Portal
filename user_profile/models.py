@@ -240,7 +240,7 @@ class Internship(models.Model):
     )
     company = models.CharField(max_length=50, blank=True, null=True)
     Position = models.CharField(max_length=50, blank=True, null=True)
-    # Loc = models.CharField(max_length=50, blank=True, null=True)
+    Loc = models.CharField(max_length=50, blank=True, null=True)
     From = models.DateField(("Date"), default=datetime.date.today)
     To = models.DateField(("Date"), default=datetime.date.today)
     desc = models.TextField(blank=True, null=True)
