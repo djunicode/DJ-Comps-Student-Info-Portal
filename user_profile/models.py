@@ -210,10 +210,9 @@ class Hackathon(models.Model):
     Desc = models.TextField(blank=True, null=True)
     URL = models.URLField(null=True, blank=True)  # if hosted url
     Github_url = models.URLField(null=True, blank=True)
-    # images = models.ManyToManyField(Image)
-    # image1 = models.FileField(blank=True, null=True)
-    # image2 = models.FileField(null=True, blank=True)
-    # image3 = models.FileField(null=True, blank=True)
+    Certificate = models.FileField(blank=True, null=True)
+    image1 = models.FileField(null=True, blank=True)
+    image2 = models.FileField(null=True, blank=True)
     # image4 = models.FileField(null=True, blank=True)
     # image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()

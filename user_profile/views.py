@@ -1315,13 +1315,16 @@ def edit_hackathon_info(request, id):
         if request.POST.get("HackathonDate") != "":
             hackathon.StartDate = request.POST.get("HackathonDate")
         hackathon.Desc = request.POST.get("HackathonDescription")
+        hackathon.Github_url = request.POST.get("GithubURL")
         hackathon.URL = request.POST.get("HackathonUrl")
+
+        hackathon.total_no_of_hours = request.POST.get("TotalHours")
+        
+        hackathon.Certificate = request.FILES.get("certificate")
 
         hackathon.image1 = request.FILES.get("image1")
         hackathon.image2 = request.FILES.get("image2")
-        hackathon.image3 = request.FILES.get("image3")
-        hackathon.image4 = request.FILES.get("image4")
-        hackathon.image5 = request.FILES.get("image5")
+
         hackathon.save()
         # number = "9833175929"
         # message = "THE STUDENT " + str(student_profile.first_name) + " has added the Hackathon " \

@@ -611,9 +611,19 @@
                                           <input type="text"  name="HackathonDescription" class="form-control" id="HackathonDescription">
                                         </div>
                                       </div>
+                                      
+                                      <!-- NEW GITHUB URL -->
+                                      <div class="form-group">
+                                        <label for="url" class="col-sm-2 control-label"> Github URL</label>
+
+                                        <div class="col-sm-8">
+                                          <input type="url" name="GithubURL" class="form-control" id="HackathonUrl">
+                                        </div>
+                                      </div>
+
 
                                       <div class="form-group">
-                                        <label for="url" class="col-sm-2 control-label"> URL</label>
+                                        <label for="url" class="col-sm-2 control-label"> Deployed URL</label>
 
                                         <div class="col-sm-8">
                                           <input type="url" name="HackathonUrl" class="form-control" id="HackathonUrl">
@@ -627,6 +637,26 @@
                                           <input type="date" name="HackathonDate" class="form-control" id="HackathonDate">
                                         </div>
                                       </div>
+
+                                      <!-- NEW STUFF -->
+
+                                      <div class="form-group">
+                                        <label for="number" class="col-sm-2 control-label"> Total Number of Hours </label>
+
+                                        <div class="col-sm-8">
+                                          <input type="number" name="TotalHours" class="form-control" id="HackathonDate">
+                                        </div>
+                                      </div>
+
+
+                                      <div class="form-group">
+                                        <label for="image" class="col-sm-2 control-label"> Certificate </label>
+
+                                        <div class="col-sm-8">
+                                          <input type="file" name="certificate" class="form-control" id="hackathon-image1">
+                                        </div>
+                                      </div>
+
                                       <div class="form-group">
                                         <label for="image" class="col-sm-2 control-label"> Image 1</label>
 
@@ -634,6 +664,7 @@
                                           <input type="file" name="image1" class="form-control" id="hackathon-image1">
                                         </div>
                                       </div>
+
                                       <div class="form-group">
                                         <label for="image" class="col-sm-2 control-label"> Image 2</label>
 
@@ -641,27 +672,8 @@
                                           <input type="file" name="image2" class="form-control" id="hackathon-image2">
                                         </div>
                                       </div>
-                                      <div class="form-group">
-                                        <label for="image" class="col-sm-2 control-label"> Image 3</label>
 
-                                        <div class="col-sm-8">
-                                          <input type="file" name="image3" class="form-control" id="hackathon-image3">
-                                        </div>
-                                      </div>
-                                      <div class="form-group">
-                                        <label for="image" class="col-sm-2 control-label"> Image 4</label>
 
-                                        <div class="col-sm-8">
-                                          <input type="file" name="image4" class="form-control" id="hackathon-image4">
-                                        </div>
-                                      </div>
-                                      <div class="form-group">
-                                        <label for="image" class="col-sm-2 control-label"> Image 5</label>
-
-                                        <div class="col-sm-8">
-                                          <input type="file" name="image5" class="form-control" id="hackathon-image5">
-                                        </div>
-                                      </div>
                                     </div>
 
                                     <div class="box-footer">
@@ -839,6 +851,7 @@
                                               <p name="url" class="form-control no-border" id="url">{{project.ProjURL}}</p>
                                             </div>
                                           </div>
+                                          
 
                                           <div class="form-group">
                                             <label for="skill" class="col-sm-2 control-label"> Skill</label>
