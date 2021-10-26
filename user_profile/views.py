@@ -1427,18 +1427,12 @@ def edit_committee_info(request, id):
         print(request.POST.get("CommitteeName"))
         committee.YourPosition = request.POST.get("CommitteePosition")
         committee.Desc = request.POST.get("CommitteeDescription")
-        committee.Loc = request.POST.get("CommitteeLocation")
         if request.POST.get("CommitteeFrom") != "":
             committee.dateFrom = request.POST.get("CommitteeFrom")
         if request.POST.get("CommitteeTo") != "":
             committee.dateTo = request.POST.get("CommitteeTo")
         committee.Certificate = request.FILES.get("certificate")
-        committee.image1 = request.FILES.get("image1")
-        committee.image2 = request.FILES.get("image2")
-        committee.image3 = request.FILES.get("image3")
-        committee.image4 = request.FILES.get("image4")
-        committee.image5 = request.FILES.get("image5")
-        print("Yo")
+
         committee.save()
         return HttpResponse("done")
     else:
