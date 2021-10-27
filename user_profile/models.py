@@ -73,6 +73,7 @@ class StudentProfile(models.Model):
         ("BE", "Final Year"),
     )
     year = models.CharField(max_length=20, choices=YEAR_CHOICES, blank=True, null=True)
+
     class Meta:
         permissions = (("view_student", "Can see student profile"),)
 
@@ -125,7 +126,7 @@ class SubjectMarks(models.Model):
 
 
 class Education(models.Model):
-    student_profile = models.ForeignKey(
+    student_profile = models.OneToOneField(
         StudentProfile, related_name="education", on_delete=models.CASCADE
     )
     sem1_gpa = models.DecimalField(
@@ -213,7 +214,7 @@ class Hackathon(models.Model):
     # image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
-    total_no_of_hours = models.IntegerField(default=0)
+    total_no_of_hours = models.IntegerField(default=0, blank=True, null=True)
 
     def __str__(self):
         return str(self.CompetitionName)
