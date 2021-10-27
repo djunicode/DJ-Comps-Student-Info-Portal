@@ -73,6 +73,7 @@ class StudentProfile(models.Model):
         ("BE", "Final Year"),
     )
     year = models.CharField(max_length=20, choices=YEAR_CHOICES, blank=True, null=True)
+
     class Meta:
         permissions = (("view_student", "Can see student profile"),)
 
@@ -125,7 +126,7 @@ class SubjectMarks(models.Model):
 
 
 class Education(models.Model):
-    student_profile = models.ForeignKey(
+    student_profile = models.OneToOneField(
         StudentProfile, related_name="education", on_delete=models.CASCADE
     )
     sem1_gpa = models.DecimalField(
