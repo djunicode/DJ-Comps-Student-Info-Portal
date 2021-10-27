@@ -1149,6 +1149,8 @@ def show_edit_studentprofile(request):
                 if s.skill != "":
                     skill_list.append(s)
             teachers_list = TeacherProfile.objects.all()
+            project_teachers_list = TeacherProfile.objects.all()
+
             students_list = StudentProfile.objects.all().exclude(student=request.user)
 
             context = {
@@ -1163,6 +1165,7 @@ def show_edit_studentprofile(request):
                 "skill_list": skill_list,
                 "competitive_exam": competitive_exam,
                 "admit": admit,
+                "project_teachers_list": project_teachers_list,
                 "teachers_list": teachers_list,
                 "students_list": students_list,
             }
@@ -1400,9 +1403,7 @@ def edit_project_info(request, id):
         project.ProjDesc = request.POST.get("ProjectDescription")
         project.image1 = request.FILES.get("image1")
         project.image2 = request.FILES.get("image2")
-        project.image3 = request.FILES.get("image3")
-        project.image4 = request.FILES.get("image4")
-        project.image5 = request.FILES.get("image5")
+        project.projectUnderTeacher = TeacherProfile.objects.get(Sap_Id=request.POST.get("project_teacher"))
         project.skill = skill
         project.save()
         skill.save()

@@ -744,6 +744,22 @@
                     <input type="text" name="ProjectSkill" class="form-control" id="ProjectSkill" required>
                   </div>
                 </div>
+
+                <div class="form-group">
+                  <label for="url" class="col-sm-2 control-label"> Teacher Guide</label>
+
+                  <div class="col-sm-8">
+                    <select required id="project_teacher" type="text" class="form-control"
+                      placeholder="Name of Your Teacher Guide" name="project_teacher">
+                      <option value="">Select Your Teacher Guide</option>
+                      {% for teacher in project_teachers_list %}
+                      <option value="{{teacher.Sap_Id}}">{{teacher.first_name}} {{teacher.last_name}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+
+
                 <div class="form-group">
                   <label for="image" class="col-sm-2 control-label"> Image 1</label>
 
@@ -758,27 +774,7 @@
                     <input type="file" name="image2" class="form-control no-border" id="project-image2">
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="image" class="col-sm-2 control-label"> Image 3</label>
-
-                  <div class="col-sm-8">
-                    <input type="file" name="image3" class="form-control no-border" id="project-image3">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="image" class="col-sm-2 control-label"> Image 4</label>
-
-                  <div class="col-sm-8">
-                    <input type="file" name="image4" class="form-control no-border" id="project-image4">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="image" class="col-sm-2 control-label"> Image 5</label>
-
-                  <div class="col-sm-8">
-                    <input type="file" name="image5" class="form-control no-border" id="project-image5">
-                  </div>
-                </div>
+                
                 <!--label for="image" class="col-sm-2 control-label"> Image</label-->
                 <!--input type="file" name="pic" accept="image/*" id="image"-->
               </div>
