@@ -1549,11 +1549,6 @@ def edit_extra_info(request, id):
         if request.POST.get("ExtraDate") != "":
             extra.date = request.POST.get("ExtraDate")
         extra.Certificate = request.FILES.get("certificate")
-        extra.image1 = request.FILES.get("image1")
-        extra.image2 = request.FILES.get("image2")
-        extra.image3 = request.FILES.get("image3")
-        extra.image4 = request.FILES.get("image4")
-        extra.image5 = request.FILES.get("image5")
         extra.save()
         return HttpResponse("done")
     else:
