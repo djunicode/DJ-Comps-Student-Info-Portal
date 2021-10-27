@@ -1388,18 +1388,26 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                  <label for="Status" class="col-sm-2 control-label">
-                                                    Status
+                                                  <label for="description" class="col-sm-2 control-label"> ISSN</label>
+
+                                                  <div class="col-sm-8">
+                                                    <input type="text" name="issn" class="form-control" id="issn">
+                                                  </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                  <label for="type" class="col-sm-2 control-label">
+                                                    Publication Type
                                                   </label>
                                                   <div class="col-sm-8">
                                                     <label>
-                                                      <input type="radio" name="status" class="flat-red" value="Published">&nbsp;Published
+                                                      <input type="radio" name="type" class="flat-red" value="Conference">&nbsp;Conference
                                                     </label>
                                                     <label>
-                                                      <input type="radio" name="status" class="flat-red" value="In Proceedings">&nbsp;In Proceedings
+                                                      <input type="radio" name="type" class="flat-red" value="Journal">&nbsp;Journal
                                                     </label>
                                                     <label>
-                                                      <input type="radio" name="status" class="flat-red" value="Submitted">&nbsp;Submitted
+                                                      <input type="radio" name="type" class="flat-red" value="Chapter">&nbsp;Chapter
                                                     </label>
                                                   </div>
                                                 </div>
@@ -1413,6 +1421,7 @@
                                                   </div>
                                                 </div>
 
+                                                
                                                 <div class="form-group">
                                                   <label for="name" class="col-sm-2 control-label"> Date of Publication</label>
 
@@ -1438,41 +1447,51 @@
                                                 </div>
 
 
+                                                <!-- NEW STUFF -->
                                                 <div class="form-group">
-                                                  <label for="image" class="col-sm-2 control-label"> Image 1</label>
+                                                  <label for="text" class="col-sm-2 control-label"> Paper ID</label>
 
                                                   <div class="col-sm-8">
-                                                    <input type="file" name="image1" class="form-control" id="researchpaper-image1">
+                                                    <input type="text" name="paperId" class="form-control" id="paperId">
                                                   </div>
                                                 </div>
+
                                                 <div class="form-group">
-                                                  <label for="image" class="col-sm-2 control-label"> Image 2</label>
+                                                  <label for="file" class="col-sm-2 control-label"> Proof of Submission</label>
 
                                                   <div class="col-sm-8">
-                                                    <input type="file" name="image2" class="form-control" id="researchpaper-image2">
+                                                    <input type="file" name="proof" class="form-control" id="researchpaper-proof">
                                                   </div>
                                                 </div>
+
                                                 <div class="form-group">
-                                                  <label for="image" class="col-sm-2 control-label"> Image 3</label>
+                                                  <label for="text" class="col-sm-2 control-label"> Research Mentor</label>
 
                                                   <div class="col-sm-8">
-                                                    <input type="file" name="image3" class="form-control" id="researchpaper-image3">
+                                                    <input type="text" name="project_mentor" class="form-control" id="project_mentor">
                                                   </div>
                                                 </div>
+
                                                 <div class="form-group">
-                                                  <label for="image" class="col-sm-2 control-label"> Image 4</label>
+                                                  <label for="text" class="col-sm-2 control-label"> Duration of Project</label>
 
                                                   <div class="col-sm-8">
-                                                    <input type="file" name="image4" class="form-control" id="researchpaper-image4">
+                                                    <input type="text" name="duration" class="form-control" id="duration">
                                                   </div>
                                                 </div>
+
                                                 <div class="form-group">
-                                                  <label for="image" class="col-sm-2 control-label"> Image 5</label>
+                                                  <label for="number" class="col-sm-2 control-label"> Total Number of Hours</label>
 
                                                   <div class="col-sm-8">
-                                                    <input type="file" name="image5" class="form-control" id="researchpaper-image5">
+                                                    <input type="number" name="total_hours" class="form-control" id="total_hours">
                                                   </div>
                                                 </div>
+
+                                                
+                                              
+
+
                                               </div>
                                               <div class="box-footer">
 
