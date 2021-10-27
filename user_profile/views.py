@@ -1112,6 +1112,9 @@ def show_edit_studentprofile(request):
             for s in skill:
                 if s.skill != "":
                     skill_list.append(s)
+            teachers_list = TeacherProfile.objects.all()
+            students_list = StudentProfile.objects.all().exclude(student=request.user)
+
             context = {
                 "student_profile": student_profile,
                 "hackathon_list": hackathon,
@@ -1124,6 +1127,8 @@ def show_edit_studentprofile(request):
                 "skill_list": skill_list,
                 "competitive_exam": competitive_exam,
                 "admit": admit,
+                "teachers_list": teachers_list,
+                "students_list": students_list,
             }
             return render(request, "user_profile/edit_student_profile_2.html", context)
     else:
@@ -1516,6 +1521,8 @@ def edit_extra_info(request, id):
 def edit_beproject_info(request, id):
     if request.method == "POST":
         student_profile = StudentProfile.objects.get(id=id)
+        teachers_list = TeacherProfile.objects.all()
+
         try:
             proj = BeProject.objects.get(student=student_profile)
         except ObjectDoesNotExist:
@@ -1523,6 +1530,13 @@ def edit_beproject_info(request, id):
         proj.ProjName = request.POST.get("BEProjectName")
         proj.ProjURL = request.POST.get("BEProjectUrl")
         proj.ProjDesc = request.POST.get("BEProjectDescription")
+        
+        proj.projectUnderTeacher = TeacherProfile.objects.get(Sap_Id=request.POST.get("teacher"))
+
+        teammates = request.POST.getlist("teammates")
+        teammates_list = [StudentProfile.objects.get(Sap_Id=i) for i in teammates]
+        proj.teammates.set(teammates_list)
+
         proj.image1 = request.FILES.get("image1")
         proj.image2 = request.FILES.get("image2")
         proj.image3 = request.FILES.get("image3")
