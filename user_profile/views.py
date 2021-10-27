@@ -1587,9 +1587,7 @@ def edit_beproject_info(request, id):
 
         proj.image1 = request.FILES.get("image1")
         proj.image2 = request.FILES.get("image2")
-        proj.image3 = request.FILES.get("image3")
-        proj.image4 = request.FILES.get("image4")
-        proj.image5 = request.FILES.get("image5")
+
         proj.project_report = request.FILES.get("project_report")
         proj.save()
         return HttpResponse("done")
