@@ -56,7 +56,7 @@ class StudentProfile(models.Model):
         TeacherProfile, on_delete=SET_NULL, blank=True, null=True
     )
     photo = models.FileField(blank=True, null=True)
-    github_id = models.CharField(max_length=50, null=True, blank=True)
+    github_id = models.URLField(null=True, blank=True)
     bio = models.CharField(max_length=200, blank=True, null=True)
     GENDER_CHOICES = (
         ("Male", "Male"),
@@ -73,10 +73,6 @@ class StudentProfile(models.Model):
         ("BE", "Final Year"),
     )
     year = models.CharField(max_length=20, choices=YEAR_CHOICES, blank=True, null=True)
-    cgpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2
-    )
-
     class Meta:
         permissions = (("view_student", "Can see student profile"),)
 
@@ -439,7 +435,7 @@ class ExtraCurricular(models.Model):
 
 
 class CompetitiveExams(models.Model):
-    student = models.ForeignKey(
+    student = models.OneToOneField(
         StudentProfile, related_name="competitiveexams", on_delete=models.CASCADE
     )
     gre_score = models.CharField(max_length=10, null=True, blank=True)

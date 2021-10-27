@@ -383,91 +383,128 @@ def student_profile(request, id):
             student = StudentProfile.objects.get(student=request.user)
         else:
             student = StudentProfile.objects.get(id=id)
-        try:
-            education = Education.objects.get(student_profile=student)
-            sem1gpa = education.sem1_gpa
-            sem2gpa = education.sem2_gpa
-            sem3gpa = education.sem3_gpa
-            sem4gpa = education.sem4_gpa
-            sem5gpa = education.sem5_gpa
-            sem6gpa = education.sem6_gpa
-            sem7gpa = education.sem7_gpa
-            sem8gpa = education.sem8_gpa
-            gpa_list = []
-            if sem1gpa is not None:
-                gpa_list.append(float(sem1gpa))
-            if sem2gpa is not None:
-                gpa_list.append(float(sem2gpa))
-            if sem3gpa is not None:
-                gpa_list.append(float(sem3gpa))
-            if sem4gpa is not None:
-                gpa_list.append(float(sem4gpa))
-            if sem5gpa is not None:
-                gpa_list.append(float(sem5gpa))
-            if sem6gpa is not None:
-                gpa_list.append(float(sem6gpa))
-            if sem7gpa is not None:
-                gpa_list.append(float(sem7gpa))
-            if sem8gpa is not None:
-                gpa_list.append(float(sem8gpa))
 
-        except Education.DoesNotExist:
-            gpa_list = []
-
-        if Project.objects.filter(student_profile=student).exists():
-            color = ["#f56954", "#00a65a", "#f39c12", "#00c0ef", "#3c8dbc", "#d2d6de"]
-            project_objects = Project.objects.filter(student_profile=student)
-            projectskill_stats = [project.skill.skill for project in project_objects if project.skill is not None]
-            projectskill_stats = dict(collections.Counter(projectskill_stats))
-            project_skills = []
-            i = 0
-            for key, value in projectskill_stats.items():
-                i = i % 6
-                colors = color[i]
-                i = i + 1
-                project_skills.append(
-                    {"label": key, "value": value, "color": colors, "highlight": colors}
-                )
-        else:
-            project_skills = {}
-
-        sem_labels = []
-        internship = Internship.objects.filter(employee=student)
-        projects = Project.objects.filter(student_profile=student)
-        committe = Committee.objects.filter(employee=student)
-        researchpaper = ResearchPaper.objects.filter(student=student)
-        beproj = BeProject.objects.filter(student=student)
-        hackathon = Hackathon.objects.filter(student_profile=student)
-        skill = Skill.objects.filter(user_profile=student)
-        extracurricular = ExtraCurricular.objects.filter(student=student)
-        competitive = CompetitiveExams.objects.filter(student=student)
-        msadmit = Admit.objects.filter(student=student)
-
-        for x, i in enumerate(gpa_list):
-            sem_labels.append("Sem " + str(x + 1))
-
-        return render(
-            request,
-            "user_profile/profile.html",
-            {
-                "gpa_list": gpa_list,
-                "projectskill_stats": project_skills,
-                "internship": internship,
-                "projects": projects,
-                "committe": committe,
-                "researchpaper": researchpaper,
-                "beproj": beproj,
-                "skill": skill,
-                "hackathon": hackathon,
-                "student": student,
-                "sem_labels": sem_labels,
-                "extracurricular": extracurricular,
-                "flag": flag,
-                "logedin_user": logedin_user,
-                "competitive": competitive,
-                "msadmit": msadmit,
-            },
+        teacher = TeacherProfile.objects.get(id=student.mentor.id)
+        # internship
+        internship_approved = Internship.objects.filter(
+            employee=student, is_approved=True
         )
+        internship_rejected = Internship.objects.filter(
+            employee=student, is_approved=False
+        )
+        internship_pending = Internship.objects.filter(
+            employee=student, is_approved=None
+        )
+        
+        # projects
+        project_approved = Project.objects.filter(
+            student_profile=student, is_approved=True
+        )
+        project_rejected = Project.objects.filter(
+            student_profile=student, is_approved=False
+        )
+        project_pending = Project.objects.filter(
+            student_profile=student, is_approved=None
+        )
+
+        # Be Projects
+        BeProject_approved = BeProject.objects.filter(
+            student=student, is_approved=True
+        )
+        BeProject_rejected = BeProject.objects.filter(
+            student=student, is_approved=False
+        )
+        BeProject_pending = BeProject.objects.filter(
+            student=student, is_approved=None
+        )
+
+        # Research paper
+        ResearchPaper_approved = ResearchPaper.objects.filter(
+            student=student, is_approved=True
+        )
+        ResearchPaper_rejected = ResearchPaper.objects.filter(
+            student=student, is_approved=False
+        )
+        ResearchPaper_pending = ResearchPaper.objects.filter(
+            student=student, is_approved=None
+        )
+
+        # Hackathon
+        Hackathon_approved = Hackathon.objects.filter(
+            student_profile=student, is_approved=True
+        )
+        Hackathon_rejected = Hackathon.objects.filter(
+            student_profile=student, is_approved=False
+        )
+        Hackathon_pending = Hackathon.objects.filter(
+            student_profile=student, is_approved=None
+        )
+
+        # Extra Curricular
+        extra_curricular = ExtraCurricular.objects.filter(student=student)
+
+        # grades
+        grades = Education.objects.filter(student_profile=student)
+        g = []
+        for i in grades:
+            count=0
+            total=0
+            if i.sem1_gpa is not None:
+                total+=i.sem1_gpa
+                count+=1
+            if i.sem2_gpa is not None:
+                total+=i.sem2_gpa
+                count+=1
+            if i.sem3_gpa is not None:
+                total+=i.sem3_gpa
+                count+=1
+            if i.sem4_gpa is not None:
+                total+=i.sem4_gpa
+                count+=1
+            if i.sem5_gpa is not None:
+                total+=i.sem5_gpa
+                count+=1
+            if i.sem6_gpa is not None:
+                total+=i.sem6_gpa
+                count+=1
+            if i.sem7_gpa is not None:
+                total+=i.sem7_gpa
+                count+=1
+            if i.sem8_gpa is not None:
+                total+=i.sem8_gpa
+                count+=1
+            if count==0:
+                g.append([i,'Not Updated'])
+            else:
+                g.append([i,round(total/count, 2)])
+        grades = g
+        context = {
+            "student": student,
+            "teacher": teacher,
+            "extra_curricular": extra_curricular,
+            "grades": grades,
+            "internship_approved": internship_approved,
+            "internship_rejected": internship_rejected,
+            "internship_pending": internship_pending,
+            "project_approved": project_approved,
+            "project_rejected": project_rejected,
+            "project_pending": project_pending,
+            "BeProject_approved": BeProject_approved,
+            "BeProject_rejected": BeProject_rejected,
+            "BeProject_pending": BeProject_pending,
+            "ResearchPaper_approved": ResearchPaper_approved,
+            "ResearchPaper_rejected": ResearchPaper_rejected,
+            "ResearchPaper_pending": ResearchPaper_pending,
+            "Hackathon_approved": Hackathon_approved,
+            "Hackathon_rejected": Hackathon_rejected,
+            "Hackathon_pending": Hackathon_pending,
+            "logedin_user": logedin_user,
+            "skill":Skill.objects.filter(user_profile=student),
+            "committees":Committee.objects.filter(employee=student),
+            "competitive_exam":CompetitiveExams.objects.get(student=student)
+        }
+
+        return render(request,"user_profile/profile.html",context)
     else:
         login = "/login/student/"
         return HttpResponseRedirect(login)
