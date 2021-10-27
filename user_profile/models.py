@@ -214,7 +214,7 @@ class Hackathon(models.Model):
     # image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
-    total_no_of_hours = models.IntegerField(default=0)
+    total_no_of_hours = models.IntegerField(default=0, blank=True, null=True)
 
     def __str__(self):
         return str(self.CompetitionName)

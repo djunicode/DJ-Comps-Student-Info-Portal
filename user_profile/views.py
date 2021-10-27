@@ -1366,7 +1366,10 @@ def edit_hackathon_info(request, id):
         hackathon.Github_url = request.POST.get("GithubURL")
         hackathon.URL = request.POST.get("HackathonUrl")
 
-        hackathon.total_no_of_hours = request.POST.get("TotalHours")
+        if request.POST.get("TotalHours") == "":
+            hackathon.total_no_of_hours = 0
+        else:
+            hackathon.total_no_of_hours = request.POST.get("TotalHours")
 
         hackathon.Certificate = request.FILES.get("certificate")
 
