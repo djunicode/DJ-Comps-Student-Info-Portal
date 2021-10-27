@@ -395,7 +395,7 @@ def student_profile(request, id):
         internship_pending = Internship.objects.filter(
             employee=student, is_approved=None
         )
-        
+
         # projects
         project_approved = Project.objects.filter(
             student_profile=student, is_approved=True
@@ -408,15 +408,11 @@ def student_profile(request, id):
         )
 
         # Be Projects
-        BeProject_approved = BeProject.objects.filter(
-            student=student, is_approved=True
-        )
+        BeProject_approved = BeProject.objects.filter(student=student, is_approved=True)
         BeProject_rejected = BeProject.objects.filter(
             student=student, is_approved=False
         )
-        BeProject_pending = BeProject.objects.filter(
-            student=student, is_approved=None
-        )
+        BeProject_pending = BeProject.objects.filter(student=student, is_approved=None)
 
         # Research paper
         ResearchPaper_approved = ResearchPaper.objects.filter(
@@ -447,38 +443,49 @@ def student_profile(request, id):
         grades = Education.objects.filter(student_profile=student)
         g = []
         for i in grades:
-            count=0
-            total=0
+            count = 0
+            total = 0
             if i.sem1_gpa is not None:
-                total+=i.sem1_gpa
-                count+=1
+                total += i.sem1_gpa
+                count += 1
             if i.sem2_gpa is not None:
-                total+=i.sem2_gpa
-                count+=1
+                total += i.sem2_gpa
+                count += 1
             if i.sem3_gpa is not None:
-                total+=i.sem3_gpa
-                count+=1
+                total += i.sem3_gpa
+                count += 1
             if i.sem4_gpa is not None:
-                total+=i.sem4_gpa
-                count+=1
+                total += i.sem4_gpa
+                count += 1
             if i.sem5_gpa is not None:
-                total+=i.sem5_gpa
-                count+=1
+                total += i.sem5_gpa
+                count += 1
             if i.sem6_gpa is not None:
-                total+=i.sem6_gpa
-                count+=1
+                total += i.sem6_gpa
+                count += 1
             if i.sem7_gpa is not None:
-                total+=i.sem7_gpa
-                count+=1
+                total += i.sem7_gpa
+                count += 1
             if i.sem8_gpa is not None:
-                total+=i.sem8_gpa
-                count+=1
-            if count==0:
-                g.append([i,'Not Updated'])
+                total += i.sem8_gpa
+                count += 1
+            if count == 0:
+                g.append([i, "Not Updated"])
             else:
-                g.append([i,round(total/count, 2)])
+                g.append([i, round(total / count, 2)])
         grades = g
+        try:
+            competitive_exam = CompetitiveExams.objects.get(student=student)
+        except CompetitiveExams.DoesNotExist:
+            competitive_exam = {}
+            competitive_exam["gre_score"] = 0
+            competitive_exam["toefl_score"] = 0
+            competitive_exam["cat_score"] = 0
+            competitive_exam["gate_score"] = 0
+            competitive_exam["gmat_score"] = 0
+            competitive_exam["mhcet_score"] = 0
         context = {
+            "flag": flag,
             "student": student,
             "teacher": teacher,
             "extra_curricular": extra_curricular,
@@ -499,12 +506,12 @@ def student_profile(request, id):
             "Hackathon_rejected": Hackathon_rejected,
             "Hackathon_pending": Hackathon_pending,
             "logedin_user": logedin_user,
-            "skill":Skill.objects.filter(user_profile=student),
-            "committees":Committee.objects.filter(employee=student),
-            "competitive_exam":CompetitiveExams.objects.get(student=student)
+            "skill": Skill.objects.filter(user_profile=student),
+            "committees": Committee.objects.filter(employee=student),
+            "competitive_exam": competitive_exam,
         }
 
-        return render(request,"user_profile/profile.html",context)
+        return render(request, "user_profile/profile.html", context)
     else:
         login = "/login/student/"
         return HttpResponseRedirect(login)
@@ -633,7 +640,7 @@ def notifs(request):
     internship_pending = Internship.objects.filter(
         employee__mentor=teacher, is_approved=None
     )
-    
+
     # projects
     project_approved = Project.objects.filter(
         student_profile__mentor=teacher, is_approved=True
@@ -685,38 +692,37 @@ def notifs(request):
     grades = Education.objects.filter(student_profile__mentor=teacher)
     g = []
     for i in grades:
-        count=0
-        total=0
+        count = 0
+        total = 0
         if i.sem1_gpa is not None:
-            total+=i.sem1_gpa
-            count+=1
+            total += i.sem1_gpa
+            count += 1
         if i.sem2_gpa is not None:
-            total+=i.sem2_gpa
-            count+=1
+            total += i.sem2_gpa
+            count += 1
         if i.sem3_gpa is not None:
-            total+=i.sem3_gpa
-            count+=1
+            total += i.sem3_gpa
+            count += 1
         if i.sem4_gpa is not None:
-            total+=i.sem4_gpa
-            count+=1
+            total += i.sem4_gpa
+            count += 1
         if i.sem5_gpa is not None:
-            total+=i.sem5_gpa
-            count+=1
+            total += i.sem5_gpa
+            count += 1
         if i.sem6_gpa is not None:
-            total+=i.sem6_gpa
-            count+=1
+            total += i.sem6_gpa
+            count += 1
         if i.sem7_gpa is not None:
-            total+=i.sem7_gpa
-            count+=1
+            total += i.sem7_gpa
+            count += 1
         if i.sem8_gpa is not None:
-            total+=i.sem8_gpa
-            count+=1
-        if count==0:
-            g.append([i,'Not Updated'])
+            total += i.sem8_gpa
+            count += 1
+        if count == 0:
+            g.append([i, "Not Updated"])
         else:
-            g.append([i,round(total/count, 2)])
+            g.append([i, round(total / count, 2)])
     grades = g
-
 
     # teacher = TeacherProfile.objects.get(teacher=request.user)
 
@@ -1057,14 +1063,7 @@ def teacher_dashboard(request):
         # intern_date = [int(x) - int(intern_dates[0]) for x in intern_dates]
         total_regs = StudentProfile.objects.all().count()
         total_intern = Internship.objects.all().count()
-        cgpa1 = [
-            pointer.cgpa
-            for pointer in StudentProfile.objects.all()
-            if pointer.cgpa is not None
-        ]
         context["total_regs"] = total_regs
-        cgpa1 = float(sum(cgpa1) / len(cgpa1)) if len(cgpa1) != 0 else 0
-        context["cgpa1"] = cgpa1
         context["total_intern"] = total_intern
         kt = KT.objects.all().count()
         if total_regs != 0:
@@ -1360,8 +1359,11 @@ def edit_hackathon_info(request, id):
         hackathon.Github_url = request.POST.get("GithubURL")
         hackathon.URL = request.POST.get("HackathonUrl")
 
-        hackathon.total_no_of_hours = request.POST.get("TotalHours")
-        
+        if request.POST.get("TotalHours") == "":
+            hackathon.total_no_of_hours = 0
+        else:
+            hackathon.total_no_of_hours = request.POST.get("TotalHours")
+
         hackathon.Certificate = request.FILES.get("certificate")
 
         hackathon.image1 = request.FILES.get("image1")
@@ -1438,9 +1440,12 @@ def edit_internship_info(request, id):
         internship.total_hours = request.POST.get("TotalHours")
         internship.how = request.POST.get("how")
 
-
-        internship.evaluation_report_mentor = request.FILES.get("evaluation_report_mentor")
-        internship.evaluation_report_supervisor = request.FILES.get("evaluation_report_supervisor")
+        internship.evaluation_report_mentor = request.FILES.get(
+            "evaluation_report_mentor"
+        )
+        internship.evaluation_report_supervisor = request.FILES.get(
+            "evaluation_report_supervisor"
+        )
         internship.evaluation_report_self = request.FILES.get("evaluation_report_self")
         internship.save()
         print(internship.company)
@@ -1567,8 +1572,10 @@ def edit_beproject_info(request, id):
         proj.ProjName = request.POST.get("BEProjectName")
         proj.ProjURL = request.POST.get("BEProjectUrl")
         proj.ProjDesc = request.POST.get("BEProjectDescription")
-        
-        proj.projectUnderTeacher = TeacherProfile.objects.get(Sap_Id=request.POST.get("teacher"))
+
+        proj.projectUnderTeacher = TeacherProfile.objects.get(
+            Sap_Id=request.POST.get("teacher")
+        )
 
         teammates = request.POST.getlist("teammates")
         teammates_list = [StudentProfile.objects.get(Sap_Id=i) for i in teammates]
@@ -1711,6 +1718,7 @@ def filters_adv(request):
         },
     )
 
+
 # Internship Views
 def internship_approved(request, id):
     try:
@@ -1732,6 +1740,7 @@ def internship_rejected(request, id):
         internship.is_approved = False
         internship.save()
     return redirect("user_profile:notifs")
+
 
 # Hackathon Views
 def hackathon_approved(request, id):
@@ -1755,6 +1764,7 @@ def hackathon_rejected(request, id):
         hackathon.save()
     return redirect("user_profile:notifs")
 
+
 # Project Views
 def project_approved(request, id):
     try:
@@ -1766,6 +1776,7 @@ def project_approved(request, id):
         project.save()
     return redirect("user_profile:notifs")
 
+
 def project_rejected(request, id):
     try:
         project = Project.objects.get(id=id)
@@ -1775,6 +1786,7 @@ def project_rejected(request, id):
         project.is_approved = False
         project.save()
     return redirect("user_profile:notifs")
+
 
 # Research Paper Views
 def research_paper_approved(request, id):
@@ -1787,6 +1799,7 @@ def research_paper_approved(request, id):
         research_paper.save()
     return redirect("user_profile:notifs")
 
+
 def research_paper_rejected(request, id):
     try:
         research_paper = ResearchPaper.objects.get(id=id)
@@ -1796,6 +1809,7 @@ def research_paper_rejected(request, id):
         research_paper.is_approved = False
         research_paper.save()
     return redirect("user_profile:notifs")
+
 
 # BE Project Views
 def BE_project_approved(request, id):
@@ -1807,6 +1821,7 @@ def BE_project_approved(request, id):
         BE_project.is_approved = True
         BE_project.save()
     return redirect("user_profile:notifs")
+
 
 def BE_project_rejected(request, id):
     try:
