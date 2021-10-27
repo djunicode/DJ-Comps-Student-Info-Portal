@@ -579,25 +579,6 @@
                 <button type="button" class="btn btn-info pull-right" onClick="submitSkill();">Submit</button>
               </div>
             </form>
-
-            {% for skill in skill_list %}
-            <form id="SkillInfo" class="form-horizontal" action="/delete_skill_info/{{skill.id}}">
-              {% csrf_token %}
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="skill" class="col-sm-2 control-label"> Skills</label>
-
-                  <div class="col-sm-8">
-                    <p type="text" name="skill" class="form-control no-border" id="skill">{{skill.skill}}</p>
-                  </div>
-                </div>
-              </div>
-              <div class="box-footer">
-
-                <button type="submit" class="btn btn-info pull-right">Delete</button>
-              </div>
-            </form>
-            {% endfor %}
           </div>
         </div>
 
@@ -708,52 +689,6 @@
                   onClick="submitHackathon();">Submit</button>
               </div>
             </form>
-
-
-
-            {% for hackathon in hackathon_list%}
-            <form id="Hackathon" class="form-horizontal" method="POST" action="/delete_hackathon_info/{{hackathon.id}}">
-              {% csrf_token %}
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> CompetitionName</label>
-
-                  <div class="col-sm-8">
-                    <p name="name" class="form-control no-border" id="name">{{hackathon.CompetitionName}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="description" class="col-sm-2 control-label"> Description</label>
-
-                  <div class="col-sm-8">
-                    <p name="description" class="form-control no-border" id="description">{{hackathon.Desc}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="url" class="col-sm-2 control-label"> URL</label>
-
-                  <div class="col-sm-8">
-                    <p name="url" class="form-control no-border" id="url">{{hackathon.URL}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="date" class="col-sm-2 control-label"> Date</label>
-
-                  <div class="col-sm-8">
-                    <p name="date" class="form-control no-border" id="date">{{hackathon.Date}}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="box-footer">
-
-                <button type="submit" class="btn btn-info pull-right">Delete</button>
-              </div>
-            </form>
-            {% endfor %}
           </div>
         </div>
 
@@ -852,53 +787,6 @@
                 <button type="button" class="btn btn-info pull-right" onClick="submitProject();">Submit</button>
               </div>
             </form>
-
-            {% for project in project_list %}
-            <form id="Project" class="form-horizontal" action="/delete_project_info/{{project.id}}">
-              {% csrf_token %}
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> Project Name</label>
-
-                  <div class="col-sm-8">
-                    <p name="name" class="form-control no-border" id="name">{{project.ProjName}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="description" class="col-sm-2 control-label"> Description</label>
-
-                  <div class="col-sm-8">
-                    <p name="description" class="form-control no-border" id="description">{{project.ProjDesc}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="url" class="col-sm-2 control-label"> URL</label>
-
-                  <div class="col-sm-8">
-                    <p name="url" class="form-control no-border" id="url">{{project.ProjURL}}</p>
-                  </div>
-                </div>
-
-
-                <div class="form-group">
-                  <label for="skill" class="col-sm-2 control-label"> Skill</label>
-
-                  <div class="col-sm-8">
-                    <p name="skill" class="form-control no-border" id="skill">{{project.skill.skill}}</p>
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="box-footer">
-
-                <button type="submit" class="btn btn-info pull-right">Delete</button>
-              </div>
-            </form>
-
-            {% endfor %}
 
           </div>
         </div>
@@ -1051,76 +939,6 @@
               </div>
 
             </form>
-            {% for internship in internship_list %}
-            <form id="Internship" class="form-horizontal" action="/delete_internship_info/{{internship.id}}">
-              {% csrf_token %}
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> Company Name</label>
-
-                  <div class="col-sm-8">
-                    <p name="name" class="form-control no-border" id="name">{{internship.company}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="description" class="col-sm-2 control-label"> Description</label>
-
-                  <div class="col-sm-8">
-                    <p name="description" class="form-control no-border" id="description">{{internship.desc}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="position" class="col-sm-2 control-label"> Position</label>
-
-                  <div class="col-sm-8">
-                    <p name="position" class="form-control no-border" id="position">{{internship.Position}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="location" class="col-sm-2 control-label"> Location</label>
-
-                  <div class="col-sm-8">
-                    <p name="location" class="form-control no-border" id="location">{{internship.Loc}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="stipend" class="col-sm-2 control-label">Stipend</label>
-
-                  <div class="col-sm-8">
-                    <p name="stipend" class="form-control no-border" id="name">{{internship.stipend}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="dateFrom" class="col-sm-2 control-label"> From</label>
-
-                  <div class="col-sm-8">
-                    <p required name="dateFrom" class="form-control no-border" id="dateFrom">{{internship.From}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="dateTo" class="col-sm-2 control-label"> To</label>
-
-                  <div class="col-sm-8">
-                    <p required name="dateTo" class="form-control no-border" id="dateTo">{{internship.To}}</p>
-                  </div>
-                </div>
-              </div>
-
-
-
-              <div class="box-footer">
-
-                <button type="submit" class="btn btn-info pull-right">Delete</button>
-              </div>
-
-            </form>
-            {% endfor %}
           </div>
         </div>
 
@@ -1198,69 +1016,6 @@
               </div>
 
             </form>
-
-            {% for committee in committee_list %}
-            <form id="Committee" class="form-horizontal" action="/delete_committee_info/{{committee.id}}">
-              {% csrf_token %}
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> Organisation Name</label>
-
-                  <div class="col-sm-8">
-                    <p name="name" class="form-control no-border" id="name">{{committee.OrganisationName}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="description" class="col-sm-2 control-label"> Description</label>
-
-                  <div class="col-sm-8">
-                    <p name="description" class="form-control no-border" id="description">{{committee.Desc}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="position" class="col-sm-2 control-label"> Position</label>
-
-                  <div class="col-sm-8">
-                    <p name="position" class="form-control no-border" id="position">{{committee.YourPosition}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="location" class="col-sm-2 control-label"> Location</label>
-
-                  <div class="col-sm-8">
-                    <p name="location" class="form-control no-border" id="location">{{committee.Loc}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="dateFrom" class="col-sm-2 control-label"> From</label>
-
-                  <div class="col-sm-8">
-                    <p name="dateFrom" class="form-control no-border" id="dateFrom">{{committee.dateFrom}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="dateTo" class="col-sm-2 control-label"> To</label>
-
-                  <div class="col-sm-8">
-                    <p name="dateTo" class="form-control no-border" id="dateTo">{{committee.dateTo}}</p>
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="box-footer">
-
-                <button type="submit" class="btn btn-info pull-right">Delete</button>
-              </div>
-
-            </form>
-            {% endfor %}
-
           </div>
         </div>
 
@@ -1521,74 +1276,6 @@
 
               </div>
             </form>
-
-            {%for researchpaper in researchpaper_list %}
-            <form id="ResearchPaper" class="form-horizontal" action="/delete_researchpaper_info/{{researchpaper.id}}">
-              {% csrf_token %}
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> Name</label>
-
-                  <div class="col-sm-8">
-                    <p name="name" class="form-control no-border" id="name">{{researchpaper.Title}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> Publication</label>
-
-                  <div class="col-sm-8">
-                    <p name="publication" class="form-control no-border" id="publication">{{researchpaper.Publication}}
-                    </p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> Date of Publication</label>
-
-                  <div class="col-sm-8">
-                    <p name="date" class="form-control no-border" id="date">{{researchpaper.DateOfPublication}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="isbn" class="col-sm-2 control-label"> ISBN</label>
-
-                  <div class="col-sm-8">
-                    <p name="isbn" class="form-control no-border" id="date">{{researchpaper.isbn}}</p>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="status" class="col-sm-2 control-label">Status</label>
-
-                  <div class="col-sm-8">
-                    <p name="status" class="form-control no-border" id="date">{{researchpaper.status}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="description" class="col-sm-2 control-label"> Description</label>
-
-                  <div class="col-sm-8">
-                    <p name="description" class="form-control no-border" id="description">{{researchpaper.Desc}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="url" class="col-sm-2 control-label"> Link to Paper</label>
-
-                  <div class="col-sm-8">
-                    <p name="url" class="form-control no-border" id="url">{{researchpaper.LinkToPaper}}</p>
-                  </div>
-                </div>
-              </div>
-              <div class="box-footer">
-
-                <button type="submit" class="btn btn-info pull-right">Delete</button>
-
-              </div>
-            </form>
-            {% endfor %}
           </div>
         </div>
 
@@ -1690,50 +1377,6 @@
 
               </div>
             </form>
-
-            {% for extra in extra_list %}
-            <form id="Extra" class="form-horizontal" action="/delete_extra_info/{{extra.id}}">
-              {% csrf_token %}
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> Name</label>
-
-                  <div class="col-sm-8">
-                    <p name="name" class="form-control no-border" id="name">{{extra.name}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> Description</label>
-
-                  <div class="col-sm-8">
-                    <p name="publication" class="form-control no-border" id="description">{{extra.desc}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> Date</label>
-
-                  <div class="col-sm-8">
-                    <p name="date" class="form-control no-border" id="date">{{extra.date}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="description" class="col-sm-2 control-label"> Achievements</label>
-
-                  <div class="col-sm-8">
-                    <p name="description" class="form-control no-border" id="achievements">{{extra.achievements}}</p>
-                  </div>
-                </div>
-              </div>
-              <div class="box-footer">
-
-                <button type="submit" class="btn btn-info pull-right">Delete</button>
-
-              </div>
-            </form>
-            {% endfor %}
           </div>
         </div>
 
@@ -1820,50 +1463,6 @@
 
               </div>
             </form>
-
-            <!-- {% for extra in extra_list %}
-                                              <form id="Extra" class="form-horizontal" action="/delete_competitive_exams/{{extra.id}}">
-                                                {% csrf_token %}
-                                                <div class="box-body">
-                                                  <div class="form-group">
-                                                    <label for="name" class="col-sm-2 control-label"> Name</label>
-
-                                                    <div class="col-sm-8">
-                                                      <p name="name" class="form-control no-border" id="name">{{extra.name}}</p>
-                                                    </div>
-                                                  </div>
-
-                                                  <div class="form-group">
-                                                    <label for="name" class="col-sm-2 control-label"> Description</label>
-
-                                                    <div class="col-sm-8">
-                                                      <p name="publication" class="form-control no-border" id="description">{{extra.desc}}</p>
-                                                    </div>
-                                                  </div>
-
-                                                  <div class="form-group">
-                                                    <label for="name" class="col-sm-2 control-label"> Date</label>
-
-                                                    <div class="col-sm-8">
-                                                      <p name="date" class="form-control no-border" id="date">{{extra.date}}</p>
-                                                    </div>
-                                                  </div>
-
-                                                  <div class="form-group">
-                                                    <label for="description" class="col-sm-2 control-label"> Achievements</label>
-
-                                                    <div class="col-sm-8">
-                                                      <p name="description" class="form-control no-border" id="achievements">{{extra.achievements}}</p>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                                <div class="box-footer">
-
-                                                  <button type="submit" class="btn btn-info pull-right" >Delete</button>
-
-                                              </div>
-                                              </form>
-                                              {% endfor %} -->
           </div>
         </div>
 
@@ -1926,49 +1525,6 @@
 
               </div>
             </form>
-
-            {% for extra in admit %}
-            <form id="Extra" class="form-horizontal" action="/delete_admit_info/{{extra.id}}">
-              {% csrf_token %}
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> College</label>
-
-                  <div class="col-sm-8">
-                    <p name="college_name" class="form-control no-border" id="name">{{extra.college_name}}</p>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> Field</label>
-
-                  <div class="col-sm-8">
-                    <p name="masters_field" class="form-control no-border" id="description">{{extra.masters_field}}</p>
-                  </div>
-                </div>
-
-                <div class="box-body">
-                  <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label"> Location</label>
-
-                    <div class="col-sm-8">
-                      <p name="college_location" class="form-control no-border" id="name">{{extra.college_location}}</p>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label"> Selected</label>
-
-                    <div class="col-sm-8">
-                      <p name="selected" class="form-control no-border" id="description">{{extra.selected}}</p>
-                    </div>
-                  </div>
-
-                  <button type="submit" class="btn btn-info pull-right">Delete</button>
-
-                </div>
-            </form>
-            {% endfor %}
           </div>
         </div>
 
