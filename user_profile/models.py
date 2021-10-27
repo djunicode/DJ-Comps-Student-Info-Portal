@@ -432,7 +432,7 @@ class CompetitiveExams(models.Model):
     cat_score = models.CharField(max_length=10, null=True, blank=True)
     gate_score = models.CharField(max_length=10, null=True, blank=True)
     gmat_score = models.CharField(max_length=10, null=True, blank=True)
-    mhcet_score = models.CharField(max_length=10, null=True, blank=True)
+    # mhcet_score = models.CharField(max_length=10, null=True, blank=True)
 
 
 class Admit(models.Model):
