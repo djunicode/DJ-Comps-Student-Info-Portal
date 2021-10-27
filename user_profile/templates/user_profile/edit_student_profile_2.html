@@ -181,10 +181,10 @@
                   </label>
                   <div class="col-sm-8">
                     <label>
-                      <input type="radio" name="gender" class="flat-red" value="Male">&nbsp;Male
+                      <input type="radio" name="gender" class="flat-red" value="Male" {% if "Male" == student_profile.gender %}checked {% endif %}>&nbsp;Male
                     </label>
                     <label>
-                      <input type="radio" name="gender" class="flat-red" value="Female">&nbsp;Female
+                      <input type="radio" name="gender" class="flat-red" value="Female" {% if "Female" == student_profile.gender %}checked {% endif %}>&nbsp;Female
                     </label>
                   </div>
                 </div>
@@ -201,7 +201,7 @@
                   <label for="github_id" class="col-sm-2 control-label">Github ID</label>
 
                   <div class="col-sm-8">
-                    <input type="url" class="form-control" name="github_id" id="github_id">
+                    <input type="url" class="form-control" name="github_id" id="github_id" value="{{student_profile.github_id}}">
                   </div>
                 </div>
 
@@ -210,34 +210,27 @@
                   <label for="bio" class="col-sm-2 control-label">Bio</label>
 
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" name="bio" id="bio">
+                    <input type="text" class="form-control" name="bio" id="bio" value="{{student_profile.bio}}">
                   </div>
                 </div>
 
 
-                <div class="form-group">
-                  <label for="cgpa" class="col-sm-2 control-label">CGPA:</label>
-
-                  <div class="col-sm-8">
-                    <input type="number" class="form-control" name="cgpa" id="cgpa" value={{student_profile.cgpa}}>
-                  </div>
-                </div>
                 <div class="form-group">
                   <label for="year" class="col-sm-2 control-label">
                     Year
                   </label>
                   <div class="col-sm-8">
                     <label>
-                      <input type="radio" name="year" class="flat-red" value="FE">&nbsp;FE
+                      <input type="radio" name="year" class="flat-red" value="FE" {% if "FE" == student_profile.year %}checked {% endif %}>&nbsp;FE
                     </label>
                     <label>
-                      <input type="radio" name="year" class="flat-red" value="SE">&nbsp;SE
+                      <input type="radio" name="year" class="flat-red" value="SE" {% if "SE" == student_profile.year %}checked {% endif %}>&nbsp;SE
                     </label>
                     <label>
-                      <input type="radio" name="year" class="flat-red" value="TE">&nbsp;TE
+                      <input type="radio" name="year" class="flat-red" value="TE" {% if "TE" == student_profile.year %}checked {% endif %}>&nbsp;TE
                     </label>
                     <label>
-                      <input type="radio" name="year" class="flat-red" value="BE">&nbsp;BE
+                      <input type="radio" name="year" class="flat-red" value="BE" {% if "BE" == student_profile.year %}checked {% endif %}>&nbsp;BE
                     </label>
                   </div>
                 </div>
