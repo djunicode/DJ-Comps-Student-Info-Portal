@@ -73,7 +73,6 @@ class StudentProfile(models.Model):
         ("BE", "Final Year"),
     )
     year = models.CharField(max_length=20, choices=YEAR_CHOICES, blank=True, null=True)
-
     class Meta:
         permissions = (("view_student", "Can see student profile"),)
 
@@ -350,17 +349,17 @@ class ResearchPaper(models.Model):
         StudentProfile, related_name="researchpaper", on_delete=models.CASCADE
     )
     Title = models.CharField(max_length=255, null=True, blank=True)
-    Publication = models.CharField(max_length=255, null=True, blank=True)
+    Publication = models.CharField(max_length=255, null=True, blank=True)#
     DateOfPublication = models.DateField(("Date"), default=datetime.date.today)
     Desc = models.TextField(null=True, blank=True)
     LinkToPaper = models.URLField(blank=True, null=True)
-    PaperId = models.CharField(max_length=50, null=True, blank=True)
+    PaperId = models.CharField(max_length=50, null=True, blank=True)#
     isbn = models.CharField(max_length=50, null=True, blank=True)
-    issn = models.CharField(max_length=50, null=True, blank=True)
-    proof_of_submission = models.FileField(null=True, blank=True)
-    project_mentor = models.CharField(max_length=100, null=True, blank=True)
-    duration_of_project = models.CharField(max_length=100, null=True, blank=True)
-    total_hours = models.IntegerField(default=0, null=True, blank=True)
+    issn = models.CharField(max_length=50, null=True, blank=True)#
+    proof_of_submission = models.FileField(null=True, blank=True)#
+    project_mentor = models.CharField(max_length=100, null=True, blank=True)#
+    duration_of_project = models.CharField(max_length=100, null=True, blank=True)#
+    total_hours = models.IntegerField(default=0, null=True, blank=True)#
     research_type = (
         ("Conference", "Conference"),
         ("Journal", "Journal"),
@@ -402,9 +401,9 @@ class BeProject(models.Model):
 
     image1 = models.FileField(null=True, blank=True)
     image2 = models.FileField(null=True, blank=True)
-    image3 = models.FileField(null=True, blank=True)
-    image4 = models.FileField(null=True, blank=True)
-    image5 = models.FileField(null=True, blank=True)
+    # image3 = models.FileField(null=True, blank=True)
+    # image4 = models.FileField(null=True, blank=True)
+    # image5 = models.FileField(null=True, blank=True)
     project_report = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
