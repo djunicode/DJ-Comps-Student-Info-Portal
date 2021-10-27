@@ -483,7 +483,7 @@ def student_profile(request, id):
             competitive_exam["cat_score"] = 0
             competitive_exam["gate_score"] = 0
             competitive_exam["gmat_score"] = 0
-            competitive_exam["mhcet_score"] = 0
+            # competitive_exam["mhcet_score"] = 0
         context = {
             "flag": flag,
             "student": student,
@@ -1186,7 +1186,7 @@ def edit_competitive_exams(request, id):
         competitive_exam.gate_score = request.POST.get("gate_score")
         competitive_exam.gmat_score = request.POST.get("gmat_score")
         competitive_exam.toefl_score = request.FILES.get("toefl_score")
-        competitive_exam.mhcet_score = request.POST.get("mhcet_score")
+        # competitive_exam.mhcet_score = request.POST.get("mhcet_score")
         competitive_exam.save()
         return HttpResponse("done")
 
@@ -1217,119 +1217,138 @@ def edit_academic_info(request, id):
         except ObjectDoesNotExist:
             education = Education.objects.create(student_profile=student_profile)
         print(request.POST)
+        print(request.FILES)
+        print(education)
         if (request.POST.get("sem1_gpa")) != "":
             education.sem1_gpa = request.POST.get("sem1_gpa")
+        education.sem1_marksheet = request.FILES.get("sem1_marksheet")
+
         if (request.POST.get("sem2_gpa")) != "":
             education.sem2_gpa = request.POST.get("sem2_gpa")
+        education.sem2_marksheet = request.FILES.get("sem2_marksheet")
+
         if (request.POST.get("sem3_gpa")) != "":
             education.sem3_gpa = request.POST.get("sem3_gpa")
+        education.sem3_marksheet = request.FILES.get("sem3_marksheet")
+
         if (request.POST.get("sem4_gpa")) != "":
             education.sem4_gpa = request.POST.get("sem4_gpa")
+        education.sem4_marksheet = request.FILES.get("sem4_marksheet")
+
         if (request.POST.get("sem5_gpa")) != "":
             education.sem5_gpa = request.POST.get("sem5_gpa")
+        education.sem5_marksheet = request.FILES.get("sem5_marksheet")
+
         if (request.POST.get("sem6_gpa")) != "":
             education.sem6_gpa = request.POST.get("sem6_gpa")
+        education.sem6_marksheet = request.FILES.get("sem6_marksheet")
+
         if (request.POST.get("sem7_gpa")) != "":
             education.sem7_gpa = request.POST.get("sem7_gpa")
+        education.sem7_marksheet = request.FILES.get("sem7_marksheet")
+
         if (request.POST.get("sem8_gpa")) != "":
             education.sem8_gpa = request.POST.get("sem8_gpa")
-        for subj in education.sem1_tt1.subject.all():
-            marks = request.POST.get("sem1_tt1_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem1_tt2.subject.all():
-            marks = request.POST.get("sem1_tt2_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem2_tt1.subject.all():
-            marks = request.POST.get("sem2_tt1_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem2_tt2.subject.all():
-            marks = request.POST.get("sem2_tt2_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem3_tt1.subject.all():
-            marks = request.POST.get("sem3_tt1_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem3_tt2.subject.all():
-            marks = request.POST.get("sem3_tt2_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem4_tt1.subject.all():
-            marks = request.POST.get("sem4_tt1_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem4_tt2.subject.all():
-            marks = request.POST.get("sem4_tt2_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem5_tt1.subject.all():
-            marks = request.POST.get("sem5_tt1_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem5_tt2.subject.all():
-            marks = request.POST.get("sem5_tt2_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem6_tt1.subject.all():
-            marks = request.POST.get("sem6_tt1_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem6_tt2.subject.all():
-            marks = request.POST.get("sem6_tt2_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem7_tt1.subject.all():
-            marks = request.POST.get("sem7_tt1_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem7_tt2.subject.all():
-            marks = request.POST.get("sem7_tt2_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem8_tt1.subject.all():
-            marks = request.POST.get("sem8_tt1_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        for subj in education.sem8_tt2.subject.all():
-            marks = request.POST.get("sem8_tt2_" + str(subj.subject.name))
-            if marks != "":
-                subj.marks = marks
-                print(subj)
-                subj.save()
-        student_profile.subject_semester = request.POST.get("kt")
+        education.sem8_marksheet = request.FILES.get("sem8_marksheet")
+
+        print("ALL FILES DONE\n\n")
+        # for subj in education.sem1_tt1.subject.all():
+        #     marks = request.POST.get("sem1_tt1_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem1_tt2.subject.all():
+        #     marks = request.POST.get("sem1_tt2_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem2_tt1.subject.all():
+        #     marks = request.POST.get("sem2_tt1_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem2_tt2.subject.all():
+        #     marks = request.POST.get("sem2_tt2_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem3_tt1.subject.all():
+        #     marks = request.POST.get("sem3_tt1_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem3_tt2.subject.all():
+        #     marks = request.POST.get("sem3_tt2_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem4_tt1.subject.all():
+        #     marks = request.POST.get("sem4_tt1_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem4_tt2.subject.all():
+        #     marks = request.POST.get("sem4_tt2_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem5_tt1.subject.all():
+        #     marks = request.POST.get("sem5_tt1_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem5_tt2.subject.all():
+        #     marks = request.POST.get("sem5_tt2_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem6_tt1.subject.all():
+        #     marks = request.POST.get("sem6_tt1_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem6_tt2.subject.all():
+        #     marks = request.POST.get("sem6_tt2_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem7_tt1.subject.all():
+        #     marks = request.POST.get("sem7_tt1_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem7_tt2.subject.all():
+        #     marks = request.POST.get("sem7_tt2_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem8_tt1.subject.all():
+        #     marks = request.POST.get("sem8_tt1_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # for subj in education.sem8_tt2.subject.all():
+        #     marks = request.POST.get("sem8_tt2_" + str(subj.subject.name))
+        #     if marks != "":
+        #         subj.marks = marks
+        #         print(subj)
+        #         subj.save()
+        # student_profile.subject_semester = request.POST.get("kt")
         education.save()
         return HttpResponse("done")
 

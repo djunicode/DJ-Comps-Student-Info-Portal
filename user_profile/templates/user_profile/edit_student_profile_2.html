@@ -251,7 +251,7 @@
           <div id="AcadsData" class="panel-collapse collapse">
             <!-- /.box-header -->
             <!-- form start -->
-            <form id="AcademicInfo" class="form-horizontal" action="/edit_academic_info/{{student_profile.id}}">
+            <form id="AcademicInfo" enctype="multipart/form-data" class="form-horizontal" method="post" action="/edit_academic_info/{{student_profile.id}}" >
               {% csrf_token %}
               <div class="box-body">
                 <div id="AcadsSubmission" style="display:none;" class="alert alert-success" role="alert">
@@ -267,10 +267,26 @@
                 </div>
 
                 <div class="form-group">
+                  <label for="sem1_marksheet" class="col-sm-2 control-label"> Sem 1 Marksheet </label>
+
+                  <div class="col-sm-8">
+                    <input type="file" name="sem1_marksheet" class="form-control" id="sem1_marksheet">
+                  </div>
+                </div>
+
+                <div class="form-group">
                   <label for="sem2_gpa" class="col-sm-2 control-label">Sem 2 GPA</label>
 
                   <div class="col-sm-8">
                     <input type="number" class="form-control" id="sem2_gpa" name="sem2_gpa" value={{acads.sem2_gpa}}>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="sem2_marksheet" class="col-sm-2 control-label">Sem 2 Marksheet</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" class="form-control" id="sem2_marksheet" name="sem2_marksheet">
                   </div>
                 </div>
 
@@ -283,10 +299,26 @@
                 </div>
 
                 <div class="form-group">
+                  <label for="sem3_marksheet" class="col-sm-2 control-label">Sem 3 Marksheet</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" class="form-control" id="sem3_marksheet" name="sem3_marksheet">
+                  </div>
+                </div>
+
+                <div class="form-group">
                   <label for="sem4_gpa" class="col-sm-2 control-label">Sem 4 GPA</label>
 
                   <div class="col-sm-8">
                     <input type="number" class="form-control" id="sem4_gpa" name="sem4_gpa" value={{acads.sem4_gpa}}>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="sem4_marksheet" class="col-sm-2 control-label">Sem 4 Marksheet</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" class="form-control" id="sem4_marksheet" name="sem4_marksheet">
                   </div>
                 </div>
 
@@ -299,10 +331,26 @@
                 </div>
 
                 <div class="form-group">
+                  <label for="sem5_marksheet" class="col-sm-2 control-label">Sem 5 Marksheet</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" class="form-control" id="sem5_marksheet" name="sem5_marksheet">
+                  </div>
+                </div>
+
+                <div class="form-group">
                   <label for="sem6_gpa" class="col-sm-2 control-label">Sem 6 GPA</label>
 
                   <div class="col-sm-8">
                     <input type="number" class="form-control" id="sem6_gpa" name="sem6_gpa" value={{acads.sem6_gpa}}>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="sem6_marksheet" class="col-sm-2 control-label">Sem 6 Marksheet</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" class="form-control" id="sem6_marksheet" name="sem6_marksheet">
                   </div>
                 </div>
 
@@ -315,12 +363,29 @@
                 </div>
 
                 <div class="form-group">
+                  <label for="sem7_marksheet" class="col-sm-2 control-label">Sem 7 Marksheet</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" class="form-control" id="sem7_marksheet" name="sem7_marksheet">
+                  </div>
+                </div>
+
+                <div class="form-group">
                   <label for="sem8_gpa" class="col-sm-2 control-label">Sem 8 GPA</label>
 
                   <div class="col-sm-8">
                     <input type="number" class="form-control" id="sem8_gpa" name="sem8_gpa" value={{acads.sem8_gpa}}>
                   </div>
                 </div>
+
+                <div class="form-group">
+                  <label for="sem8_marksheet" class="col-sm-2 control-label">Sem 8 Marksheet</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" class="form-control" id="sem8_marksheet" name="sem8_marksheet">
+                  </div>
+                </div>
+                <!--
                 <div class="form-group">
                   <label for="year" class="col-sm-2 control-label">
                     KT
@@ -535,6 +600,7 @@
                   </div>
                 </div>
                 {% endfor %}
+                -->
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
@@ -657,10 +723,10 @@
 
 
                 <div class="form-group">
-                  <label for="image" class="col-sm-2 control-label"> Certificate </label>
+                  <label for="certificate" class="col-sm-2 control-label"> Certificate </label>
 
                   <div class="col-sm-8">
-                    <input type="file" name="certificate" class="form-control" id="hackathon-image1">
+                    <input type="file" name="certificate" class="form-control" id="hackathon-certificate">
                   </div>
                 </div>
 
@@ -1399,10 +1465,10 @@
                     value="{{competitive_exam.gate_score}}">
                 </div>
               </div>
-
+              <!--
               <div class="form-group">
                 <label for="name" class="col-sm-2 control-label"> MHCET score</label>
-                <!--
+                
                 <div class="col-sm-8">
                   <input type="text" name="mhcet_score" class="form-control" id="mhcet_score"
                     value="{{competitive_exam.mhcet_score}}">
