@@ -1205,6 +1205,9 @@ def edit_basic_info(request, id):
         student_profile.mobileNo = request.POST.get("mobileNo")
         student_profile.photo = request.FILES.get("photo")
         student_profile.cgpa = request.POST.get("cgpa")
+        student_profile.github_id = request.POST.get("github_id")
+        student_profile.bio = request.POST.get("bio")
+
         student_profile.save()
         return HttpResponse("done")
 
