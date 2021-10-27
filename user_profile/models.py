@@ -301,18 +301,7 @@ class Project(models.Model):
         blank=True,
         null=True,
     )
-    image3 = models.FileField(
-        blank=True,
-        null=True,
-    )
-    image4 = models.FileField(
-        blank=True,
-        null=True,
-    )
-    image5 = models.FileField(
-        blank=True,
-        null=True,
-    )
+
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
 
