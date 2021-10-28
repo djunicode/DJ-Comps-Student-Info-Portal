@@ -1208,7 +1208,8 @@ def edit_basic_info(request, id):
         student_profile.bio = request.POST.get("bio")
 
         student_profile.save()
-        return HttpResponse("done")
+        return redirect('/edit_basic_info')
+        # return HttpResponse("done")
 
 
 def edit_academic_info(request, id):
@@ -1352,7 +1353,9 @@ def edit_academic_info(request, id):
         #         subj.save()
         # student_profile.subject_semester = request.POST.get("kt")
         education.save()
-        return HttpResponse("done")
+        return redirect('/editprofile')
+
+        # return HttpResponse("done")
 
 
 def edit_skill_info(request, id):
