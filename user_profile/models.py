@@ -255,9 +255,13 @@ class Internship(models.Model):
     offer_letter = models.FileField(blank=True, null=True)
     Certificate = models.FileField(blank=True, null=True)
     total_hours = models.IntegerField(default=0, null=True, blank=True)
+    evaluation_report_self_one = models.FileField(blank=True, null=True)
+    evaluation_report_self_two = models.FileField(blank=True, null=True)
+    evaluation_report_self_three = models.FileField(blank=True, null=True)
+
     evaluation_report_mentor = models.FileField(blank=True, null=True)
     evaluation_report_supervisor = models.FileField(blank=True, null=True)
-    evaluation_report_self = models.FileField(blank=True, null=True)
+    # evaluation_report_self = models.FileField(blank=True, null=True)
     # images = models.ManyToManyField(Image)
 
     # image1 = models.FileField(blank=True, null=True)
