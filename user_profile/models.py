@@ -359,6 +359,8 @@ class ResearchPaper(models.Model):
         ("Chapter", "Chapter"),
     )
     type = models.CharField(max_length=20, choices=research_type, blank=True, null=True)
+    research_impact_factor = models.FloatField(blank=True, null=True, default=0)
+    indexing = models.CharField(max_length=255, blank=True, null=True)
     # images = models.ManyToManyField(Image)
 
     # image1 = models.FileField(null=True, blank=True)
