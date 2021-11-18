@@ -447,3 +447,4 @@ class Admit(models.Model):
     masters_field = models.CharField(max_length=50, null=True, blank=True)
     college_location = models.CharField(max_length=50, null=True, blank=True)
     selected = models.CharField(max_length=50, null=True, blank=True)
+    admit_proof = models.FileField(blank=True, null=True)
