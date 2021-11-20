@@ -1471,7 +1471,11 @@ def edit_internship_info(request, id):
         internship.evaluation_report_supervisor = request.FILES.get(
             "evaluation_report_supervisor"
         )
-        internship.evaluation_report_self = request.FILES.get("evaluation_report_self")
+        internship.evaluation_report_self = request.FILES.get("evaluation_report_self_one")
+        internship.evaluation_report_self = request.FILES.get("evaluation_report_self_two")
+
+        internship.evaluation_report_self = request.FILES.get("evaluation_report_self_three")
+
         internship.save()
         print(internship.company)
         return HttpResponse("done")
