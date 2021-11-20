@@ -394,6 +394,12 @@ class BeProject(models.Model):
 
 
 class ExtraCurricular(models.Model):
+    extra_curricular_type = (
+        ("Coursera", "Coursera"),
+        ("NPTEL", "NPTEL"),
+        ("Sports", "Sports"),
+        ("Others", "Others"),
+    )
     student = models.ForeignKey(
         StudentProfile, related_name="extracurricular", on_delete=models.CASCADE
     )
@@ -402,6 +408,8 @@ class ExtraCurricular(models.Model):
     achievements = models.CharField(max_length=500, null=True, blank=True)
     date = models.DateField(("Date"), default=datetime.date.today)
     Certificate = models.FileField(null=True, blank=True)
+    extra_curricular_type = models.CharField(max_length=20, choices=extra_curricular_type, blank=True, null=True)
+
     # images = models.ManyToManyField(Image)
 
     # image1 = models.FileField(null=True, blank=True)
