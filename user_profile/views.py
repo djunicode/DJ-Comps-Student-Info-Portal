@@ -1581,6 +1581,7 @@ def edit_extra_info(request, id):
         if request.POST.get("ExtraDate") != "":
             extra.date = request.POST.get("ExtraDate")
         extra.Certificate = request.FILES.get("certificate")
+        extra.extra_curricular_type = request.POST.get("extra_curricular_type")
         extra.save()
         return HttpResponse("done")
     else:
