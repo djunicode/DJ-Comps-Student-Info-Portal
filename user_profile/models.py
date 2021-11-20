@@ -438,3 +438,11 @@ class Admit(models.Model):
     selected = models.CharField(max_length=50, null=True, blank=True)
     admit_proof = models.FileField(blank=True, null=True)
     is_approved = models.BooleanField(null=True, blank=True, default=None)
+
+class Placements(models.Model):
+    student = models.ForeignKey(
+        StudentProfile, related_name="placement", on_delete=models.CASCADE
+    )
+    company_name = models.CharField(max_length=255, blank=False, null=False)
+    offer_letter = models.FileField(null=True)
+    is_approved = models.BooleanField(null=True, blank=True, default=None)
