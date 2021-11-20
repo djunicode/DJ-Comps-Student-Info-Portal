@@ -181,10 +181,12 @@
                   </label>
                   <div class="col-sm-8">
                     <label>
-                      <input type="radio" name="gender" class="flat-red" value="Male" {% if "Male" == student_profile.gender %}checked {% endif %}>&nbsp;Male
+                      <input type="radio" name="gender" class="flat-red" value="Male" {%
+                        if "Male"==student_profile.gender %}checked {% endif %}>&nbsp;Male
                     </label>
                     <label>
-                      <input type="radio" name="gender" class="flat-red" value="Female" {% if "Female" == student_profile.gender %}checked {% endif %}>&nbsp;Female
+                      <input type="radio" name="gender" class="flat-red" value="Female" {%
+                        if "Female"==student_profile.gender %}checked {% endif %}>&nbsp;Female
                     </label>
                   </div>
                 </div>
@@ -201,7 +203,8 @@
                   <label for="github_id" class="col-sm-2 control-label">Github ID</label>
 
                   <div class="col-sm-8">
-                    <input type="url" class="form-control" name="github_id" id="github_id" value="{{student_profile.github_id}}">
+                    <input type="url" class="form-control" name="github_id" id="github_id"
+                      value="{{student_profile.github_id}}">
                   </div>
                 </div>
 
@@ -221,16 +224,20 @@
                   </label>
                   <div class="col-sm-8">
                     <label>
-                      <input type="radio" name="year" class="flat-red" value="FE" {% if "FE" == student_profile.year %}checked {% endif %}>&nbsp;FE
+                      <input type="radio" name="year" class="flat-red" value="FE" {% if "FE"==student_profile.year
+                        %}checked {% endif %}>&nbsp;FE
                     </label>
                     <label>
-                      <input type="radio" name="year" class="flat-red" value="SE" {% if "SE" == student_profile.year %}checked {% endif %}>&nbsp;SE
+                      <input type="radio" name="year" class="flat-red" value="SE" {% if "SE"==student_profile.year
+                        %}checked {% endif %}>&nbsp;SE
                     </label>
                     <label>
-                      <input type="radio" name="year" class="flat-red" value="TE" {% if "TE" == student_profile.year %}checked {% endif %}>&nbsp;TE
+                      <input type="radio" name="year" class="flat-red" value="TE" {% if "TE"==student_profile.year
+                        %}checked {% endif %}>&nbsp;TE
                     </label>
                     <label>
-                      <input type="radio" name="year" class="flat-red" value="BE" {% if "BE" == student_profile.year %}checked {% endif %}>&nbsp;BE
+                      <input type="radio" name="year" class="flat-red" value="BE" {% if "BE"==student_profile.year
+                        %}checked {% endif %}>&nbsp;BE
                     </label>
                   </div>
                 </div>
@@ -263,7 +270,8 @@
           <div id="AcadsData" class="panel-collapse collapse">
             <!-- /.box-header -->
             <!-- form start -->
-            <form id="AcademicInfo" enctype="multipart/form-data" class="form-horizontal" method="post" action="/edit_academic_info/{{student_profile.id}}" >
+            <form id="AcademicInfo" enctype="multipart/form-data" class="form-horizontal" method="post"
+              action="/edit_academic_info/{{student_profile.id}}">
               {% csrf_token %}
               <div class="box-body">
                 <div id="AcadsSubmission" style="display:none;" class="alert alert-success" role="alert">
@@ -852,7 +860,7 @@
                     <input type="file" name="image2" class="form-control no-border" id="project-image2">
                   </div>
                 </div>
-                
+
                 <!--label for="image" class="col-sm-2 control-label"> Image</label-->
                 <!--input type="file" name="pic" accept="image/*" id="image"-->
               </div>
@@ -1180,7 +1188,7 @@
                     <input type="file" name="image2" class="form-control" id="beproject-image2">
                   </div>
                 </div>
-                
+
               </div>
               <div class="form-group">
                 <label for="image" class="col-sm-2 control-label"> Project Report</label>
@@ -1208,131 +1216,135 @@
               </a>
             </h4>
           </div>
-        <div id="ResearchPaperData" class="panel-collapse collapse ">
-              <!-- /.box-header -->
-              <!-- form start -->
-              <form id="ResearchPaperInfo" class="form-horizontal" action="/edit_research_paper_info/{{student_profile.id}}">
-                {% csrf_token %}
-                <div class="box-body">
-                  <div id="ResearchPaperSubmission" style="display:none;" class="alert alert-success" role="alert">
+          <div id="ResearchPaperData" class="panel-collapse collapse ">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="ResearchPaperInfo" class="form-horizontal"
+              action="/edit_research_paper_info/{{student_profile.id}}">
+              {% csrf_token %}
+              <div class="box-body">
+                <div id="ResearchPaperSubmission" style="display:none;" class="alert alert-success" role="alert">
 
-                    <div id="ResearchPaperSubmissionContent"></div></div>
-                  <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label"> Title</label>
+                  <div id="ResearchPaperSubmissionContent"></div>
+                </div>
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Title</label>
 
-                    <div class="col-sm-8">
-                      <input type="text" name="ResearchPaperName" class="form-control" id="ResearchPaperName">
-                    </div>
+                  <div class="col-sm-8">
+                    <input type="text" name="ResearchPaperName" class="form-control" id="ResearchPaperName">
                   </div>
+                </div>
 
-                  <div class="form-group">
-                    <label for="description" class="col-sm-2 control-label"> ISBN</label>
+                <div class="form-group">
+                  <label for="description" class="col-sm-2 control-label"> ISBN</label>
 
-                    <div class="col-sm-8">
-                      <input type="text" name="isbn" class="form-control" id="isbn">
-                    </div>
+                  <div class="col-sm-8">
+                    <input type="text" name="isbn" class="form-control" id="isbn">
                   </div>
+                </div>
 
-                  <div class="form-group">
-                    <label for="description" class="col-sm-2 control-label"> ISSN</label>
+                <div class="form-group">
+                  <label for="description" class="col-sm-2 control-label"> ISSN</label>
 
-                    <div class="col-sm-8">
-                      <input type="text" name="issn" class="form-control" id="issn">
-                    </div>
+                  <div class="col-sm-8">
+                    <input type="text" name="issn" class="form-control" id="issn">
                   </div>
+                </div>
 
-                  <div class="form-group">
-                    <label for="type" class="col-sm-2 control-label">
-                      Publication Type
+                <div class="form-group">
+                  <label for="type" class="col-sm-2 control-label">
+                    Publication Type
+                  </label>
+                  <div class="col-sm-8">
+                    <label>
+                      <input type="radio" name="type" class="flat-red" value="Conference">&nbsp;Conference
                     </label>
-                    <div class="col-sm-8">
-                      <label>
-                        <input type="radio" name="type" class="flat-red" value="Conference">&nbsp;Conference
-                      </label>
-                      <label>
-                        <input type="radio" name="type" class="flat-red" value="Journal">&nbsp;Journal
-                      </label>
-                      <label>
-                        <input type="radio" name="type" class="flat-red" value="Chapter">&nbsp;Chapter
-                      </label>
-                    </div>
+                    <label>
+                      <input type="radio" name="type" class="flat-red" value="Journal">&nbsp;Journal
+                    </label>
+                    <label>
+                      <input type="radio" name="type" class="flat-red" value="Chapter">&nbsp;Chapter
+                    </label>
                   </div>
+                </div>
 
 
-                  <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label"> Publication</label>
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Publication</label>
 
-                    <div class="col-sm-8">
-                      <input type="text" name="ResearchPaperPublication" class="form-control" id="ResearchPaperPublication">
-                    </div>
+                  <div class="col-sm-8">
+                    <input type="text" name="ResearchPaperPublication" class="form-control"
+                      id="ResearchPaperPublication">
                   </div>
+                </div>
 
-                  
-                  <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label"> Date of Publication</label>
 
-                    <div class="col-sm-8">
-                      <input type="date" name="ResearchPaperDate" class="form-control" id="ResearchPaperDate">
-                    </div>
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Date of Publication</label>
+
+                  <div class="col-sm-8">
+                    <input type="date" name="ResearchPaperDate" class="form-control" id="ResearchPaperDate">
                   </div>
+                </div>
 
-                  <div class="form-group">
-                    <label for="description" class="col-sm-2 control-label"> Description</label>
+                <div class="form-group">
+                  <label for="description" class="col-sm-2 control-label"> Description</label>
 
-                    <div class="col-sm-8">
-                      <input type="text" name="ResearchPaperDescription" class="form-control" id="ResearchPaperDescription">
-                    </div>
+                  <div class="col-sm-8">
+                    <input type="text" name="ResearchPaperDescription" class="form-control"
+                      id="ResearchPaperDescription">
                   </div>
+                </div>
 
-                  <div class="form-group">
-                    <label for="url" class="col-sm-2 control-label"> Link to Paper</label>
+                <div class="form-group">
+                  <label for="url" class="col-sm-2 control-label"> Link to Paper</label>
 
-                    <div class="col-sm-8">
-                      <input type="url" name="ResearchPaperUrl" class="form-control" id="ResearchPaperUrl">
-                    </div>
+                  <div class="col-sm-8">
+                    <input type="url" name="ResearchPaperUrl" class="form-control" id="ResearchPaperUrl">
                   </div>
+                </div>
 
 
-                  <!-- NEW STUFF -->
-                  <div class="form-group">
-                    <label for="text" class="col-sm-2 control-label"> Paper ID</label>
+                <!-- NEW STUFF -->
+                <div class="form-group">
+                  <label for="text" class="col-sm-2 control-label"> Paper ID</label>
 
-                    <div class="col-sm-8">
-                      <input type="text" name="paperId" class="form-control" id="paperId">
-                    </div>
+                  <div class="col-sm-8">
+                    <input type="text" name="paperId" class="form-control" id="paperId">
                   </div>
+                </div>
 
-                  <div class="form-group">
-                    <label for="file" class="col-sm-2 control-label"> Proof of Submission</label>
+                <div class="form-group">
+                  <label for="file" class="col-sm-2 control-label"> Proof of Submission</label>
 
-                    <div class="col-sm-8">
-                      <input type="file" name="proof" class="form-control" id="researchpaper-proof">
-                    </div>
+                  <div class="col-sm-8">
+                    <input type="file" name="proof" class="form-control" id="researchpaper-proof">
                   </div>
+                </div>
 
-                  <div class="form-group">
-                    <label for="text" class="col-sm-2 control-label"> Research Mentor</label>
+                <div class="form-group">
+                  <label for="text" class="col-sm-2 control-label"> Research Mentor</label>
 
-                    <div class="col-sm-8">
-                      <input type="text" name="project_mentor" class="form-control" id="project_mentor">
-                    </div>
+                  <div class="col-sm-8">
+                    <input type="text" name="project_mentor" class="form-control" id="project_mentor">
                   </div>
+                </div>
 
-                  <div class="form-group">
-                    <label for="text" class="col-sm-2 control-label"> Duration of Project</label>
+                <div class="form-group">
+                  <label for="text" class="col-sm-2 control-label"> Duration of Project</label>
 
-                    <div class="col-sm-8">
-                      <input type="text" name="duration" class="form-control" id="duration">
-                    </div>
+                  <div class="col-sm-8">
+                    <input type="text" name="duration" class="form-control" id="duration">
                   </div>
+                </div>
 
-                  <div class="form-group">
-                    <label for="number" class="col-sm-2 control-label"> Total Number of Hours</label>
+                <div class="form-group">
+                  <label for="number" class="col-sm-2 control-label"> Total Number of Hours</label>
 
-                    <div class="col-sm-8">
-                      <input type="number" name="total_hours" class="form-control" id="total_hours">
-                    </div>
+                  <div class="col-sm-8">
+                    <input type="number" name="total_hours" class="form-control" id="total_hours">
                   </div>
+                </div>
 
               </div>
               <div class="box-footer">
@@ -1400,8 +1412,8 @@
                     <input type="file" name="certificate" class="form-control" id="extracurricular-certificate">
                   </div>
                 </div>
-                
-                
+
+
               </div>
               <div class="box-footer">
 
@@ -2737,7 +2749,5 @@
 </script>
 
 
-<script>
 
-
-  {% endblock %}
+{% endblock %}

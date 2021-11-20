@@ -73,6 +73,7 @@ class StudentProfile(models.Model):
         ("BE", "Final Year"),
     )
     year = models.CharField(max_length=20, choices=YEAR_CHOICES, blank=True, null=True)
+
     class Meta:
         permissions = (("view_student", "Can see student profile"),)
 
@@ -128,37 +129,21 @@ class Education(models.Model):
     student_profile = models.OneToOneField(
         StudentProfile, related_name="education", on_delete=models.CASCADE
     )
-    sem1_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2
-    )
+    sem1_gpa = models.FloatField(blank=True, null=True, default=None)
     sem1_marksheet = models.FileField(blank=True, null=True)
-    sem2_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2
-    )
+    sem2_gpa = models.FloatField(blank=True, null=True, default=None)
     sem2_marksheet = models.FileField(blank=True, null=True)
-    sem3_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2
-    )
+    sem3_gpa = models.FloatField(blank=True, null=True, default=None)
     sem3_marksheet = models.FileField(blank=True, null=True)
-    sem4_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2
-    )
+    sem4_gpa = models.FloatField(blank=True, null=True, default=None)
     sem4_marksheet = models.FileField(blank=True, null=True)
-    sem5_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2
-    )
+    sem5_gpa = models.FloatField(blank=True, null=True, default=None)
     sem5_marksheet = models.FileField(blank=True, null=True)
-    sem6_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2
-    )
+    sem6_gpa = models.FloatField(blank=True, null=True, default=None)
     sem6_marksheet = models.FileField(blank=True, null=True)
-    sem7_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2
-    )
+    sem7_gpa = models.FloatField(blank=True, null=True, default=None)
     sem7_marksheet = models.FileField(blank=True, null=True)
-    sem8_gpa = models.DecimalField(
-        blank=True, null=True, default=None, max_digits=4, decimal_places=2
-    )
+    sem8_gpa = models.FloatField(blank=True, null=True, default=None)
     sem8_marksheet = models.FileField(blank=True, null=True)
     history = HistoricalRecords()
 
@@ -332,6 +317,7 @@ class Committee(models.Model):
     # image4 = models.FileField(null=True, blank=True)
     # image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
+    is_approved = models.BooleanField(null=True, blank=True, default=None)
 
     def __str__(self):
         return str(self.OrganisationName)
@@ -342,17 +328,17 @@ class ResearchPaper(models.Model):
         StudentProfile, related_name="researchpaper", on_delete=models.CASCADE
     )
     Title = models.CharField(max_length=255, null=True, blank=True)
-    Publication = models.CharField(max_length=255, null=True, blank=True)#
+    Publication = models.CharField(max_length=255, null=True, blank=True)  #
     DateOfPublication = models.DateField(("Date"), default=datetime.date.today)
     Desc = models.TextField(null=True, blank=True)
     LinkToPaper = models.URLField(blank=True, null=True)
-    PaperId = models.CharField(max_length=50, null=True, blank=True)#
+    PaperId = models.CharField(max_length=50, null=True, blank=True)  #
     isbn = models.CharField(max_length=50, null=True, blank=True)
-    issn = models.CharField(max_length=50, null=True, blank=True)#
-    proof_of_submission = models.FileField(null=True, blank=True)#
-    project_mentor = models.CharField(max_length=100, null=True, blank=True)#
-    duration_of_project = models.CharField(max_length=100, null=True, blank=True)#
-    total_hours = models.IntegerField(default=0, null=True, blank=True)#
+    issn = models.CharField(max_length=50, null=True, blank=True)  #
+    proof_of_submission = models.FileField(null=True, blank=True)  #
+    project_mentor = models.CharField(max_length=100, null=True, blank=True)  #
+    duration_of_project = models.CharField(max_length=100, null=True, blank=True)  #
+    total_hours = models.IntegerField(default=0, null=True, blank=True)  #
     research_type = (
         ("Conference", "Conference"),
         ("Journal", "Journal"),
@@ -438,6 +424,7 @@ class CompetitiveExams(models.Model):
     cat_score = models.CharField(max_length=10, null=True, blank=True)
     gate_score = models.CharField(max_length=10, null=True, blank=True)
     gmat_score = models.CharField(max_length=10, null=True, blank=True)
+    is_approved = models.BooleanField(null=True, blank=True, default=None)
     # mhcet_score = models.CharField(max_length=10, null=True, blank=True)
 
 
@@ -450,3 +437,4 @@ class Admit(models.Model):
     college_location = models.CharField(max_length=50, null=True, blank=True)
     selected = models.CharField(max_length=50, null=True, blank=True)
     admit_proof = models.FileField(blank=True, null=True)
+    is_approved = models.BooleanField(null=True, blank=True, default=None)
