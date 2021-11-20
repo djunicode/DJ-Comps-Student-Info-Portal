@@ -1535,7 +1535,7 @@ def edit_research_paper_info(request, id):
         paper.Publication = request.POST.get("ResearchPaperPublication")
         paper.Desc = request.POST.get("ResearchPaperDescription")
         paper.isbn = request.POST.get("isbn")
-        paper.status = request.POST.get("status")
+        # paper.status = request.POST.get("status")
         paper.LinkToPaper = request.POST.get("ResearchPaperUrl")
 
         paper.PaperId = request.POST.get("paperId")
@@ -1546,6 +1546,9 @@ def edit_research_paper_info(request, id):
         paper.total_hours = request.POST.get("total_hours")
         paper.type = request.POST.get("type")
 
+        paper.DateOfPublication = request.POST.get("DateOfPublication")
+        paper.research_impact_factor = request.POST.get("research_impact_factor")
+        paper.indexing = request.POST.get("indexing")
         # paper.image1 = request.FILES.get("image1")
         # paper.image2 = request.FILES.get("image2")
         # paper.image3 = request.FILES.get("image3")
