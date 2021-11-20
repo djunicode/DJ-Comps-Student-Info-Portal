@@ -181,12 +181,10 @@
                   </label>
                   <div class="col-sm-8">
                     <label>
-                      <input type="radio" name="gender" class="flat-red" value="Male" {%
-                        if "Male"==student_profile.gender %}checked {% endif %}>&nbsp;Male
+                      <input type="radio" name="gender" class="flat-red" value="Male" {% if "Male" == student_profile.gender %}checked {% endif %}>&nbsp;Male
                     </label>
                     <label>
-                      <input type="radio" name="gender" class="flat-red" value="Female" {%
-                        if "Female"==student_profile.gender %}checked {% endif %}>&nbsp;Female
+                      <input type="radio" name="gender" class="flat-red" value="Female" {% if "Female" == student_profile.gender %}checked {% endif %}>&nbsp;Female
                     </label>
                   </div>
                 </div>
@@ -224,20 +222,16 @@
                   </label>
                   <div class="col-sm-8">
                     <label>
-                      <input type="radio" name="year" class="flat-red" value="FE" {% if "FE"==student_profile.year
-                        %}checked {% endif %}>&nbsp;FE
+                      <input type="radio" name="year" class="flat-red" value="FE" {% if "FE" == student_profile.year %}checked {% endif %}>&nbsp;FE
                     </label>
                     <label>
-                      <input type="radio" name="year" class="flat-red" value="SE" {% if "SE"==student_profile.year
-                        %}checked {% endif %}>&nbsp;SE
+                      <input type="radio" name="year" class="flat-red" value="SE" {% if "SE" == student_profile.year %}checked {% endif %}>&nbsp;SE
                     </label>
                     <label>
-                      <input type="radio" name="year" class="flat-red" value="TE" {% if "TE"==student_profile.year
-                        %}checked {% endif %}>&nbsp;TE
+                      <input type="radio" name="year" class="flat-red" value="TE" {% if "TE" == student_profile.year %}checked {% endif %}>&nbsp;TE
                     </label>
                     <label>
-                      <input type="radio" name="year" class="flat-red" value="BE" {% if "BE"==student_profile.year
-                        %}checked {% endif %}>&nbsp;BE
+                      <input type="radio" name="year" class="flat-red" value="BE" {% if "BE" == student_profile.year %}checked {% endif %}>&nbsp;BE
                     </label>
                   </div>
                 </div>
@@ -1212,7 +1206,7 @@
           <div class="box-header with-border">
             <h4 class="box-title">
               <a data-toggle="collapse" data-parent="#accordion" href="#ResearchPaperData">
-                Research Paper
+                Research Work
               </a>
             </h4>
           </div>
