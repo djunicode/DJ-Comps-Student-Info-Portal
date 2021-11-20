@@ -1632,6 +1632,7 @@ def edit_admit_info(request, id):
         extra.masters_field = request.POST.get("masters_field")
         extra.college_location = request.POST.get("college_location")
         extra.selected = request.POST.get("selected")
+        extra.admit_proof = request.FILES.get("admit_proof")
         extra.save()
         return HttpResponse("done")
     else:
@@ -1642,6 +1643,7 @@ def edit_admit_info(request, id):
                 "masters_field": data.masters_field,
                 "college_location": data.college_location,
                 "selected": data.selected,
+                "admit_proof": data.admit_proof,
                 "id": data.id,
             }
         )
