@@ -1868,3 +1868,149 @@ def BE_project_rejected(request, id):
         BE_project.is_approved = False
         BE_project.save()
     return redirect("user_profile:notifs")
+
+def download_all_excel(request):
+    if request.user.is_authenticated and TeacherProfile.objects.filter(teacher=request.user).exists():
+        from django.http import HttpResponse
+        import xlwt
+        user = request.user
+        teacher = TeacherProfile.objects.get(teacher=user)
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition']='attachment; filename= Details of Students under ' +str(teacher.Sap_Id)+'.xls'
+        wb = xlwt.Workbook(encoding='utf-8')
+
+        # Student List Sheet start
+        students = StudentProfile.objects.filter(mentor=teacher).order_by('Sap_Id')
+        ws=wb.add_sheet("Student List")
+        row_num = 0
+        font_style=xlwt.XFStyle()
+        font_style.font.bold=True
+
+        columns = ['SAP ID','First Name','Last Name','Year','Department','Gender','Mobile Number']
+        for col_num in range(len(columns)):
+            ws.write(row_num,col_num,columns[col_num],font_style)
+        
+        font_style=xlwt.XFStyle()
+        rows=students.values_list('Sap_Id','first_name','last_name','year','department','gender','mobileNo')
+        for row in rows:
+            row_num+=1
+            for col_num in range(len(row)):
+                ws.write(row_num,col_num,str(row[col_num]),font_style)
+        # Student List Sheet end
+
+        # Internship List Sheet start
+        internships = Internship.objects.filter(employee__mentor=teacher,is_approved=True).order_by('employee__Sap_Id','id')
+        ws=wb.add_sheet("Internship List")
+        row_num = 0
+        font_style=xlwt.XFStyle()
+        font_style.font.bold=True
+
+        columns = ['SAP ID','First Name','Last Name','Company','Position','Location','From','To','Description','In/Out of College','Paid/Unpaid','Total Hours']
+        for col_num in range(len(columns)):
+            ws.write(row_num,col_num,columns[col_num],font_style)
+        
+        font_style=xlwt.XFStyle()
+        rows=internships.values_list('employee__Sap_Id','employee__first_name','employee__last_name','company','Position','Loc','From','To','desc','how','stipend','total_hours')
+        for row in rows:
+            row_num+=1
+            for col_num in range(len(row)):
+                ws.write(row_num,col_num,str(row[col_num]),font_style)
+        # Internship List Sheet end
+
+        # Project List Sheet start
+        projects = Project.objects.filter(student_profile__mentor=teacher,is_approved=True).order_by('student_profile__Sap_Id','id')
+        ws=wb.add_sheet("Project List")
+        row_num = 0
+        font_style=xlwt.XFStyle()
+        font_style.font.bold=True
+
+        columns = ['SAP ID','First Name','Last Name','Project Name','Project URL','Project Description']
+        for col_num in range(len(columns)):
+            ws.write(row_num,col_num,columns[col_num],font_style)
+        
+        font_style=xlwt.XFStyle()
+        rows=projects.values_list('student_profile__Sap_Id','student_profile__first_name','student_profile__last_name','ProjName','ProjURL','ProjDesc')
+        for row in rows:
+            row_num+=1
+            for col_num in range(len(row)):
+                ws.write(row_num,col_num,str(row[col_num]),font_style)
+        # Project List Sheet end
+
+        # Extra Curricular List Sheet start
+        extra_c = ExtraCurricular.objects.filter(student__mentor=teacher).order_by('student__Sap_Id','id')
+        ws=wb.add_sheet("Extra Curricular List")
+        row_num = 0
+        font_style=xlwt.XFStyle()
+        font_style.font.bold=True
+
+        columns = ['SAP ID','First Name','Last Name','EC Type','Name','Description','Achievements','Date']
+        for col_num in range(len(columns)):
+            ws.write(row_num,col_num,columns[col_num],font_style)
+        
+        font_style=xlwt.XFStyle()
+        rows=extra_c.values_list('student__Sap_Id','student__first_name','student__last_name','extra_curricular_type','name','desc','achievements','date')
+        for row in rows:
+            row_num+=1
+            for col_num in range(len(row)):
+                ws.write(row_num,col_num,str(row[col_num]),font_style)
+        # Extra Curricular List Sheet end
+
+        # Grade List Sheet start
+        grade = Education.objects.filter(student_profile__mentor=teacher).order_by('student_profile__Sap_Id','id')
+        ws=wb.add_sheet("Grade List")
+        row_num = 0
+        font_style=xlwt.XFStyle()
+        font_style.font.bold=True
+
+        columns = ['SAP ID','First Name','Last Name','SEM 1','SEM 2','SEM 3','SEM 4','SEM 5','SEM 6','SEM 7','SEM 8',]
+        for col_num in range(len(columns)):
+            ws.write(row_num,col_num,columns[col_num],font_style)
+        
+        font_style=xlwt.XFStyle()
+        rows=grade.values_list('student_profile__Sap_Id','student_profile__first_name','student_profile__last_name','sem1_gpa','sem2_gpa','sem3_gpa','sem4_gpa','sem5_gpa','sem6_gpa','sem7_gpa','sem8_gpa')
+        for row in rows:
+            row_num+=1
+            for col_num in range(len(row)):
+                ws.write(row_num,col_num,str(row[col_num]),font_style)
+        # Grade List Sheet end
+
+        # BE Project List Sheet start
+        projects = BeProject.objects.filter(student__mentor=teacher,is_approved=True).order_by('student__Sap_Id','id')
+        ws=wb.add_sheet("BE Project List")
+        row_num = 0
+        font_style=xlwt.XFStyle()
+        font_style.font.bold=True
+
+        columns = ['SAP ID','First Name','Last Name','Project Name','Project URL','Project Description']
+        for col_num in range(len(columns)):
+            ws.write(row_num,col_num,columns[col_num],font_style)
+        
+        font_style=xlwt.XFStyle()
+        rows=projects.values_list('student__Sap_Id','student__first_name','student__last_name','ProjName','ProjURL','ProjDesc')
+        for row in rows:
+            row_num+=1
+            for col_num in range(len(row)):
+                ws.write(row_num,col_num,str(row[col_num]),font_style)
+        # BE Project List Sheet end
+
+        # Research Paper List Sheet start
+        research = ResearchPaper.objects.filter(student__mentor=teacher,is_approved=True).order_by('student__Sap_Id','id')
+        ws=wb.add_sheet("Research Paper List")
+        row_num = 0
+        font_style=xlwt.XFStyle()
+        font_style.font.bold=True
+
+        columns = ['SAP ID','First Name','Last Name','Title','Publication','Date Of Publication','Description','Paper ID','ISBN','ISSN','Type','Research Impact Factor','Indexing','Project Mentor','Duration of Project','Total Hours']
+        for col_num in range(len(columns)):
+            ws.write(row_num,col_num,columns[col_num],font_style)
+        
+        font_style=xlwt.XFStyle()
+        rows=research.values_list('student__Sap_Id','student__first_name','student__last_name','Title','Publication','DateOfPublication','Desc','PaperId','isbn','issn','type','research_impact_factor','indexing','project_mentor','duration_of_project','total_hours')
+        for row in rows:
+            row_num+=1
+            for col_num in range(len(row)):
+                ws.write(row_num,col_num,str(row[col_num]),font_style)
+        # Research Paper List Sheet end
+
+        wb.save(response)
+        return response
