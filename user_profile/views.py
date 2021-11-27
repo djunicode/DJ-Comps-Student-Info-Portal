@@ -18,6 +18,7 @@ from .models import (
     TermTest,
     CompetitiveExams,
     Admit,
+    Placements,
 )
 from .models import (
     HistoricalInternship,
@@ -1129,6 +1130,7 @@ def show_edit_studentprofile(request):
             researchpaper = ResearchPaper.objects.filter(student=student_profile)
             internship = Internship.objects.filter(employee=student_profile)
             admit = Admit.objects.filter(student=student_profile)
+            placement = Placements.objects.filter(student=student_profile)
             try:
                 beproject = BeProject.objects.get(student=student_profile)
             except ObjectDoesNotExist:
@@ -1168,6 +1170,7 @@ def show_edit_studentprofile(request):
                 "project_teachers_list": project_teachers_list,
                 "teachers_list": teachers_list,
                 "students_list": students_list,
+                "placement": placement,
             }
             return render(request, "user_profile/edit_student_profile_2.html", context)
     else:
@@ -1649,6 +1652,23 @@ def edit_admit_info(request, id):
             }
         )
 
+def edit_placement_info(request, id):
+    if request.method == "POST":
+        student_profile = StudentProfile.objects.get(id=id)
+        extra = Placements.objects.create(student=student_profile)
+        extra.company_name = request.POST.get("company_name")
+        extra.offer_letter = request.FILES.get("offer_letter")
+        extra.save()
+        return HttpResponse("done")
+    else:
+        data = Placements.objects.last()
+        return JsonResponse(
+            {
+                "company_name": data.company_name,
+                "offer_letter": data.offer_letter,
+                "id": data.id,
+            }
+        )
 
 def delete_hackathon_info(request, id):
     hackathon = Hackathon.objects.get(id=id)
@@ -1699,6 +1719,10 @@ def delete_admit_info(request, id):
     extra.delete()
     return HttpResponseRedirect("/editprofile/")
 
+def delete_placement_info(request, id):
+    extra = Placements.objects.get(id=id)
+    extra.delete()
+    return HttpResponseRedirect("/editprofile/")
 
 def send_sms(message, number):
     print(number)

@@ -52,6 +52,10 @@ urlpatterns = [
     url(r"^edit_extra_info/(\d+)$", views.edit_extra_info),
     url(r"^delete_admit_info/(\d+)$", views.delete_admit_info),
     url(r"^edit_admit_info/(\d+)$", views.edit_admit_info),
+
+    url(r"^delete_placement_info/(\d+)$", views.delete_placement_info),
+    url(r"^edit_placement_info/(\d+)$", views.edit_placement_info),
+
     url(r"^filters_adv/$", views.filters_adv, name="filters_adv"),
     path("internship_approved/<int:id>", views.internship_approved, name="iapproved"),
     path("internship_rejected/<int:id>", views.internship_rejected, name="irejected"),
