@@ -1534,22 +1534,22 @@ def edit_research_paper_info(request, id):
         print("aayush")
         student_profile = StudentProfile.objects.get(id=id)
         paper = ResearchPaper.objects.create(student=student_profile)
-        paper.Title = request.POST.get("ResearchPaperName")
-        paper.Publication = request.POST.get("ResearchPaperPublication")
-        paper.Desc = request.POST.get("ResearchPaperDescription")
-        paper.isbn = request.POST.get("isbn")
+        paper.Title = request.POST.get("ResearchPaperName")#
+        paper.Publication = request.POST.get("ResearchPaperPublication")#
+        paper.Desc = request.POST.get("ResearchPaperDescription")#
+        paper.isbn = request.POST.get("isbn")#
         # paper.status = request.POST.get("status")
-        paper.LinkToPaper = request.POST.get("ResearchPaperUrl")
+        paper.LinkToPaper = request.POST.get("ResearchPaperUrl")#
 
-        paper.PaperId = request.POST.get("paperId")
-        paper.issn = request.POST.get("issn")
-        paper.proof_of_submission = request.FILES.get("proof")
-        paper.project_mentor = request.POST.get("project_mentor")
-        paper.duration_of_project = request.POST.get("duration")
-        paper.total_hours = request.POST.get("total_hours")
-        paper.type = request.POST.get("type")
+        paper.PaperId = request.POST.get("paperId")#
+        paper.issn = request.POST.get("issn")#
+        paper.proof_of_submission = request.FILES.get("proof")#
+        paper.project_mentor = request.POST.get("project_mentor")#
+        paper.duration_of_project = request.POST.get("duration")#
+        paper.total_hours = request.POST.get("total_hours")#
+        paper.type = request.POST.get("type")#
 
-        paper.DateOfPublication = request.POST.get("DateOfPublication")
+        paper.DateOfPublication = request.POST.get("DateOfPublication")#
         paper.research_impact_factor = request.POST.get("research_impact_factor")
         paper.indexing = request.POST.get("indexing")
         # paper.image1 = request.FILES.get("image1")
