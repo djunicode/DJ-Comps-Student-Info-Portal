@@ -497,7 +497,17 @@ def student_profile(request, id):
             student=student, is_approved=None
         )
 
-        placement = Placements.objects.get(student=student)
+        # Placements
+        placement_approved = Placements.objects.filter(
+            student=student, is_approved=True
+        )
+        placement_rejected = Placements.objects.filter(
+            student=student, is_approved=False
+        )
+        placement_pending = Placements.objects.filter(
+            student=student, is_approved=None
+        )
+
         context = {
             "flag": flag,
             "student": student,
@@ -527,8 +537,11 @@ def student_profile(request, id):
             "admit_approved": admit_approved,
             "admit_rejected": admit_rejected,
             "admit_pending": admit_pending,
+            
+            "placement_approved": placement_approved,
+            "placement_rejected": placement_rejected,
+            "placement_pending": placement_pending
 
-            "placement": placement
         }
 
         return render(request, "user_profile/profile.html", context)
