@@ -485,6 +485,19 @@ def student_profile(request, id):
             competitive_exam["gate_score"] = 0
             competitive_exam["gmat_score"] = 0
             # competitive_exam["mhcet_score"] = 0
+
+        # admits
+        admit_approved = Admit.objects.filter(
+            student=student, is_approved=True
+        )
+        admit_rejected = Admit.objects.filter(
+            student=student, is_approved=False
+        )
+        admit_pending = Admit.objects.filter(
+            student=student, is_approved=None
+        )
+
+        placement = Placements.objects.get(student=student)
         context = {
             "flag": flag,
             "student": student,
@@ -510,6 +523,12 @@ def student_profile(request, id):
             "skill": Skill.objects.filter(user_profile=student),
             "committees": Committee.objects.filter(employee=student),
             "competitive_exam": competitive_exam,
+
+            "admit_approved": admit_approved,
+            "admit_rejected": admit_rejected,
+            "admit_pending": admit_pending,
+
+            "placement": placement
         }
 
         return render(request, "user_profile/profile.html", context)
