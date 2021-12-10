@@ -181,7 +181,10 @@
                   <th class="mailbox-name">Offer Letter</th>
                   <th class="mailbox-name">Evaluation Report (Mentor)</th>
                   <th class="mailbox-name">Evaluation Report (Supervisor)</th>
-                  <th class="mailbox-name">Evaluation Report (Self)</th>
+                  <th class="mailbox-name">Evaluation Report 1 (Self)</th>
+                  <th class="mailbox-name">Evaluation Report 2 (Self)</th>
+                  <th class="mailbox-name">Evaluation Report 3 (Self)</th>
+
                   <th class="mailbox-name">Action</th>
                 </thead>
                 {% for internship in internship_pending %}
@@ -218,12 +221,28 @@
                   <td class="mailbox-name"><a target="_blank"
                       href="{{internship.evaluation_report_supervisor.url}}">Supervisor Evaluation URL</a></td>
                   {% endifequal %}
-                  {% ifequal internship.evaluation_report_self "" %}
+                  {% ifequal internship.evaluation_report_self_one "" %}
                   <td class="mailbox-name">Not Uploaded</td>
                   {% else %}
-                  <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self.url}}">Self
-                      Evaluation URL</a></td>
+                  <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self_one.url}}">Self
+                      Evaluation 1 URL</a></td>
                   {% endifequal %}
+
+                  {% ifequal internship.evaluation_report_self_two "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self_two.url}}">Self
+                      Evaluation 2 URL</a></td>
+                  {% endifequal %}
+
+                  {% ifequal internship.evaluation_report_self_three "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self_three.url}}">Self
+                      Evaluation 3 URL</a></td>
+                  {% endifequal %}
+
+
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:iapproved' internship.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
                     <a style="color:red" href="{% url 'user_profile:irejected' internship.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
@@ -262,7 +281,10 @@
                   <th class="mailbox-name">Offer Letter</th>
                   <th class="mailbox-name">Evaluation Report (Mentor)</th>
                   <th class="mailbox-name">Evaluation Report (Supervisor)</th>
-                  <th class="mailbox-name">Evaluation Report (Self)</th>
+                  <th class="mailbox-name">Evaluation Report 1 (Self)</th>
+                  <th class="mailbox-name">Evaluation Report 2 (Self)</th>
+                  <th class="mailbox-name">Evaluation Report 3 (Self)</th>
+
                 </thead>
                 {% for internship in internship_approved %}
                 <tr>
@@ -298,12 +320,28 @@
                   <td class="mailbox-name"><a target="_blank"
                       href="{{internship.evaluation_report_supervisor.url}}">Supervisor Evaluation URL</a></td>
                   {% endifequal %}
-                  {% ifequal internship.evaluation_report_self "" %}
+                  {% ifequal internship.evaluation_report_self_one "" %}
                   <td class="mailbox-name">Not Uploaded</td>
                   {% else %}
-                  <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self.url}}">Self
-                      Evaluation URL</a></td>
+                  <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self_one.url}}">Self
+                      Evaluation 1 URL</a></td>
                   {% endifequal %}
+
+                  {% ifequal internship.evaluation_report_self_two "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self_two.url}}">Self
+                      Evaluation 2 URL</a></td>
+                  {% endifequal %}
+
+                  {% ifequal internship.evaluation_report_self_three "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self_three.url}}">Self
+                      Evaluation 3 URL</a></td>
+                  {% endifequal %}
+
+
                 </tr>
                 {% endfor %}
               </tbody>
@@ -338,7 +376,10 @@
                   <th class="mailbox-name">Offer Letter</th>
                   <th class="mailbox-name">Evaluation Report (Mentor)</th>
                   <th class="mailbox-name">Evaluation Report (Supervisor)</th>
-                  <th class="mailbox-name">Evaluation Report (Self)</th>
+                  <th class="mailbox-name">Evaluation Report 1 (Self)</th>
+                  <th class="mailbox-name">Evaluation Report 2 (Self)</th>
+                  <th class="mailbox-name">Evaluation Report 3 (Self)</th>
+
                 </thead>
                 {% for internship in internship_rejected %}
                 <tr>
@@ -374,12 +415,28 @@
                   <td class="mailbox-name"><a target="_blank"
                       href="{{internship.evaluation_report_supervisor.url}}">Supervisor Evaluation URL</a></td>
                   {% endifequal %}
-                  {% ifequal internship.evaluation_report_self "" %}
+                  {% ifequal internship.evaluation_report_self_one "" %}
                   <td class="mailbox-name">Not Uploaded</td>
                   {% else %}
-                  <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self.url}}">Self
-                      Evaluation URL</a></td>
+                  <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self_one.url}}">Self
+                      Evaluation 1 URL</a></td>
                   {% endifequal %}
+
+                  {% ifequal internship.evaluation_report_self_two "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self_two.url}}">Self
+                      Evaluation 2 URL</a></td>
+                  {% endifequal %}
+
+                  {% ifequal internship.evaluation_report_self_three "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_self_three.url}}">Self
+                      Evaluation 3 URL</a></td>
+                  {% endifequal %}
+
+
                 </tr>
                 {% endfor %}
               </tbody>
