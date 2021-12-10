@@ -108,7 +108,7 @@
               </a>
             </li>
             <li id="r">
-              <a style="cursor: pointer;" Onclick="research()"><i class="fa fa-paste"></i>Research Papers
+              <a style="cursor: pointer;" Onclick="research()"><i class="fa fa-paste"></i>Research Work
               </a>
             </li>
             <li id="h">
@@ -694,6 +694,8 @@
                   <th class="mailbox-name">Description</th>
                   <th class="mailbox-name">Link to Paper</th>
                   <th class="mailbox-name">Paper ID</th>
+                  <th class="mailbox-name">Type</th>
+
                   <th class="mailbox-name">ISBN</th>
                   <th class="mailbox-name">ISSN</th>
                   <th class="mailbox-name">Proof of Submission</th>
@@ -701,6 +703,9 @@
                   <th class="mailbox-name">Type</th>
                   <th class="mailbox-name">Duration</th>
                   <th class="mailbox-name">Total Hours (Approx)</th>
+                  <th class="mailbox-name">Research Impact Factor</th>
+                  <th class="mailbox-name">Indexing</th>
+
                   <th class="mailbox-name">Action</th>
                 </thead>
                 {% for research_paper in ResearchPaper_pending %}
@@ -713,6 +718,8 @@
                   <td class="mailbox-name">{{ research_paper.Desc }}/td>
                   <td class="mailbox-name"><a target="_blank" href="{{ research_paper.LinkToPaper }}">{{ research_paper.LinkToPaper }}</a></td>
                   <td class="mailbox-name">{{ research_paper.Title }}</td>
+                  <td class="mailbox-name">{{ research_paper.research_type }}</td>
+
                   <td class="mailbox-name">{{ research_paper.isbn }}</td>
                   <td class="mailbox-name">{{ research_paper.issn }}</td>
                   {% ifequal internship.Certificate "" %}
@@ -725,6 +732,9 @@
                   <td class="mailbox-name">{{ research_paper.type }}</td>
                   <td class="mailbox-name">{{ research_paper.duration_of_project }}</td>
                   <td class="mailbox-name">{{ research_paper.total_hours }}</td>
+                  <td class="mailbox-name">{{ research_paper.research_impact_factor }}</td>
+                  <td class="mailbox-name">{{ research_paper.indexing }}</td>
+
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:research-paper-approved' research_paper.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
                     <a style="color:red" href="{% url 'user_profile:research-paper-rejected' research_paper.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
@@ -759,6 +769,8 @@
                   <th class="mailbox-name">Description</th>
                   <th class="mailbox-name">Link to Paper</th>
                   <th class="mailbox-name">Paper ID</th>
+                  <th class="mailbox-name">Type</th>
+
                   <th class="mailbox-name">ISBN</th>
                   <th class="mailbox-name">ISSN</th>
                   <th class="mailbox-name">Proof of Submission</th>
@@ -766,6 +778,9 @@
                   <th class="mailbox-name">Type</th>
                   <th class="mailbox-name">Duration</th>
                   <th class="mailbox-name">Total Hours (Approx)</th>
+                  <th class="mailbox-name">Research Impact Factor</th>
+                  <th class="mailbox-name">Indexing</th>
+
                 </thead>
                 {% for research_paper in ResearchPaper_approved %}
                 <tr>
@@ -777,6 +792,8 @@
                   <td class="mailbox-name">{{ research_paper.Desc }}/td>
                   <td class="mailbox-name"><a target="_blank" href="{{ research_paper.LinkToPaper }}">{{ research_paper.LinkToPaper }}</a></td>
                   <td class="mailbox-name">{{ research_paper.Title }}</td>
+                  <td class="mailbox-name">{{ research_paper.research_type }}</td>
+
                   <td class="mailbox-name">{{ research_paper.isbn }}</td>
                   <td class="mailbox-name">{{ research_paper.issn }}</td>
                   {% ifequal internship.Certificate "" %}
@@ -789,6 +806,9 @@
                   <td class="mailbox-name">{{ research_paper.type }}</td>
                   <td class="mailbox-name">{{ research_paper.duration_of_project }}</td>
                   <td class="mailbox-name">{{ research_paper.total_hours }}</td>
+                  <td class="mailbox-name">{{ research_paper.research_impact_factor }}</td>
+                  <td class="mailbox-name">{{ research_paper.indexing }}</td>
+
                 </tr>
                 {% endfor %}
               </tbody>
@@ -819,6 +839,8 @@
                   <th class="mailbox-name">Description</th>
                   <th class="mailbox-name">Link to Paper</th>
                   <th class="mailbox-name">Paper ID</th>
+                  <th class="mailbox-name">Type</th>
+
                   <th class="mailbox-name">ISBN</th>
                   <th class="mailbox-name">ISSN</th>
                   <th class="mailbox-name">Proof of Submission</th>
@@ -826,6 +848,9 @@
                   <th class="mailbox-name">Type</th>
                   <th class="mailbox-name">Duration</th>
                   <th class="mailbox-name">Total Hours (Approx)</th>
+                  <th class="mailbox-name">Research Impact Factor</th>
+                  <th class="mailbox-name">Indexing</th>
+
                 </thead>
                 {% for research_paper in ResearchPaper_rejected %}
                 <tr>
@@ -837,6 +862,8 @@
                   <td class="mailbox-name">{{ research_paper.Desc }}/td>
                   <td class="mailbox-name"><a target="_blank" href="{{ research_paper.LinkToPaper }}">{{ research_paper.LinkToPaper }}</a></td>
                   <td class="mailbox-name">{{ research_paper.Title }}</td>
+                  <td class="mailbox-name">{{ research_paper.research_type }}</td>
+
                   <td class="mailbox-name">{{ research_paper.isbn }}</td>
                   <td class="mailbox-name">{{ research_paper.issn }}</td>
                   {% ifequal internship.Certificate "" %}
@@ -849,6 +876,9 @@
                   <td class="mailbox-name">{{ research_paper.type }}</td>
                   <td class="mailbox-name">{{ research_paper.duration_of_project }}</td>
                   <td class="mailbox-name">{{ research_paper.total_hours }}</td>
+                  <td class="mailbox-name">{{ research_paper.research_impact_factor }}</td>
+                  <td class="mailbox-name">{{ research_paper.indexing }}</td>
+
                 </tr>
                 {% endfor %}
               </tbody>
