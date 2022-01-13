@@ -6,7 +6,7 @@ django-simple-history==3.0.0
 flake8==3.9.2
 idna==2.6
 mccabe==0.6.1
-Pillow==8.4.0
+Pillow==9.0.0
 psycopg2==2.9.1
 pycodestyle==2.7.0
 pyflakes==2.3.1
