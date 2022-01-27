@@ -115,6 +115,22 @@
               <a style="cursor: pointer;" Onclick="hackathons()"><i class="fa fa-trophy"></i>Hackathons
               </a>
             </li>
+            <li id="a">
+              <a style="cursor: pointer;" Onclick="admits()"><i class="fa fa-university"></i>Admits
+              </a>
+            </li>
+            <li id="pl">
+              <a style="cursor: pointer;" Onclick="placements()"><i class="fa fa-briefcase"></i>Placements
+              </a>
+            </li>
+            <li id="ce">
+              <a style="cursor: pointer;" Onclick="competitiveExams()"><i class="fa fa-pencil"></i>Competitive Exams
+              </a>
+            </li>
+            <li id="c">
+              <a style="cursor: pointer;" Onclick="committee()"><i class="fa fa-building"></i>Committee
+              </a>
+            </li>
           </ul>
         </div>
         <!-- /.box-body -->
@@ -896,7 +912,102 @@
     <div id="Extra" class="col-md-10">
       <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Extra Curricular</h3>
+          <h3 class="box-title">Pending Extra Curricular</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <thead>
+                  <th class="mailbox-number">Sr. No</th>
+                  <th class="mailbox-name">Student</th>
+                  <th class="mailbox-name">Name</th>
+                  <th class="mailbox-name">Description</th>
+                  <th class="mailbox-name">Achievements</th>
+                  <th class="mailbox-name">Date</th>
+                  <th class="mailbox-name">Certificate</th>
+                  <th class="mailbox-name">Action</th>
+                </thead>
+                {% for e in extra_curricular %}
+                <tr>
+                  <td class="mailbox-number">{{ forloop.counter }}</td>
+                  <td class="mailbox-name">{{e.student.Sap_Id}} - {{e.student.first_name}}
+                    {{e.student.last_name}}</td>
+                  <td class="mailbox-name">{{ e.name }}</td>
+                  <td class="mailbox-name">{{ e.desc }}</td>
+                  <td class="mailbox-name">{{ e.achievements }}</td>
+                  <td class="mailbox-name">{{ e.date }}</td>
+                  {% ifequal e.Certificate.url "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{e.Certificate.url}}">Certificate</a>
+                  </td>
+                  {% endifequal %}
+                  
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+        </div>
+      </div>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Accepted Extra Curricular</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <thead>
+                  <th class="mailbox-number">Sr. No</th>
+                  <th class="mailbox-name">Student</th>
+                  <th class="mailbox-name">Name</th>
+                  <th class="mailbox-name">Description</th>
+                  <th class="mailbox-name">Achievements</th>
+                  <th class="mailbox-name">Date</th>
+                  <th class="mailbox-name">Certificate</th>
+                </thead>
+                {% for e in extra_curricular %}
+                <tr>
+                  <td class="mailbox-number">{{ forloop.counter }}</td>
+                  <td class="mailbox-name">{{e.student.Sap_Id}} - {{e.student.first_name}}
+                    {{e.student.last_name}}</td>
+                  <td class="mailbox-name">{{ e.name }}</td>
+                  <td class="mailbox-name">{{ e.desc }}</td>
+                  <td class="mailbox-name">{{ e.achievements }}</td>
+                  <td class="mailbox-name">{{ e.date }}</td>
+                  {% ifequal e.Certificate.url "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{e.Certificate.url}}">Certificate</a>
+                  </td>
+                  {% endifequal %}
+                  
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+        </div>
+      </div>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Rejected Extra Curricular</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body no-padding">
@@ -1229,6 +1340,591 @@
       <!-- /. box -->
     </div>
 
+    <div id="Admits" class="col-md-10">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Pending Admits</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <thead>
+                  <th class="mailbox-number">Sr. No</th>
+                  <th class="mailbox-name">Student</th>
+                  <th class="mailbox-name">College Name</th>
+                  <th class="mailbox-name">Masters</th>
+                  <th class="mailbox-name">College Location</th>
+                  <th class="mailbox-name">Selected</th>
+                  <th class="mailbox-name">Admit Result</th>
+                  <th class="mailbox-name">Action</th>
+                </thead>
+                {% for project in BeProject_pending %}
+                <tr>
+                  <td class="mailbox-number">{{ forloop.counter }}</td>
+                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
+                    {{project.student.last_name}}</td>
+                  <td class="mailbox-name">{{ project.ProjName }}</td>
+                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
+                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
+                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
+                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  </td>
+                  {% endifequal %}
+                  <td class="mailbox-name">
+                    <a style="color:green" href="{% url 'user_profile:be-project-approved' project.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                    <a style="color:red" href="{% url 'user_profile:be-project-rejected' project.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+        </div>
+      </div>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Accepted Admits</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <thead>
+                  <th class="mailbox-number">Sr. No</th>
+                  <th class="mailbox-name">Student</th>
+                  <th class="mailbox-name">College Name</th>
+                  <th class="mailbox-name">Masters</th>
+                  <th class="mailbox-name">College Location</th>
+                  <th class="mailbox-name">Selected</th>
+                  <th class="mailbox-name">Admit Result</th>
+                </thead>
+                {% for project in BeProject_approved %}
+                <tr>
+                  <td class="mailbox-number">{{ forloop.counter }}</td>
+                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
+                    {{project.student.last_name}}</td>
+                  <td class="mailbox-name">{{ project.ProjName }}</td>
+                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
+                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
+                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
+                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  </td>
+                  {% endifequal %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+        </div>
+      </div>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Rejected Admits</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <thead>
+                  <th class="mailbox-number">Sr. No</th>
+                  <th class="mailbox-name">Student</th>
+                  <th class="mailbox-name">College Name</th>
+                  <th class="mailbox-name">Masters</th>
+                  <th class="mailbox-name">College Location</th>
+                  <th class="mailbox-name">Selected</th>
+                  <th class="mailbox-name">Admit Result</th>
+                </thead>
+                {% for project in BeProject_rejected %}
+                <tr>
+                  <td class="mailbox-number">{{ forloop.counter }}</td>
+                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
+                    {{project.student.last_name}}</td>
+                  <td class="mailbox-name">{{ project.ProjName }}</td>
+                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
+                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
+                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
+                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  </td>
+                  {% endifequal %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+        </div>
+      </div>
+      <!-- /. box -->
+    </div>
+
+    <div id="Placements" class="col-md-10">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Pending Placements</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <thead>
+                  <th class="mailbox-number">Sr. No</th>
+                  <th class="mailbox-name">Student</th>
+                  <th class="mailbox-name">Company Name</th>
+                  <th class="mailbox-name">Offer Letter</th>
+                  <th class="mailbox-name">Action</th>
+                </thead>
+                {% for project in BeProject_pending %}
+                <tr>
+                  <td class="mailbox-number">{{ forloop.counter }}</td>
+                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
+                    {{project.student.last_name}}</td>
+                  <td class="mailbox-name">{{ project.ProjName }}</td>
+                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
+                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
+                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
+                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  </td>
+                  {% endifequal %}
+                  <td class="mailbox-name">
+                    <a style="color:green" href="{% url 'user_profile:be-project-approved' project.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                    <a style="color:red" href="{% url 'user_profile:be-project-rejected' project.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+        </div>
+      </div>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Accepted Placements</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <thead>
+                  <th class="mailbox-number">Sr. No</th>
+                  <th class="mailbox-name">Student</th>
+                  <th class="mailbox-name">Company Name</th>
+                  <th class="mailbox-name">Offer Letter</th>
+                </thead>
+                {% for project in BeProject_approved %}
+                <tr>
+                  <td class="mailbox-number">{{ forloop.counter }}</td>
+                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
+                    {{project.student.last_name}}</td>
+                  <td class="mailbox-name">{{ project.ProjName }}</td>
+                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
+                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
+                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
+                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  </td>
+                  {% endifequal %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+        </div>
+      </div>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Rejected Placements</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <thead>
+                  <th class="mailbox-number">Sr. No</th>
+                  <th class="mailbox-name">Student</th>
+                  <th class="mailbox-name">Company Name</th>
+                  <th class="mailbox-name">Offer Letter</th>
+                </thead>
+                {% for project in BeProject_rejected %}
+                <tr>
+                  <td class="mailbox-number">{{ forloop.counter }}</td>
+                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
+                    {{project.student.last_name}}</td>
+                  <td class="mailbox-name">{{ project.ProjName }}</td>
+                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
+                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
+                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
+                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  </td>
+                  {% endifequal %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+        </div>
+      </div>
+      <!-- /. box -->
+    </div>
+
+    <div id="CompetitiveExams" class="col-md-10">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Pending Competitive Exams</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <thead>
+                  <th class="mailbox-number">Sr. No</th>
+                  <th class="mailbox-name">Student</th>
+                  <th class="mailbox-name">GRE Score</th>
+                  <th class="mailbox-name">TOELF Score</th>
+                  <th class="mailbox-name">CAT Score</th>
+                  <th class="mailbox-name">GATE Score</th>
+                  <th class="mailbox-name">GMAT Score</th>
+                  <th class="mailbox-name">Action</th>
+                </thead>
+                {% for project in BeProject_pending %}
+                <tr>
+                  <td class="mailbox-number">{{ forloop.counter }}</td>
+                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
+                    {{project.student.last_name}}</td>
+                  <td class="mailbox-name">{{ project.ProjName }}</td>
+                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
+                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
+                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
+                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  </td>
+                  {% endifequal %}
+                  <td class="mailbox-name">
+                    <a style="color:green" href="{% url 'user_profile:be-project-approved' project.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                    <a style="color:red" href="{% url 'user_profile:be-project-rejected' project.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+        </div>
+      </div>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Accepted Competitive Exams</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <thead>
+                  <th class="mailbox-number">Sr. No</th>
+                  <th class="mailbox-name">Student</th>
+                  <th class="mailbox-name">GRE Score</th>
+                  <th class="mailbox-name">TOELF Score</th>
+                  <th class="mailbox-name">CAT Score</th>
+                  <th class="mailbox-name">GATE Score</th>
+                  <th class="mailbox-name">GMAT Score</th>
+                </thead>
+                {% for project in BeProject_approved %}
+                <tr>
+                  <td class="mailbox-number">{{ forloop.counter }}</td>
+                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
+                    {{project.student.last_name}}</td>
+                  <td class="mailbox-name">{{ project.ProjName }}</td>
+                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
+                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
+                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
+                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  </td>
+                  {% endifequal %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+        </div>
+      </div>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Rejected Competitive Exams</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <thead>
+                  <th class="mailbox-number">Sr. No</th>
+                  <th class="mailbox-name">Student</th>
+                  <th class="mailbox-name">GRE Score</th>
+                  <th class="mailbox-name">TOELF Score</th>
+                  <th class="mailbox-name">CAT Score</th>
+                  <th class="mailbox-name">GATE Score</th>
+                  <th class="mailbox-name">GMAT Score</th>
+                </thead>
+                {% for project in BeProject_rejected %}
+                <tr>
+                  <td class="mailbox-number">{{ forloop.counter }}</td>
+                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
+                    {{project.student.last_name}}</td>
+                  <td class="mailbox-name">{{ project.ProjName }}</td>
+                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
+                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
+                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
+                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  </td>
+                  {% endifequal %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+        </div>
+      </div>
+      <!-- /. box -->
+    </div>
+
+    <div id="Committees" class="col-md-10">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Pending Committees</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <thead>
+                  <th class="mailbox-number">Sr. No</th>
+                  <th class="mailbox-name">Student</th>
+                  <th class="mailbox-name">Organisation Name</th>
+                  <th class="mailbox-name">Designation</th>
+                  <th class="mailbox-name">From</th>
+                  <th class="mailbox-name">To</th>
+                  <th class="mailbox-name">Description</th>
+                  <th class="mailbox-name">Certificate</th>
+                  <th class="mailbox-name">History</th>
+                  <th class="mailbox-name">Action</th>
+                </thead>
+                {% for project in BeProject_pending %}
+                <tr>
+                  <td class="mailbox-number">{{ forloop.counter }}</td>
+                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
+                    {{project.student.last_name}}</td>
+                  <td class="mailbox-name">{{ project.ProjName }}</td>
+                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
+                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
+                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
+                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  </td>
+                  {% endifequal %}
+                  <td class="mailbox-name">
+                    <a style="color:green" href="{% url 'user_profile:be-project-approved' project.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                    <a style="color:red" href="{% url 'user_profile:be-project-rejected' project.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+        </div>
+      </div>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Accepted Committees</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <thead>
+                  <th class="mailbox-number">Sr. No</th>
+                  <th class="mailbox-name">Student</th>
+                  <th class="mailbox-name">Organisation Name</th>
+                  <th class="mailbox-name">Designation</th>
+                  <th class="mailbox-name">From</th>
+                  <th class="mailbox-name">To</th>
+                  <th class="mailbox-name">Description</th>
+                  <th class="mailbox-name">Certificate</th>
+                  <th class="mailbox-name">History</th>
+                </thead>
+                {% for project in BeProject_approved %}
+                <tr>
+                  <td class="mailbox-number">{{ forloop.counter }}</td>
+                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
+                    {{project.student.last_name}}</td>
+                  <td class="mailbox-name">{{ project.ProjName }}</td>
+                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
+                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
+                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
+                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  </td>
+                  {% endifequal %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+        </div>
+      </div>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Rejected Committees</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <thead>
+                  <th class="mailbox-number">Sr. No</th>
+                  <th class="mailbox-name">Student</th>
+                  <th class="mailbox-name">Organisation Name</th>
+                  <th class="mailbox-name">Designation</th>
+                  <th class="mailbox-name">From</th>
+                  <th class="mailbox-name">To</th>
+                  <th class="mailbox-name">Description</th>
+                  <th class="mailbox-name">Certificate</th>
+                  <th class="mailbox-name">History</th>
+                </thead>
+                {% for project in BeProject_rejected %}
+                <tr>
+                  <td class="mailbox-number">{{ forloop.counter }}</td>
+                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
+                    {{project.student.last_name}}</td>
+                  <td class="mailbox-name">{{ project.ProjName }}</td>
+                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
+                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
+                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
+                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  </td>
+                  {% endifequal %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+        </div>
+      </div>
+      <!-- /. box -->
+    </div>
+
     <!-- /.col -->
   </div>
   <!-- /.row -->
@@ -1248,6 +1944,10 @@
     document.getElementById("b").className=""
     document.getElementById("r").className=""
     document.getElementById("h").className=""
+    document.getElementById("a").className=""
+    document.getElementById("pl").className=""
+    document.getElementById("ce").className=""
+    document.getElementById("c").className=""
 
     $("#Student").show();
     $("#Internship").hide();
@@ -1257,6 +1957,10 @@
     $("#BE").hide();
     $("#Research").hide();
     $("#Hackathons").hide();
+    $("#Admits").hide();
+    $("#Placements").hide();
+    $("#CompetitiveExams").hide();
+    $("#Committees").hide();
   }
 
   function internship() {
@@ -1268,6 +1972,10 @@
     document.getElementById("b").className=""
     document.getElementById("r").className=""
     document.getElementById("h").className=""
+    document.getElementById("a").className=""
+    document.getElementById("pl").className=""
+    document.getElementById("ce").className=""
+    document.getElementById("c").className=""
 
     $("#Student").hide();
     $("#Internship").show();
@@ -1277,6 +1985,10 @@
     $("#BE").hide();
     $("#Research").hide();
     $("#Hackathons").hide();
+    $("#Admits").hide();
+    $("#Placements").hide();
+    $("#CompetitiveExams").hide();
+    $("#Committees").hide();
   }
 
   function grades() {
@@ -1288,6 +2000,10 @@
     document.getElementById("b").className=""
     document.getElementById("r").className=""
     document.getElementById("h").className=""
+    document.getElementById("a").className=""
+    document.getElementById("pl").className=""
+    document.getElementById("ce").className=""
+    document.getElementById("c").className=""
 
     $("#Student").hide();
     $("#Internship").hide();
@@ -1297,6 +2013,10 @@
     $("#BE").hide();
     $("#Research").hide();
     $("#Hackathons").hide();
+    $("#Admits").hide();
+    $("#Placements").hide();
+    $("#CompetitiveExams").hide();
+    $("#Committees").hide();
   }
 
   function projects() {
@@ -1308,6 +2028,10 @@
     document.getElementById("b").className=""
     document.getElementById("r").className=""
     document.getElementById("h").className=""
+    document.getElementById("a").className=""
+    document.getElementById("pl").className=""
+    document.getElementById("ce").className=""
+    document.getElementById("c").className=""
 
     $("#Student").hide();
     $("#Internship").hide();
@@ -1317,6 +2041,10 @@
     $("#BE").hide();
     $("#Research").hide();
     $("#Hackathons").hide();
+    $("#Admits").hide();
+    $("#Placements").hide();
+    $("#CompetitiveExams").hide();
+    $("#Committees").hide();
   }
 
   function beprojects() {
@@ -1328,6 +2056,10 @@
     document.getElementById("b").className="active"
     document.getElementById("r").className=""
     document.getElementById("h").className=""
+    document.getElementById("a").className=""
+    document.getElementById("pl").className=""
+    document.getElementById("ce").className=""
+    document.getElementById("c").className=""
 
     $("#Student").hide();
     $("#Internship").hide();
@@ -1337,6 +2069,10 @@
     $("#BE").show();
     $("#Research").hide();
     $("#Hackathons").hide();
+    $("#Admits").hide();
+    $("#Placements").hide();
+    $("#CompetitiveExams").hide();
+    $("#Committees").hide();
   }
 
   function research() {
@@ -1348,6 +2084,10 @@
     document.getElementById("b").className=""
     document.getElementById("r").className="active"
     document.getElementById("h").className=""
+    document.getElementById("a").className=""
+    document.getElementById("pl").className=""
+    document.getElementById("ce").className=""
+    document.getElementById("c").className=""
 
     $("#Student").hide();
     $("#Internship").hide();
@@ -1357,6 +2097,10 @@
     $("#BE").hide();
     $("#Research").show();
     $("#Hackathons").hide();
+    $("#Admits").hide();
+    $("#Placements").hide();
+    $("#CompetitiveExams").hide();
+    $("#Committees").hide();
   }
 
   function extra() {
@@ -1368,6 +2112,10 @@
     document.getElementById("b").className=""
     document.getElementById("r").className=""
     document.getElementById("h").className=""
+    document.getElementById("a").className=""
+    document.getElementById("pl").className=""
+    document.getElementById("ce").className=""
+    document.getElementById("c").className=""
 
     $("#Student").hide();
     $("#Internship").hide();
@@ -1377,6 +2125,10 @@
     $("#BE").hide();
     $("#Research").hide();
     $("#Hackathons").hide();
+    $("#Admits").hide();
+    $("#Placements").hide();
+    $("#CompetitiveExams").hide();
+    $("#Committees").hide();
   }
 
   function hackathons() {
@@ -1388,6 +2140,10 @@
     document.getElementById("b").className=""
     document.getElementById("r").className=""
     document.getElementById("h").className="active"
+    document.getElementById("a").className=""
+    document.getElementById("pl").className=""
+    document.getElementById("ce").className=""
+    document.getElementById("c").className=""
 
     $("#Student").hide();
     $("#Internship").hide();
@@ -1397,6 +2153,122 @@
     $("#BE").hide();
     $("#Research").hide();
     $("#Hackathons").show();
+    $("#Admits").hide();
+    $("#Placements").hide();
+    $("#CompetitiveExams").hide();
+    $("#Committees").hide();
+  }
+
+  function admits() {
+    document.getElementById("s").className=""
+    document.getElementById("i").className=""
+    document.getElementById("p").className=""
+    document.getElementById("e").className=""
+    document.getElementById("g").className=""
+    document.getElementById("b").className=""
+    document.getElementById("r").className=""
+    document.getElementById("h").className=""
+    document.getElementById("a").className="active"
+    document.getElementById("pl").className=""
+    document.getElementById("ce").className=""
+    document.getElementById("c").className=""
+
+    $("#Student").hide();
+    $("#Internship").hide();
+    $("#Projects").hide();
+    $("#Extra").hide();
+    $("#Grades").hide();
+    $("#BE").hide();
+    $("#Research").hide();
+    $("#Hackathons").hide();
+    $("#Admits").show();
+    $("#Placements").hide();
+    $("#CompetitiveExams").hide();
+    $("#Committees").hide();
+  }
+
+  function placements() {
+    document.getElementById("s").className=""
+    document.getElementById("i").className=""
+    document.getElementById("p").className=""
+    document.getElementById("e").className=""
+    document.getElementById("g").className=""
+    document.getElementById("b").className=""
+    document.getElementById("r").className=""
+    document.getElementById("h").className=""
+    document.getElementById("a").className=""
+    document.getElementById("pl").className="active"
+    document.getElementById("ce").className=""
+    document.getElementById("c").className=""
+
+    $("#Student").hide();
+    $("#Internship").hide();
+    $("#Projects").hide();
+    $("#Extra").hide();
+    $("#Grades").hide();
+    $("#BE").hide();
+    $("#Research").hide();
+    $("#Hackathons").hide();
+    $("#Admits").hide();
+    $("#Placements").show();
+    $("#CompetitiveExams").hide();
+    $("#Committees").hide();
+  }
+
+  function competitiveExams() {
+    document.getElementById("s").className=""
+    document.getElementById("i").className=""
+    document.getElementById("p").className=""
+    document.getElementById("e").className=""
+    document.getElementById("g").className=""
+    document.getElementById("b").className=""
+    document.getElementById("r").className=""
+    document.getElementById("h").className=""
+    document.getElementById("a").className=""
+    document.getElementById("pl").className=""
+    document.getElementById("ce").className="active"
+    document.getElementById("c").className=""
+
+    $("#Student").hide();
+    $("#Internship").hide();
+    $("#Projects").hide();
+    $("#Extra").hide();
+    $("#Grades").hide();
+    $("#BE").hide();
+    $("#Research").hide();
+    $("#Hackathons").hide();
+    $("#Admits").hide();
+    $("#Placements").hide();
+    $("#CompetitiveExams").show();
+    $("#Committees").hide();
+  }
+
+  function committee() {
+    document.getElementById("s").className=""
+    document.getElementById("i").className=""
+    document.getElementById("p").className=""
+    document.getElementById("e").className=""
+    document.getElementById("g").className=""
+    document.getElementById("b").className=""
+    document.getElementById("r").className=""
+    document.getElementById("h").className=""
+    document.getElementById("a").className=""
+    document.getElementById("pl").className=""
+    document.getElementById("ce").className=""
+    document.getElementById("c").className="active"
+
+    $("#Student").hide();
+    $("#Internship").hide();
+    $("#Projects").hide();
+    $("#Extra").hide();
+    $("#Grades").hide();
+    $("#BE").hide();
+    $("#Research").hide();
+    $("#Hackathons").hide();
+    $("#Admits").hide();
+    $("#Placements").hide();
+    $("#CompetitiveExams").hide();
+    $("#Committees").show();
   }
 </script>
 {% endblock %}
