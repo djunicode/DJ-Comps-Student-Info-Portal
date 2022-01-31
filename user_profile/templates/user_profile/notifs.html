@@ -1505,24 +1505,21 @@
                   <th class="mailbox-name">Offer Letter</th>
                   <th class="mailbox-name">Action</th>
                 </thead>
-                {% for project in BeProject_pending %}
+                {% for placement in placements_pending %}
                 <tr>
                   <td class="mailbox-number">{{ forloop.counter }}</td>
-                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
-                    {{project.student.last_name}}</td>
-                  <td class="mailbox-name">{{ project.ProjName }}</td>
-                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
-                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
-                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
-                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">{{placement.student.Sap_Id}} - {{placement.student.first_name}}
+                    {{placement.student.last_name}}</td>
+                  <td class="mailbox-name">{{ placement.company_name }}</td>
+                  {% ifequal placement.offer_letter "" %}
                   <td class="mailbox-name">Not Uploaded</td>
                   {% else %}
-                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter.url}}">Report</a>
                   </td>
                   {% endifequal %}
                   <td class="mailbox-name">
-                    <a style="color:green" href="{% url 'user_profile:be-project-approved' project.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="{% url 'user_profile:be-project-rejected' project.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:green" href="{% url 'user_profile:placement-approved' placement.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                    <a style="color:red" href="{% url 'user_profile:placement-rejected' placement.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -1552,19 +1549,16 @@
                   <th class="mailbox-name">Company Name</th>
                   <th class="mailbox-name">Offer Letter</th>
                 </thead>
-                {% for project in BeProject_approved %}
+                {% for placement in placements_accepted %}
                 <tr>
                   <td class="mailbox-number">{{ forloop.counter }}</td>
-                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
-                    {{project.student.last_name}}</td>
-                  <td class="mailbox-name">{{ project.ProjName }}</td>
-                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
-                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
-                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
-                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">{{placement.student.Sap_Id}} - {{placement.student.first_name}}
+                    {{placement.student.last_name}}</td>
+                  <td class="mailbox-name">{{ placement.company_name }}</td>
+                  {% ifequal placement.offer_letter "" %}
                   <td class="mailbox-name">Not Uploaded</td>
                   {% else %}
-                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter.url}}">Report</a>
                   </td>
                   {% endifequal %}
                 </tr>
@@ -1595,19 +1589,16 @@
                   <th class="mailbox-name">Company Name</th>
                   <th class="mailbox-name">Offer Letter</th>
                 </thead>
-                {% for project in BeProject_rejected %}
+                {% for placement in placements_rejected %}
                 <tr>
                   <td class="mailbox-number">{{ forloop.counter }}</td>
-                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
-                    {{project.student.last_name}}</td>
-                  <td class="mailbox-name">{{ project.ProjName }}</td>
-                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
-                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
-                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
-                  {% ifequal project.project_report "" %}
+                  <td class="mailbox-name">{{placement.student.Sap_Id}} - {{placement.student.first_name}}
+                    {{placement.student.last_name}}</td>
+                  <td class="mailbox-name">{{ placement.company_name }}</td>
+                  {% ifequal placement.offer_letter "" %}
                   <td class="mailbox-name">Not Uploaded</td>
                   {% else %}
-                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter.url}}">Report</a>
                   </td>
                   {% endifequal %}
                 </tr>
@@ -1646,24 +1637,20 @@
                   <th class="mailbox-name">GMAT Score</th>
                   <th class="mailbox-name">Action</th>
                 </thead>
-                {% for project in BeProject_pending %}
+                {% for competitive_exam in competitive_exams_pending %}
                 <tr>
                   <td class="mailbox-number">{{ forloop.counter }}</td>
-                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
-                    {{project.student.last_name}}</td>
-                  <td class="mailbox-name">{{ project.ProjName }}</td>
-                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
-                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
-                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
-                  {% ifequal project.project_report "" %}
-                  <td class="mailbox-name">Not Uploaded</td>
-                  {% else %}
-                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
-                  </td>
-                  {% endifequal %}
+                  <td class="mailbox-name">{{competitive_exam.student.Sap_Id}} - {{competitive_exam.student.first_name}}
+                    {{competitive_exam.student.last_name}}</td>
+                  <td class="mailbox-name">{{ competitive_exam.gre_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.toefl_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.cat_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.gate_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.gmat_score }}</td>
+
                   <td class="mailbox-name">
-                    <a style="color:green" href="{% url 'user_profile:be-project-approved' project.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="{% url 'user_profile:be-project-rejected' project.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:green" href="{% url 'user_profile:competitive-exam-approved' competitive_exam.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                    <a style="color:red" href="{% url 'user_profile:competitive-exam-rejected' competitive_exam.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -1696,21 +1683,17 @@
                   <th class="mailbox-name">GATE Score</th>
                   <th class="mailbox-name">GMAT Score</th>
                 </thead>
-                {% for project in BeProject_approved %}
+                {% for competitive_exam in competitive_exams_approved %}
                 <tr>
                   <td class="mailbox-number">{{ forloop.counter }}</td>
-                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
-                    {{project.student.last_name}}</td>
-                  <td class="mailbox-name">{{ project.ProjName }}</td>
-                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
-                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
-                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
-                  {% ifequal project.project_report "" %}
-                  <td class="mailbox-name">Not Uploaded</td>
-                  {% else %}
-                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
-                  </td>
-                  {% endifequal %}
+                  <td class="mailbox-name">{{competitive_exam.student.Sap_Id}} - {{competitive_exam.student.first_name}}
+                    {{competitive_exam.student.last_name}}</td>
+                  <td class="mailbox-name">{{ competitive_exam.gre_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.toefl_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.cat_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.gate_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.gmat_score }}</td>
+
                 </tr>
                 {% endfor %}
               </tbody>
@@ -1742,21 +1725,17 @@
                   <th class="mailbox-name">GATE Score</th>
                   <th class="mailbox-name">GMAT Score</th>
                 </thead>
-                {% for project in BeProject_rejected %}
+                {% for competitive_exam in competitive_exams_rejected %}
                 <tr>
                   <td class="mailbox-number">{{ forloop.counter }}</td>
-                  <td class="mailbox-name">{{project.student.Sap_Id}} - {{project.student.first_name}}
-                    {{project.student.last_name}}</td>
-                  <td class="mailbox-name">{{ project.ProjName }}</td>
-                  <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
-                  <td class="mailbox-name">{{ project.ProjDesc }}</td>
-                  <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
-                  {% ifequal project.project_report "" %}
-                  <td class="mailbox-name">Not Uploaded</td>
-                  {% else %}
-                  <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
-                  </td>
-                  {% endifequal %}
+                  <td class="mailbox-name">{{competitive_exam.student.Sap_Id}} - {{competitive_exam.student.first_name}}
+                    {{competitive_exam.student.last_name}}</td>
+                  <td class="mailbox-name">{{ competitive_exam.gre_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.toefl_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.cat_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.gate_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.gmat_score }}</td>
+
                 </tr>
                 {% endfor %}
               </tbody>

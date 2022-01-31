@@ -75,5 +75,12 @@ urlpatterns = [
     path("admit_approved/<int:id>", views.admit_approved, name="admit-approved"),
     path("admit_rejected/<int:id>", views.admit_rejected, name="admit-rejected"),
 
+    path("placement_approved/<int:id>", views.placement_approved, name="placement-approved"),
+    path("placement_rejected/<int:id>", views.placement_rejected, name="placement-rejected"),
+
+
+    path("competitive_exam_approved/<int:id>", views.competitive_exams_approved, name="competitive-exam-approved"),
+    path("competitive_exam_rejected/<int:id>", views.competitive_exams_rejected, name="competitive-exam-rejected"),
+    
     path("all_excel", views.download_all_excel, name="all-excel"),
 ]

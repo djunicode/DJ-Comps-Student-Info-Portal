@@ -19,7 +19,6 @@ from .models import (
     CompetitiveExams,
     Admit,
     Placements,
-    Admit,
 )
 from .models import (
     HistoricalInternship,
@@ -760,9 +759,22 @@ def notifs(request):
 
     # teacher = TeacherProfile.objects.get(teacher=request.user)
 
+    # Admits
     admits_approved = Admit.objects.filter(student__mentor = teacher, is_approved = True)
     admits_rejected = Admit.objects.filter(student__mentor = teacher, is_approved = False)
     admits_pending = Admit.objects.filter(student__mentor = teacher, is_approved = None)
+
+    # Placements
+    placements_approved = Placements.objects.filter(student__mentor = teacher, is_approved = True)
+    placements_rejected = Placements.objects.filter(student__mentor = teacher, is_approved = False)
+    placements_pending = Placements.objects.filter(student__mentor = teacher, is_approved = None)
+
+    # Compititive Exams
+    compititive_exams_approved = CompetitiveExams.objects.filter(student__mentor = teacher, is_approved = True)
+    compititive_exams_rejected = CompetitiveExams.objects.filter(student__mentor = teacher, is_approved = False)
+    compititive_exams_pending = CompetitiveExams.objects.filter(student__mentor = teacher, is_approved = None)
+
+
 
 
     context = {
@@ -773,21 +785,34 @@ def notifs(request):
         "internship_approved": internship_approved,
         "internship_rejected": internship_rejected,
         "internship_pending": internship_pending,
+
         "project_approved": project_approved,
         "project_rejected": project_rejected,
         "project_pending": project_pending,
+
         "BeProject_approved": BeProject_approved,
         "BeProject_rejected": BeProject_rejected,
         "BeProject_pending": BeProject_pending,
+
         "ResearchPaper_approved": ResearchPaper_approved,
         "ResearchPaper_rejected": ResearchPaper_rejected,
         "ResearchPaper_pending": ResearchPaper_pending,
+
         "Hackathon_approved": Hackathon_approved,
         "Hackathon_rejected": Hackathon_rejected,
         "Hackathon_pending": Hackathon_pending,
+
         "admits_approved" : admits_approved,
         "admits_rejected" : admits_rejected,
         "admits_pending" : admits_pending,
+
+        "placements_approved" : placements_approved,
+        "placements_rejected" : placements_rejected,
+        "placements_pending" : placements_pending,
+
+        "competitive_exams_approved" : compititive_exams_approved,
+        "competitive_exams_rejected" : compititive_exams_rejected,
+        "competitive_exams_pending" : compititive_exams_pending,
     }
     return render(request, "user_profile/notifs.html", context)
 
@@ -1953,6 +1978,49 @@ def admit_rejected(request, id):
     if admit.is_approved == None:
         admit.is_approved = False
         admit.save()
+    return redirect("user_profile:notifs") 
+
+# Placement views
+def placement_approved(request, id):
+    try:
+        placement = Placements.objects.get(id = id)
+    except Placements.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if placement.is_approved == None:
+        placement.is_approved = True
+        placement.save()
+    return redirect("user_profile:notifs") 
+
+def placement_rejected(request, id):
+    try:
+        placement = Placements.objects.get(id = id)
+    except Placements.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if placement.is_approved == None:
+        placement.is_approved = False
+        placement.save()
+    return redirect("user_profile:notifs") 
+
+
+# Competitive Exams views
+def competitive_exams_approved(request, id):
+    try:
+        competitive_exams = CompetitiveExams.objects.get(id = id)
+    except CompetitiveExams.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if competitive_exams.is_approved == None:
+        competitive_exams.is_approved = True
+        competitive_exams.save()
+    return redirect("user_profile:notifs") 
+
+def competitive_exams_rejected(request, id):
+    try:
+        competitive_exams = CompetitiveExams.objects.get(id = id)
+    except CompetitiveExams.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if competitive_exams.is_approved == None:
+        competitive_exams.is_approved = False
+        competitive_exams.save()
     return redirect("user_profile:notifs") 
 
 def download_all_excel(request):
