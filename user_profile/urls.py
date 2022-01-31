@@ -81,6 +81,10 @@ urlpatterns = [
 
     path("competitive_exam_approved/<int:id>", views.competitive_exams_approved, name="competitive-exam-approved"),
     path("competitive_exam_rejected/<int:id>", views.competitive_exams_rejected, name="competitive-exam-rejected"),
-    
+
+    path("committee_approved/<int:id>", views.committee_approved, name="committee-approved"),
+    path("committee_rejected/<int:id>", views.committee_rejected, name="committee-rejected"),
+
+
     path("all_excel", views.download_all_excel, name="all-excel"),
 ]

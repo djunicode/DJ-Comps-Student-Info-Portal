@@ -774,7 +774,10 @@ def notifs(request):
     compititive_exams_rejected = CompetitiveExams.objects.filter(student__mentor = teacher, is_approved = False)
     compititive_exams_pending = CompetitiveExams.objects.filter(student__mentor = teacher, is_approved = None)
 
-
+    # Committee
+    committee_approved = Committee.objects.filter(employee__mentor = teacher, is_approved = True)
+    committee_rejected = Committee.objects.filter(employee__mentor = teacher, is_approved = False)
+    committee_pending = Committee.objects.filter(employee__mentor = teacher, is_approved = None)
 
 
     context = {
@@ -813,6 +816,10 @@ def notifs(request):
         "competitive_exams_approved" : compititive_exams_approved,
         "competitive_exams_rejected" : compititive_exams_rejected,
         "competitive_exams_pending" : compititive_exams_pending,
+
+        "committee_approved" : committee_approved,
+        "committee_rejected" : committee_rejected,
+        "committee_pending" : committee_pending,
     }
     return render(request, "user_profile/notifs.html", context)
 
@@ -2021,6 +2028,28 @@ def competitive_exams_rejected(request, id):
     if competitive_exams.is_approved == None:
         competitive_exams.is_approved = False
         competitive_exams.save()
+    return redirect("user_profile:notifs") 
+
+
+# Committee views
+def committee_approved(request, id):
+    try:
+        committee = Committee.objects.get(id = id)
+    except Committee.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if committee.is_approved == None:
+        committee.is_approved = True
+        committee.save()
+    return redirect("user_profile:notifs") 
+
+def committee_rejected(request, id):
+    try:
+        committee = Committee.objects.get(id = id)
+    except Committee.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if committee.is_approved == None:
+        committee.is_approved = False
+        committee.save()
     return redirect("user_profile:notifs") 
 
 def download_all_excel(request):
