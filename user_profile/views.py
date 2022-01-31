@@ -19,6 +19,7 @@ from .models import (
     CompetitiveExams,
     Admit,
     Placements,
+    Admit,
 )
 from .models import (
     HistoricalInternship,
@@ -759,6 +760,11 @@ def notifs(request):
 
     # teacher = TeacherProfile.objects.get(teacher=request.user)
 
+    admits_approved = Admit.objects.filter(student__mentor = teacher, is_approved = True)
+    admits_rejected = Admit.objects.filter(student__mentor = teacher, is_approved = False)
+    admits_pending = Admit.objects.filter(student__mentor = teacher, is_approved = None)
+
+
     context = {
         "students": stu,
         "teacher": teacher,
@@ -779,6 +785,9 @@ def notifs(request):
         "Hackathon_approved": Hackathon_approved,
         "Hackathon_rejected": Hackathon_rejected,
         "Hackathon_pending": Hackathon_pending,
+        "admits_approved" : admits_approved,
+        "admits_rejected" : admits_rejected,
+        "admits_pending" : admits_pending,
     }
     return render(request, "user_profile/notifs.html", context)
 
@@ -1924,6 +1933,27 @@ def BE_project_rejected(request, id):
         BE_project.is_approved = False
         BE_project.save()
     return redirect("user_profile:notifs")
+
+# Admit views
+def admit_approved(request, id):
+    try:
+        admit = Admit.objects.get(id = id)
+    except Admit.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if admit.is_approved == None:
+        admit.is_approved = True
+        admit.save()
+    return redirect("user_profile:notifs") 
+
+def admit_rejected(request, id):
+    try:
+        admit = Admit.objects.get(id = id)
+    except Admit.DoesNotExist:
+        return redirect("user_profile:notifs")
+    if admit.is_approved == None:
+        admit.is_approved = False
+        admit.save()
+    return redirect("user_profile:notifs") 
 
 def download_all_excel(request):
     if request.user.is_authenticated and TeacherProfile.objects.filter(teacher=request.user).exists():

@@ -72,5 +72,8 @@ urlpatterns = [
     path("be_project_approved/<int:id>", views.BE_project_approved, name="be-project-approved"),
     path("be_project_rejected/<int:id>", views.BE_project_rejected, name="be-project-rejected"),
 
+    path("admit_approved/<int:id>", views.admit_approved, name="admit-approved"),
+    path("admit_rejected/<int:id>", views.admit_rejected, name="admit-rejected"),
+
     path("all_excel", views.download_all_excel, name="all-excel"),
 ]
