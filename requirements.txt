@@ -1,7 +1,7 @@
 asgiref==3.4.1
 certifi==2021.5.30
 chardet==3.0.4
-Django==3.2.7
+Django==3.2.12
 django-simple-history==3.0.0
 flake8==3.9.2
 idna==2.6
