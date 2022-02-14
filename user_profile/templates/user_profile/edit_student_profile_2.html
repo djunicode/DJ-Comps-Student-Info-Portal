@@ -169,11 +169,73 @@
                 </div>
                 <div class="form-group">
                   <label for="Department" class="col-sm-2 control-label">Department</label>
+                  <div class="col-sm-8">
+                    <select name="department" id="Department" class="form-control" placeholder="Hello">
+                      
+                      <option value="None" selected>Select Your Department</option>
 
+                      {% if student_profile.department == "Computer" %}
+                      <option value="Computer" selected>Computer</option>
+                      {% else %}
+                      <option value="Computer" >Computer2</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "IT" %}
+                      <option value="IT" selected>IT</option>
+                      {% else %}
+                      <option value="IT" >IT</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "EXTC" %}
+                      <option value="EXTC" selected>EXTC</option>
+                      {% else %}
+                      <option value="EXTC" >EXTC</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "Electronics" %}
+                      <option value="Electronics" selected>Electronics</option>
+                      {% else %}
+                      <option value="Electronics" >Electronics</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "Chemical" %}
+                      <option value="Chemical" selected>Chemical</option>
+                      {% else %}
+                      <option value="Chemical" >Chemical</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "Computer" %}
+                      <option value="IT" selected>IT</option>
+                      {% else %}
+                      <option value="IT" >IT</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "Mechanical" %}
+                      <option value="Mechanical" selected>Mechanical</option>
+                      {% else %}
+                      <option value="Mechanical" >Mechanical</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "Production" %}
+                      <option value="Production" selected>Production</option>
+                      {% else %}
+                      <option value="Production" >Production</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "Data Science" %}
+                      <option value="Data Science" selected>Data Science</option>
+                      {% else %}
+                      <option value="Data Science" >Data Science</option>
+                      {% endif %}
+
+                    </select>
+                  </div>
+                  <!--
                   <div class="col-sm-8">
                     <input type="text" class="form-control" id="Department" name="department"
                       value="{{student_profile.department}}">
                   </div>
+                -->
                 </div>
                 <div class="form-group">
                   <label for="Gender" class="col-sm-2 control-label">
