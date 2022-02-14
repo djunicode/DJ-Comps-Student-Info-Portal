@@ -1265,7 +1265,7 @@ def edit_competitive_exams(request, id):
         competitive_exam.cat_score = request.POST.get("cat_score")
         competitive_exam.gate_score = request.POST.get("gate_score")
         competitive_exam.gmat_score = request.POST.get("gmat_score")
-        competitive_exam.toefl_score = request.FILES.get("toefl_score")
+        competitive_exam.toefl_score = request.POST.get("toefl_score")
         # competitive_exam.mhcet_score = request.POST.get("mhcet_score")
         competitive_exam.save()
         return HttpResponse("done")
