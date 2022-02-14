@@ -336,10 +336,16 @@
                 </div>
                 <div class="form-group">
                   <label for="sem1_gpa" class="col-sm-2 control-label">Sem 1 GPA</label>
-
+                  
+                  {% if acads.sem1_gpa == '' %}
                   <div class="col-sm-8">
-                    <input type="number" class="form-control" id="sem1_gpa" name="sem1_gpa" step="0.01" value={{acads.sem1_gpa}}>
+                    <input type="number" class="form-control" id="sem1_gpa" name="sem1_gpa" step="0.01" min="0" max="10">
                   </div>
+                  {% else %}
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" id="sem1_gpa" name="sem1_gpa" step="0.01" min="0" max="10" value={{acads.sem1_gpa}}>
+                  </div>
+                  {% endif %}
                 </div>
 
                 <div class="form-group">
@@ -354,7 +360,7 @@
                   <label for="sem2_gpa" class="col-sm-2 control-label">Sem 2 GPA</label>
 
                   <div class="col-sm-8">
-                    <input type="number" class="form-control" id="sem2_gpa" name="sem2_gpa" step="0.01" value={{acads.sem2_gpa}}>
+                    <input type="number" class="form-control" id="sem2_gpa" name="sem2_gpa" step="0.01" min="0" max="10" value={{acads.sem2_gpa}}>
                   </div>
                 </div>
 
@@ -370,7 +376,7 @@
                   <label for="sem3_gpa" class="col-sm-2 control-label">Sem 3 GPA</label>
 
                   <div class="col-sm-8">
-                    <input type="number" class="form-control" id="sem3_gpa" name="sem3_gpa" step="0.01" value={{acads.sem3_gpa}}>
+                    <input type="number" class="form-control" id="sem3_gpa" name="sem3_gpa" step="0.01" min="0" max="10" value={{acads.sem3_gpa}}>
                   </div>
                 </div>
 
@@ -386,7 +392,7 @@
                   <label for="sem4_gpa" class="col-sm-2 control-label">Sem 4 GPA</label>
 
                   <div class="col-sm-8">
-                    <input type="number" class="form-control" id="sem4_gpa" name="sem4_gpa" step="0.01" value={{acads.sem4_gpa}}>
+                    <input type="number" class="form-control" id="sem4_gpa" name="sem4_gpa" step="0.01" min="0" max="10" value={{acads.sem4_gpa}}>
                   </div>
                 </div>
 
@@ -402,7 +408,7 @@
                   <label for="sem5_gpa" class="col-sm-2 control-label">Sem 5 GPA</label>
 
                   <div class="col-sm-8">
-                    <input type="number" class="form-control" id="sem5_gpa" name="sem5_gpa" step="0.01" value={{acads.sem5_gpa}}>
+                    <input type="number" class="form-control" id="sem5_gpa" name="sem5_gpa" step="0.01" min="0" max="10" value={{acads.sem5_gpa}}>
                   </div>
                 </div>
 
@@ -418,7 +424,7 @@
                   <label for="sem6_gpa" class="col-sm-2 control-label">Sem 6 GPA</label>
 
                   <div class="col-sm-8">
-                    <input type="number" class="form-control" id="sem6_gpa" name="sem6_gpa" step="0.01" value={{acads.sem6_gpa}}>
+                    <input type="number" class="form-control" id="sem6_gpa" name="sem6_gpa" step="0.01" min="0" max="10" value={{acads.sem6_gpa}}>
                   </div>
                 </div>
 
@@ -434,7 +440,7 @@
                   <label for="sem7_gpa" class="col-sm-2 control-label">Sem 7 GPA</label>
 
                   <div class="col-sm-8">
-                    <input type="number" class="form-control" id="sem7_gpa" name="sem7_gpa" step="0.01" value={{acads.sem7_gpa}}>
+                    <input type="number" class="form-control" id="sem7_gpa" name="sem7_gpa" step="0.01" min="0" max="10" value={{acads.sem7_gpa}}>
                   </div>
                 </div>
 
@@ -450,7 +456,7 @@
                   <label for="sem8_gpa" class="col-sm-2 control-label">Sem 8 GPA</label>
 
                   <div class="col-sm-8">
-                    <input type="number" class="form-control" id="sem8_gpa" name="sem8_gpa" step="0.01" value={{acads.sem8_gpa}}>
+                    <input type="number" class="form-control" id="sem8_gpa" name="sem8_gpa" step="0.01" min="0" max="10" value={{acads.sem8_gpa}}>
                   </div>
                 </div>
 
