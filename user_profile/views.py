@@ -1204,20 +1204,24 @@ def show_edit_studentprofile(request):
             internship = Internship.objects.filter(employee=student_profile)
             admit = Admit.objects.filter(student=student_profile)
             placement = Placements.objects.filter(student=student_profile)
-            try:
-                beproject = BeProject.objects.get(student=student_profile)
-            except ObjectDoesNotExist:
-                beproject = BeProject.objects.create(student=student_profile)
-            try:
-                acads = Education.objects.get(student_profile=student_profile)
-            except ObjectDoesNotExist:
-                acads = Education.objects.create(student_profile=student_profile)
-            try:
-                competitive_exam = CompetitiveExams.objects.get(student=student_profile)
-            except ObjectDoesNotExist:
-                competitive_exam = CompetitiveExams.objects.create(
-                    student=student_profile
-                )
+            beproject = BeProject.objects.filter(student=student_profile)
+            acads = Education.objects.filter(student_profile=student_profile)
+            competitive_exam = CompetitiveExams.objects.filter(student=student_profile)
+
+            # try:
+            #     beproject = BeProject.objects.get(student=student_profile)
+            # except ObjectDoesNotExist:
+            #     beproject = BeProject.objects.create(student=student_profile)
+            # try:
+            #     acads = Education.objects.get(student_profile=student_profile)
+            # except ObjectDoesNotExist:
+            #     acads = Education.objects.create(student_profile=student_profile)
+            # try:
+            #     competitive_exam = CompetitiveExams.objects.get(student=student_profile)
+            # except ObjectDoesNotExist:
+            #     competitive_exam = CompetitiveExams.objects.create(
+            #         student=student_profile
+            #     )
             skill = Skill.objects.filter(user_profile=student_profile)
             skill_list = []
             for s in skill:
