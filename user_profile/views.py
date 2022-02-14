@@ -1295,10 +1295,12 @@ def edit_basic_info(request, id):
 def edit_academic_info(request, id):
     if request.method == "POST":
         student_profile = StudentProfile.objects.get(id=id)
-        try:
-            education = Education.objects.get(student_profile=student_profile)
-        except ObjectDoesNotExist:
-            education = Education.objects.create(student_profile=student_profile)
+        education = Education.objects.filter(student_profile=student_profile)
+
+        # try:
+        #     education = Education.objects.get(student_profile=student_profile)
+        # except ObjectDoesNotExist:
+        #     education = Education.objects.create(student_profile=student_profile)
         print(request.POST)
         print(request.FILES)
         print(education)
