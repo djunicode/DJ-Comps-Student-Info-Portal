@@ -170,14 +170,14 @@
                 <div class="form-group">
                   <label for="Department" class="col-sm-2 control-label">Department</label>
                   <div class="col-sm-8">
-                    <select name="department" id="Department" class="form-control" placeholder="Hello">
+                    <select name="department" id="Department" class="form-control">
                       
                       <option value="None" selected>Select Your Department</option>
 
                       {% if student_profile.department == "Computer" %}
                       <option value="Computer" selected>Computer</option>
                       {% else %}
-                      <option value="Computer" >Computer2</option>
+                      <option value="Computer" >Computer</option>
                       {% endif %}
 
                       {% if student_profile.department == "IT" %}
@@ -202,12 +202,6 @@
                       <option value="Chemical" selected>Chemical</option>
                       {% else %}
                       <option value="Chemical" >Chemical</option>
-                      {% endif %}
-
-                      {% if student_profile.department == "Computer" %}
-                      <option value="IT" selected>IT</option>
-                      {% else %}
-                      <option value="IT" >IT</option>
                       {% endif %}
 
                       {% if student_profile.department == "Mechanical" %}
@@ -335,7 +329,7 @@
                   <div id="AcadsSubmissionContent"></div>
                 </div>
                 <div class="form-group">
-                  <label for="sem1_gpa" class="col-sm-2 control-label">Sem 1 GPA</label>
+                  <label for="sem1_gpa" class="col-sm-2 control-label">Sem 1 GPA ({{acads.sem1_gpa}})</label>
                   
                   {% if acads.sem1_gpa == '' %}
                   <div class="col-sm-8">
@@ -1705,12 +1699,12 @@
           <div id="PlacementData" class="panel-collapse collapse ">
             <!-- /.box-header -->
             <!-- form start -->
-            <form id="PlacementInfo" class="form-horizontal" action="/edit_admit_info/{{student_profile.id}}">
+            <form id="PlacementInfo" class="form-horizontal" action="/edit_placement_info/{{student_profile.id}}">
               {% csrf_token %}
               <div class="box-body">
-                <div id="AdmitSubmission" style="display:none;" class="alert alert-success" role="alert">
+                <div id="PlacementSubmission" style="display:none;" class="alert alert-success" role="alert">
 
-                  <div id="AdmitSubmissionContent"></div>
+                  <div id="PlacementSubmissionContent"></div>
                 </div>
                 <div class="form-group">
                   <label for="company_name" class="col-sm-2 control-label"> Company Name</label>
@@ -1731,7 +1725,7 @@
               </div>
               <div class="box-footer">
 
-                <button type="button" class="btn btn-info pull-right" onClick="submitAdmit();">Submit</button>
+                <button type="button" class="btn btn-info pull-right" onClick="submitPlacement();">Submit</button>
 
               </div>
             </form>
@@ -1783,6 +1777,14 @@
 <script>
   function submitBasicInfo() {
     //if($('#sem1_gpa').val()===''&&$('#sem2_gpa').val()===''&&$('#sem3_gpa').val()===''&&$('#sem4_gpa').val()===''&&$('#sem5_gpa').val()===''&&$('#sem6_gpa').val()===''&&$('#sem7_gpa').val()===''&&$('#sem8_gpa').val()==='')
+    var phoneno = /^\d{10}$/;
+    mob_no=document.getElementById("MobileNO");
+    if((mob_no.value.match(phoneno))){
+    }
+    else{
+      alert("Error with Phone Number");
+      return false;
+    }
     var data = new FormData($('#BasicInfo')[0]);
     console.log(data);
     var url = "/edit_basic_info/{{student_profile.id}}";
@@ -2911,6 +2913,101 @@
     });
   }
 
+  function submitPlacement() {
+    //  if($('#sem1_gpa').val()===''&&$('#sem2_gpa').val()===''&&$('#sem3_gpa').val()===''&&$('#sem4_gpa').val()===''&&$('#sem5_gpa').val()===''&&$('#sem6_gpa').val()===''&&$('#sem7_gpa').val()===''&&$('#sem8_gpa').val()==='')
+    var data = new FormData($('#PlacementInfo')[0]);
+    console.log(data);
+    var url = "/edit_placement_info/{{student_profile.id}}";
+    $.ajaxSetup({
+      headers: { "X-CSRFToken": '{{csrf_token}}' }
+    });
+
+    $.ajax({
+      url: url,
+      data: data,
+      type: 'POST',
+      processData: false,
+      contentType: false,
+    });
+    setTimeout(add_admit, 500);
+    $('#company_name').val('');
+    $('#offer_letter').val('');
+
+    setTimeout(function () {
+      var x = document.getElementById('PlacementSubmission');
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }, 3000);
+    myFunction('PlacementSubmission');
+    //$('#SkillSubmission').addClass('alert alert-success alert-ible').slideDown().show();
+    $('#PlacementSubmissionContent').html('<h2>Successful!</h2>');
+    //$('#modal').modal('show');
+
+
+  }
+
+  function add_placement() {
+    $.getJSON("/edit_admit_info/{{student_profile.id}}", function (data) {
+
+      console.log(data)
+      var obj = JSON.parse(JSON.stringify(data));
+
+      var div = document.getElementById("PlacementData");
+
+      var box = document.createElement('div');
+      box.setAttribute("class", "box-body");
+
+
+      var footer = document.createElement('div');
+      footer.setAttribute("class", "box-footer");
+      var f = document.createElement('form');
+      var d1 = document.createElement('div');
+      d1.setAttribute("class", "form-group");
+      var d2 = document.createElement('div');
+      d2.setAttribute("class", "form-group");
+      var innerdiv1 = document.createElement('div');
+      var innerdiv2 = document.createElement('div');
+      innerdiv1.setAttribute("class", "col-sm-8");
+      innerdiv2.setAttribute("class", "col-sm-8");
+
+      var l1 = document.createElement('label');
+      var l2 = document.createElement('label');
+      var p1 = document.createElement('p');
+      var p2 = document.createElement('p');
+      var b = document.createElement('button');
+      l1.setAttribute("class", "col-sm-2 control-label");
+      p1.setAttribute("class", "form-control no-border");
+      l2.setAttribute("class", "col-sm-2 control-label");
+      p2.setAttribute("class", "form-control no-border");
+      p1.append(obj.company_name);
+      p2.append(obj.offer_letter);
+      innerdiv1.append(p1);
+      innerdiv2.append(p2);
+      b.append('Delete');
+      b.setAttribute("type", "submit");
+      b.setAttribute("class", "btn btn-info pull-right");
+      f.setAttribute("action", "/delete_placement_info/".concat(obj.id));
+      f.setAttribute("method", "POST");
+      f.setAttribute("class", "form-horizontal");
+      l1.append('Company Name');
+      l2.append('Offer Letter');
+      d1.append(l1, innerdiv1);
+      d2.append(l2, innerdiv2);
+      var inputElem = document.createElement('input');
+      inputElem.type = 'hidden';
+      inputElem.name = 'csrfmiddlewaretoken';
+      inputElem.value = '{{ csrf_token }}';
+      f.appendChild(inputElem);
+      footer.append(b);
+      //f.append("{% csrf_token%}");
+      box.append(d1, d2);
+      f.append(box, footer);
+      div.append(f);
+    });
+  }
 
 </script>
 

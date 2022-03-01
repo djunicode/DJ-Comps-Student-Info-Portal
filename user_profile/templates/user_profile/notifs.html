@@ -912,102 +912,7 @@
     <div id="Extra" class="col-md-10">
       <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Pending Extra Curricular</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body no-padding">
-
-          <div class="table-responsive mailbox-messages">
-            <table class="table table-hover table-striped">
-              <tbody>
-                <thead>
-                  <th class="mailbox-number">Sr. No</th>
-                  <th class="mailbox-name">Student</th>
-                  <th class="mailbox-name">Name</th>
-                  <th class="mailbox-name">Description</th>
-                  <th class="mailbox-name">Achievements</th>
-                  <th class="mailbox-name">Date</th>
-                  <th class="mailbox-name">Certificate</th>
-                  <th class="mailbox-name">Action</th>
-                </thead>
-                {% for e in extra_curricular %}
-                <tr>
-                  <td class="mailbox-number">{{ forloop.counter }}</td>
-                  <td class="mailbox-name">{{e.student.Sap_Id}} - {{e.student.first_name}}
-                    {{e.student.last_name}}</td>
-                  <td class="mailbox-name">{{ e.name }}</td>
-                  <td class="mailbox-name">{{ e.desc }}</td>
-                  <td class="mailbox-name">{{ e.achievements }}</td>
-                  <td class="mailbox-name">{{ e.date }}</td>
-                  {% ifequal e.Certificate.url "" %}
-                  <td class="mailbox-name">Not Uploaded</td>
-                  {% else %}
-                  <td class="mailbox-name"><a target="_blank" href="{{e.Certificate.url}}">Certificate</a>
-                  </td>
-                  {% endifequal %}
-                  
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-            <!-- /.table -->
-          </div>
-          <!-- /.mail-box-messages -->
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer no-padding">
-        </div>
-      </div>
-      <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Accepted Extra Curricular</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body no-padding">
-
-          <div class="table-responsive mailbox-messages">
-            <table class="table table-hover table-striped">
-              <tbody>
-                <thead>
-                  <th class="mailbox-number">Sr. No</th>
-                  <th class="mailbox-name">Student</th>
-                  <th class="mailbox-name">Name</th>
-                  <th class="mailbox-name">Description</th>
-                  <th class="mailbox-name">Achievements</th>
-                  <th class="mailbox-name">Date</th>
-                  <th class="mailbox-name">Certificate</th>
-                </thead>
-                {% for e in extra_curricular %}
-                <tr>
-                  <td class="mailbox-number">{{ forloop.counter }}</td>
-                  <td class="mailbox-name">{{e.student.Sap_Id}} - {{e.student.first_name}}
-                    {{e.student.last_name}}</td>
-                  <td class="mailbox-name">{{ e.name }}</td>
-                  <td class="mailbox-name">{{ e.desc }}</td>
-                  <td class="mailbox-name">{{ e.achievements }}</td>
-                  <td class="mailbox-name">{{ e.date }}</td>
-                  {% ifequal e.Certificate.url "" %}
-                  <td class="mailbox-name">Not Uploaded</td>
-                  {% else %}
-                  <td class="mailbox-name"><a target="_blank" href="{{e.Certificate.url}}">Certificate</a>
-                  </td>
-                  {% endifequal %}
-                  
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-            <!-- /.table -->
-          </div>
-          <!-- /.mail-box-messages -->
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer no-padding">
-        </div>
-      </div>
-      <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Rejected Extra Curricular</h3>
+          <h3 class="box-title">Extra Curricular</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body no-padding">
@@ -1549,7 +1454,7 @@
                   <th class="mailbox-name">Company Name</th>
                   <th class="mailbox-name">Offer Letter</th>
                 </thead>
-                {% for placement in placements_accepted %}
+                {% for placement in placements_approved %}
                 <tr>
                   <td class="mailbox-number">{{ forloop.counter }}</td>
                   <td class="mailbox-name">{{placement.student.Sap_Id}} - {{placement.student.first_name}}

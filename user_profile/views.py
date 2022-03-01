@@ -1205,7 +1205,7 @@ def show_edit_studentprofile(request):
             admit = Admit.objects.filter(student=student_profile)
             placement = Placements.objects.filter(student=student_profile)
             beproject = BeProject.objects.filter(student=student_profile)
-            acads = Education.objects.filter(student_profile=student_profile)
+            acads = Education.objects.filter(student_profile=student_profile)[0]
             competitive_exam = CompetitiveExams.objects.filter(student=student_profile)
 
             # try:
@@ -1276,14 +1276,16 @@ def edit_basic_info(request, id):
         student_profile = StudentProfile.objects.get(id=id)
         student_profile.first_name = request.POST.get("fname")
         student_profile.last_name = request.POST.get("lname")
-        student_profile.department = request.POST.get("department")
+        if request.POST.get("gender") is not None:
+            student_profile.department = request.POST.get("department")
         # print(request.POST.get('gender'))
         if request.POST.get("gender") is not None:
             student_profile.gender = request.POST.get("gender")
         if request.POST.get("year") is not None:
             student_profile.year = request.POST.get("year")
         student_profile.mobileNo = request.POST.get("mobileNo")
-        student_profile.photo = request.FILES.get("photo")
+        if request.FILES.get("photo") is not None:
+            student_profile.photo = request.FILES.get("photo")
         student_profile.github_id = request.POST.get("github_id")
         student_profile.bio = request.POST.get("bio")
 
