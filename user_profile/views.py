@@ -1205,7 +1205,10 @@ def show_edit_studentprofile(request):
             admit = Admit.objects.filter(student=student_profile)
             placement = Placements.objects.filter(student=student_profile)
             beproject = BeProject.objects.filter(student=student_profile)
-            acads = Education.objects.filter(student_profile=student_profile)[0]
+            if Education.objects.filter(student_profile=student_profile):
+                acads = Education.objects.filter(student_profile=student_profile)[0]
+            else:
+                acads = []
             competitive_exam = CompetitiveExams.objects.filter(student=student_profile)
 
             # try:
@@ -1288,6 +1291,8 @@ def edit_basic_info(request, id):
             student_profile.photo = request.FILES.get("photo")
         student_profile.github_id = request.POST.get("github_id")
         student_profile.bio = request.POST.get("bio")
+        student_profile.tenth_marks = request.POST.get("10thMarks")
+        student_profile.twelfth_or_diploma_marks = request.POST.get("12thMarks")
 
         student_profile.save()
         return redirect('/edit_basic_info')

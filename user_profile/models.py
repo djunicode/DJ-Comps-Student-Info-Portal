@@ -58,6 +58,8 @@ class StudentProfile(models.Model):
     photo = models.FileField(blank=True, null=True)
     github_id = models.URLField(null=True, blank=True)
     bio = models.CharField(max_length=200, blank=True, null=True)
+    tenth_marks = models.CharField(max_length=10, blank=True, null=True)
+    twelfth_or_diploma_marks = models.CharField(max_length=10, blank=True, null=True)
     GENDER_CHOICES = (
         ("Male", "Male"),
         ("Female", "Female"),
