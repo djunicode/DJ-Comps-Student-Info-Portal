@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
+from django.views.decorators.csrf import csrf_exempt
 from .models import (
     StudentProfile,
     TeacherProfile,
@@ -537,7 +538,7 @@ def student_profile(request, id):
             "admit_approved": admit_approved,
             "admit_rejected": admit_rejected,
             "admit_pending": admit_pending,
-            
+
             "placement_approved": placement_approved,
             "placement_rejected": placement_rejected,
             "placement_pending": placement_pending
@@ -1129,6 +1130,47 @@ def teacher_dashboard(request):
             average(BE_gpa["sem7"]),
             average(BE_gpa["sem8"]),
         ]
+        students = StudentProfile.objects.all()
+        all_avg_gpa = 0
+        total_count = 0
+        for student in students:
+            grades = Education.objects.filter(student_profile=student)
+            avg_gpa = 0
+            for i in grades:
+                count = 0
+                total = 0
+                if i.sem1_gpa is not None:
+                    total += i.sem1_gpa
+                    count += 1
+                if i.sem2_gpa is not None:
+                    total += i.sem2_gpa
+                    count += 1
+                if i.sem3_gpa is not None:
+                    total += i.sem3_gpa
+                    count += 1
+                if i.sem4_gpa is not None:
+                    total += i.sem4_gpa
+                    count += 1
+                if i.sem5_gpa is not None:
+                    total += i.sem5_gpa
+                    count += 1
+                if i.sem6_gpa is not None:
+                    total += i.sem6_gpa
+                    count += 1
+                if i.sem7_gpa is not None:
+                    total += i.sem7_gpa
+                    count += 1
+                if i.sem8_gpa is not None:
+                    total += i.sem8_gpa
+                    count += 1
+                if count == 0:
+                    pass
+                else:
+                    avg_gpa = round(total / count, 2)
+                    all_avg_gpa += avg_gpa
+                    total_count+=1
+        all_avg_gpa = round(all_avg_gpa / total_count, 2)
+        context["all_avg_gpa"] = all_avg_gpa
         # internship time stamps
         intern_dates = [
             format(internship.From, "U") for internship in Internship.objects.all()
@@ -1313,35 +1355,43 @@ def edit_academic_info(request, id):
         # print(education)
         if (request.POST.get("sem1_gpa")) != "":
             education.sem1_gpa = request.POST.get("sem1_gpa")
-        education.sem1_marksheet = request.FILES.get("sem1_marksheet")
+        if (request.FILES.get("sem1_marksheet")) is not None:
+            education.sem1_marksheet = request.FILES.get("sem1_marksheet")
 
         if (request.POST.get("sem2_gpa")) != "":
             education.sem2_gpa = request.POST.get("sem2_gpa")
-        education.sem2_marksheet = request.FILES.get("sem2_marksheet")
+        if (request.FILES.get("sem2_marksheet")) is not None:
+            education.sem2_marksheet = request.FILES.get("sem2_marksheet")
 
         if (request.POST.get("sem3_gpa")) != "":
             education.sem3_gpa = request.POST.get("sem3_gpa")
-        education.sem3_marksheet = request.FILES.get("sem3_marksheet")
+        if (request.FILES.get("sem3_marksheet")) is not None:
+            education.sem3_marksheet = request.FILES.get("sem3_marksheet")
 
         if (request.POST.get("sem4_gpa")) != "":
             education.sem4_gpa = request.POST.get("sem4_gpa")
-        education.sem4_marksheet = request.FILES.get("sem4_marksheet")
+        if (request.FILES.get("sem4_marksheet")) is not None:
+            education.sem4_marksheet = request.FILES.get("sem4_marksheet")
 
         if (request.POST.get("sem5_gpa")) != "":
             education.sem5_gpa = request.POST.get("sem5_gpa")
-        education.sem5_marksheet = request.FILES.get("sem5_marksheet")
+        if (request.FILES.get("sem5_marksheet")) is not None:
+            education.sem5_marksheet = request.FILES.get("sem5_marksheet")
 
         if (request.POST.get("sem6_gpa")) != "":
             education.sem6_gpa = request.POST.get("sem6_gpa")
-        education.sem6_marksheet = request.FILES.get("sem6_marksheet")
+        if (request.FILES.get("sem6_marksheet")) is not None:
+            education.sem6_marksheet = request.FILES.get("sem6_marksheet")
 
         if (request.POST.get("sem7_gpa")) != "":
             education.sem7_gpa = request.POST.get("sem7_gpa")
-        education.sem7_marksheet = request.FILES.get("sem7_marksheet")
+        if (request.FILES.get("sem7_marksheet")) is not None:
+            education.sem7_marksheet = request.FILES.get("sem7_marksheet")
 
         if (request.POST.get("sem8_gpa")) != "":
             education.sem8_gpa = request.POST.get("sem8_gpa")
-        education.sem8_marksheet = request.FILES.get("sem8_marksheet")
+        if (request.FILES.get("sem1_marksheet")) is not None:
+            education.sem8_marksheet = request.FILES.get("sem8_marksheet")
 
         print("ALL FILES DONE\n\n")
         # for subj in education.sem1_tt1.subject.all():
@@ -1614,7 +1664,7 @@ def edit_committee_info(request, id):
             }
         )
 
-
+@csrf_exempt
 def edit_research_paper_info(request, id):
     if request.method == "POST":
         print("aayush")
@@ -1988,7 +2038,7 @@ def admit_approved(request, id):
     if admit.is_approved == None:
         admit.is_approved = True
         admit.save()
-    return redirect("user_profile:notifs") 
+    return redirect("user_profile:notifs")
 
 def admit_rejected(request, id):
     try:
@@ -1998,7 +2048,7 @@ def admit_rejected(request, id):
     if admit.is_approved == None:
         admit.is_approved = False
         admit.save()
-    return redirect("user_profile:notifs") 
+    return redirect("user_profile:notifs")
 
 # Placement views
 def placement_approved(request, id):
@@ -2009,7 +2059,7 @@ def placement_approved(request, id):
     if placement.is_approved == None:
         placement.is_approved = True
         placement.save()
-    return redirect("user_profile:notifs") 
+    return redirect("user_profile:notifs")
 
 def placement_rejected(request, id):
     try:
@@ -2019,7 +2069,7 @@ def placement_rejected(request, id):
     if placement.is_approved == None:
         placement.is_approved = False
         placement.save()
-    return redirect("user_profile:notifs") 
+    return redirect("user_profile:notifs")
 
 
 # Competitive Exams views
@@ -2031,7 +2081,7 @@ def competitive_exams_approved(request, id):
     if competitive_exams.is_approved == None:
         competitive_exams.is_approved = True
         competitive_exams.save()
-    return redirect("user_profile:notifs") 
+    return redirect("user_profile:notifs")
 
 def competitive_exams_rejected(request, id):
     try:
@@ -2041,7 +2091,7 @@ def competitive_exams_rejected(request, id):
     if competitive_exams.is_approved == None:
         competitive_exams.is_approved = False
         competitive_exams.save()
-    return redirect("user_profile:notifs") 
+    return redirect("user_profile:notifs")
 
 
 # Committee views
@@ -2053,7 +2103,7 @@ def committee_approved(request, id):
     if committee.is_approved == None:
         committee.is_approved = True
         committee.save()
-    return redirect("user_profile:notifs") 
+    return redirect("user_profile:notifs")
 
 def committee_rejected(request, id):
     try:
@@ -2063,7 +2113,7 @@ def committee_rejected(request, id):
     if committee.is_approved == None:
         committee.is_approved = False
         committee.save()
-    return redirect("user_profile:notifs") 
+    return redirect("user_profile:notifs")
 
 def download_all_excel(request):
     if request.user.is_authenticated and TeacherProfile.objects.filter(teacher=request.user).exists():
@@ -2085,7 +2135,7 @@ def download_all_excel(request):
         columns = ['SAP ID','First Name','Last Name','Year','Department','Gender','Mobile Number']
         for col_num in range(len(columns)):
             ws.write(row_num,col_num,columns[col_num],font_style)
-        
+
         font_style=xlwt.XFStyle()
         rows=students.values_list('Sap_Id','first_name','last_name','year','department','gender','mobileNo')
         for row in rows:
@@ -2104,7 +2154,7 @@ def download_all_excel(request):
         columns = ['SAP ID','First Name','Last Name','Company','Position','Location','From','To','Description','In/Out of College','Paid/Unpaid','Total Hours']
         for col_num in range(len(columns)):
             ws.write(row_num,col_num,columns[col_num],font_style)
-        
+
         font_style=xlwt.XFStyle()
         rows=internships.values_list('employee__Sap_Id','employee__first_name','employee__last_name','company','Position','Loc','From','To','desc','how','stipend','total_hours')
         for row in rows:
@@ -2123,7 +2173,7 @@ def download_all_excel(request):
         columns = ['SAP ID','First Name','Last Name','Project Name','Project URL','Project Description']
         for col_num in range(len(columns)):
             ws.write(row_num,col_num,columns[col_num],font_style)
-        
+
         font_style=xlwt.XFStyle()
         rows=projects.values_list('student_profile__Sap_Id','student_profile__first_name','student_profile__last_name','ProjName','ProjURL','ProjDesc')
         for row in rows:
@@ -2142,7 +2192,7 @@ def download_all_excel(request):
         columns = ['SAP ID','First Name','Last Name','EC Type','Name','Description','Achievements','Date']
         for col_num in range(len(columns)):
             ws.write(row_num,col_num,columns[col_num],font_style)
-        
+
         font_style=xlwt.XFStyle()
         rows=extra_c.values_list('student__Sap_Id','student__first_name','student__last_name','extra_curricular_type','name','desc','achievements','date')
         for row in rows:
@@ -2161,7 +2211,7 @@ def download_all_excel(request):
         columns = ['SAP ID','First Name','Last Name','SEM 1','SEM 2','SEM 3','SEM 4','SEM 5','SEM 6','SEM 7','SEM 8',]
         for col_num in range(len(columns)):
             ws.write(row_num,col_num,columns[col_num],font_style)
-        
+
         font_style=xlwt.XFStyle()
         rows=grade.values_list('student_profile__Sap_Id','student_profile__first_name','student_profile__last_name','sem1_gpa','sem2_gpa','sem3_gpa','sem4_gpa','sem5_gpa','sem6_gpa','sem7_gpa','sem8_gpa')
         for row in rows:
@@ -2180,7 +2230,7 @@ def download_all_excel(request):
         columns = ['SAP ID','First Name','Last Name','Project Name','Project URL','Project Description']
         for col_num in range(len(columns)):
             ws.write(row_num,col_num,columns[col_num],font_style)
-        
+
         font_style=xlwt.XFStyle()
         rows=projects.values_list('student__Sap_Id','student__first_name','student__last_name','ProjName','ProjURL','ProjDesc')
         for row in rows:
@@ -2199,7 +2249,7 @@ def download_all_excel(request):
         columns = ['SAP ID','First Name','Last Name','Title','Publication','Date Of Publication','Description','Paper ID','ISBN','ISSN','Type','Research Impact Factor','Indexing','Project Mentor','Duration of Project','Total Hours']
         for col_num in range(len(columns)):
             ws.write(row_num,col_num,columns[col_num],font_style)
-        
+
         font_style=xlwt.XFStyle()
         rows=research.values_list('student__Sap_Id','student__first_name','student__last_name','Title','Publication','DateOfPublication','Desc','PaperId','isbn','issn','type','research_impact_factor','indexing','project_mentor','duration_of_project','total_hours')
         for row in rows:

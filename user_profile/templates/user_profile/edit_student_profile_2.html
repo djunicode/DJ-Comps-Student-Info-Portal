@@ -171,7 +171,7 @@
                   <label for="Department" class="col-sm-2 control-label">Department</label>
                   <div class="col-sm-8">
                     <select name="department" id="Department" class="form-control">
-                      
+
                       <option value="None" selected>Select Your Department</option>
 
                       {% if student_profile.department == "Computer" %}
@@ -303,7 +303,7 @@
                   <label for="10thMarks" class="col-sm-2 control-label">10th Marks</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control" name="10thMarks" id="10thMarks"
-                      value={{student_profile.tenth_marks}}> 
+                      value={{student_profile.tenth_marks}}>
                   </div>
                 </div>
                 <div class="form-group">
@@ -343,8 +343,8 @@
                   <div id="AcadsSubmissionContent"></div>
                 </div>
                 <div class="form-group">
-                  <label for="sem1_gpa" class="col-sm-2 control-label">Sem 1 GPA ({{acads.sem1_gpa}})</label>
-                  
+                  <label for="sem1_gpa" class="col-sm-2 control-label">Sem 1 GPA</label>
+
                   {% if acads.sem1_gpa == '' %}
                   <div class="col-sm-8">
                     <input type="number" class="form-control" id="sem1_gpa" name="sem1_gpa" step="0.01" min="0" max="10">
@@ -1488,7 +1488,7 @@
                       <option value="NPTEL"> NPTEL </option>
                       <option value="Sports"> Sports </option>
                       <option value="Others"> Others </option>
-                    </select>                  
+                    </select>
                   </div>
                 </div>
 
@@ -1611,7 +1611,7 @@
               <!--
               <div class="form-group">
                 <label for="name" class="col-sm-2 control-label"> MHCET score</label>
-                
+
                 <div class="col-sm-8">
                   <input type="text" name="mhcet_score" class="form-control" id="mhcet_score"
                     value="{{competitive_exam.mhcet_score}}">
@@ -2545,7 +2545,10 @@
 
   function submitResearchPaper() {
     //if($('#sem1_gpa').val()===''&&$('#sem2_gpa').val()===''&&$('#sem3_gpa').val()===''&&$('#sem4_gpa').val()===''&&$('#sem5_gpa').val()===''&&$('#sem6_gpa').val()===''&&$('#sem7_gpa').val()===''&&$('#sem8_gpa').val()==='')    var data = $('#ResearchPaperInfo').serialize();
-    var data = new FormData($('#ResearchPaperInfo')[0]);
+    // var data = new FormData($('#ResearchPaperInfo')[0]);
+    var data = $('#ResearchPaperInfo').serialize();
+    console.log("CHECK THIS!!!!!!!!!!!!!!")
+    console.log(data)
     var url = "/edit_research_paper_info/{{student_profile.id}}";
     $.ajax({
       url: url,
@@ -2681,7 +2684,6 @@
 
 
   function submitExtra() {
-    //if($('#sem1_gpa').val()===''&&$('#sem2_gpa').val()===''&&$('#sem3_gpa').val()===''&&$('#sem4_gpa').val()===''&&$('#sem5_gpa').val()===''&&$('#sem6_gpa').val()===''&&$('#sem7_gpa').val()===''&&$('#sem8_gpa').val()==='')    var data = $('#ResearchPaperInfo').serialize();
     var data = new FormData($('#ExtraCurricularInfo')[0]);
     var url = "/edit_extra_info/{{student_profile.id}}";
     $.ajax({
