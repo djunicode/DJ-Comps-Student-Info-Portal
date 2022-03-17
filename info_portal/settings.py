@@ -151,8 +151,8 @@ ELASTICSEARCH_URL = 'localhost'
 #Change for email
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'emailaddress@here.com'
-EMAIL_HOST_PASSWORD = 'passwordhere'
+EMAIL_HOST_USER = 'junaidgirkar@gmail.com'
+EMAIL_HOST_PASSWORD = 'vbupgutcreqerltd'
 EMAIL_PORT = 587
 
 

@@ -126,7 +126,20 @@ def register(request):
                     last_name=last_name,
                     mentor=mentor,
                 )
-                student.save()
+                user.is_active = False
+                user.save()
+                current_site = get_current_site(request)
+                mail_subject = 'Activate your account on Student Info Portal'
+                message = render_to_string('user_profile/activate_email.html', {
+                    'user': user,
+                    'first_name': first_name,
+                    'last_name': last_name,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token':account_activation_token.make_token(user),
+                })
+                email_message = EmailMessage(mail_subject, message, to=[email])
+                email_message.send()
                 auth_login(request, user)
                 student_profile_url = "/student_profile/" + str(student.id)
                 return HttpResponseRedirect(student_profile_url)
@@ -252,20 +265,20 @@ def register_teacher(request):
                 )
                 user.user_permissions.add(permission)
                 # Email stuff
-                # user.is_active = False
-                # user.save()
-                # current_site = get_current_site(request)
-                # mail_subject = 'Activate your account on Student Info Portal'
-                # message = render_to_string('user_profile/activate_email.html', {
-                #     'user': user,
-                #     'first_name': first_name,
-                #     'last_name': last_name,
-                #     'domain': current_site.domain,
-                #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                #     'token':account_activation_token.make_token(user),
-                # })
-                # email_message = EmailMessage(mail_subject, message, to=[email])
-                # email_message.send()
+                user.is_active = False
+                user.save()
+                current_site = get_current_site(request)
+                mail_subject = 'Activate your account on Student Info Portal'
+                message = render_to_string('user_profile/activate_email.html', {
+                    'user': user,
+                    'first_name': first_name,
+                    'last_name': last_name,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token':account_activation_token.make_token(user),
+                })
+                email_message = EmailMessage(mail_subject, message, to=[email])
+                email_message.send()
                 teacher = TeacherProfile.objects.create(
                     teacher=user,
                     Sap_Id=Sap_Id,
