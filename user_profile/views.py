@@ -505,12 +505,12 @@ def student_profile(request, id):
             competitive_exam["gate_registration_number"] = 0
             competitive_exam["gmat_registration_number"] = 0
             # competitive_exam["mhcet_registration_number"] = 0
-            competitive_exam["gre_proof"] = None
-            competitive_exam["toefl_proof"] = None
-            competitive_exam["cat_proof"] = None
-            competitive_exam["gate_proof"] = None
-            competitive_exam["gmat_proof"] = None
-            
+            competitive_exam["gre_proof"] = ""
+            competitive_exam["toefl_proof"] = ""
+            competitive_exam["cat_proof"] = ""
+            competitive_exam["gate_proof"] = ""
+            competitive_exam["gmat_proof"] = ""
+
 
         # admits
         admit_approved = Admit.objects.filter(
