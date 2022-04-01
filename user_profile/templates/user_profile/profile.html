@@ -1227,99 +1227,99 @@
                         </div>
                       </div>
                      </div>
-
                      <div class="tab-pane" id="Competitive-exams">
-                        <div class="box box-primary">
-                          <div class="box-header with-border">
-                            <h3 class="box-title">Competitive Exams</h3>
-                          </div>
-                          <div class="box-body no-padding">
-                  
-                            <div class="table-responsive mailbox-messages">
-                              <table class="table table-hover table-striped">
-                                <tbody>
-                                  <tr>
-                                    <th class="mailbox-number">GRE</th>
-                                    <td class="mailbox-number">{{ competitive_exam.gre_score }}</td>
-                                  </tr>
-                                  <tr>
-                                    <th class="mailbox-number">GRE Registraion Number</th>
-                                    <td class="mailbox-number">{{ competitive_exam.gre_registration_number }}</td>
-                                  </tr>
-                                  <tr>
-                                    <th class="mailbox-number">GRE Proof</th>
-                                    {% if competitive_exam.gre_proof.url != "" %}
-                                    <td class="mailbox-number"><a href = "{{ competitive_exam.gre_proof.url }}">Link</a></td>
-                                    {% else %}
-                                    <td class="mailbox-number"><a href = "{{ competitive_exam.gre_proof.url }}">None</a></td>
-                                    {% endif %}
-                                  </tr>
-                                  <hr>
-                                  <tr><th class="mailbox-number">TOEFL</th><td class="mailbox-number">{{ competitive_exam.toefl_score }}</td></tr>
-                                  <tr>
-                                    <th class="mailbox-number">TOEFL Registraion Number</th>
-                                    <td class="mailbox-number">{{ competitive_exam.toefl_registration_number }}</td>
-                                  </tr>
-                                  <tr>
-                                    <th class="mailbox-number">TOEFL Proof</th>
-                                    {% if competitive_exam.toefl_proof %}
-                                    <td class="mailbox-number"><a href = "{{ competitive_exam.toefl_proof.url }}">Link</a></td>
-                                    {% else %}
-                                    <td class="mailbox-number">None</td>
-                                    {% endif %}                                  </tr>
-                                  <hr>
-                                  
-                                  <tr><th class="mailbox-number">CAT</th><td class="mailbox-number">{{ competitive_exam.cat_score }}</td></tr>
-                                  <tr>
-                                    <th class="mailbox-number">CAT Registraion Number</th>
-                                    <td class="mailbox-number">{{ competitive_exam.cat_registration_number }}</td>
-                                  </tr>
-                                  <tr>
-                                    <th class="mailbox-number">CAT Proof</th>
-                                    {% if competitive_exam.cat_proof %}
-                                    <td class="mailbox-number"><a href = "{{ competitive_exam.cat_proof.url }}">Link</a></td>
-                                    {% else %}
-                                    <td class="mailbox-number">None</td>
-                                    {% endif %}                                  </tr>
-                                  <hr>
-                                  <tr><th class="mailbox-number">GATE</th><td class="mailbox-number">{{ competitive_exam.gate_score }}</td></tr>
-                                  <tr>
-                                    <th class="mailbox-number">GATE Registraion Number</th>
-                                    <td class="mailbox-number">{{ competitive_exam.gate_registration_number }}</td>
-                                  </tr>
-                                  <tr>
-                                    <th class="mailbox-number">GATE Proof</th>
-                                    {% if competitive_exam.gate_proof %}
-                                    <td class="mailbox-number"><a href = "{{ competitive_exam.gate_proof.url }}">Link</a></td>
-                                    {% else %}
-                                    <td class="mailbox-number">None</td>
-                                    {% endif %}                                  </tr>
-                                  <hr>
-                                  <tr><th class="mailbox-number">GMAT</th><td class="mailbox-number">{{ competitive_exam.gmat_score }}</td></tr>
-                                  <tr>
-                                    <th class="mailbox-number">GMAT Registraion Number</th>
-                                    <td class="mailbox-number">{{ competitive_exam.gmat_registration_number }}</td>
-                                  </tr>
-                                  <tr>
-                                    <th class="mailbox-number">GMAT Proof</th>
-                                    {% if competitive_exam.gmat_proof %}
-                                    <td class="mailbox-number"><a href = "{{ competitive_exam.gmat_proof.url }}">Link</a></td>
-                                    {% else %}
-                                    <td class="mailbox-number">None</td>
-                                    {% endif %}                                  </tr>
-                                  
-                                </tbody>
-                              </table>
-                              <!-- /.table -->
-                            </div>
-                            <!-- /.mail-box-messages -->
-                          </div>
-                          <!-- /.box-body -->
-                          <div class="box-footer no-padding">
-                          </div>
+                      <div class="box box-primary">
+                        <div class="box-header with-border">
+                          <h3 class="box-title">Competitive Exams</h3>
                         </div>
-                     </div>
-
+                        <div class="box-body no-padding">
+                
+                          <div class="table-responsive mailbox-messages">
+                            <table class="table table-hover table-striped">
+                              <tbody>
+                                <tr>
+                                  <th class="mailbox-number">GRE</th>
+                                  <td class="mailbox-number">{{ competitive_exam.gre_score }}</td>
+                                </tr>
+                                <tr>
+                                  <th class="mailbox-number">GRE Registraion Number</th>
+                                  <td class="mailbox-number">{{ competitive_exam.gre_registration_number }}</td>
+                                </tr>
+                                <tr>
+                                  <th class="mailbox-number">GRE Proof</th>
+                                  {% if competitive_exam.gre_proof.url != "" %}
+                                  <td class="mailbox-number"><a href = "{{ competitive_exam.gre_proof.url }}">Link</a></td>
+                                  {% else %}
+                                  <td class="mailbox-number"><a href = "{{ competitive_exam.gre_proof.url }}">None</a></td>
+                                  {% endif %}
+                                </tr>
+                                <tr><th class="mailbox-number">&nbsp;</th><td class="mailbox-number">&nbsp;</td></tr>
+                                <tr><th class="mailbox-number">TOEFL</th><td class="mailbox-number">{{ competitive_exam.toefl_score }}</td></tr>
+                                <tr>
+                                  <th class="mailbox-number">TOEFL Registraion Number</th>
+                                  <td class="mailbox-number">{{ competitive_exam.toefl_registration_number }}</td>
+                                </tr>
+                                <tr>
+                                  <th class="mailbox-number">TOEFL Proof</th>
+                                  {% if competitive_exam.toefl_proof %}
+                                  <td class="mailbox-number"><a href = "{{ competitive_exam.toefl_proof.url }}">Link</a></td>
+                                  {% else %}
+                                  <td class="mailbox-number">None</td>
+                                  {% endif %}                                  </tr>
+                                <hr>
+                                <tr><th class="mailbox-number">&nbsp;</th><td class="mailbox-number">&nbsp;</td></tr>
+                                <tr><th class="mailbox-number">CAT</th><td class="mailbox-number">{{ competitive_exam.cat_score }}</td></tr>
+                                <tr>
+                                  <th class="mailbox-number">CAT Registraion Number</th>
+                                  <td class="mailbox-number">{{ competitive_exam.cat_registration_number }}</td>
+                                </tr>
+                                <tr>
+                                  <th class="mailbox-number">CAT Proof</th>
+                                  {% if competitive_exam.cat_proof %}
+                                  <td class="mailbox-number"><a href = "{{ competitive_exam.cat_proof.url }}">Link</a></td>
+                                  {% else %}
+                                  <td class="mailbox-number">None</td>
+                                  {% endif %}                                  </tr>
+                                <hr>
+                                <tr><th class="mailbox-number">&nbsp;</th><td class="mailbox-number">&nbsp;</td></tr>
+                                <tr><th class="mailbox-number">GATE</th><td class="mailbox-number">{{ competitive_exam.gate_score }}</td></tr>
+                                <tr>
+                                  <th class="mailbox-number">GATE Registraion Number</th>
+                                  <td class="mailbox-number">{{ competitive_exam.gate_registration_number }}</td>
+                                </tr>
+                                <tr>
+                                  <th class="mailbox-number">GATE Proof</th>
+                                  {% if competitive_exam.gate_proof %}
+                                  <td class="mailbox-number"><a href = "{{ competitive_exam.gate_proof.url }}">Link</a></td>
+                                  {% else %}
+                                  <td class="mailbox-number">None</td>
+                                  {% endif %}                                  </tr>
+                                <hr>
+                                <tr><th class="mailbox-number">&nbsp;</th><td class="mailbox-number">&nbsp;</td></tr>
+                                <tr><th class="mailbox-number">GMAT</th><td class="mailbox-number">{{ competitive_exam.gmat_score }}</td></tr>
+                                <tr>
+                                  <th class="mailbox-number">GMAT Registraion Number</th>
+                                  <td class="mailbox-number">{{ competitive_exam.gmat_registration_number }}</td>
+                                </tr>
+                                <tr>
+                                  <th class="mailbox-number">GMAT Proof</th>
+                                  {% if competitive_exam.gmat_proof %}
+                                  <td class="mailbox-number"><a href = "{{ competitive_exam.gmat_proof.url }}">Link</a></td>
+                                  {% else %}
+                                  <td class="mailbox-number">None</td>
+                                  {% endif %}                                  </tr>
+                                  <tr><th class="mailbox-number">&nbsp;</th><td class="mailbox-number">&nbsp;</td></tr>
+                              </tbody>
+                            </table>
+                            <!-- /.table -->
+                          </div>
+                          <!-- /.mail-box-messages -->
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer no-padding">
+                        </div>
+                      </div>
+                    </div>
                      <div class=" tab-pane" id="Masters-Admit">
                       <div class="box box-primary">
                         <div class="box-header with-border">
@@ -1445,9 +1445,6 @@
                         </div>
                       </div>
                      </div>
-
-
-
                      <div class=" tab-pane" id="Placement">
                       <div class="box box-primary">
                         <div class="box-header with-border">
