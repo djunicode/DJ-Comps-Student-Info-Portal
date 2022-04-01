@@ -499,6 +499,18 @@ def student_profile(request, id):
             competitive_exam["gate_score"] = 0
             competitive_exam["gmat_score"] = 0
             # competitive_exam["mhcet_score"] = 0
+            competitive_exam["gre_registration_number"] = 0
+            competitive_exam["toefl_registration_number"] = 0
+            competitive_exam["cat_registration_number"] = 0
+            competitive_exam["gate_registration_number"] = 0
+            competitive_exam["gmat_registration_number"] = 0
+            # competitive_exam["mhcet_registration_number"] = 0
+            competitive_exam["gre_proof"] = None
+            competitive_exam["toefl_proof"] = None
+            competitive_exam["cat_proof"] = None
+            competitive_exam["gate_proof"] = None
+            competitive_exam["gmat_proof"] = None
+            
 
         # admits
         admit_approved = Admit.objects.filter(
@@ -1325,6 +1337,18 @@ def edit_competitive_exams(request, id):
         competitive_exam.gmat_score = request.POST.get("gmat_score")
         competitive_exam.toefl_score = request.POST.get("toefl_score")
         # competitive_exam.mhcet_score = request.POST.get("mhcet_score")
+        competitive_exam.gre_registraion_number = request.POST.get("gre_registraion_number")
+        competitive_exam.cat_registraion_number = request.POST.get("cat_registraion_number")
+        competitive_exam.gate_registraion_number = request.POST.get("gate_registraion_number")
+        competitive_exam.gmat_registraion_number = request.POST.get("gmat_registraion_number")
+        competitive_exam.toefl_registraion_number = request.POST.get("toefl_registraion_number")
+
+        competitive_exam.gre_proof = request.FILES.get("gre_proof")
+        competitive_exam.cat_proof = request.FILES.get("cat_proof")
+        competitive_exam.gate_proof = request.FILES.get("gate_proof")
+        competitive_exam.gmat_proof = request.FILES.get("gmat_proof")
+        competitive_exam.toefl_proof = request.FILES.get("toefl_proof")
+
         competitive_exam.save()
         return HttpResponse("done")
 
