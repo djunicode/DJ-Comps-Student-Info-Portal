@@ -1,3 +1,4 @@
+from operator import mod
 from django.db import models
 import datetime
 from django.contrib.auth.models import User
@@ -436,8 +437,17 @@ class CompetitiveExams(models.Model):
     gmat_score = models.CharField(max_length=10, null=True, blank=True)
     is_approved = models.BooleanField(null=True, blank=True, default=None)
     # mhcet_score = models.CharField(max_length=10, null=True, blank=True)
-
-
+    # NEW STUFF
+    gre_registration_number = models.CharField(max_length=25, null=True, blank=True)
+    gre_proof = models.FileField(null=True, blank=True)
+    toefl_registration_number = models.CharField(max_length=25, null=True, blank=True)
+    toefl_proof = models.FileField(null=True, blank=True)
+    cat_registration_number = models.CharField(max_length=25, null=True, blank=True)
+    cat_proof = models.FileField(null=True, blank=True)
+    gate_registration_number = models.CharField(max_length=25, null=True, blank=True)
+    gate_proof = models.FileField(null=True, blank=True)
+    gmat_registration_number = models.CharField(max_length=25, null=True, blank=True)
+    gmat_proof = models.FileField(null=True, blank=True)
 class Admit(models.Model):
     student = models.ForeignKey(
         StudentProfile, related_name="admit", on_delete=models.CASCADE
@@ -456,3 +466,8 @@ class Placements(models.Model):
     company_name = models.CharField(max_length=255, blank=False, null=False)
     offer_letter = models.FileField(null=True)
     is_approved = models.BooleanField(null=True, blank=True, default=None)
+    # NEW STUFF
+    ctc = models.FloatField(null=True, blank=True, default=0)
+    company_address = models.CharField(max_length=255, blank=True, null=True)
+    company_phone_number = models.CharField(max_length=20, blank=True, null=True)
+    designation = models.CharField(max_length=255, blank=True, null=True)
