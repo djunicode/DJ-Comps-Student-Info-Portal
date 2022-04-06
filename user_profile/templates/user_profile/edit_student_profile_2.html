@@ -294,15 +294,16 @@
                 <div class="form-group">
                   <label for="photo" class="col-sm-2 control-label">Photo</label>
                   
-                  {% if student_profile.photo is None  %}
-                  <div class="col-sm-8">
-                    <input type="file" class="form-control" name="photo" id="photo" accept="image/*">
-                  </div>
-                  {% else %}
+                  {% if student_profile.photo %}
                   <div class="col-sm-8">
                     <p><a href="{{student_profile.photo.url}}">Current Photo</a></p>
                     <input type="file" class="form-control" name="photo" id="photo" accept="image/*">
                   </div>
+                  {% else %}
+                  <div class="col-sm-8">
+                    <input type="file" class="form-control" name="photo" id="photo" accept="image/*">
+                  </div>
+                  
                   {% endif %}
                   <!-- <img src="/media/{{ student_profile.photo }}" alt=""> -->
                 </div>
