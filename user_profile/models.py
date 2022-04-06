@@ -18,7 +18,7 @@ from django.contrib.postgres.fields import JSONField
 class TeacherProfile(models.Model):
     teacher = models.OneToOneField(User, on_delete=models.CASCADE)
     Sap_Id = models.BigIntegerField(
-        validators=[MaxValueValidator(99999999999), MinValueValidator(10000000000)],
+        validators=[MaxValueValidator(99999999), MinValueValidator(10000000)],
         blank=True,
         null=True,
     )
