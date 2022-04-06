@@ -229,8 +229,8 @@ class Internship(models.Model):
     To = models.DateField(("Date"), default=datetime.date.today)
     desc = models.TextField(blank=True, null=True)
     how_options = (
-        ("In College", "In College"),
-        ("Out of College", "Out of College"),
+        ("In House", "In House"),
+        ("Out House", "Out House"),
     )
     how = models.CharField(max_length=16, choices=how_options, blank=True, null=True)
     stipend_options = (
