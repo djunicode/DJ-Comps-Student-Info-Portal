@@ -129,15 +129,18 @@ def register(request):
                 user.is_active = False
                 user.save()
                 current_site = get_current_site(request)
-                mail_subject = 'Activate your account on Student Info Portal'
-                message = render_to_string('user_profile/activate_email.html', {
-                    'user': user,
-                    'first_name': first_name,
-                    'last_name': last_name,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token':account_activation_token.make_token(user),
-                })
+                mail_subject = "Activate your account on Student Info Portal"
+                message = render_to_string(
+                    "user_profile/activate_email.html",
+                    {
+                        "user": user,
+                        "first_name": first_name,
+                        "last_name": last_name,
+                        "domain": current_site.domain,
+                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                        "token": account_activation_token.make_token(user),
+                    },
+                )
                 email_message = EmailMessage(mail_subject, message, to=[email])
                 email_message.send()
                 auth_login(request, user)
@@ -268,15 +271,18 @@ def register_teacher(request):
                 user.is_active = False
                 user.save()
                 current_site = get_current_site(request)
-                mail_subject = 'Activate your account on Student Info Portal'
-                message = render_to_string('user_profile/activate_email.html', {
-                    'user': user,
-                    'first_name': first_name,
-                    'last_name': last_name,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token':account_activation_token.make_token(user),
-                })
+                mail_subject = "Activate your account on Student Info Portal"
+                message = render_to_string(
+                    "user_profile/activate_email.html",
+                    {
+                        "user": user,
+                        "first_name": first_name,
+                        "last_name": last_name,
+                        "domain": current_site.domain,
+                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                        "token": account_activation_token.make_token(user),
+                    },
+                )
                 email_message = EmailMessage(mail_subject, message, to=[email])
                 email_message.send()
                 teacher = TeacherProfile.objects.create(
@@ -511,17 +517,10 @@ def student_profile(request, id):
             competitive_exam["gate_proof"] = ""
             competitive_exam["gmat_proof"] = ""
 
-
         # admits
-        admit_approved = Admit.objects.filter(
-            student=student, is_approved=True
-        )
-        admit_rejected = Admit.objects.filter(
-            student=student, is_approved=False
-        )
-        admit_pending = Admit.objects.filter(
-            student=student, is_approved=None
-        )
+        admit_approved = Admit.objects.filter(student=student, is_approved=True)
+        admit_rejected = Admit.objects.filter(student=student, is_approved=False)
+        admit_pending = Admit.objects.filter(student=student, is_approved=None)
 
         # Placements
         placement_approved = Placements.objects.filter(
@@ -530,9 +529,7 @@ def student_profile(request, id):
         placement_rejected = Placements.objects.filter(
             student=student, is_approved=False
         )
-        placement_pending = Placements.objects.filter(
-            student=student, is_approved=None
-        )
+        placement_pending = Placements.objects.filter(student=student, is_approved=None)
 
         context = {
             "flag": flag,
@@ -559,15 +556,12 @@ def student_profile(request, id):
             "skill": Skill.objects.filter(user_profile=student),
             "committees": Committee.objects.filter(employee=student),
             "competitive_exam": competitive_exam,
-
             "admit_approved": admit_approved,
             "admit_rejected": admit_rejected,
             "admit_pending": admit_pending,
-
             "placement_approved": placement_approved,
             "placement_rejected": placement_rejected,
-            "placement_pending": placement_pending
-
+            "placement_pending": placement_pending,
         }
 
         return render(request, "user_profile/profile.html", context)
@@ -786,25 +780,42 @@ def notifs(request):
     # teacher = TeacherProfile.objects.get(teacher=request.user)
 
     # Admits
-    admits_approved = Admit.objects.filter(student__mentor = teacher, is_approved = True)
-    admits_rejected = Admit.objects.filter(student__mentor = teacher, is_approved = False)
-    admits_pending = Admit.objects.filter(student__mentor = teacher, is_approved = None)
+    admits_approved = Admit.objects.filter(student__mentor=teacher, is_approved=True)
+    admits_rejected = Admit.objects.filter(student__mentor=teacher, is_approved=False)
+    admits_pending = Admit.objects.filter(student__mentor=teacher, is_approved=None)
 
     # Placements
-    placements_approved = Placements.objects.filter(student__mentor = teacher, is_approved = True)
-    placements_rejected = Placements.objects.filter(student__mentor = teacher, is_approved = False)
-    placements_pending = Placements.objects.filter(student__mentor = teacher, is_approved = None)
+    placements_approved = Placements.objects.filter(
+        student__mentor=teacher, is_approved=True
+    )
+    placements_rejected = Placements.objects.filter(
+        student__mentor=teacher, is_approved=False
+    )
+    placements_pending = Placements.objects.filter(
+        student__mentor=teacher, is_approved=None
+    )
 
     # Compititive Exams
-    compititive_exams_approved = CompetitiveExams.objects.filter(student__mentor = teacher, is_approved = True)
-    compititive_exams_rejected = CompetitiveExams.objects.filter(student__mentor = teacher, is_approved = False)
-    compititive_exams_pending = CompetitiveExams.objects.filter(student__mentor = teacher, is_approved = None)
+    compititive_exams_approved = CompetitiveExams.objects.filter(
+        student__mentor=teacher, is_approved=True
+    )
+    compititive_exams_rejected = CompetitiveExams.objects.filter(
+        student__mentor=teacher, is_approved=False
+    )
+    compititive_exams_pending = CompetitiveExams.objects.filter(
+        student__mentor=teacher, is_approved=None
+    )
 
     # Committee
-    committee_approved = Committee.objects.filter(employee__mentor = teacher, is_approved = True)
-    committee_rejected = Committee.objects.filter(employee__mentor = teacher, is_approved = False)
-    committee_pending = Committee.objects.filter(employee__mentor = teacher, is_approved = None)
-
+    committee_approved = Committee.objects.filter(
+        employee__mentor=teacher, is_approved=True
+    )
+    committee_rejected = Committee.objects.filter(
+        employee__mentor=teacher, is_approved=False
+    )
+    committee_pending = Committee.objects.filter(
+        employee__mentor=teacher, is_approved=None
+    )
 
     context = {
         "students": stu,
@@ -814,38 +825,30 @@ def notifs(request):
         "internship_approved": internship_approved,
         "internship_rejected": internship_rejected,
         "internship_pending": internship_pending,
-
         "project_approved": project_approved,
         "project_rejected": project_rejected,
         "project_pending": project_pending,
-
         "BeProject_approved": BeProject_approved,
         "BeProject_rejected": BeProject_rejected,
         "BeProject_pending": BeProject_pending,
-
         "ResearchPaper_approved": ResearchPaper_approved,
         "ResearchPaper_rejected": ResearchPaper_rejected,
         "ResearchPaper_pending": ResearchPaper_pending,
-
         "Hackathon_approved": Hackathon_approved,
         "Hackathon_rejected": Hackathon_rejected,
         "Hackathon_pending": Hackathon_pending,
-
-        "admits_approved" : admits_approved,
-        "admits_rejected" : admits_rejected,
-        "admits_pending" : admits_pending,
-
-        "placements_approved" : placements_approved,
-        "placements_rejected" : placements_rejected,
-        "placements_pending" : placements_pending,
-
-        "competitive_exams_approved" : compititive_exams_approved,
-        "competitive_exams_rejected" : compititive_exams_rejected,
-        "competitive_exams_pending" : compititive_exams_pending,
-
-        "committee_approved" : committee_approved,
-        "committee_rejected" : committee_rejected,
-        "committee_pending" : committee_pending,
+        "admits_approved": admits_approved,
+        "admits_rejected": admits_rejected,
+        "admits_pending": admits_pending,
+        "placements_approved": placements_approved,
+        "placements_rejected": placements_rejected,
+        "placements_pending": placements_pending,
+        "competitive_exams_approved": compititive_exams_approved,
+        "competitive_exams_rejected": compititive_exams_rejected,
+        "competitive_exams_pending": compititive_exams_pending,
+        "committee_approved": committee_approved,
+        "committee_rejected": committee_rejected,
+        "committee_pending": committee_pending,
     }
     return render(request, "user_profile/notifs.html", context)
 
@@ -1193,8 +1196,8 @@ def teacher_dashboard(request):
                 else:
                     avg_gpa = round(total / count, 2)
                     all_avg_gpa += avg_gpa
-                    total_count+=1
-        if total_count!=0:
+                    total_count += 1
+        if total_count != 0:
             all_avg_gpa = round(all_avg_gpa / total_count, 2)
         else:
             all_avg_gpa = 0
@@ -1331,7 +1334,9 @@ def edit_competitive_exams(request, id):
     if request.method == "POST":
         student_profile = StudentProfile.objects.get(id=id)
         try:
-            competitive_exam = CompetitiveExams.objects.filter(student=student_profile)[0]
+            competitive_exam = CompetitiveExams.objects.filter(student=student_profile)[
+                0
+            ]
         except:
             competitive_exam = CompetitiveExams.objects.create(student=student_profile)
         if request.POST.get("gre_score") is not "":
@@ -1346,17 +1351,27 @@ def edit_competitive_exams(request, id):
             competitive_exam.toefl_score = request.POST.get("toefl_score")
 
         # competitive_exam.mhcet_score = request.POST.get("mhcet_score")
-        
+
         if request.POST.get("gre_registration_number") is not "":
-            competitive_exam.gre_registration_number = request.POST.get("gre_registration_number")
+            competitive_exam.gre_registration_number = request.POST.get(
+                "gre_registration_number"
+            )
         if request.POST.get("cat_registration_number") is not "":
-            competitive_exam.cat_registration_number = request.POST.get("cat_registration_number")
+            competitive_exam.cat_registration_number = request.POST.get(
+                "cat_registration_number"
+            )
         if request.POST.get("gate_registration_number") is not "":
-            competitive_exam.gate_registration_number = request.POST.get("gate_registration_number")
+            competitive_exam.gate_registration_number = request.POST.get(
+                "gate_registration_number"
+            )
         if request.POST.get("gmat_registration_number") is not "":
-            competitive_exam.gmat_registration_number = request.POST.get("gmat_registration_number")
+            competitive_exam.gmat_registration_number = request.POST.get(
+                "gmat_registration_number"
+            )
         if request.POST.get("toefl_registration_number") is not "":
-            competitive_exam.toefl_registration_number = request.POST.get("toefl_registration_number")
+            competitive_exam.toefl_registration_number = request.POST.get(
+                "toefl_registration_number"
+            )
 
         if request.FILES.get("gre_proof") is not None:
             competitive_exam.gre_proof = request.FILES.get("gre_proof")
@@ -1394,14 +1409,16 @@ def edit_basic_info(request, id):
         student_profile.twelfth_or_diploma_marks = request.POST.get("12thMarks")
 
         student_profile.save()
-        return redirect('/edit_basic_info')
+        return redirect("/edit_basic_info")
         # return HttpResponse("done")
 
 
 def edit_academic_info(request, id):
     if request.method == "POST":
         student_profile = StudentProfile.objects.get(id=id)
-        education, created = Education.objects.get_or_create(student_profile=student_profile)
+        education, created = Education.objects.get_or_create(
+            student_profile=student_profile
+        )
 
         # try:
         #     education = Education.objects.get(student_profile=student_profile)
@@ -1549,7 +1566,7 @@ def edit_academic_info(request, id):
         #         subj.save()
         # student_profile.subject_semester = request.POST.get("kt")
         education.save()
-        return redirect('/editprofile')
+        return redirect("/editprofile")
 
         # return HttpResponse("done")
 
@@ -1623,7 +1640,9 @@ def edit_project_info(request, id):
         project.ProjDesc = request.POST.get("ProjectDescription")
         project.image1 = request.FILES.get("image1")
         project.image2 = request.FILES.get("image2")
-        project.projectUnderTeacher = TeacherProfile.objects.get(Sap_Id=request.POST.get("project_teacher"))
+        project.projectUnderTeacher = TeacherProfile.objects.get(
+            Sap_Id=request.POST.get("project_teacher")
+        )
         project.skill = skill
         project.save()
         skill.save()
@@ -1667,10 +1686,16 @@ def edit_internship_info(request, id):
         internship.evaluation_report_supervisor = request.FILES.get(
             "evaluation_report_supervisor"
         )
-        internship.evaluation_report_self = request.FILES.get("evaluation_report_self_one")
-        internship.evaluation_report_self = request.FILES.get("evaluation_report_self_two")
+        internship.evaluation_report_self = request.FILES.get(
+            "evaluation_report_self_one"
+        )
+        internship.evaluation_report_self = request.FILES.get(
+            "evaluation_report_self_two"
+        )
 
-        internship.evaluation_report_self = request.FILES.get("evaluation_report_self_three")
+        internship.evaluation_report_self = request.FILES.get(
+            "evaluation_report_self_three"
+        )
 
         internship.save()
         print(internship.company)
@@ -1721,28 +1746,29 @@ def edit_committee_info(request, id):
             }
         )
 
+
 @csrf_exempt
 def edit_research_paper_info(request, id):
     if request.method == "POST":
         print("aayush")
         student_profile = StudentProfile.objects.get(id=id)
         paper = ResearchPaper.objects.create(student=student_profile)
-        paper.Title = request.POST.get("ResearchPaperName")#
-        paper.Publication = request.POST.get("ResearchPaperPublication")#
-        paper.Desc = request.POST.get("ResearchPaperDescription")#
-        paper.isbn = request.POST.get("isbn")#
+        paper.Title = request.POST.get("ResearchPaperName")  #
+        paper.Publication = request.POST.get("ResearchPaperPublication")  #
+        paper.Desc = request.POST.get("ResearchPaperDescription")  #
+        paper.isbn = request.POST.get("isbn")  #
         # paper.status = request.POST.get("status")
-        paper.LinkToPaper = request.POST.get("ResearchPaperUrl")#
+        paper.LinkToPaper = request.POST.get("ResearchPaperUrl")  #
 
-        paper.PaperId = request.POST.get("paperId")#
-        paper.issn = request.POST.get("issn")#
-        paper.proof_of_submission = request.FILES.get("proof")#
-        paper.project_mentor = request.POST.get("project_mentor")#
-        paper.duration_of_project = request.POST.get("duration")#
-        paper.total_hours = request.POST.get("total_hours")#
-        paper.type = request.POST.get("type")#
+        paper.PaperId = request.POST.get("paperId")  #
+        paper.issn = request.POST.get("issn")  #
+        paper.proof_of_submission = request.FILES.get("proof")  #
+        paper.project_mentor = request.POST.get("project_mentor")  #
+        paper.duration_of_project = request.POST.get("duration")  #
+        paper.total_hours = request.POST.get("total_hours")  #
+        paper.type = request.POST.get("type")  #
 
-        paper.DateOfPublication = request.POST.get("DateOfPublication")#
+        paper.DateOfPublication = request.POST.get("DateOfPublication")  #
         paper.research_impact_factor = request.POST.get("research_impact_factor")
         paper.indexing = request.POST.get("indexing")
         # paper.image1 = request.FILES.get("image1")
@@ -1845,6 +1871,7 @@ def edit_admit_info(request, id):
             }
         )
 
+
 def edit_placement_info(request, id):
     if request.method == "POST":
         student_profile = StudentProfile.objects.get(id=id)
@@ -1862,6 +1889,7 @@ def edit_placement_info(request, id):
                 "id": data.id,
             }
         )
+
 
 def delete_hackathon_info(request, id):
     hackathon = Hackathon.objects.get(id=id)
@@ -1912,10 +1940,12 @@ def delete_admit_info(request, id):
     extra.delete()
     return HttpResponseRedirect("/editprofile/")
 
+
 def delete_placement_info(request, id):
     extra = Placements.objects.get(id=id)
     extra.delete()
     return HttpResponseRedirect("/editprofile/")
+
 
 def send_sms(message, number):
     print(number)
@@ -1942,6 +1972,7 @@ def send_sms(message, number):
     export MSG91KEY="YOURKEYHERE"
     #
     And also remember, rudresh is the best (DUH)
+    Jinay is better than Rudresh
     """
 
 
@@ -2086,10 +2117,11 @@ def BE_project_rejected(request, id):
         BE_project.save()
     return redirect("user_profile:notifs")
 
+
 # Admit views
 def admit_approved(request, id):
     try:
-        admit = Admit.objects.get(id = id)
+        admit = Admit.objects.get(id=id)
     except Admit.DoesNotExist:
         return redirect("user_profile:notifs")
     if admit.is_approved == None:
@@ -2097,9 +2129,10 @@ def admit_approved(request, id):
         admit.save()
     return redirect("user_profile:notifs")
 
+
 def admit_rejected(request, id):
     try:
-        admit = Admit.objects.get(id = id)
+        admit = Admit.objects.get(id=id)
     except Admit.DoesNotExist:
         return redirect("user_profile:notifs")
     if admit.is_approved == None:
@@ -2107,10 +2140,11 @@ def admit_rejected(request, id):
         admit.save()
     return redirect("user_profile:notifs")
 
+
 # Placement views
 def placement_approved(request, id):
     try:
-        placement = Placements.objects.get(id = id)
+        placement = Placements.objects.get(id=id)
     except Placements.DoesNotExist:
         return redirect("user_profile:notifs")
     if placement.is_approved == None:
@@ -2118,9 +2152,10 @@ def placement_approved(request, id):
         placement.save()
     return redirect("user_profile:notifs")
 
+
 def placement_rejected(request, id):
     try:
-        placement = Placements.objects.get(id = id)
+        placement = Placements.objects.get(id=id)
     except Placements.DoesNotExist:
         return redirect("user_profile:notifs")
     if placement.is_approved == None:
@@ -2132,7 +2167,7 @@ def placement_rejected(request, id):
 # Competitive Exams views
 def competitive_exams_approved(request, id):
     try:
-        competitive_exams = CompetitiveExams.objects.get(id = id)
+        competitive_exams = CompetitiveExams.objects.get(id=id)
     except CompetitiveExams.DoesNotExist:
         return redirect("user_profile:notifs")
     if competitive_exams.is_approved == None:
@@ -2140,9 +2175,10 @@ def competitive_exams_approved(request, id):
         competitive_exams.save()
     return redirect("user_profile:notifs")
 
+
 def competitive_exams_rejected(request, id):
     try:
-        competitive_exams = CompetitiveExams.objects.get(id = id)
+        competitive_exams = CompetitiveExams.objects.get(id=id)
     except CompetitiveExams.DoesNotExist:
         return redirect("user_profile:notifs")
     if competitive_exams.is_approved == None:
@@ -2154,7 +2190,7 @@ def competitive_exams_rejected(request, id):
 # Committee views
 def committee_approved(request, id):
     try:
-        committee = Committee.objects.get(id = id)
+        committee = Committee.objects.get(id=id)
     except Committee.DoesNotExist:
         return redirect("user_profile:notifs")
     if committee.is_approved == None:
@@ -2162,9 +2198,10 @@ def committee_approved(request, id):
         committee.save()
     return redirect("user_profile:notifs")
 
+
 def committee_rejected(request, id):
     try:
-        committee = Committee.objects.get(id = id)
+        committee = Committee.objects.get(id=id)
     except Committee.DoesNotExist:
         return redirect("user_profile:notifs")
     if committee.is_approved == None:
@@ -2172,147 +2209,314 @@ def committee_rejected(request, id):
         committee.save()
     return redirect("user_profile:notifs")
 
+
 def download_all_excel(request):
-    if request.user.is_authenticated and TeacherProfile.objects.filter(teacher=request.user).exists():
+    if (
+        request.user.is_authenticated
+        and TeacherProfile.objects.filter(teacher=request.user).exists()
+    ):
         from django.http import HttpResponse
         import xlwt
+
         user = request.user
         teacher = TeacherProfile.objects.get(teacher=user)
-        response = HttpResponse(content_type='application/ms-excel')
-        response['Content-Disposition']='attachment; filename= Details of Students under ' +str(teacher.Sap_Id)+'.xls'
-        wb = xlwt.Workbook(encoding='utf-8')
+        response = HttpResponse(content_type="application/ms-excel")
+        response["Content-Disposition"] = (
+            "attachment; filename= Details of Students under "
+            + str(teacher.Sap_Id)
+            + ".xls"
+        )
+        wb = xlwt.Workbook(encoding="utf-8")
 
         # Student List Sheet start
-        students = StudentProfile.objects.filter(mentor=teacher).order_by('Sap_Id')
-        ws=wb.add_sheet("Student List")
+        students = StudentProfile.objects.filter(mentor=teacher).order_by("Sap_Id")
+        ws = wb.add_sheet("Student List")
         row_num = 0
-        font_style=xlwt.XFStyle()
-        font_style.font.bold=True
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
 
-        columns = ['SAP ID','First Name','Last Name','Year','Department','Gender','Mobile Number']
+        columns = [
+            "SAP ID",
+            "First Name",
+            "Last Name",
+            "Year",
+            "Department",
+            "Gender",
+            "Mobile Number",
+        ]
         for col_num in range(len(columns)):
-            ws.write(row_num,col_num,columns[col_num],font_style)
+            ws.write(row_num, col_num, columns[col_num], font_style)
 
-        font_style=xlwt.XFStyle()
-        rows=students.values_list('Sap_Id','first_name','last_name','year','department','gender','mobileNo')
+        font_style = xlwt.XFStyle()
+        rows = students.values_list(
+            "Sap_Id",
+            "first_name",
+            "last_name",
+            "year",
+            "department",
+            "gender",
+            "mobileNo",
+        )
         for row in rows:
-            row_num+=1
+            row_num += 1
             for col_num in range(len(row)):
-                ws.write(row_num,col_num,str(row[col_num]),font_style)
+                ws.write(row_num, col_num, str(row[col_num]), font_style)
         # Student List Sheet end
 
         # Internship List Sheet start
-        internships = Internship.objects.filter(employee__mentor=teacher,is_approved=True).order_by('employee__Sap_Id','id')
-        ws=wb.add_sheet("Internship List")
+        internships = Internship.objects.filter(
+            employee__mentor=teacher, is_approved=True
+        ).order_by("employee__Sap_Id", "id")
+        ws = wb.add_sheet("Internship List")
         row_num = 0
-        font_style=xlwt.XFStyle()
-        font_style.font.bold=True
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
 
-        columns = ['SAP ID','First Name','Last Name','Company','Position','Location','From','To','Description','In/Out of College','Paid/Unpaid','Total Hours']
+        columns = [
+            "SAP ID",
+            "First Name",
+            "Last Name",
+            "Company",
+            "Position",
+            "Location",
+            "From",
+            "To",
+            "Description",
+            "In/Out of College",
+            "Paid/Unpaid",
+            "Total Hours",
+        ]
         for col_num in range(len(columns)):
-            ws.write(row_num,col_num,columns[col_num],font_style)
+            ws.write(row_num, col_num, columns[col_num], font_style)
 
-        font_style=xlwt.XFStyle()
-        rows=internships.values_list('employee__Sap_Id','employee__first_name','employee__last_name','company','Position','Loc','From','To','desc','how','stipend','total_hours')
+        font_style = xlwt.XFStyle()
+        rows = internships.values_list(
+            "employee__Sap_Id",
+            "employee__first_name",
+            "employee__last_name",
+            "company",
+            "Position",
+            "Loc",
+            "From",
+            "To",
+            "desc",
+            "how",
+            "stipend",
+            "total_hours",
+        )
         for row in rows:
-            row_num+=1
+            row_num += 1
             for col_num in range(len(row)):
-                ws.write(row_num,col_num,str(row[col_num]),font_style)
+                ws.write(row_num, col_num, str(row[col_num]), font_style)
         # Internship List Sheet end
 
         # Project List Sheet start
-        projects = Project.objects.filter(student_profile__mentor=teacher,is_approved=True).order_by('student_profile__Sap_Id','id')
-        ws=wb.add_sheet("Project List")
+        projects = Project.objects.filter(
+            student_profile__mentor=teacher, is_approved=True
+        ).order_by("student_profile__Sap_Id", "id")
+        ws = wb.add_sheet("Project List")
         row_num = 0
-        font_style=xlwt.XFStyle()
-        font_style.font.bold=True
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
 
-        columns = ['SAP ID','First Name','Last Name','Project Name','Project URL','Project Description']
+        columns = [
+            "SAP ID",
+            "First Name",
+            "Last Name",
+            "Project Name",
+            "Project URL",
+            "Project Description",
+        ]
         for col_num in range(len(columns)):
-            ws.write(row_num,col_num,columns[col_num],font_style)
+            ws.write(row_num, col_num, columns[col_num], font_style)
 
-        font_style=xlwt.XFStyle()
-        rows=projects.values_list('student_profile__Sap_Id','student_profile__first_name','student_profile__last_name','ProjName','ProjURL','ProjDesc')
+        font_style = xlwt.XFStyle()
+        rows = projects.values_list(
+            "student_profile__Sap_Id",
+            "student_profile__first_name",
+            "student_profile__last_name",
+            "ProjName",
+            "ProjURL",
+            "ProjDesc",
+        )
         for row in rows:
-            row_num+=1
+            row_num += 1
             for col_num in range(len(row)):
-                ws.write(row_num,col_num,str(row[col_num]),font_style)
+                ws.write(row_num, col_num, str(row[col_num]), font_style)
         # Project List Sheet end
 
         # Extra Curricular List Sheet start
-        extra_c = ExtraCurricular.objects.filter(student__mentor=teacher).order_by('student__Sap_Id','id')
-        ws=wb.add_sheet("Extra Curricular List")
+        extra_c = ExtraCurricular.objects.filter(student__mentor=teacher).order_by(
+            "student__Sap_Id", "id"
+        )
+        ws = wb.add_sheet("Extra Curricular List")
         row_num = 0
-        font_style=xlwt.XFStyle()
-        font_style.font.bold=True
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
 
-        columns = ['SAP ID','First Name','Last Name','EC Type','Name','Description','Achievements','Date']
+        columns = [
+            "SAP ID",
+            "First Name",
+            "Last Name",
+            "EC Type",
+            "Name",
+            "Description",
+            "Achievements",
+            "Date",
+        ]
         for col_num in range(len(columns)):
-            ws.write(row_num,col_num,columns[col_num],font_style)
+            ws.write(row_num, col_num, columns[col_num], font_style)
 
-        font_style=xlwt.XFStyle()
-        rows=extra_c.values_list('student__Sap_Id','student__first_name','student__last_name','extra_curricular_type','name','desc','achievements','date')
+        font_style = xlwt.XFStyle()
+        rows = extra_c.values_list(
+            "student__Sap_Id",
+            "student__first_name",
+            "student__last_name",
+            "extra_curricular_type",
+            "name",
+            "desc",
+            "achievements",
+            "date",
+        )
         for row in rows:
-            row_num+=1
+            row_num += 1
             for col_num in range(len(row)):
-                ws.write(row_num,col_num,str(row[col_num]),font_style)
+                ws.write(row_num, col_num, str(row[col_num]), font_style)
         # Extra Curricular List Sheet end
 
         # Grade List Sheet start
-        grade = Education.objects.filter(student_profile__mentor=teacher).order_by('student_profile__Sap_Id','id')
-        ws=wb.add_sheet("Grade List")
+        grade = Education.objects.filter(student_profile__mentor=teacher).order_by(
+            "student_profile__Sap_Id", "id"
+        )
+        ws = wb.add_sheet("Grade List")
         row_num = 0
-        font_style=xlwt.XFStyle()
-        font_style.font.bold=True
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
 
-        columns = ['SAP ID','First Name','Last Name','SEM 1','SEM 2','SEM 3','SEM 4','SEM 5','SEM 6','SEM 7','SEM 8',]
+        columns = [
+            "SAP ID",
+            "First Name",
+            "Last Name",
+            "SEM 1",
+            "SEM 2",
+            "SEM 3",
+            "SEM 4",
+            "SEM 5",
+            "SEM 6",
+            "SEM 7",
+            "SEM 8",
+        ]
         for col_num in range(len(columns)):
-            ws.write(row_num,col_num,columns[col_num],font_style)
+            ws.write(row_num, col_num, columns[col_num], font_style)
 
-        font_style=xlwt.XFStyle()
-        rows=grade.values_list('student_profile__Sap_Id','student_profile__first_name','student_profile__last_name','sem1_gpa','sem2_gpa','sem3_gpa','sem4_gpa','sem5_gpa','sem6_gpa','sem7_gpa','sem8_gpa')
+        font_style = xlwt.XFStyle()
+        rows = grade.values_list(
+            "student_profile__Sap_Id",
+            "student_profile__first_name",
+            "student_profile__last_name",
+            "sem1_gpa",
+            "sem2_gpa",
+            "sem3_gpa",
+            "sem4_gpa",
+            "sem5_gpa",
+            "sem6_gpa",
+            "sem7_gpa",
+            "sem8_gpa",
+        )
         for row in rows:
-            row_num+=1
+            row_num += 1
             for col_num in range(len(row)):
-                ws.write(row_num,col_num,str(row[col_num]),font_style)
+                ws.write(row_num, col_num, str(row[col_num]), font_style)
         # Grade List Sheet end
 
         # BE Project List Sheet start
-        projects = BeProject.objects.filter(student__mentor=teacher,is_approved=True).order_by('student__Sap_Id','id')
-        ws=wb.add_sheet("BE Project List")
+        projects = BeProject.objects.filter(
+            student__mentor=teacher, is_approved=True
+        ).order_by("student__Sap_Id", "id")
+        ws = wb.add_sheet("BE Project List")
         row_num = 0
-        font_style=xlwt.XFStyle()
-        font_style.font.bold=True
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
 
-        columns = ['SAP ID','First Name','Last Name','Project Name','Project URL','Project Description']
+        columns = [
+            "SAP ID",
+            "First Name",
+            "Last Name",
+            "Project Name",
+            "Project URL",
+            "Project Description",
+        ]
         for col_num in range(len(columns)):
-            ws.write(row_num,col_num,columns[col_num],font_style)
+            ws.write(row_num, col_num, columns[col_num], font_style)
 
-        font_style=xlwt.XFStyle()
-        rows=projects.values_list('student__Sap_Id','student__first_name','student__last_name','ProjName','ProjURL','ProjDesc')
+        font_style = xlwt.XFStyle()
+        rows = projects.values_list(
+            "student__Sap_Id",
+            "student__first_name",
+            "student__last_name",
+            "ProjName",
+            "ProjURL",
+            "ProjDesc",
+        )
         for row in rows:
-            row_num+=1
+            row_num += 1
             for col_num in range(len(row)):
-                ws.write(row_num,col_num,str(row[col_num]),font_style)
+                ws.write(row_num, col_num, str(row[col_num]), font_style)
         # BE Project List Sheet end
 
         # Research Paper List Sheet start
-        research = ResearchPaper.objects.filter(student__mentor=teacher,is_approved=True).order_by('student__Sap_Id','id')
-        ws=wb.add_sheet("Research Paper List")
+        research = ResearchPaper.objects.filter(
+            student__mentor=teacher, is_approved=True
+        ).order_by("student__Sap_Id", "id")
+        ws = wb.add_sheet("Research Paper List")
         row_num = 0
-        font_style=xlwt.XFStyle()
-        font_style.font.bold=True
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
 
-        columns = ['SAP ID','First Name','Last Name','Title','Publication','Date Of Publication','Description','Paper ID','ISBN','ISSN','Type','Research Impact Factor','Indexing','Project Mentor','Duration of Project','Total Hours']
+        columns = [
+            "SAP ID",
+            "First Name",
+            "Last Name",
+            "Title",
+            "Publication",
+            "Date Of Publication",
+            "Description",
+            "Paper ID",
+            "ISBN",
+            "ISSN",
+            "Type",
+            "Research Impact Factor",
+            "Indexing",
+            "Project Mentor",
+            "Duration of Project",
+            "Total Hours",
+        ]
         for col_num in range(len(columns)):
-            ws.write(row_num,col_num,columns[col_num],font_style)
+            ws.write(row_num, col_num, columns[col_num], font_style)
 
-        font_style=xlwt.XFStyle()
-        rows=research.values_list('student__Sap_Id','student__first_name','student__last_name','Title','Publication','DateOfPublication','Desc','PaperId','isbn','issn','type','research_impact_factor','indexing','project_mentor','duration_of_project','total_hours')
+        font_style = xlwt.XFStyle()
+        rows = research.values_list(
+            "student__Sap_Id",
+            "student__first_name",
+            "student__last_name",
+            "Title",
+            "Publication",
+            "DateOfPublication",
+            "Desc",
+            "PaperId",
+            "isbn",
+            "issn",
+            "type",
+            "research_impact_factor",
+            "indexing",
+            "project_mentor",
+            "duration_of_project",
+            "total_hours",
+        )
         for row in rows:
-            row_num+=1
+            row_num += 1
             for col_num in range(len(row)):
-                ws.write(row_num,col_num,str(row[col_num]),font_style)
+                ws.write(row_num, col_num, str(row[col_num]), font_style)
         # Research Paper List Sheet end
 
         wb.save(response)
