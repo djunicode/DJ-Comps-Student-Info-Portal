@@ -904,12 +904,12 @@
                                   <td class="mailbox-name">{{ research_paper.Title }}</td>
                                   <td class="mailbox-name">{{ research_paper.isbn }}</td>
                                   <td class="mailbox-name">{{ research_paper.issn }}</td>
-                                  {% ifequal internship.Certificate "" %}
-                                  <td class="mailbox-name">Not Uploaded</td>
-                                  {% else %}
+                                  {% if research_paper.proof_of_submission %}
                                   <td class="mailbox-name"><a target="_blank" href="{{ research_paper.proof_of_submission.url }}">Proof of Submission</a>
                                   </td>
-                                  {% endifequal %}
+                                  {% else %}
+                                  <td class="mailbox-name">Not Uploaded</td>
+                                  {% endif %}
                                   <td class="mailbox-name">{{ research_paper.project_mentor }}</td>
                                   <td class="mailbox-name">{{ research_paper.type }}</td>
                                   <td class="mailbox-name">{{ research_paper.duration_of_project }}</td>
@@ -964,12 +964,12 @@
                                   <td class="mailbox-name">{{ research_paper.Title }}</td>
                                   <td class="mailbox-name">{{ research_paper.isbn }}</td>
                                   <td class="mailbox-name">{{ research_paper.issn }}</td>
-                                  {% ifequal internship.Certificate "" %}
-                                  <td class="mailbox-name">Not Uploaded</td>
-                                  {% else %}
+                                  {% if research_paper.proof_of_submission %}
                                   <td class="mailbox-name"><a target="_blank" href="{{ research_paper.proof_of_submission.url }}">Proof of Submission</a>
                                   </td>
-                                  {% endifequal %}
+                                  {% else %}
+                                  <td class="mailbox-name">Not Uploaded</td>
+                                  {% endif %}
                                   <td class="mailbox-name">{{ research_paper.project_mentor }}</td>
                                   <td class="mailbox-name">{{ research_paper.type }}</td>
                                   <td class="mailbox-name">{{ research_paper.duration_of_project }}</td>
@@ -1024,12 +1024,13 @@
                                   <td class="mailbox-name">{{ research_paper.Title }}</td>
                                   <td class="mailbox-name">{{ research_paper.isbn }}</td>
                                   <td class="mailbox-name">{{ research_paper.issn }}</td>
-                                  {% ifequal internship.Certificate "" %}
-                                  <td class="mailbox-name">Not Uploaded</td>
-                                  {% else %}
+                                  {% if research_paper.proof_of_submission %}
                                   <td class="mailbox-name"><a target="_blank" href="{{ research_paper.proof_of_submission.url }}">Proof of Submission</a>
                                   </td>
-                                  {% endifequal %}
+                                  {% else %}
+                                  <td class="mailbox-name">Not Uploaded</td>
+                                  
+                                  {% endif %}
                                   <td class="mailbox-name">{{ research_paper.project_mentor }}</td>
                                   <td class="mailbox-name">{{ research_paper.type }}</td>
                                   <td class="mailbox-name">{{ research_paper.duration_of_project }}</td>
@@ -1207,12 +1208,12 @@
                                   <td class="mailbox-name">{{ e.desc }}</td>
                                   <td class="mailbox-name">{{ e.achievements }}</td>
                                   <td class="mailbox-name">{{ e.date }}</td>
-                                  {% ifequal e.Certificate.url "" %}
-                                  <td class="mailbox-name">Not Uploaded</td>
-                                  {% else %}
+                                  {% if e.Certificate %}
                                   <td class="mailbox-name"><a target="_blank" href="{{e.Certificate.url}}">Certificate</a>
                                   </td>
-                                  {% endifequal %}
+                                  {% else %}
+                                  <td class="mailbox-name">Not Uploaded</td>
+                                  {% endif %}
                                   
                                 </tr>
                                 {% endfor %}
@@ -1247,7 +1248,7 @@
                                 </tr>
                                 <tr>
                                   <th class="mailbox-number">GRE Proof</th>
-                                  {% if competitive_exam.gre_proof.url != "" %}
+                                  {% if competitive_exam.gre_proof %}
                                   <td class="mailbox-number"><a href = "{{ competitive_exam.gre_proof.url }}">Link</a></td>
                                   {% else %}
                                   <td class="mailbox-number"><a href = "{{ competitive_exam.gre_proof.url }}">None</a></td>
@@ -1344,12 +1345,13 @@
                                   <td class="mailbox-name">{{project.college_name}}</td>
                                   <td class="mailbox-name">{{ project.masters_field }}</td>
                                   <td class="mailbox-name">{{ project.college_location }}</td>
-                                  {% ifequal project.admit_proof "" %}
-                                  <td class="mailbox-name">Not Uploaded</td>
-                                  {% else %}
+                                  {% if project.admit_proof %}
                                   <td class="mailbox-name"><a target="_blank" href="{{project.admit_proof.url}}">Admit Proof</a>
                                   </td>
-                                  {% endifequal %}
+                                  {% else %}
+                                  <td class="mailbox-name">Not Uploaded</td>
+                                  
+                                  {% endif %}
                                 </tr>
                                 {% endfor %}
                               </tbody>
@@ -1426,12 +1428,13 @@
                                   <td class="mailbox-name">{{project.college_name}}</td>
                                   <td class="mailbox-name">{{ project.masters_field }}</td>
                                   <td class="mailbox-name">{{ project.college_location }}</td>
-                                  {% ifequal project.admit_proof "" %}
-                                  <td class="mailbox-name">Not Uploaded</td>
-                                  {% else %}
+                                  {% if project.admit_proof %}
                                   <td class="mailbox-name"><a target="_blank" href="{{project.admit_proof.url}}">Admit Proof</a>
                                   </td>
-                                  {% endifequal %}
+                                  {% else %}
+                                  <td class="mailbox-name">Not Uploaded</td>
+                                  
+                                  {% endif %}
                                 </tr>
                                 {% endfor %}
                               </tbody>
@@ -1501,12 +1504,13 @@
                               <tr>
                                 <td class="mailbox-number">{{ forloop.counter }}</td>
                                 <td class="mailbox-name">{{project.company_name}}</td>
-                                {% ifequal project.offer_letter "" %}
-                                <td class="mailbox-name">Not Uploaded</td>
-                                {% else %}
+                                {% if project.offer_letter %}
                                 <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter.url}}">Offer Letter</a>
                                 </td>
-                                {% endifequal %}
+                                {% else %}
+                                <td class="mailbox-name">Not Uploaded</td>
+                                
+                                {% endif %}
                               </tr>
                               {% endfor %}
                             </table>
@@ -1537,12 +1541,13 @@
                                 <tr>
                                   <td class="mailbox-number">{{ forloop.counter }}</td>
                                   <td class="mailbox-name">{{project.company_name}}</td>
-                                  {% ifequal project.offer_letter "" %}
-                                  <td class="mailbox-name">Not Uploaded</td>
-                                  {% else %}
+                                  {% if project.offer_letter %}
+                                  
                                   <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter.url}}">Offer Letter</a>
                                   </td>
-                                  {% endifequal %}
+                                  {% else %}
+                                  <td class="mailbox-name">Not Uploaded</td>
+                                  {% endif %}
                                 </tr>
                                 {% endfor %}
                               </tbody>
