@@ -1,0 +1,2400 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<title>Edit Student Profile</title>
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="{% static " /dist/css/skins/_all-skins.min.css" %}">
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="{% static " /plugins/iCheck/all.css" %}">
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+{% endblock %}
+<!-- Google Font -->
+{% block nav %}
+<nav class="navbar navbar-static-top">
+  <!-- Sidebar toggle button-->
+
+  <div class="navbar-custom-menu">
+    <ul class="nav navbar-nav">
+      <!-- User Account: style can be found in dropdown.less -->
+      <li class="dropdown user user-menu">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <!-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
+
+          <span>{{ student_profile.first_name }} {{ student_profile.last_name }} </span>
+
+        </a>
+        <ul class="dropdown-menu">
+          <!-- User image -->
+          <li class="user-header">
+
+            <p>
+              {{ student_profile.Sap_Id }}
+              <small>{{ student_profile.year }}</small>
+            </p>
+          </li>
+          <!-- Menu Footer-->
+          <li class="user-footer">
+            <div class="pull-left">
+              <a href="{% url 'user_profile:student_profile' student_profile.id %}"
+                class="btn btn-default btn-flat">Profile</a>
+            </div>
+            <div class="pull-right">
+              <a href="{% url 'user_profile:logout_student' %}" class="btn btn-default btn-flat">Sign out</a>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <!-- Control Sidebar Toggle Button -->
+      <!-- <li>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+              </li> -->
+    </ul>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Edit Profile Page
+    <small>{{student_profile.first_name}} {{student_profile.last_name}}</small>
+  </h1>
+
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="box box-solid">
+    <div class="box-header with-border">
+      <h3 class="box-title">Student Update Profile</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <div class="box-group" id="accordion">
+        <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+        <!-- Basic Info -->
+        <div class="panel box box-primary">
+          <div class="box-header with-border">
+            <h4 class="box-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#BasicData">
+                Basic Information
+              </a>
+            </h4>
+          </div>
+          <div id="BasicData" class="panel-collapse collapse in">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="BasicInfo" enctype="multipart/form-data" class="form-horizontal">
+              {% csrf_token %}
+              <input type='hidden' name='csrfmiddlewaretoken' value='{{csrf_token}}'>
+              <div class="box-body">
+                <div tabindex="0" id="BasicInfoSubmission" style="display:none;" class="alert" role="alert">
+                  <div id="BasicInfoSubmissionContent"></div>
+                </div>
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> First Name</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="fname" class="form-control" id="fname"
+                      value="{{student_profile.first_name}}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Last Name</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="lname" class="form-control" id="lname"
+                      value="{{student_profile.last_name}}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="Sap_Id" class="col-sm-2 control-label">Sap_Id</label>
+
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" id="Sap_Id" name="Sap_Id"
+                      value="{{student_profile.Sap_Id}}" disabled>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Mentor Name</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="lname"
+                      value="{{student_profile.mentor.first_name}} {{student_profile.mentor.last_name}}" disabled>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="Department" class="col-sm-2 control-label">Department</label>
+                  <div class="col-sm-8">
+                    <select name="department" id="Department" class="form-control">
+
+                      <option value="None" selected>Select Your Department</option>
+
+                      {% if student_profile.department == "Computer" %}
+                      <option value="Computer" selected>Computer</option>
+                      {% else %}
+                      <option value="Computer" >Computer</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "IT" %}
+                      <option value="IT" selected>IT</option>
+                      {% else %}
+                      <option value="IT" >IT</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "EXTC" %}
+                      <option value="EXTC" selected>EXTC</option>
+                      {% else %}
+                      <option value="EXTC" >EXTC</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "Electronics" %}
+                      <option value="Electronics" selected>Electronics</option>
+                      {% else %}
+                      <option value="Electronics" >Electronics</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "Chemical" %}
+                      <option value="Chemical" selected>Chemical</option>
+                      {% else %}
+                      <option value="Chemical" >Chemical</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "Mechanical" %}
+                      <option value="Mechanical" selected>Mechanical</option>
+                      {% else %}
+                      <option value="Mechanical" >Mechanical</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "Production" %}
+                      <option value="Production" selected>Production</option>
+                      {% else %}
+                      <option value="Production" >Production</option>
+                      {% endif %}
+
+                      {% if student_profile.department == "Data Science" %}
+                      <option value="Data Science" selected>Data Science</option>
+                      {% else %}
+                      <option value="Data Science" >Data Science</option>
+                      {% endif %}
+
+                    </select>
+                  </div>
+                  <!--
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="Department" name="department"
+                      value="{{student_profile.department}}">
+                  </div>
+                -->
+                </div>
+                <div class="form-group">
+                  <label for="Gender" class="col-sm-2 control-label">
+                    Gender
+                  </label>
+                  <div class="col-sm-8">
+                    <label>
+                      <input type="radio" name="gender" class="flat-red" value="Male" {% if "Male" == student_profile.gender %}checked {% endif %}>&nbsp;Male
+                    </label>
+                    <label>
+                      <input type="radio" name="gender" class="flat-red" value="Female" {% if "Female" == student_profile.gender %}checked {% endif %}>&nbsp;Female
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="MobileNO" class="col-sm-2 control-label">Mobile No.</label>
+
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" name="mobileNo" id="MobileNO"
+                      value={{student_profile.mobileNo}}>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="github_id" class="col-sm-2 control-label">Github ID</label>
+
+                  <div class="col-sm-8">
+                    <input type="url" class="form-control" name="github_id" id="github_id"
+                      value="{{student_profile.github_id}}">
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="bio" class="col-sm-2 control-label">Bio</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" name="bio" id="bio" value="{{student_profile.bio}}">
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="year" class="col-sm-2 control-label">
+                    Year
+                  </label>
+                  <div class="col-sm-8">
+                    <label>
+                      <input type="radio" name="year" class="flat-red" value="FE" {% if "FE" == student_profile.year %}checked {% endif %}>&nbsp;FE
+                    </label>
+                    <label>
+                      <input type="radio" name="year" class="flat-red" value="SE" {% if "SE" == student_profile.year %}checked {% endif %}>&nbsp;SE
+                    </label>
+                    <label>
+                      <input type="radio" name="year" class="flat-red" value="TE" {% if "TE" == student_profile.year %}checked {% endif %}>&nbsp;TE
+                    </label>
+                    <label>
+                      <input type="radio" name="year" class="flat-red" value="BE" {% if "BE" == student_profile.year %}checked {% endif %}>&nbsp;BE
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="photo" class="col-sm-2 control-label">Photo</label>
+                  
+                  {% if student_profile.photo %}
+                  <div class="col-sm-8" style="display: flex;">
+                    <p class="col-sm-2"><a href="{{student_profile.photo.url}}">Current Photo</a></p>
+                    <input type="file" class="form-control col-sm-10" name="photo" id="photo" accept="image/*">
+                  </div>
+                  {% else %}
+                  <div class="col-sm-8">
+                    <input type="file" class="form-control" name="photo" id="photo" accept="image/*">
+                  </div>
+                  {% endif %}
+                  <!-- <img src="/media/{{ student_profile.photo }}" alt=""> -->
+                </div>
+                <div class="form-group">
+                  <label for="10thMarks" class="col-sm-2 control-label">10th Marks</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" name="10thMarks" id="10thMarks"
+                      value={{student_profile.tenth_marks}}>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="12thMarks" class="col-sm-2 control-label">12th Or Diploma Marks</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" name="12thMarks" id="12thMarks"
+                      value={{student_profile.twelfth_or_diploma_marks}}>
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button onclick="validate_BasicInfo();" type="button" class="btn btn-info pull-right">Submit</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+        </div>
+        <!-- Academics -->
+        <div class="panel box box-primary">
+          <div class="box-header with-border">
+            <h4 class="box-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#AcadsData">
+                Academics
+              </a>
+            </h4>
+          </div>
+          <div id="AcadsData" class="panel-collapse collapse">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="AcademicInfo" enctype="multipart/form-data" class="form-horizontal">
+              {% csrf_token %}
+              <div class="box-body">
+                <div tabindex=0 id="AcadsSubmission" style="display:none;" class="alert" role="alert">
+
+                  <div id="AcadsSubmissionContent"></div>
+                </div>
+                <div class="form-group">
+                  <label for="sem1_gpa" class="col-sm-2 control-label">Sem 1 GPA</label>
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" id="sem1_gpa" name="sem1_gpa" step="0.01" min="0" max="10" value={{acads.sem1_gpa}}>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="sem2_gpa" class="col-sm-2 control-label">Sem 2 GPA</label>
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" id="sem2_gpa" name="sem2_gpa" step="0.01" min="0" max="10" value={{acads.sem2_gpa}}>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="sem3_gpa" class="col-sm-2 control-label">Sem 3 GPA</label>
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" id="sem3_gpa" name="sem3_gpa" step="0.01" min="0" max="10" value={{acads.sem3_gpa}}>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="sem4_gpa" class="col-sm-2 control-label">Sem 4 GPA</label>
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" id="sem4_gpa" name="sem4_gpa" step="0.01" min="0" max="10" value={{acads.sem4_gpa}}>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="sem5_gpa" class="col-sm-2 control-label">Sem 5 GPA</label>
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" id="sem5_gpa" name="sem5_gpa" step="0.01" min="0" max="10" value={{acads.sem5_gpa}}>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="sem6_gpa" class="col-sm-2 control-label">Sem 6 GPA</label>
+
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" id="sem6_gpa" name="sem6_gpa" step="0.01" min="0" max="10" value={{acads.sem6_gpa}}>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="sem7_gpa" class="col-sm-2 control-label">Sem 7 GPA</label>
+
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" id="sem7_gpa" name="sem7_gpa" step="0.01" min="0" max="10" value={{acads.sem7_gpa}}>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="sem8_gpa" class="col-sm-2 control-label">Sem 8 GPA</label>
+
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" id="sem8_gpa" name="sem8_gpa" step="0.01" min="0" max="10" value={{acads.sem8_gpa}}>
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+
+                <!-- <button type="button" class="btn btn-info pull-right" onClick="submitAcademic();">Submit</button> -->
+                <button onclick="validate_AcademicInfo();" type="button" class="btn btn-info pull-right">Submit</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+        </div>
+        <!-- Skills -->
+        <div class="panel box box-primary">
+          <div class="box-header with-border">
+            <h4 class="box-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#SkillData">
+                Skills
+              </a>
+            </h4>
+          </div>
+          <div id="SkillData" class="panel-collapse collapse ">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="SkillInfo" class="form-horizontal" action="/edit_skill_info/{{student_profile.id}}">
+              {% csrf_token %}
+              <div class="box-body">
+
+                <div id="SkillSubmission" style="display:none;" class="alert" role="alert">
+
+                  <div id="SkillSubmissionContent"></div>
+                </div>
+
+                <div class="form-group">
+                  <label for="skill" class="col-sm-2 control-label">Add Skill</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="skill" class="form-control" id="skill">
+                  </div>
+                </div>
+              </div>
+              <div class="box-footer">
+
+                <button type="button" class="btn btn-info pull-right" onClick="validate_SkillInfo();">Submit</button>
+              </div>
+            </form>
+            <div style="text-align: center;" class="tab-pane" id="Skills">
+                <div class="form-group">
+                    <label class="control-label">Skills:</label>
+                    <p>|&nbsp;&nbsp;{% for skil in skill_list %}{{ skil.skill }}&nbsp;&nbsp;|&nbsp;&nbsp;{% endfor %}</p>
+                </div>
+             </div>
+          </div>
+        </div>
+        <!-- Hackathons -->
+        <div class="panel box box-primary">
+          <div class="box-header with-border">
+            <h4 class="box-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#HackathonData">
+                Hackathons
+              </a>
+            </h4>
+          </div>
+          <div id="HackathonData" class="panel-collapse collapse ">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="HackathonInfo" class="form-horizontal" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="box-body">
+                <div tabindex="0" id="HackathonSubmission" style="display:none;" class="alert" role="alert">
+
+                  <div id="HackathonSubmissionContent"></div>
+                </div>
+                <div class="container">
+                  <div class="box-header with-border">
+                    <h4 class="box-title">
+                      Add Hackathon
+                    </h4>
+                  </div>
+                </div>
+                <br>
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Competition Name</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="HackathonName" class="form-control" id="HackathonName" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label for="date" class="col-sm-2 control-label">Start Date</label>
+                    <div class="col-sm-8">
+                      <input type="date" name="HackathonStartDate" class="form-control" id="HackathonStartDate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="date" class="col-sm-2 control-label">End Date</label>
+                    <div class="col-sm-8">
+                      <input type="date" name="HackathonEndDate" class="form-control" id="HackathonEndDate">
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="description" class="col-sm-2 control-label">Description</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="HackathonDescription" class="form-control" id="HackathonDescription">
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label for="url" class="col-sm-2 control-label">Deployed URL</label>
+                    <div class="col-sm-8">
+                      <input type="url" name="HackathonUrl" class="form-control" id="HackathonUrl">
+                    </div>
+                  </div>
+                <!-- NEW GITHUB URL -->
+                <div class="form-group">
+                  <label for="url" class="col-sm-2 control-label">Github URL</label>
+                  <div class="col-sm-8">
+                    <input type="url" name="GithubURL" class="form-control" id="HackathonGithubUrl">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="number" class="col-sm-2 control-label">Total Number of Hours</label>
+                  <div class="col-sm-8">
+                    <input type="number" name="TotalHours" class="form-control" id="HackathonTotalHours">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="certificate" class="col-sm-2 control-label">Certificate</label>
+                  <div class="col-sm-8">
+                    <input type="file" name="certificate" class="form-control" id="hackathon-certificate">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="image" class="col-sm-2 control-label">Image 1</label>
+                  <div class="col-sm-8">
+                    <input type="file" name="image1" class="form-control" id="hackathon-image1">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="image" class="col-sm-2 control-label">Image 2</label>
+                  <div class="col-sm-8">
+                    <input type="file" name="image2" class="form-control" id="hackathon-image2">
+                  </div>
+                </div>
+              </div>
+
+              <div class="box-footer">
+
+                <button id="addHackathon" type="button" class="btn btn-info pull-right"
+                  onClick="validate_HackathonInfo();">Submit</button>
+              </div>
+            </form>
+            <div class="container">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                    <h3 class="box-title">My Hackathons</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body no-padding">
+            
+                    <div class="table-responsive mailbox-messages">
+                        <table class="table table-hover table-striped">
+                        <tbody>
+                            <thead>
+                            <th class="mailbox-number">Sr. No</th>
+                            <th class="mailbox-name">Competition Name</th>
+                            <th class="mailbox-name">Duration</th>
+                            <th class="mailbox-name">Hackathon Proj. Description</th>
+                            <th class="mailbox-number">No. of Hours</th>
+                            <th class="mailbox-name">Proj. URL</th>
+                            <th class="mailbox-name">Github URL</th>
+                            <th class="mailbox-name">Certificate</th>
+                            <th class="mailbox-name">Images</th>
+                            </thead>
+                            {% for hackathon in hackathon_list %}
+                            <tr>
+                            <td class="mailbox-number">{{ forloop.counter }}</td>
+                            <td class="mailbox-name">{{ hackathon.CompetitionName }}</td>
+                            <td class="mailbox-name">{{ hackathon.StartDate }} - {{ hackathon.EndDate }}</td>
+                            <td class="mailbox-name">{{ hackathon.Desc }}</td>
+                            <td class="mailbox-number">{{ hackathon.total_no_of_hours }}</td>
+                            <td class="mailbox-name"><a target="_blank" href="{{ hackathon.URL }}">Click Here</a></td>
+                            <td class="mailbox-name"><a target="_blank" href="{{ hackathon.Github_url }}">Click Here</a></td>
+                            {% if hackathon.Certificate %}
+                            <td class="mailbox-name"><a target="_blank" href="{{ hackathon.Certificate.url }}">Click Here</a></td>
+                            {% else %}
+                            <td class="mailbox-name">Not Uploaded</td>
+                            {% endif %}
+                            <td class="mailbox-name">
+                                    {% if hackathon.image1 %}
+                                    <a target="_blank" href="{{ hackathon.image1.url }}">Img1</a>
+                                    {% else %}
+                                    Not Uploaded
+                                    {% endif %}
+                                    &nbsp;
+                                    {% if hackathon.image2 %}
+                                    <a target="_blank" href="{{ hackathon.image2.url }}">Img2</a>
+                                    {% else %}
+                                    Not Uploaded
+                                    {% endif %}
+                            </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        </table>
+                        <!-- /.table -->
+                    </div>
+                    <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer no-padding">
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <!-- Projects -->
+        <div class="panel box box-primary">
+          <div class="box-header with-border">
+            <h4 class="box-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#ProjectData">
+                Projects
+              </a>
+            </h4>
+          </div>
+          <div id="ProjectData" class="panel-collapse collapse ">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="ProjectInfo" class="form-horizontal" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="box-body">
+                <div tabindex="0" id="ProjectSubmission" style="display:none;" class="alert" role="alert">
+
+                  <div id="ProjectSubmissionContent"></div>
+                </div>
+                <div class="container">
+                  <div class="box-header with-border">
+                    <h4 class="box-title">
+                      Add Project
+                    </h4>
+                  </div>
+                </div>
+                <br>
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Project Name</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="ProjectName" class="form-control" id="ProjectName">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="ProjectDescription" class="form-control" id="ProjectDescription">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="url" class="col-sm-2 control-label"> URL</label>
+
+                  <div class="col-sm-8">
+                    <input type="url" name="ProjectUrl" class="form-control" id="ProjectUrl">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="url" class="col-sm-2 control-label"> Teacher Guide</label>
+
+                  <div class="col-sm-8">
+                    <select required id="project_teacher" type="text" class="form-control"
+                      placeholder="Name of Your Teacher Guide" name="project_teacher">
+                      <option value="">Select Your Teacher Guide</option>
+                      {% for teacher in project_teachers_list %}
+                      <option value="{{teacher.Sap_Id}}">{{teacher.first_name}} {{teacher.last_name}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="image" class="col-sm-2 control-label"> Image 1</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" name="image1" class="form-control no-border" id="project-image1">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="image" class="col-sm-2 control-label"> Image 2</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" name="image2" class="form-control no-border" id="project-image2">
+                  </div>
+                </div>
+
+                <!--label for="image" class="col-sm-2 control-label"> Image</label-->
+                <!--input type="file" name="pic" accept="image/*" id="image"-->
+              </div>
+              <div class="box-footer">
+
+                <button type="button" class="btn btn-info pull-right" onClick="validate_ProjectInfo();">Submit</button>
+              </div>
+            </form>
+            <div class="container">
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">My Projects</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+        
+                  <div class="table-responsive mailbox-messages">
+                    <table class="table table-hover table-striped">
+                      <tbody>
+                        <thead>
+                          <th class="mailbox-number">Sr. No</th>
+                          <th class="mailbox-name">Project Name</th>
+                          <th class="mailbox-name">Project URL</th>
+                          <th class="mailbox-name">Project Description</th>
+                          <th class="mailbox-name">Under Teacher</th>
+                          <th class="mailbox-name">Images</th>
+                        </thead>
+                        {% for project in project_list %}
+                        <tr>
+                          <td class="mailbox-number">{{ forloop.counter }}</td>
+                          <td class="mailbox-name">{{ project.ProjName }}</td>
+                          <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
+                          <td class="mailbox-name">{{ project.ProjDesc }}</td>
+                          <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
+                          <td class="mailbox-name">
+                            {% if project.image1 %}
+                            <a target="_blank" href="{{ project.image1.url }}">Img1</a>
+                            {% else %}
+                            Not Uploaded
+                            {% endif %}
+                            &nbsp;
+                            {% if project.image2 %}
+                            <a target="_blank" href="{{ project.image2.url }}">Img2</a>
+                            {% else %}
+                            Not Uploaded
+                            {% endif %}
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <!-- /.table -->
+                  </div>
+                  <!-- /.mail-box-messages -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer no-padding">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- Internships -->
+        <div class="panel box box-primary">
+          <div class="box-header with-border">
+            <h4 class="box-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#InternshipData">
+                Internships
+              </a>
+            </h4>
+          </div>
+          <div id="InternshipData" class="panel-collapse collapse ">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="InternshipInfo" class="form-horizontal" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="box-body">
+                <div tabindex="0" id="InternshipSubmission" style="display:none;" class="alert alert-success" role="alert">
+
+                  <div id="InternshipSubmissionContent"></div>
+                </div>
+                <div class="container">
+                  <div class="box-header with-border">
+                    <h4 class="box-title">
+                      Add Internship
+                    </h4>
+                  </div>
+                </div>
+                <br>
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Company Name</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="InternshipName" class="form-control" id="InternshipName">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="InternshipDescription" class="form-control" id="InternshipDescription">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="stipend" class="col-sm-2 control-label">
+                    Stipend
+                  </label>
+                  <div class="col-sm-8">
+                    <label>
+                      <input type="radio" name="stipend" class="flat-red" value="Paid">&nbsp;Paid
+                    </label>
+                    <label>
+                      <input type="radio" name="stipend" class="flat-red" value="Unpaid">&nbsp;Unpaid
+                    </label>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="position" class="col-sm-2 control-label"> Position</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="InternshipPosition" class="form-control" id="InternshipPosition">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="location" class="col-sm-2 control-label"> Location</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="InternshipLocation" class="form-control" id="InternshipLocation">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="dateFrom" class="col-sm-2 control-label"> From</label>
+
+                  <div class="col-sm-8">
+                    <input type="date" name="InternshipFrom" class="form-control" id="InternshipFrom">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="dateTo" class="col-sm-2 control-label"> To</label>
+
+                  <div class="col-sm-8">
+                    <input type="date" name="InternshipTo" class="form-control" id="InternshipTo">
+                  </div>
+                </div>
+
+                <!-- NEW STUFF -->
+                <div class="form-group">
+                  <label for="dateTo" class="col-sm-2 control-label"> Total Number of Hours</label>
+
+                  <div class="col-sm-8">
+                    <input type="number" name="TotalHours" class="form-control" id="TotalHours">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="how" class="col-sm-2 control-label">
+                    How did you get this Internship
+                  </label>
+                  <div class="col-sm-8">
+                    <label>
+                      <input type="radio" name="how" class="flat-red" value="In House">&nbsp;In House
+                    </label>
+                    <label>
+                      <input type="radio" name="how" class="flat-red" value="Out House">&nbsp;Out House
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="certificate" class="col-sm-2 control-label"> Offer Letter</label>
+                  <div class="col-sm-8">
+                    <input type="file" name="offer_letter" class="form-control" id="internship_offer_letter">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="certificate" class="col-sm-2 control-label"> Certificate</label>
+                  <div class="col-sm-8">
+                    <input type="file" name="certificate" class="form-control" id="internship-certificate">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="image" class="col-sm-2 control-label"> Mentor Report</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" name="evaluation_report_mentor" class="form-control"
+                      id="internship-evaluation_report_mentor">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="image" class="col-sm-2 control-label"> Supervisor Report</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" name="evaluation_report_supervisor" class="form-control"
+                      id="internship-evaluation_report_supervisor">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="image" class="col-sm-2 control-label"> Progress Report One</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" name="evaluation_report_self_one" class="form-control"
+                      id="internship-evaluation_report_self">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="image" class="col-sm-2 control-label"> Progress Report Two</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" name="evaluation_report_self_three" class="form-control"
+                      id="internship-evaluation_report_self">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="image" class="col-sm-2 control-label"> Progress Report Three<span style="color:rgb(148, 7, 7)">*</span></label>
+
+                  <div class="col-sm-8">
+                    <input type="file" name="evaluation_report_self_two" class="form-control"
+                      id="internship-evaluation_report_self" required>
+                  </div>
+                </div>
+
+              </div>
+
+
+
+              <div class="box-footer">
+
+                <button type="button" class="btn btn-info pull-right" onClick="validate_InternshipInfo();">Submit</button>
+              </div>
+
+            </form>
+            <div class="container">
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">My Internships</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+        
+                  <div class="table-responsive mailbox-messages">
+                    <table class="table table-hover table-striped">
+                      <tbody>
+                        <thead>
+                          <th class="mailbox-number">Sr. No</th>
+                          <th class="mailbox-name">Company</th>
+                          <th class="mailbox-name">Position</th>
+                          <th class="mailbox-name">Duration</th>
+                          <th class="mailbox-number">Total Hours</th>
+                          <th class="mailbox-name">Stipend</th>
+                          <th class="mailbox-name">Offer Letter</th>
+                          <th class="mailbox-name">Certificate</th>
+                          <th class="mailbox-name">Evaluation Report (Mentor)</th>
+                          <th class="mailbox-name">Evaluation Report (Supervisor)</th>
+                          <th class="mailbox-name">Evaluation Report (Self)</th>
+                        </thead>
+                        {% for internship in internship_list %}
+                        <tr>
+                          <td class="mailbox-number">{{ forloop.counter }}</td>
+                          <td class="mailbox-name">{{ internship.company }}</td>
+                          <td class="mailbox-name">{{ internship.Position }}</td>
+                          <td class="mailbox-name">{{ internship.From }} - {{ internship.To }}</td>
+                          <td class="mailbox-number">{{ internship.total_hours }}</td>
+                          <td class="mailbox-name">{{ internship.stipend }}</td>
+                          {% if internship.offer_letter %}
+                          <td class="mailbox-name"><a target="_blank" href="{{internship.offer_letter.url}}">Offer Letter
+                            URL</a></td>
+                          {% else %}
+                          <td class="mailbox-name">Not Uploaded</td>
+                          {% endif %}
+                          {% if internship.Certificate %}                         
+                          <td class="mailbox-name"><a target="_blank" href="{{internship.Certificate.url}}">Certificate</a>
+                          </td>
+                          {% else %}
+                          <td class="mailbox-name">Not Uploaded</td>
+                          {% endif %}
+                          {% if internship.evaluation_report_mentor %}
+                          <td class="mailbox-name"><a target="_blank" href="{{internship.evaluation_report_mentor.url}}">Mentor
+                            Evaluation</a></td>
+                          {% else %}
+                          <td class="mailbox-name">Not Uploaded</td>
+                          {% endif %}
+                          {% if internship.evaluation_report_supervisor %}
+                          <td class="mailbox-name"><a target="_blank"
+                            href="{{internship.evaluation_report_supervisor.url}}">Supervisor Evaluation</a></td>
+                          {% else %}
+                          <td class="mailbox-name">Not Uploaded</td>
+                          
+                          {% endif %}
+                          <td class="mailbox-name">
+                            {% if internship.evaluation_report_self_one %}
+                            <a target="_blank" href="{{internship.evaluation_report_self_one.url}}">Self 1</a>
+                            {% else %}
+                            Not Uploaded
+                            {% endif %}
+                            &nbsp;
+                            {% if internship.evaluation_report_self_two %}
+                            <a target="_blank" href="{{internship.evaluation_report_self_two.url}}">Self 2</a>
+                            {% else %}
+                            Not Uploaded
+                            {% endif %}
+                            &nbsp;
+                            {% if internship.evaluation_report_self_three %}
+                            <a target="_blank" href="{{internship.evaluation_report_self_three.url}}">Self 3</a>
+                            {% else %}
+                            Not Uploaded
+                            {% endif %}
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <!-- /.table -->
+                  </div>
+                  <!-- /.mail-box-messages -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer no-padding">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Committees -->
+        <div class="panel box box-primary">
+          <div class="box-header with-border">
+            <h4 class="box-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#CommitteeData">
+                Committees
+              </a>
+            </h4>
+          </div>
+          <div id="CommitteeData" class="panel-collapse collapse ">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="CommitteeInfo" class="form-horizontal" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="box-body">
+                <div tabindex="0" id="CommitteeSubmission" style="display:none;" class="alert" role="alert">
+
+                  <div id="CommitteeSubmissionContent"></div>
+                </div>
+                <div class="container">
+                  <div class="box-header with-border">
+                    <h4 class="box-title">
+                      Add Committee
+                    </h4>
+                  </div>
+                </div>
+                <br>
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Organisation Name</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="CommitteeName" class="form-control" id="CommitteeName">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="CommitteeDescription" class="form-control" id="CommitteeDescription">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="position" class="col-sm-2 control-label"> Position</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="CommitteePosition" class="form-control" id="CommitteePosition">
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="dateFrom" class="col-sm-2 control-label"> From</label>
+
+                  <div class="col-sm-8">
+                    <input type="date" name="CommitteeFrom" class="form-control" id="CommitteeFrom">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="dateTo" class="col-sm-2 control-label"> To</label>
+
+                  <div class="col-sm-8">
+                    <input type="date" name="CommitteeTo" class="form-control" id="CommitteeTo">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="certificate" class="col-sm-2 control-label"> Certificate</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" name="certificate" class="form-control" id="committee-certificate">
+                  </div>
+                </div>
+
+              </div>
+              <div class="box-footer">
+
+                <button type="button" class="btn btn-info pull-right" onClick="validate_CommitteeInfo();">Submit</button>
+              </div>
+
+            </form>
+            <div class="container">
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">My Committees</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+        
+                  <div class="table-responsive mailbox-messages">
+                    <table class="table table-hover table-striped">
+                      <tbody>
+                        <thead>
+                          <th class="mailbox-number">Sr. No</th>
+                          <th class="mailbox-name">Committee</th>
+                          <th class="mailbox-name">Position</th>
+                          <th class="mailbox-name">Duration</th>
+                          <th class="mailbox-number">Description</th>
+                          <th class="mailbox-name">Certificate</th>
+                        </thead>
+                        {% for committee in committee_list %}
+                        <tr>
+                          <td class="mailbox-number">{{ forloop.counter }}</td>
+                          <td class="mailbox-name">{{ committee.OrganisationName }}</td>
+                          <td class="mailbox-name">{{ committee.YourPosition }}</td>
+                          <td class="mailbox-name">{{ committee.dateFrom }} - {{ committee.dateTo }}</td>
+                          <td class="mailbox-name">{{ committee.Desc }}</td>
+                          {% if committee.Certificate %}
+                          <td class="mailbox-name"><a target="_blank" href="{{committee.Certificate.url}}">Certificate URL</a>
+                          </td>
+                          {% else %}
+                          <td class="mailbox-name">Not Uploaded</td>
+                          {% endif %}
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <!-- /.table -->
+                  </div>
+                  <!-- /.mail-box-messages -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer no-padding">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- BE Projects -->
+        <div class="panel box box-primary">
+          <div class="box-header with-border">
+            <h4 class="box-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#BeProjectData">
+                BE Projects
+              </a>
+            </h4>
+          </div>
+          <div id="BeProjectData" class="panel-collapse collapse ">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="BeProjectInfo" class="form-horizontal" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="box-body">
+                <div tabindex="0" id="BEProjectSubmission" style="display:none;" class="alert alert-success" role="alert">
+
+                  <div id="BEProjectSubmissionContent"></div>
+                </div>
+                <div class="container">
+                  <div class="box-header with-border">
+                    <h4 class="box-title">
+                      Add BE Project
+                    </h4>
+                  </div>
+                </div>
+                <br>
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Project Name</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="BEProjectName" class="form-control" id="BEProjectName">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="BEProjectDescription" class="form-control" id="BEProjectDescription">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="url" class="col-sm-2 control-label"> URL</label>
+
+                  <div class="col-sm-8">
+                    <input type="url" name="BEProjectUrl" class="form-control" id="BEProjectUrl">
+                  </div>
+                </div>
+                <!-- NEW STUFF -->
+                <div class="form-group">
+                  <label for="image" class="col-sm-2 control-label"> Project Report</label>
+  
+                  <div class="col-sm-8">
+                    <input type="file" name="project_report" class="form-control" id="project_report">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="url" class="col-sm-2 control-label"> Teacher Guide</label>
+
+                  <div class="col-sm-8">
+                    <select required id="teacher" type="text" class="form-control"
+                      placeholder="Name of Your Teacher Guide" name="teacher">
+                      <option value="">Select Your Teacher Guide</option>
+                      {% for teacher in teachers_list %}
+                      <option value="{{teacher.Sap_Id}}">{{teacher.first_name}} {{teacher.last_name}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="image" class="col-sm-2 control-label"> Image 1</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" name="image1" class="form-control" id="beproject-image1">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="image" class="col-sm-2 control-label"> Image 2</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" name="image2" class="form-control" id="beproject-image2">
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="box-footer">
+
+                <button type="button" class="btn btn-info pull-right" onClick="validate_BEProjectInfo();">Submit</button>
+              </div>
+
+            </form>
+            <div class="container">
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">My BE Projects</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+        
+                  <div class="table-responsive mailbox-messages">
+                    <table class="table table-hover table-striped">
+                      <tbody>
+                        <thead>
+                          <th class="mailbox-number">Sr. No</th>
+                          <th class="mailbox-name">Project Name</th>
+                          <th class="mailbox-name">Project URL</th>
+                          <th class="mailbox-name">Project Description</th>
+                          <th class="mailbox-name">Under Teacher</th>
+                          <th class="mailbox-name">Project Report</th>
+                          <th class="mailbox-name">Images</th>
+                        </thead>
+                        {% for project in beproject %}
+                        <tr>
+                          <td class="mailbox-number">{{ forloop.counter }}</td>
+                          <td class="mailbox-name">{{ project.ProjName }}</td>
+                          <td class="mailbox-name"><a href="{{ project.ProjURL }}">{{ project.ProjURL }}</a></td>
+                          <td class="mailbox-name">{{ project.ProjDesc }}</td>
+                          <td class="mailbox-name">{{ project.projectUnderTeacher.Sap_Id }} - {{ project.projectUnderTeacher.first_name }} {{ project.projectUnderTeacher.last_name }}</td>
+                          {% if project.project_report %}
+                          <td class="mailbox-name"><a target="_blank" href="{{project.project_report.url}}">Report</a>
+                          </td>
+                          {% else %}
+                          <td class="mailbox-name">Not Uploaded</td>
+                          {% endif %}
+                          <td class="mailbox-name">
+                            {% if project.image1 %}
+                            <a target="_blank" href="{{ project.image1.url }}">Img1</a>
+                            {% else %}
+                            Not Uploaded
+                            {% endif %}
+                            &nbsp;
+                            {% if project.image2 %}
+                            <a target="_blank" href="{{ project.image2.url }}">Img2</a>
+                            {% else %}
+                            Not Uploaded
+                            {% endif %}
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <!-- /.table -->
+                  </div>
+                  <!-- /.mail-box-messages -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer no-padding">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Research Work -->
+        <div class="panel box box-primary">
+          <div class="box-header with-border">
+            <h4 class="box-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#ResearchPaperData">
+                Research Work
+              </a>
+            </h4>
+          </div>
+          <div id="ResearchPaperData" class="panel-collapse collapse ">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="ResearchPaperInfo" class="form-horizontal" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="box-body">
+                <div tabindex="0" id="ResearchPaperSubmission" style="display:none;" class="alert alert-success" role="alert">
+
+                  <div id="ResearchPaperSubmissionContent"></div>
+                </div>
+                <div class="container">
+                  <div class="box-header with-border">
+                    <h4 class="box-title">
+                      Add Research Work
+                    </h4>
+                  </div>
+                </div>
+                <br>
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Title</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="ResearchPaperName" class="form-control" id="ResearchPaperName">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="description" class="col-sm-2 control-label"> ISBN</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="isbn" class="form-control" id="isbn">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="description" class="col-sm-2 control-label"> ISSN</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="issn" class="form-control" id="issn">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="type" class="col-sm-2 control-label">
+                    Publication Type
+                  </label>
+                  <div class="col-sm-8">
+                    <label>
+                      <input type="radio" name="type" class="flat-red" value="Conference">&nbsp;Conference
+                    </label>
+                    <label>
+                      <input type="radio" name="type" class="flat-red" value="Journal">&nbsp;Journal
+                    </label>
+                    <label>
+                      <input type="radio" name="type" class="flat-red" value="Chapter">&nbsp;Chapter
+                    </label>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Publication</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="ResearchPaperPublication" class="form-control"
+                      id="ResearchPaperPublication">
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Date of Publication</label>
+
+                  <div class="col-sm-8">
+                    <input type="date" name="ResearchPaperDate" class="form-control" id="ResearchPaperDate">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="description" class="col-sm-2 control-label"> Description</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="ResearchPaperDescription" class="form-control"
+                      id="ResearchPaperDescription">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="url" class="col-sm-2 control-label"> Link to Paper</label>
+
+                  <div class="col-sm-8">
+                    <input type="url" name="ResearchPaperUrl" class="form-control" id="ResearchPaperUrl">
+                  </div>
+                </div>
+
+
+                <!-- NEW STUFF -->
+                <div class="form-group">
+                  <label for="text" class="col-sm-2 control-label"> Paper ID</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="paperId" class="form-control" id="paperId">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="file" class="col-sm-2 control-label"> Proof of Submission</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" name="proof" class="form-control" id="researchpaper-proof">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="text" class="col-sm-2 control-label"> Research Mentor</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="project_mentor" class="form-control" id="project_mentor">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="text" class="col-sm-2 control-label"> Duration of Project</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="duration" class="form-control" id="duration">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="number" class="col-sm-2 control-label"> Total Number of Hours</label>
+
+                  <div class="col-sm-8">
+                    <input type="number" name="total_hours" class="form-control" id="total_hours">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="research_impact_factor" class="col-sm-2 control-label"> Research Impact Factor</label>
+
+                  <div class="col-sm-8">
+                    <input type="number" step="0.01" name="research_impact_factor" class="form-control" id="research_impact_factor">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="indexing" class="col-sm-2 control-label"> Indexing</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="indexing" class="form-control" id="indexing">
+                  </div>
+                </div>
+
+              </div>
+              <div class="box-footer">
+
+                <button type="button" class="btn btn-info pull-right" onClick="validate_ResearchInfo();">Submit</button>
+
+              </div>
+            </form>
+            <div class="container">
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">My Research</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+        
+                  <div class="table-responsive mailbox-messages">
+                    <table class="table table-hover table-striped">
+                      <tbody>
+                        <thead>
+                          <th class="mailbox-number">Sr. No</th>
+                          <th class="mailbox-name">Title</th>
+                          <th class="mailbox-name">Publication</th>
+                          <th class="mailbox-name">Publication Date</th>
+                          <th class="mailbox-name">Description</th>
+                          <th class="mailbox-name">Link to Paper</th>
+                          <th class="mailbox-name">Paper ID</th>
+                          <th class="mailbox-name">ISBN</th>
+                          <th class="mailbox-name">ISSN</th>
+                          <th class="mailbox-name">Proof of Submission</th>
+                          <th class="mailbox-name">Project Mentor</th>
+                          <th class="mailbox-name">Type</th>
+                          <th class="mailbox-name">Duration</th>
+                          <th class="mailbox-name">Total Hours (Approx)</th>
+                          <th class="mailbox-name">Research Impact Factor</th>
+                          <th class="mailbox-name">Indexing</th>
+                        </thead>
+                        {% for research_paper in researchpaper_list %}
+                        <tr>
+                          <td class="mailbox-number">{{ forloop.counter }}</td>
+                          <td class="mailbox-name">{{ research_paper.Title }}</td>
+                          <td class="mailbox-name">{{ research_paper.Publication }}</td>
+                          <td class="mailbox-name">{{ research_paper.DateOfPublication }}</td>
+                          <td class="mailbox-name">{{ research_paper.Desc }}</td>
+                          <td class="mailbox-name"><a target="_blank" href="{{ research_paper.LinkToPaper }}">{{ research_paper.LinkToPaper }}</a></td>
+                          <td class="mailbox-name">{{ research_paper.Title }}</td>
+                          <td class="mailbox-name">{{ research_paper.isbn }}</td>
+                          <td class="mailbox-name">{{ research_paper.issn }}</td>
+                          {% if research_paper.proof_of_submission %}
+                          <td class="mailbox-name"><a target="_blank" href="{{ research_paper.proof_of_submission.url }}">Proof</a>
+                          </td>
+                          {% else %}
+                          <td class="mailbox-name">Not Uploaded</td>
+                          {% endif %}
+                          <td class="mailbox-name">{{ research_paper.project_mentor }}</td>
+                          <td class="mailbox-name">{{ research_paper.type }}</td>
+                          <td class="mailbox-name">{{ research_paper.duration_of_project }}</td>
+                          <td class="mailbox-name">{{ research_paper.total_hours }}</td>
+                          <td class="mailbox-name">{{ research_paper.research_impact_factor }}</td>
+                          <td class="mailbox-name">{{ research_paper.indexing }}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <!-- /.table -->
+                  </div>
+                  <!-- /.mail-box-messages -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer no-padding">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Extra Curricular -->
+        <div class="panel box box-primary">
+          <div class="box-header with-border">
+            <h4 class="box-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#ExtraCurricularData">
+                Extra Curricular
+              </a>
+            </h4>
+          </div>
+          <div id="ExtraCurricularData" class="panel-collapse collapse ">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="ExtraCurricularInfo" class="form-horizontal" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="box-body">
+                <div tabindex="0" id="ExtraCurricularSubmission" style="display:none;" class="alert alert-success" role="alert">
+
+                  <div id="ExtraCurricularSubmissionContent"></div>
+                </div>
+                <div class="container">
+                  <div class="box-header with-border">
+                    <h4 class="box-title">
+                      Add Extra Curricular
+                    </h4>
+                  </div>
+                </div>
+                <br>
+
+                <div class="form-group">
+                  <label for="extra_curricular_type" class="col-sm-2 control-label"> Type</label>
+
+                  <div class="col-sm-8">
+                    <select name="extra_curricular_type" id="extra_curricular_type">
+                      <option value="Coursera"> Coursera </option>
+                      <option value="NPTEL"> NPTEL </option>
+                      <option value="Sports"> Sports </option>
+                      <option value="Others"> Others </option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Name</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="ExtraName" class="form-control" id="ExtraName">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Description</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="ExtraDescription" class="form-control" id="ExtraDescription">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Date</label>
+
+                  <div class="col-sm-8">
+                    <input type="date" name="ExtraDate" class="form-control" id="ExtraDate">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="description" class="col-sm-2 control-label"> Achievements</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="ExtraAchievements" class="form-control" id="ExtraAchievements">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="certificate" class="col-sm-2 control-label"> Certificate</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" name="certificate" class="form-control" id="extracurricular-certificate">
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="box-footer">
+
+                <button type="button" class="btn btn-info pull-right" onClick="validate_ExtraCurricularInfo();">Submit</button>
+
+              </div>
+            </form>
+            <div class="container">
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">My Extra Curricular</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+        
+                  <div class="table-responsive mailbox-messages">
+                    <table class="table table-hover table-striped">
+                      <tbody>
+                        <thead>
+                          <th class="mailbox-number">Sr. No</th>
+                          <th class="mailbox-name">Type</th>
+                          <th class="mailbox-name">Name</th>
+                          <th class="mailbox-name">Description</th>
+                          <th class="mailbox-name">Achievements</th>
+                          <th class="mailbox-name">Date</th>
+                          <th class="mailbox-name">Certificate</th>
+                        </thead>
+                        {% for e in extra_curricular %}
+                        <tr>
+                          <td class="mailbox-number">{{ forloop.counter }}</td>
+                          <td class="mailbox-name">{{ e.extra_curricular_type }}</td>
+                          <td class="mailbox-name">{{ e.name }}</td>
+                          <td class="mailbox-name">{{ e.desc }}</td>
+                          <td class="mailbox-name">{{ e.achievements }}</td>
+                          <td class="mailbox-name">{{ e.date }}</td>
+                          {% if e.Certificate %}
+                          <td class="mailbox-name"><a target="_blank" href="{{e.Certificate.url}}">Certificate</a>
+                          </td>
+                          {% else %}
+                          <td class="mailbox-name">Not Uploaded</td>
+                          {% endif %}
+                          
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <!-- /.table -->
+                  </div>
+                  <!-- /.mail-box-messages -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer no-padding">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Competitive Exams -->
+        <div class="panel box box-primary">
+          <div class="box-header with-border">
+            <h4 class="box-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#CompetitiveExams">
+                Competitive Exams
+              </a>
+            </h4>
+          </div>
+          <div id="CompetitiveExams" class="panel-collapse collapse ">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="CompetitiveExamsInfo" class="form-horizontal" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="box-body">
+                <div tabindex="0" id="CompetitiveExamsSubmission" style="display:none;" class="alert" role="alert">
+
+                  <div id="CompetitiveExamsSubmissionContent"></div>
+                </div>
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> GRE Score</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="gre_score" class="form-control" id="gre_score" value="{{competitive_exam.gre_score}}">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> GRE Registraion Number</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="gre_registration_number" class="form-control" id="gre_registration_number"
+                      value="{{competitive_exam.gre_registration_number}}">
+                  </div>
+                </div>
+
+                
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> GRE Proof</label>
+                  {% if competitive_exam.gre_proof %}
+                  <div class="col-sm-8" style="display: flex;">
+                    <p class="col-sm-2"><a target="_blank" href="{{competitive_exam.gre_proof.url}}">Current Proof</a></p>
+                    <input type="file" name="gre_proof" class="form-control col-sm-10" id="gre_proof">
+                  </div>
+                  {% else %}
+                  <div class="col-sm-8">
+                    <input type="file" name="gre_proof" class="form-control" id="gre_proof">
+                  </div>
+                  {% endif %}
+                </div>
+                
+                <hr>
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> TOEFL score</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="toefl_score" class="form-control" id="toefl_score"
+                      value="{{competitive_exam.toefl_score}}">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> TOEFL Registraion Number</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="toefl_registration_number" class="form-control" id="toefl_registration_number"
+                      value="{{competitive_exam.toefl_registration_number}}">
+                  </div>
+                </div>
+
+                
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> TOEFL Proof</label>
+                  {% if competitive_exam.toefl_proof %}
+                  <div class="col-sm-8" style="display: flex;">
+                    <p class="col-sm-2"><a target="_blank" href="{{competitive_exam.toefl_proof.url}}">Current Proof</a></p>
+                    <input type="file" name="toefl_proof" class="form-control col-sm-10" id="toefl_proof">
+                  </div>
+                  {% else %}
+                  <div class="col-sm-8">
+                    <input type="file" name="toefl_proof" class="form-control" id="toefl_proof">
+                  </div>
+                  {% endif %}
+                </div>
+
+                <hr>
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> GMAT score</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="gmat_score" class="form-control" id="gmat_score"
+                      value="{{competitive_exam.gmat_score}}">
+                  </div>
+                </div>
+                <div id="CompetitiveExamsSubmissionContent"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="name" class="col-sm-2 control-label"> GMAT Registraion Number</label>
+
+                <div class="col-sm-8">
+                  <input type="text" name="gmat_registration_number" class="form-control" id="gmat_registration_number"
+                    value="{{competitive_exam.gmat_registration_number}}">
+                </div>
+              </div>
+
+              
+              <div class="form-group">
+                <label for="name" class="col-sm-2 control-label"> GMAT Proof</label>
+                {% if competitive_exam.gmat_proof %}
+                  <div class="col-sm-8" style="display: flex;">
+                    <p class="col-sm-2"><a target="_blank" href="{{competitive_exam.gmat_proof.url}}">Current Proof</a></p>
+                    <input type="file" name="gmat_proof" class="form-control col-sm-10" id="gmat_proof">
+                  </div>
+                  {% else %}
+                  <div class="col-sm-8">
+                    <input type="file" name="gmat_proof" class="form-control" id="gmat_proof">
+                  </div>
+                  {% endif %}
+              </div>
+
+              <hr>
+
+              <div class="form-group">
+                <label for="name" class="col-sm-2 control-label"> CAT Score</label>
+
+                <div class="col-sm-8">
+                  <input type="text" name="cat_score" class="form-control" id="cat_score"
+                    value="{{competitive_exam.cat_score}}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="name" class="col-sm-2 control-label"> CAT Registraion Number</label>
+
+                <div class="col-sm-8">
+                  <input type="text" name="cat_registration_number" class="form-control" id="cat_registration_number"
+                    value="{{competitive_exam.cat_registration_number}}">
+                </div>
+              </div>
+
+              
+              <div class="form-group">
+                <label for="name" class="col-sm-2 control-label"> CAT Proof</label>
+                {% if competitive_exam.cat_proof %}
+                  <div class="col-sm-8" style="display: flex;">
+                    <p class="col-sm-2"><a target="_blank" href="{{competitive_exam.cat_proof.url}}">Current Proof</a></p>
+                    <input type="file" name="cat_proof" class="form-control col-sm-10" id="cat_proof">
+                  </div>
+                  {% else %}
+                  <div class="col-sm-8">
+                    <input type="file" name="cat_proof" class="form-control" id="cat_proof">
+                  </div>
+                  {% endif %}
+              </div>
+              <hr>
+
+              <div class="form-group">
+                <label for="name" class="col-sm-2 control-label"> GATE score</label>
+
+                <div class="col-sm-8">
+                  <input type="text" name="gate_score" class="form-control" id="gate_score"
+                    value="{{competitive_exam.gate_score}}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="name" class="col-sm-2 control-label"> GATE Registraion Number</label>
+
+                <div class="col-sm-8">
+                  <input type="text" name="gate_registration_number" class="form-control" id="gate_registration_number"
+                    value="{{competitive_exam.gate_registration_number}}">
+                </div>
+              </div>
+
+              
+              <div class="form-group">
+                <label for="name" class="col-sm-2 control-label"> GATE Proof</label>
+                {% if competitive_exam.gate_proof %}
+                  <div class="col-sm-8" style="display: flex;">
+                    <p class="col-sm-2"><a target="_blank" href="{{competitive_exam.gate_proof.url}}">Current Proof</a></p>
+                    <input type="file" name="gate_proof" class="form-control col-sm-10" id="gate_proof">
+                  </div>
+                  {% else %}
+                  <div class="col-sm-8">
+                    <input type="file" name="gate_proof" class="form-control" id="gate_proof">
+                  </div>
+                  {% endif %}
+              </div>
+
+              <!--
+              <div class="form-group">
+                <label for="name" class="col-sm-2 control-label"> MHCET score</label>
+
+                <div class="col-sm-8">
+                  <input type="text" name="mhcet_score" class="form-control" id="mhcet_score"
+                    value="{{competitive_exam.mhcet_score}}">
+                </div>
+              </div>
+            -->
+
+
+
+              <div class="box-footer">
+
+                <button type="button" class="btn btn-info pull-right" onClick="validate_CompetitiveExamsInfo();">Submit</button>
+
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- Admit -->
+        <div class="panel box box-primary">
+          <div class="box-header with-border">
+            <h4 class="box-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#AdmitData">
+                Admit
+              </a>
+            </h4>
+          </div>
+          <div id="AdmitData" class="panel-collapse collapse ">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="AdmitInfo" class="form-horizontal" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="box-body">
+                <div tabindex="0" id="AdmitSubmission" style="display:none;" class="alert alert-success" role="alert">
+
+                  <div id="AdmitSubmissionContent"></div>
+                </div>
+                <div class="container">
+                  <div class="box-header with-border">
+                    <h4 class="box-title">
+                      Add Admit
+                    </h4>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> College</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="college_name" class="form-control" id="college_name">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Field</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="masters_field" class="form-control" id="masters_field">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Location</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="college_location" class="form-control" id="college_location">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Selected</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="selected" class="form-control" id="selected">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label"> Admit Proof (If Selected)</label>
+
+                  <div class="col-sm-8">
+                    <input type="file" name="admit_proof" class="form-control" id="admit_proof">
+                  </div>
+                </div>
+
+              </div>
+              <div class="box-footer">
+
+                <button type="button" class="btn btn-info pull-right" onClick="validate_AdmitInfo();">Submit</button>
+
+              </div>
+            </form>
+            <div class="container">
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">My Masters Admit</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+        
+                  <div class="table-responsive mailbox-messages">
+                    <table class="table table-hover table-striped">
+                      <tbody>
+                        <thead>
+                          <th class="mailbox-number">Sr. No</th>
+                          <th class="mailbox-name">College Name</th>
+                          <th class="mailbox-name">Masters Field</th>
+                          <th class="mailbox-name">College Location</th>
+                          <th class="mailbox-name">Selected</th>
+                          <th class="mailbox-name">Admit Proof</th>
+                        </thead>
+                        {% for project in admit %}
+                        <tr>
+                          <td class="mailbox-number">{{ forloop.counter }}</td>
+                          <td class="mailbox-name">{{project.college_name}}</td>
+                          <td class="mailbox-name">{{ project.masters_field }}</td>
+                          <td class="mailbox-name">{{ project.college_location }}</td>
+                          <td class="mailbox-name">{{ project.selected }}</td>
+                          {% if project.admit_proof %}
+                          <td class="mailbox-name"><a target="_blank" href="{{project.admit_proof.url}}">Admit Proof</a>
+                          </td>
+                          {% else %}
+                          <td class="mailbox-name">Not Uploaded</td>
+                          {% endif %}
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <!-- /.table -->
+                  </div>
+                  <!-- /.mail-box-messages -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer no-padding">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Placement -->
+        <div class="panel box box-primary">
+          <div class="box-header with-border">
+            <h4 class="box-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#PlacementData">
+                Placement
+              </a>
+            </h4>
+          </div>
+          <div id="PlacementData" class="panel-collapse collapse ">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="PlacementInfo" class="form-horizontal" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="box-body">
+                <div tabindex="0" id="PlacementSubmission" style="display:none;" class="alert" role="alert">
+
+                  <div id="PlacementSubmissionContent"></div>
+                </div>
+                <div class="container">
+                  <div class="box-header with-border">
+                    <h4 class="box-title">
+                      Add Placement
+                    </h4>
+                  </div>
+                </div>
+                <br>
+                <div class="form-group">
+                  <label for="company_name" class="col-sm-2 control-label"> Company Name</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="company_name" class="form-control" id="company_name">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="offer_letter" class="col-sm-2 control-label"> Offer Letter </label>
+                  <div class="col-sm-8">
+                    <input type="file" name="offer_letter" class="form-control" id="offer_letter">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="company_name" class="col-sm-2 control-label">CTC</label>
+                  <div class="col-sm-8">
+                    <input type="number" name="ctc" class="form-control" id="ctc">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="company_name" class="col-sm-2 control-label">Company Address</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="company_address" class="form-control" id="company_address">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="company_name" class="col-sm-2 control-label">Company Phone Number</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="company_phone" class="form-control" id="company_phone">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="company_name" class="col-sm-2 control-label">Designation</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="designation" class="form-control" id="designation">
+                  </div>
+                </div>
+
+              </div>
+              <div class="box-footer">
+
+                <button type="button" class="btn btn-info pull-right" onClick="validate_PlacementInfo();">Submit</button>
+
+              </div>
+            </form>
+            <div class="container">
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">My Placements</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+        
+                  <div class="table-responsive mailbox-messages">
+                    <table class="table table-hover table-striped">
+                      <tbody>
+                        <thead>
+                          <th class="mailbox-number">Sr. No</th>
+                          <th class="mailbox-name">Company Name</th>
+                          <th class="mailbox-name">Offer Letter</th>
+                          <th class="mailbox-name">CTC</th>
+                          <th class="mailbox-name">Company Address</th>
+                          <th class="mailbox-name">Company Phone No.</th>
+                          <th class="mailbox-name">Designation</th>
+                        </thead>
+                        {% for project in placement %}
+                        <tr>
+                          <td class="mailbox-number">{{ forloop.counter }}</td>
+                          <td class="mailbox-name">{{project.company_name}}</td>
+                          {% if project.offer_letter %}
+                          <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter.url}}">Offer Letter</a>
+                          </td>
+                          {% else %}
+                          <td class="mailbox-name">Not Uploaded</td>
+                          {% endif %}
+                          <td class="mailbox-name">{{project.ctc}}</td>
+                          <td class="mailbox-name">{{project.company_address}}</td>
+                          <td class="mailbox-name">{{project.company_phone_number}}</td>
+                          <td class="mailbox-name">{{project.designation}}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <!-- /.table -->
+                  </div>
+                  <!-- /.mail-box-messages -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer no-padding">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.box -->
+
+</section>
+<!-- /.content -->
+{% endblock %}
+<!-- ./wrapper -->
+{% block js %}
+<!-- iCheck for checkboxes and radio inputs -->
+<script src="{% static " /plugins/iCheck/icheck.min.js" %}"></script>
+<script src="{% static " /csrf.js" %}"></script>
+<script>
+  $(document).ready(function () {
+    $("input[name$='inlineRadioOptions']").click(function () {
+      var test = $(this).val();
+      $("div[class*='sem']").hide();
+      $("div." + test).show();
+    });
+  });
+  $(function () {
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass: 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass: 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass: 'iradio_flat-green'
+    })
+  });
+</script>
+
+<script>
+    // Basic Info
+    function validate_BasicInfo(){
+        var phoneno = /^\d{10}$/;
+        mob_no=document.getElementById("MobileNO");
+        if((mob_no.value.match(phoneno))){
+        }
+        else{
+            var x = document.getElementById('BasicInfoSubmission');
+            x.classList.remove('alert-success');
+            x.classList.add('alert-danger');
+            x.style.display = "block";
+            var y = document.getElementById('BasicInfoSubmissionContent');
+            y.innerHTML="<h4>Length of mobile number is incorrect.</h4>";
+            x.focus();
+            return false;
+        }
+        var x = document.getElementById('BasicInfoSubmission');
+        x.classList.remove('alert-danger');
+        x.classList.add('alert-success');
+        x.style.display = "block";
+        var y = document.getElementById('BasicInfoSubmissionContent');
+        y.innerHTML="<h4>Success</h4>";
+        x.focus();
+        setTimeout(function () {
+            f = document.getElementById('BasicInfo');
+            f.method="POST";
+            f.action="/edit_basic_info/{{student_profile.id}}";
+            f.submit();
+        }, 1000);
+    }
+    // Academic Info
+    function validate_AcademicInfo(){
+        const sem = [
+                    parseFloat(document.getElementById("sem1_gpa").value),
+                    parseFloat(document.getElementById("sem2_gpa").value),
+                    parseFloat(document.getElementById("sem3_gpa").value), 
+                    parseFloat(document.getElementById("sem4_gpa").value),
+                    parseFloat(document.getElementById("sem5_gpa").value),
+                    parseFloat(document.getElementById("sem6_gpa").value),
+                    parseFloat(document.getElementById("sem7_gpa").value),
+                    parseFloat(document.getElementById("sem8_gpa").value)
+                ];
+        for(i=0;i<8;i++){
+            if (!isNaN(sem[i])){
+                if (!(sem[i]>=0 && sem[i]<=10)){
+                    var x = document.getElementById('AcadsSubmission');
+                    x.classList.remove('alert-success');
+                    x.classList.add('alert-danger');
+                    x.style.display = "block";
+                    var y = document.getElementById('AcadsSubmissionContent');
+                    y.innerHTML="<h4>SEM "+(i+1).toString()+" pointer is invalid</h4>";
+                    x.focus();
+                    return false;
+                }
+            }
+        }
+        var x = document.getElementById('AcadsSubmission');
+        x.classList.remove('alert-danger');
+        x.classList.add('alert-success');
+        x.style.display = "block";
+        var y = document.getElementById('AcadsSubmissionContent');
+        y.innerHTML="<h4>Success</h4>";
+        x.focus();
+        setTimeout(function () {
+            f = document.getElementById('AcademicInfo')
+            f.method="POST";
+            f.action="/edit_academic_info/{{student_profile.id}}";
+            f.submit();
+        }, 1000);
+    }
+    // Skills
+    function validate_SkillInfo(){
+        var x = document.getElementById('SkillSubmission');
+        x.classList.remove('alert-danger');
+        x.classList.add('alert-success');
+        x.style.display = "block";
+        var y = document.getElementById('SkillSubmissionContent');
+        y.innerHTML="<h4>Success</h4>";
+        x.focus();
+        setTimeout(function () {
+            f = document.getElementById('SkillInfo')
+            f.method="POST";
+            f.action="/edit_skill_info/{{student_profile.id}}";
+            f.submit();
+        }, 1000);
+    }
+    // hackathon
+    function validate_HackathonInfo(){
+        var x = document.getElementById('HackathonSubmission');
+        x.classList.remove('alert-danger');
+        x.classList.add('alert-success');
+        x.style.display = "block";
+        var y = document.getElementById('HackathonSubmissionContent');
+        y.innerHTML="<h4>Success</h4>";
+        x.focus();
+        setTimeout(function () {
+            f = document.getElementById('HackathonInfo')
+            f.method="POST";
+            f.action="/edit_hackathon_info/{{student_profile.id}}";
+            f.submit();
+        }, 1000);
+    }
+    // project
+    function validate_ProjectInfo(){
+        var x = document.getElementById('ProjectSubmission');
+        x.classList.remove('alert-danger');
+        x.classList.add('alert-success');
+        x.style.display = "block";
+        var y = document.getElementById('ProjectSubmissionContent');
+        y.innerHTML="<h4>Success</h4>";
+        x.focus();
+        setTimeout(function () {
+            f = document.getElementById('ProjectInfo')
+            f.method="POST";
+            f.action="/edit_project_info/{{student_profile.id}}";
+            f.submit();
+        }, 1000);
+    }
+    // Internship
+    function validate_InternshipInfo(){
+        var x = document.getElementById('InternshipSubmission');
+        x.classList.remove('alert-danger');
+        x.classList.add('alert-success');
+        x.style.display = "block";
+        var y = document.getElementById('InternshipSubmissionContent');
+        y.innerHTML="<h4>Success</h4>";
+        x.focus();
+        setTimeout(function () {
+            f = document.getElementById('InternshipInfo')
+            f.method="POST";
+            f.action="/edit_internship_info/{{student_profile.id}}";
+            f.submit();
+        }, 1000);
+    }
+    // Committee
+    function validate_CommitteeInfo(){
+        var x = document.getElementById('CommitteeSubmission');
+        x.classList.remove('alert-danger');
+        x.classList.add('alert-success');
+        x.style.display = "block";
+        var y = document.getElementById('CommitteeSubmissionContent');
+        y.innerHTML="<h4>Success</h4>";
+        x.focus();
+        setTimeout(function () {
+            f = document.getElementById('CommitteeInfo')
+            f.method="POST";
+            f.action="/edit_committee_info/{{student_profile.id}}";
+            f.submit();
+        }, 1000);
+    }
+    // BE Project
+    function validate_BEProjectInfo(){
+        var x = document.getElementById('BEProjectSubmission');
+        x.classList.remove('alert-danger');
+        x.classList.add('alert-success');
+        x.style.display = "block";
+        var y = document.getElementById('BEProjectSubmissionContent');
+        y.innerHTML="<h4>Success</h4>";
+        x.focus();
+        setTimeout(function () {
+            f = document.getElementById('BeProjectInfo')
+            f.method="POST";
+            f.action="/edit_beproject_info/{{student_profile.id}}";
+            f.submit();
+        }, 1000);
+    }
+    // Research
+    function validate_ResearchInfo(){
+        var x = document.getElementById('ResearchPaperSubmission');
+        x.classList.remove('alert-danger');
+        x.classList.add('alert-success');
+        x.style.display = "block";
+        var y = document.getElementById('ResearchPaperSubmissionContent');
+        y.innerHTML="<h4>Success</h4>";
+        x.focus();
+        setTimeout(function () {
+            f = document.getElementById('ResearchPaperInfo')
+            f.method="POST";
+            f.action="/edit_research_paper_info/{{student_profile.id}}";
+            f.submit();
+        }, 1000);
+    }
+    // Research
+    function validate_ExtraCurricularInfo(){
+        var x = document.getElementById('ExtraCurricularSubmission');
+        x.classList.remove('alert-danger');
+        x.classList.add('alert-success');
+        x.style.display = "block";
+        var y = document.getElementById('ExtraCurricularSubmissionContent');
+        y.innerHTML="<h4>Success</h4>";
+        x.focus();
+        setTimeout(function () {
+            f = document.getElementById('ExtraCurricularInfo')
+            f.method="POST";
+            f.action="/edit_extra_info/{{student_profile.id}}";
+            f.submit();
+        }, 1000);
+    }
+    function validate_CompetitiveExamsInfo(){
+        var x = document.getElementById('CompetitiveExamsSubmission');
+        x.classList.remove('alert-danger');
+        x.classList.add('alert-success');
+        x.style.display = "block";
+        var y = document.getElementById('CompetitiveExamsSubmissionContent');
+        y.innerHTML="<h4>Success</h4>";
+        x.focus();
+        setTimeout(function () {
+            f = document.getElementById('CompetitiveExamsInfo')
+            f.method="POST";
+            f.action="/edit_competitive_exams/{{student_profile.id}}";
+            f.submit();
+        }, 1000);
+    }
+    function validate_AdmitInfo(){
+        var x = document.getElementById('AdmitSubmission');
+        x.classList.remove('alert-danger');
+        x.classList.add('alert-success');
+        x.style.display = "block";
+        var y = document.getElementById('AdmitSubmissionContent');
+        y.innerHTML="<h4>Success</h4>";
+        x.focus();
+        setTimeout(function () {
+            f = document.getElementById('AdmitInfo')
+            f.method="POST";
+            f.action="/edit_admit_info/{{student_profile.id}}";
+            f.submit();
+        }, 1000);
+    }
+    function validate_PlacementInfo(){
+        var x = document.getElementById('PlacementSubmission');
+        x.classList.remove('alert-danger');
+        x.classList.add('alert-success');
+        x.style.display = "block";
+        var y = document.getElementById('PlacementSubmissionContent');
+        y.innerHTML="<h4>Success</h4>";
+        x.focus();
+        setTimeout(function () {
+            f = document.getElementById('PlacementInfo')
+            f.method="POST";
+            f.action="/edit_placement_info/{{student_profile.id}}";
+            f.submit();
+        }, 1000);
+    }
+    
+
+</script>
+
+
+
+{% endblock %}

@@ -1307,7 +1307,6 @@ def show_edit_studentprofile(request):
             project_teachers_list = TeacherProfile.objects.all()
 
             students_list = StudentProfile.objects.all().exclude(student=request.user)
-
             context = {
                 "student_profile": student_profile,
                 "hackathon_list": hackathon,
@@ -1318,14 +1317,15 @@ def show_edit_studentprofile(request):
                 "internship_list": internship,
                 "acads": acads,
                 "skill_list": skill_list,
-                "competitive_exam": competitive_exam,
+                "competitive_exam": competitive_exam[0],
                 "admit": admit,
                 "project_teachers_list": project_teachers_list,
                 "teachers_list": teachers_list,
                 "students_list": students_list,
                 "placement": placement,
+                "extra_curricular":ExtraCurricular.objects.filter(student=student_profile)
             }
-            return render(request, "user_profile/edit_student_profile_2.html", context)
+            return render(request, "user_profile/edit_student_profile.html", context)
     else:
         return HttpResponseRedirect("/login/student/")
 
@@ -1385,7 +1385,7 @@ def edit_competitive_exams(request, id):
             competitive_exam.toefl_proof = request.FILES.get("toefl_proof")
 
         competitive_exam.save()
-        return HttpResponse("done")
+        return redirect("/editprofile")
 
 
 def edit_basic_info(request, id):
@@ -1409,7 +1409,7 @@ def edit_basic_info(request, id):
         student_profile.twelfth_or_diploma_marks = request.POST.get("12thMarks")
 
         student_profile.save()
-        return redirect("/edit_basic_info")
+        return redirect("/editprofile")
         # return HttpResponse("done")
 
 
@@ -1419,152 +1419,38 @@ def edit_academic_info(request, id):
         education, created = Education.objects.get_or_create(
             student_profile=student_profile
         )
-
-        # try:
-        #     education = Education.objects.get(student_profile=student_profile)
-        # except ObjectDoesNotExist:
-        #     education = Education.objects.create(student_profile=student_profile)
-        print(request.POST)
-        # print(request.FILES)
-        # print(education)
         if (request.POST.get("sem1_gpa")) != "":
             education.sem1_gpa = request.POST.get("sem1_gpa")
-        if (request.FILES.get("sem1_marksheet")) is not None:
-            education.sem1_marksheet = request.FILES.get("sem1_marksheet")
-
+        else:
+            education.sem1_gpa = None
         if (request.POST.get("sem2_gpa")) != "":
             education.sem2_gpa = request.POST.get("sem2_gpa")
-        if (request.FILES.get("sem2_marksheet")) is not None:
-            education.sem2_marksheet = request.FILES.get("sem2_marksheet")
-
+        else:
+            education.sem2_gpa = None
         if (request.POST.get("sem3_gpa")) != "":
             education.sem3_gpa = request.POST.get("sem3_gpa")
-        if (request.FILES.get("sem3_marksheet")) is not None:
-            education.sem3_marksheet = request.FILES.get("sem3_marksheet")
-
+        else:
+            education.sem3_gpa = None
         if (request.POST.get("sem4_gpa")) != "":
             education.sem4_gpa = request.POST.get("sem4_gpa")
-        if (request.FILES.get("sem4_marksheet")) is not None:
-            education.sem4_marksheet = request.FILES.get("sem4_marksheet")
-
+        else:
+            education.sem4_gpa = None
         if (request.POST.get("sem5_gpa")) != "":
             education.sem5_gpa = request.POST.get("sem5_gpa")
-        if (request.FILES.get("sem5_marksheet")) is not None:
-            education.sem5_marksheet = request.FILES.get("sem5_marksheet")
-
+        else:
+            education.sem5_gpa = None
         if (request.POST.get("sem6_gpa")) != "":
             education.sem6_gpa = request.POST.get("sem6_gpa")
-        if (request.FILES.get("sem6_marksheet")) is not None:
-            education.sem6_marksheet = request.FILES.get("sem6_marksheet")
-
+        else:
+            education.sem6_gpa = None
         if (request.POST.get("sem7_gpa")) != "":
             education.sem7_gpa = request.POST.get("sem7_gpa")
-        if (request.FILES.get("sem7_marksheet")) is not None:
-            education.sem7_marksheet = request.FILES.get("sem7_marksheet")
-
+        else:
+            education.sem7_gpa = None
         if (request.POST.get("sem8_gpa")) != "":
             education.sem8_gpa = request.POST.get("sem8_gpa")
-        if (request.FILES.get("sem1_marksheet")) is not None:
-            education.sem8_marksheet = request.FILES.get("sem8_marksheet")
-
-        print("ALL FILES DONE\n\n")
-        # for subj in education.sem1_tt1.subject.all():
-        #     marks = request.POST.get("sem1_tt1_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem1_tt2.subject.all():
-        #     marks = request.POST.get("sem1_tt2_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem2_tt1.subject.all():
-        #     marks = request.POST.get("sem2_tt1_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem2_tt2.subject.all():
-        #     marks = request.POST.get("sem2_tt2_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem3_tt1.subject.all():
-        #     marks = request.POST.get("sem3_tt1_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem3_tt2.subject.all():
-        #     marks = request.POST.get("sem3_tt2_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem4_tt1.subject.all():
-        #     marks = request.POST.get("sem4_tt1_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem4_tt2.subject.all():
-        #     marks = request.POST.get("sem4_tt2_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem5_tt1.subject.all():
-        #     marks = request.POST.get("sem5_tt1_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem5_tt2.subject.all():
-        #     marks = request.POST.get("sem5_tt2_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem6_tt1.subject.all():
-        #     marks = request.POST.get("sem6_tt1_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem6_tt2.subject.all():
-        #     marks = request.POST.get("sem6_tt2_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem7_tt1.subject.all():
-        #     marks = request.POST.get("sem7_tt1_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem7_tt2.subject.all():
-        #     marks = request.POST.get("sem7_tt2_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem8_tt1.subject.all():
-        #     marks = request.POST.get("sem8_tt1_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # for subj in education.sem8_tt2.subject.all():
-        #     marks = request.POST.get("sem8_tt2_" + str(subj.subject.name))
-        #     if marks != "":
-        #         subj.marks = marks
-        #         print(subj)
-        #         subj.save()
-        # student_profile.subject_semester = request.POST.get("kt")
+        else:
+            education.sem8_gpa = None
         education.save()
         return redirect("/editprofile")
 
@@ -1579,7 +1465,7 @@ def edit_skill_info(request, id):
         # print(request.POST.get('skill'))
         skill.save()
         # print('.....')
-        return HttpResponseRedirect("")
+        return redirect("/editprofile")
     else:
         data = Skill.objects.last()
         return JsonResponse({"skill": data.skill, "id": data.id})
@@ -1593,11 +1479,15 @@ def edit_hackathon_info(request, id):
         hackathon = Hackathon.objects.create(student_profile=student_profile)
         # hackathon = Hackathon.objects.get(student_profile_id=id)
         hackathon.CompetitionName = request.POST.get("HackathonName")
-        if request.POST.get("HackathonDate") != "":
-            hackathon.StartDate = request.POST.get("HackathonDate")
+        if request.POST.get("HackathonStartDate") != "":
+            hackathon.StartDate = request.POST.get("HackathonStartDate")
+        if request.POST.get("HackathonEndDate") != "":
+            hackathon.EndDate = request.POST.get("HackathonEndDate")
         hackathon.Desc = request.POST.get("HackathonDescription")
-        hackathon.Github_url = request.POST.get("GithubURL")
-        hackathon.URL = request.POST.get("HackathonUrl")
+        if request.POST.get("GithubURL") != "":
+            hackathon.Github_url = request.POST.get("GithubURL")
+        if request.POST.get("HackathonUrl") != "":
+            hackathon.URL = request.POST.get("HackathonUrl")
 
         if request.POST.get("TotalHours") == "":
             hackathon.total_no_of_hours = 0
@@ -1615,7 +1505,7 @@ def edit_hackathon_info(request, id):
         #     + hackathon.CompetitionName + " to his profile"
         # send_sms(message, number)
         # print("sdsdsdsd")
-        return HttpResponseRedirect("")
+        return redirect("/editprofile")
     else:
         data = Hackathon.objects.last()
         return JsonResponse(
@@ -1634,7 +1524,7 @@ def edit_project_info(request, id):
         student_profile = StudentProfile.objects.get(id=id)
         project = Project.objects.create(student_profile=student_profile)
         skill = Skill.objects.create(user_profile=student_profile)
-        skill.skill = request.POST.get("ProjectSkill")
+        skill.skill = "-"
         project.ProjURL = request.POST.get("ProjectUrl")
         project.ProjName = request.POST.get("ProjectName")
         project.ProjDesc = request.POST.get("ProjectDescription")
@@ -1645,8 +1535,7 @@ def edit_project_info(request, id):
         )
         project.skill = skill
         project.save()
-        skill.save()
-        return HttpResponse("done")
+        return redirect("/editprofile")
     else:
         data = Project.objects.last()
         return JsonResponse(
@@ -1664,12 +1553,9 @@ def edit_internship_info(request, id):
     if request.method == "POST":
         student_profile = StudentProfile.objects.get(id=id)
         internship = Internship.objects.create(employee=student_profile)
-        print("HI")
         internship.company = request.POST.get("InternshipName")
         internship.stipend = request.POST.get("stipend")
-        print(request.POST.get("InternshipName"))
         internship.desc = request.POST.get("InternshipDescription")
-        print(request.POST.get("InternshipDescription"))
         internship.Position = request.POST.get("InternshipPosition")
         internship.Loc = request.POST.get("InternshipLocation")
         if request.POST.get("InternshipFrom") != "":
@@ -1677,6 +1563,7 @@ def edit_internship_info(request, id):
         if request.POST.get("InternshipTo") != "":
             internship.To = request.POST.get("InternshipTo")
         internship.Certificate = request.FILES.get("certificate")
+        internship.offer_letter = request.FILES.get("offer_letter")
         internship.total_hours = request.POST.get("TotalHours")
         internship.how = request.POST.get("how")
 
@@ -1686,20 +1573,19 @@ def edit_internship_info(request, id):
         internship.evaluation_report_supervisor = request.FILES.get(
             "evaluation_report_supervisor"
         )
-        internship.evaluation_report_self = request.FILES.get(
+        internship.evaluation_report_self_one = request.FILES.get(
             "evaluation_report_self_one"
         )
-        internship.evaluation_report_self = request.FILES.get(
+        internship.evaluation_report_self_two = request.FILES.get(
             "evaluation_report_self_two"
         )
 
-        internship.evaluation_report_self = request.FILES.get(
+        internship.evaluation_report_self_three = request.FILES.get(
             "evaluation_report_self_three"
         )
 
         internship.save()
-        print(internship.company)
-        return HttpResponse("done")
+        return redirect("/editprofile")
     else:
         data = Internship.objects.last()
         return JsonResponse(
@@ -1731,7 +1617,7 @@ def edit_committee_info(request, id):
         committee.Certificate = request.FILES.get("certificate")
 
         committee.save()
-        return HttpResponse("done")
+        return redirect("/editprofile")
     else:
         data = Committee.objects.last()
         return JsonResponse(
@@ -1750,7 +1636,6 @@ def edit_committee_info(request, id):
 @csrf_exempt
 def edit_research_paper_info(request, id):
     if request.method == "POST":
-        print("aayush")
         student_profile = StudentProfile.objects.get(id=id)
         paper = ResearchPaper.objects.create(student=student_profile)
         paper.Title = request.POST.get("ResearchPaperName")  #
@@ -1768,7 +1653,7 @@ def edit_research_paper_info(request, id):
         paper.total_hours = request.POST.get("total_hours")  #
         paper.type = request.POST.get("type")  #
 
-        paper.DateOfPublication = request.POST.get("DateOfPublication")  #
+        paper.DateOfPublication = request.POST.get("ResearchPaperDate")  #
         paper.research_impact_factor = request.POST.get("research_impact_factor")
         paper.indexing = request.POST.get("indexing")
         # paper.image1 = request.FILES.get("image1")
@@ -1777,8 +1662,7 @@ def edit_research_paper_info(request, id):
         # paper.image4 = request.FILES.get("image4")
         # paper.image5 = request.FILES.get("image5")
         paper.save()
-        print(paper.status)
-        return HttpResponse("done")
+        return redirect("/editprofile")
     else:
         data = ResearchPaper.objects.last()
         return JsonResponse(
@@ -1802,10 +1686,11 @@ def edit_extra_info(request, id):
         extra.achievements = request.POST.get("ExtraAchievements")
         if request.POST.get("ExtraDate") != "":
             extra.date = request.POST.get("ExtraDate")
-        extra.Certificate = request.FILES.get("certificate")
+        if request.FILES.get("certificate"):
+            extra.Certificate = request.FILES.get("certificate")
         extra.extra_curricular_type = request.POST.get("extra_curricular_type")
         extra.save()
-        return HttpResponse("done")
+        return redirect("/editprofile")
     else:
         data = ExtraCurricular.objects.last()
         return JsonResponse(
@@ -1835,16 +1720,12 @@ def edit_beproject_info(request, id):
             Sap_Id=request.POST.get("teacher")
         )
 
-        teammates = request.POST.getlist("teammates")
-        teammates_list = [StudentProfile.objects.get(Sap_Id=i) for i in teammates]
-        proj.teammates.set(teammates_list)
-
         proj.image1 = request.FILES.get("image1")
         proj.image2 = request.FILES.get("image2")
 
         proj.project_report = request.FILES.get("project_report")
         proj.save()
-        return HttpResponse("done")
+        return redirect("/editprofile")
 
 
 def edit_admit_info(request, id):
@@ -1857,7 +1738,7 @@ def edit_admit_info(request, id):
         extra.selected = request.POST.get("selected")
         extra.admit_proof = request.FILES.get("admit_proof")
         extra.save()
-        return HttpResponse("done")
+        return redirect("/editprofile")
     else:
         data = Admit.objects.last()
         return JsonResponse(
@@ -1878,8 +1759,12 @@ def edit_placement_info(request, id):
         extra = Placements.objects.create(student=student_profile)
         extra.company_name = request.POST.get("company_name")
         extra.offer_letter = request.FILES.get("offer_letter")
+        extra.ctc = request.POST.get("ctc")
+        extra.company_address = request.POST.get("company_address")
+        extra.company_phone_number = request.POST.get("company_phone")
+        extra.designation = request.POST.get("designation")
         extra.save()
-        return HttpResponse("done")
+        return redirect("/editprofile")
     else:
         data = Placements.objects.last()
         return JsonResponse(
