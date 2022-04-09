@@ -208,8 +208,8 @@ def register_teacher(request):
                 return render(
                     request, "user_profile/registration_teacher.html", {"error": error}
                 )
-            elif len(Sap_Id) < 11:
-                error = "The Sap_id should be 11 digits long."
+            elif len(Sap_Id) < 8:
+                error = "The Sap_id should be 8 digits long."
                 return render(
                     request, "user_profile/registration_teacher.html", {"error": error}
                 )
@@ -1283,6 +1283,10 @@ def show_edit_studentprofile(request):
             else:
                 acads = []
             competitive_exam = CompetitiveExams.objects.filter(student=student_profile)
+            if competitive_exam:
+                competitive_exam=competitive_exam[0]
+            else:
+                competitive_exam=[]
 
             # try:
             #     beproject = BeProject.objects.get(student=student_profile)
@@ -1317,7 +1321,7 @@ def show_edit_studentprofile(request):
                 "internship_list": internship,
                 "acads": acads,
                 "skill_list": skill_list,
-                "competitive_exam": competitive_exam[0],
+                "competitive_exam": competitive_exam,
                 "admit": admit,
                 "project_teachers_list": project_teachers_list,
                 "teachers_list": teachers_list,

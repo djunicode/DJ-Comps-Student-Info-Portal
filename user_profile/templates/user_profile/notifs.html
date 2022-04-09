@@ -731,14 +731,14 @@
                     {{research_paper.student.last_name}}</td>
                   <td class="mailbox-name">{{ research_paper.Title }}</td>
                   <td class="mailbox-name">{{ research_paper.DateOfPublication }}</td>
-                  <td class="mailbox-name">{{ research_paper.Desc }}/td>
+                  <td class="mailbox-name">{{ research_paper.Desc }}</td>
                   <td class="mailbox-name"><a target="_blank" href="{{ research_paper.LinkToPaper }}">{{ research_paper.LinkToPaper }}</a></td>
                   <td class="mailbox-name">{{ research_paper.Title }}</td>
-                  <td class="mailbox-name">{{ research_paper.research_type }}</td>
+                  <td class="mailbox-name">{{ research_paper.type }}</td>
 
                   <td class="mailbox-name">{{ research_paper.isbn }}</td>
                   <td class="mailbox-name">{{ research_paper.issn }}</td>
-                  {% ifequal internship.Certificate "" %}
+                  {% ifequal research_paper.proof_of_submission "" %}
                   <td class="mailbox-name">Not Uploaded</td>
                   {% else %}
                   <td class="mailbox-name"><a target="_blank" href="{{ research_paper.proof_of_submission.url }}">Proof of Submission</a>
@@ -805,14 +805,14 @@
                     {{research_paper.student.last_name}}</td>
                   <td class="mailbox-name">{{ research_paper.Title }}</td>
                   <td class="mailbox-name">{{ research_paper.DateOfPublication }}</td>
-                  <td class="mailbox-name">{{ research_paper.Desc }}/td>
+                  <td class="mailbox-name">{{ research_paper.Desc }}</td>
                   <td class="mailbox-name"><a target="_blank" href="{{ research_paper.LinkToPaper }}">{{ research_paper.LinkToPaper }}</a></td>
                   <td class="mailbox-name">{{ research_paper.Title }}</td>
-                  <td class="mailbox-name">{{ research_paper.research_type }}</td>
+                  <td class="mailbox-name">{{ research_paper.type }}</td>
 
                   <td class="mailbox-name">{{ research_paper.isbn }}</td>
                   <td class="mailbox-name">{{ research_paper.issn }}</td>
-                  {% ifequal internship.Certificate "" %}
+                  {% ifequal research_paper.proof_of_submission "" %}
                   <td class="mailbox-name">Not Uploaded</td>
                   {% else %}
                   <td class="mailbox-name"><a target="_blank" href="{{ research_paper.proof_of_submission.url }}">Proof of Submission</a>
@@ -875,14 +875,14 @@
                     {{research_paper.student.last_name}}</td>
                   <td class="mailbox-name">{{ research_paper.Title }}</td>
                   <td class="mailbox-name">{{ research_paper.DateOfPublication }}</td>
-                  <td class="mailbox-name">{{ research_paper.Desc }}/td>
+                  <td class="mailbox-name">{{ research_paper.Desc }}</td>
                   <td class="mailbox-name"><a target="_blank" href="{{ research_paper.LinkToPaper }}">{{ research_paper.LinkToPaper }}</a></td>
                   <td class="mailbox-name">{{ research_paper.Title }}</td>
-                  <td class="mailbox-name">{{ research_paper.research_type }}</td>
+                  <td class="mailbox-name">{{ research_paper.type }}</td>
 
                   <td class="mailbox-name">{{ research_paper.isbn }}</td>
                   <td class="mailbox-name">{{ research_paper.issn }}</td>
-                  {% ifequal internship.Certificate "" %}
+                  {% ifequal research_paper.proof_of_submission "" %}
                   <td class="mailbox-name">Not Uploaded</td>
                   {% else %}
                   <td class="mailbox-name"><a target="_blank" href="{{ research_paper.proof_of_submission.url }}">Proof of Submission</a>
@@ -938,7 +938,7 @@
                   <td class="mailbox-name">{{ e.desc }}</td>
                   <td class="mailbox-name">{{ e.achievements }}</td>
                   <td class="mailbox-name">{{ e.date }}</td>
-                  {% ifequal e.Certificate.url "" %}
+                  {% ifequal e.Certificate "" %}
                   <td class="mailbox-name">Not Uploaded</td>
                   {% else %}
                   <td class="mailbox-name"><a target="_blank" href="{{e.Certificate.url}}">Certificate</a>
