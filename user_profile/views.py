@@ -18,6 +18,7 @@ from .models import (
     SubjectMarks,
     TermTest,
     CompetitiveExams,
+    ExamDetails,
     Admit,
     Placements,
 )
@@ -496,7 +497,7 @@ def student_profile(request, id):
                 g.append([i, round(total / count, 2)])
         grades = g
         try:
-            competitive_exam = CompetitiveExams.objects.get(student=student)
+            competitive_exam = CompetitiveExams.objects.filter(student=student)
         except CompetitiveExams.DoesNotExist:
             competitive_exam = {}
             # competitive_exam["gre_score"] = 0
@@ -1337,57 +1338,29 @@ def show_edit_studentprofile(request):
 def edit_competitive_exams(request, id):
     if request.method == "POST":
         student_profile = StudentProfile.objects.get(id=id)
-        try:
-            competitive_exam = CompetitiveExams.objects.filter(student=student_profile)[
-                0
-            ]
-        except:
-            competitive_exam = CompetitiveExams.objects.create(student=student_profile)
-        if request.POST.get("gre_score") is not "":
-            competitive_exam.gre_score = request.POST.get("gre_score")
-        if request.POST.get("cat_score") is not "":
-            competitive_exam.cat_score = request.POST.get("cat_score")
-        if request.POST.get("gate_score") is not "":
-            competitive_exam.gate_score = request.POST.get("gate_score")
-        if request.POST.get("gmat_score") is not "":
-            competitive_exam.gmat_score = request.POST.get("gmat_score")
-        if request.POST.get("toefl_score") is not "":
-            competitive_exam.toefl_score = request.POST.get("toefl_score")
+        # try:
+        #     competitive_exam = CompetitiveExams.objects.filter(student=student_profile)[
+        #         0
+        #     ]
+        # except:
+        competitive_exam = CompetitiveExams.objects.create(student=student_profile)
+        if request.POST.get("exam_name") is not "":
+            exam_details = ExamDetails.objects.create()
+            exam_details.exam_name = request.POST.get("exam_name")
+        else:
+            exam_details.delete()
 
-        # competitive_exam.mhcet_score = request.POST.get("mhcet_score")
+        if request.POST.get("exam_score") is not "":
+            exam_details.exam_score = request.POST.get("exam_score")
 
-        if request.POST.get("gre_registration_number") is not "":
-            competitive_exam.gre_registration_number = request.POST.get(
-                "gre_registration_number"
-            )
-        if request.POST.get("cat_registration_number") is not "":
-            competitive_exam.cat_registration_number = request.POST.get(
-                "cat_registration_number"
-            )
-        if request.POST.get("gate_registration_number") is not "":
-            competitive_exam.gate_registration_number = request.POST.get(
-                "gate_registration_number"
-            )
-        if request.POST.get("gmat_registration_number") is not "":
-            competitive_exam.gmat_registration_number = request.POST.get(
-                "gmat_registration_number"
-            )
-        if request.POST.get("toefl_registration_number") is not "":
-            competitive_exam.toefl_registration_number = request.POST.get(
-                "toefl_registration_number"
-            )
+        if request.POST.get("exam_registration_number") is not "":
+            exam_details.exam_registration_number = request.POST.get("exam_registration_number")
 
-        if request.FILES.get("gre_proof") is not None:
-            competitive_exam.gre_proof = request.FILES.get("gre_proof")
-        if request.FILES.get("cat_proof") is not None:
-            competitive_exam.cat_proof = request.FILES.get("cat_proof")
-        if request.FILES.get("gate_proof") is not None:
-            competitive_exam.gate_proof = request.FILES.get("gate_proof")
-        if request.FILES.get("gmat_proof") is not None:
-            competitive_exam.gmat_proof = request.FILES.get("gmat_proof")
-        if request.FILES.get("toefl_proof") is not None:
-            competitive_exam.toefl_proof = request.FILES.get("toefl_proof")
+        if request.FILES.get("exam_proof") is not None:
+            exam_details.exam_proof = request.FILES.get("exam_proof")
 
+        exam_details.save()
+        competitive_exam.exam = exam_details
         competitive_exam.save()
         return redirect("/editprofile")
 

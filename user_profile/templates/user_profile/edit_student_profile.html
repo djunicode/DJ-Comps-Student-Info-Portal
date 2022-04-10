@@ -1668,38 +1668,47 @@
 
                   <div id="CompetitiveExamsSubmissionContent"></div>
                 </div>
+
                 <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> GRE Score</label>
+                  <label for="exam_name" class="col-sm-2 control-label">Exam Name</label>
 
                   <div class="col-sm-8">
-                    <input type="text" name="gre_score" class="form-control" id="gre_score" value="{{competitive_exam.gre_score}}">
+                    <input type="text" name="exam_name" class="form-control" id="exam_name" value="{{competitive_exam.exam.exam_name}}">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> GRE Registraion Number</label>
+                  <label for="exam_score" class="col-sm-2 control-label">Exam Score</label>
 
                   <div class="col-sm-8">
-                    <input type="text" name="gre_registration_number" class="form-control" id="gre_registration_number"
-                      value="{{competitive_exam.gre_registration_number}}">
+                    <input type="text" name="exam_score" class="form-control" id="exam_score" value="{{competitive_exam.exam.exam_score}}">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="exam_registration_number" class="col-sm-2 control-label">Exam Registraion Number</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" name="exam_registration_number" class="form-control" id="exam_registration_number"
+                      value="{{competitive_exam.exam.exam_registration_number}}">
                   </div>
                 </div>
 
                 
                 <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label"> GRE Proof</label>
-                  {% if competitive_exam.gre_proof %}
+                  <label for="exam_proof" class="col-sm-2 control-label">Exam Proof</label>
+                  <!-- {% if competitive_exam.gre_proof %}
                   <div class="col-sm-8" style="display: flex;">
                     <p class="col-sm-2"><a target="_blank" href="{{competitive_exam.gre_proof.url}}">Current Proof</a></p>
                     <input type="file" name="gre_proof" class="form-control col-sm-10" id="gre_proof">
                   </div>
-                  {% else %}
+                  {% else %} -->
                   <div class="col-sm-8">
-                    <input type="file" name="gre_proof" class="form-control" id="gre_proof">
+                    <input type="file" name="exam_proof" class="form-control" id="exam_proof">
                   </div>
-                  {% endif %}
+                  <!-- {% endif %} -->
                 </div>
-                
+                <!-- 
                 <hr>
 
                 <div class="form-group">
@@ -1841,7 +1850,7 @@
                   {% endif %}
               </div>
 
-              <!--
+              
               <div class="form-group">
                 <label for="name" class="col-sm-2 control-label"> MHCET score</label>
 

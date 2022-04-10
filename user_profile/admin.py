@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import TeacherProfile
 from .models import Hackathon, Committee, ResearchPaper, BeProject, Internship
 from .models import Project, StudentProfile, Skill, Recruiter, KT, Subject
-from .models import Education, ExtraCurricular, TermTest, SubjectMarks, CompetitiveExams, Admit, Image, Placements
+from .models import Education, ExtraCurricular, TermTest, SubjectMarks, CompetitiveExams, Admit, Image, Placements, ExamDetails
 from simple_history.admin import SimpleHistoryAdmin
 
 admin.site.register(Image)
@@ -23,5 +23,6 @@ admin.site.register(TermTest)
 admin.site.register(Subject)
 admin.site.register(SubjectMarks)
 admin.site.register(CompetitiveExams)
+admin.site.register(ExamDetails)
 admin.site.register(Admit)
 admin.site.register(Placements)

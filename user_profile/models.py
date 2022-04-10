@@ -431,7 +431,7 @@ class ExamDetails(models.Model):
     exam_score = models.CharField(max_length=20, null=True, blank=True)
     exam_proof = models.FileField(null=True, blank=True)
 class CompetitiveExams(models.Model):
-    student = models.OneToOneField(
+    student = models.ForeignKey(
         StudentProfile, related_name="competitiveexams", on_delete=models.CASCADE
     )
     exam = models.ForeignKey(ExamDetails, on_delete=models.SET_NULL, null=True, blank=True)

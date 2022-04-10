@@ -1234,28 +1234,34 @@
                           <h3 class="box-title">Competitive Exams</h3>
                         </div>
                         <div class="box-body no-padding">
-                
+                        
                           <div class="table-responsive mailbox-messages">
                             <table class="table table-hover table-striped">
+                              {% for exam in competitive_exam %}
                               <tbody>
                                 <tr>
-                                  <th class="mailbox-number">GRE</th>
-                                  <td class="mailbox-number">{{ competitive_exam.gre_score }}</td>
+                                  <th class="mailbox-number">Exam Name</th>
+                                  <td class="mailbox-number">{{ exam.exam.exam_name }}</td>
                                 </tr>
                                 <tr>
-                                  <th class="mailbox-number">GRE Registraion Number</th>
-                                  <td class="mailbox-number">{{ competitive_exam.gre_registration_number }}</td>
+                                  <th class="mailbox-number">Exam Score</th>
+                                  <td class="mailbox-number">{{ exam.exam.exam_score }}</td>
                                 </tr>
                                 <tr>
-                                  <th class="mailbox-number">GRE Proof</th>
-                                  {% if competitive_exam.gre_proof %}
-                                  <td class="mailbox-number"><a href = "{{ competitive_exam.gre_proof.url }}">Link</a></td>
+                                  <th class="mailbox-number">Exam Registraion Number</th>
+                                  <td class="mailbox-number">{{ exam.exam.exam_registration_number }}</td>
+                                </tr>
+                                <tr>
+                                  <th class="mailbox-number">Exam Proof</th>
+                                  {% if exam.exam.exam_proof %}
+                                  <td class="mailbox-number"><a href = "{{ exam.exam.exam_proof.url }}" target="_blank">Link</a></td>
                                   {% else %}
-                                  <td class="mailbox-number"><a href = "{{ competitive_exam.gre_proof.url }}">None</a></td>
+                                  <td class="mailbox-number"><a href = "{{ exam.exam.exam_proof.url }}">None</a></td>
                                   {% endif %}
                                 </tr>
                                 <tr><th class="mailbox-number">&nbsp;</th><td class="mailbox-number">&nbsp;</td></tr>
-                                <tr><th class="mailbox-number">TOEFL</th><td class="mailbox-number">{{ competitive_exam.toefl_score }}</td></tr>
+                                {% endfor %}
+                                <!-- <tr><th class="mailbox-number">TOEFL</th><td class="mailbox-number">{{ competitive_exam.toefl_score }}</td></tr>
                                 <tr>
                                   <th class="mailbox-number">TOEFL Registraion Number</th>
                                   <td class="mailbox-number">{{ competitive_exam.toefl_registration_number }}</td>
@@ -1309,7 +1315,7 @@
                                   {% else %}
                                   <td class="mailbox-number">None</td>
                                   {% endif %}                                  </tr>
-                                  <tr><th class="mailbox-number">&nbsp;</th><td class="mailbox-number">&nbsp;</td></tr>
+                                  <tr><th class="mailbox-number">&nbsp;</th><td class="mailbox-number">&nbsp;</td></tr> -->
                               </tbody>
                             </table>
                             <!-- /.table -->
