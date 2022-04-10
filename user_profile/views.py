@@ -499,23 +499,23 @@ def student_profile(request, id):
             competitive_exam = CompetitiveExams.objects.get(student=student)
         except CompetitiveExams.DoesNotExist:
             competitive_exam = {}
-            competitive_exam["gre_score"] = 0
-            competitive_exam["toefl_score"] = 0
-            competitive_exam["cat_score"] = 0
-            competitive_exam["gate_score"] = 0
-            competitive_exam["gmat_score"] = 0
-            # competitive_exam["mhcet_score"] = 0
-            competitive_exam["gre_registration_number"] = 0
-            competitive_exam["toefl_registration_number"] = 0
-            competitive_exam["cat_registration_number"] = 0
-            competitive_exam["gate_registration_number"] = 0
-            competitive_exam["gmat_registration_number"] = 0
-            # competitive_exam["mhcet_registration_number"] = 0
-            competitive_exam["gre_proof"] = ""
-            competitive_exam["toefl_proof"] = ""
-            competitive_exam["cat_proof"] = ""
-            competitive_exam["gate_proof"] = ""
-            competitive_exam["gmat_proof"] = ""
+            # competitive_exam["gre_score"] = 0
+            # competitive_exam["toefl_score"] = 0
+            # competitive_exam["cat_score"] = 0
+            # competitive_exam["gate_score"] = 0
+            # competitive_exam["gmat_score"] = 0
+            # # competitive_exam["mhcet_score"] = 0
+            # competitive_exam["gre_registration_number"] = 0
+            # competitive_exam["toefl_registration_number"] = 0
+            # competitive_exam["cat_registration_number"] = 0
+            # competitive_exam["gate_registration_number"] = 0
+            # competitive_exam["gmat_registration_number"] = 0
+            # # competitive_exam["mhcet_registration_number"] = 0
+            # competitive_exam["gre_proof"] = ""
+            # competitive_exam["toefl_proof"] = ""
+            # competitive_exam["cat_proof"] = ""
+            # competitive_exam["gate_proof"] = ""
+            # competitive_exam["gmat_proof"] = ""
 
         # admits
         admit_approved = Admit.objects.filter(student=student, is_approved=True)

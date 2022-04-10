@@ -440,7 +440,7 @@ class CompetitiveExams(models.Model):
     # cat_score = models.CharField(max_length=10, null=True, blank=True)
     # gate_score = models.CharField(max_length=10, null=True, blank=True)
     # gmat_score = models.CharField(max_length=10, null=True, blank=True)
-    # is_approved = models.BooleanField(null=True, blank=True, default=None)
+    is_approved = models.BooleanField(null=True, blank=True, default=None)
     # # mhcet_score = models.CharField(max_length=10, null=True, blank=True)
     # # NEW STUFF
     # gre_registration_number = models.CharField(max_length=25, null=True, blank=True)
