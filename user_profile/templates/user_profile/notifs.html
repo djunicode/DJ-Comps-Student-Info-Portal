@@ -1535,11 +1535,15 @@
                 <thead>
                   <th class="mailbox-number">Sr. No</th>
                   <th class="mailbox-name">Student</th>
-                  <th class="mailbox-name">GRE Score</th>
-                  <th class="mailbox-name">TOELF Score</th>
+                  <th class="mailbox-name">Exam Name</th>
+                  <th class="mailbox-name">Exam Score</th>
+                  <th class="mailbox-name">Exam Registration Number</th>
+                  <th class="mailbox-name">Exam Proof</th>
+
+                  <!-- <th class="mailbox-name">TOELF Score</th>
                   <th class="mailbox-name">CAT Score</th>
                   <th class="mailbox-name">GATE Score</th>
-                  <th class="mailbox-name">GMAT Score</th>
+                  <th class="mailbox-name">GMAT Score</th> -->
                   <th class="mailbox-name">Action</th>
                 </thead>
                 {% for competitive_exam in competitive_exams_pending %}
@@ -1547,11 +1551,18 @@
                   <td class="mailbox-number">{{ forloop.counter }}</td>
                   <td class="mailbox-name">{{competitive_exam.student.Sap_Id}} - {{competitive_exam.student.first_name}}
                     {{competitive_exam.student.last_name}}</td>
-                  <td class="mailbox-name">{{ competitive_exam.gre_score }}</td>
-                  <td class="mailbox-name">{{ competitive_exam.toefl_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.exam.exam_name }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.exam.exam_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.exam.exam_registration_number }}</td>
+                  {% ifequal competitive_exam.exam.exam_proof "" %}
+                  <td class="mailbox-name">None</td>
+                  {% else %}
+                  <td class="mailbox-name"><a href = "{{ competitive_exam.exam.exam_proof.url }}" target="_blank">Link</a></td>
+                  {% endifequal %}
+                  <!-- <td class="mailbox-name">{{ competitive_exam.toefl_score }}</td>
                   <td class="mailbox-name">{{ competitive_exam.cat_score }}</td>
                   <td class="mailbox-name">{{ competitive_exam.gate_score }}</td>
-                  <td class="mailbox-name">{{ competitive_exam.gmat_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.gmat_score }}</td> -->
 
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:competitive-exam-approved' competitive_exam.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
@@ -1582,23 +1593,24 @@
                 <thead>
                   <th class="mailbox-number">Sr. No</th>
                   <th class="mailbox-name">Student</th>
-                  <th class="mailbox-name">GRE Score</th>
-                  <th class="mailbox-name">TOELF Score</th>
-                  <th class="mailbox-name">CAT Score</th>
-                  <th class="mailbox-name">GATE Score</th>
-                  <th class="mailbox-name">GMAT Score</th>
+                  <th class="mailbox-name">Exam Name</th>
+                  <th class="mailbox-name">Exam Score</th>
+                  <th class="mailbox-name">Exam Registration Number</th>
+                  <th class="mailbox-name">Exam Proof</th>
                 </thead>
                 {% for competitive_exam in competitive_exams_approved %}
                 <tr>
                   <td class="mailbox-number">{{ forloop.counter }}</td>
                   <td class="mailbox-name">{{competitive_exam.student.Sap_Id}} - {{competitive_exam.student.first_name}}
                     {{competitive_exam.student.last_name}}</td>
-                  <td class="mailbox-name">{{ competitive_exam.gre_score }}</td>
-                  <td class="mailbox-name">{{ competitive_exam.toefl_score }}</td>
-                  <td class="mailbox-name">{{ competitive_exam.cat_score }}</td>
-                  <td class="mailbox-name">{{ competitive_exam.gate_score }}</td>
-                  <td class="mailbox-name">{{ competitive_exam.gmat_score }}</td>
-
+                  <td class="mailbox-name">{{ competitive_exam.exam.exam_name }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.exam.exam_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.exam.exam_registration_number }}</td>
+                  {% ifequal competitive_exam.exam.exam_proof "" %}
+                  <td class="mailbox-name">None</td>
+                  {% else %}
+                  <td class="mailbox-name"><a href = "{{ competitive_exam.exam.exam_proof.url }}" target="_blank">Link</a></td>
+                  {% endifequal %}
                 </tr>
                 {% endfor %}
               </tbody>
@@ -1624,23 +1636,24 @@
                 <thead>
                   <th class="mailbox-number">Sr. No</th>
                   <th class="mailbox-name">Student</th>
-                  <th class="mailbox-name">GRE Score</th>
-                  <th class="mailbox-name">TOELF Score</th>
-                  <th class="mailbox-name">CAT Score</th>
-                  <th class="mailbox-name">GATE Score</th>
-                  <th class="mailbox-name">GMAT Score</th>
+                  <th class="mailbox-name">Exam Name</th>
+                  <th class="mailbox-name">Exam Score</th>
+                  <th class="mailbox-name">Exam Registration Number</th>
+                  <th class="mailbox-name">Exam Proof</th>
                 </thead>
                 {% for competitive_exam in competitive_exams_rejected %}
                 <tr>
                   <td class="mailbox-number">{{ forloop.counter }}</td>
                   <td class="mailbox-name">{{competitive_exam.student.Sap_Id}} - {{competitive_exam.student.first_name}}
                     {{competitive_exam.student.last_name}}</td>
-                  <td class="mailbox-name">{{ competitive_exam.gre_score }}</td>
-                  <td class="mailbox-name">{{ competitive_exam.toefl_score }}</td>
-                  <td class="mailbox-name">{{ competitive_exam.cat_score }}</td>
-                  <td class="mailbox-name">{{ competitive_exam.gate_score }}</td>
-                  <td class="mailbox-name">{{ competitive_exam.gmat_score }}</td>
-
+                  <td class="mailbox-name">{{ competitive_exam.exam.exam_name }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.exam.exam_score }}</td>
+                  <td class="mailbox-name">{{ competitive_exam.exam.exam_registration_number }}</td>
+                  {% ifequal competitive_exam.exam.exam_proof "" %}
+                  <td class="mailbox-name">None</td>
+                  {% else %}
+                  <td class="mailbox-name"><a href = "{{ competitive_exam.exam.exam_proof.url }}" target="_blank">Link</a></td>
+                  {% endifequal %}
                 </tr>
                 {% endfor %}
               </tbody>
