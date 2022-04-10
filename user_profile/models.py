@@ -425,29 +425,41 @@ class ExtraCurricular(models.Model):
     def __str__(self):
         return str(self.name)
 
-
+class ExamDetails(models.Model):
+    exam_name = models.CharField(max_length=50, null=True, blank=True)
+    exam_registration_number = models.CharField(max_length=50, null=True, blank=True)
+    exam_score = models.CharField(max_length=20, null=True, blank=True)
+    exam_proof = models.FileField(null=True, blank=True)
 class CompetitiveExams(models.Model):
     student = models.OneToOneField(
         StudentProfile, related_name="competitiveexams", on_delete=models.CASCADE
     )
-    gre_score = models.CharField(max_length=10, null=True, blank=True)
-    toefl_score = models.CharField(max_length=10, null=True, blank=True)
-    cat_score = models.CharField(max_length=10, null=True, blank=True)
-    gate_score = models.CharField(max_length=10, null=True, blank=True)
-    gmat_score = models.CharField(max_length=10, null=True, blank=True)
-    is_approved = models.BooleanField(null=True, blank=True, default=None)
-    # mhcet_score = models.CharField(max_length=10, null=True, blank=True)
-    # NEW STUFF
-    gre_registration_number = models.CharField(max_length=25, null=True, blank=True)
-    gre_proof = models.FileField(null=True, blank=True)
-    toefl_registration_number = models.CharField(max_length=25, null=True, blank=True)
-    toefl_proof = models.FileField(null=True, blank=True)
-    cat_registration_number = models.CharField(max_length=25, null=True, blank=True)
-    cat_proof = models.FileField(null=True, blank=True)
-    gate_registration_number = models.CharField(max_length=25, null=True, blank=True)
-    gate_proof = models.FileField(null=True, blank=True)
-    gmat_registration_number = models.CharField(max_length=25, null=True, blank=True)
-    gmat_proof = models.FileField(null=True, blank=True)
+    exam = models.ForeignKey(ExamDetails, on_delete=models.SET_NULL, null=True, blank=True)
+    # gre_score = models.CharField(max_length=10, null=True, blank=True)
+    # toefl_score = models.CharField(max_length=10, null=True, blank=True)
+    # cat_score = models.CharField(max_length=10, null=True, blank=True)
+    # gate_score = models.CharField(max_length=10, null=True, blank=True)
+    # gmat_score = models.CharField(max_length=10, null=True, blank=True)
+    # is_approved = models.BooleanField(null=True, blank=True, default=None)
+    # # mhcet_score = models.CharField(max_length=10, null=True, blank=True)
+    # # NEW STUFF
+    # gre_registration_number = models.CharField(max_length=25, null=True, blank=True)
+    # gre_proof = models.FileField(null=True, blank=True)
+    # toefl_registration_number = models.CharField(max_length=25, null=True, blank=True)
+    # toefl_proof = models.FileField(null=True, blank=True)
+    # cat_registration_number = models.CharField(max_length=25, null=True, blank=True)
+    # cat_proof = models.FileField(null=True, blank=True)
+    # gate_registration_number = models.CharField(max_length=25, null=True, blank=True)
+    # gate_proof = models.FileField(null=True, blank=True)
+    # gmat_registration_number = models.CharField(max_length=25, null=True, blank=True)
+    # gmat_proof = models.FileField(null=True, blank=True)
+
+    # MORE NEW STUFF
+    # mba_cet_score = models.CharField(max_length=10, null=True, blank=True)
+    # mba_cet_registration_number = models.CharField(max_length=25, null=True, blank=True)
+    # mba_cet_proof = models.FileField(null=True, blank=True)
+
+    
 class Admit(models.Model):
     student = models.ForeignKey(
         StudentProfile, related_name="admit", on_delete=models.CASCADE
