@@ -1284,10 +1284,6 @@ def show_edit_studentprofile(request):
             else:
                 acads = []
             competitive_exam = CompetitiveExams.objects.filter(student=student_profile)
-            if competitive_exam:
-                competitive_exam=competitive_exam[0]
-            else:
-                competitive_exam=[]
 
             # try:
             #     beproject = BeProject.objects.get(student=student_profile)
