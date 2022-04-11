@@ -240,6 +240,7 @@ class Internship(models.Model):
     stipend = models.CharField(
         max_length=6, choices=stipend_options, blank=True, null=True
     )
+    stipend_amount = models.IntegerField(blank=True, null=True)
     offer_letter = models.FileField(blank=True, null=True)
     Certificate = models.FileField(blank=True, null=True)
     total_hours = models.IntegerField(default=0, null=True, blank=True)

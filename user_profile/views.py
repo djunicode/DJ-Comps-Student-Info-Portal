@@ -1528,6 +1528,7 @@ def edit_internship_info(request, id):
         internship = Internship.objects.create(employee=student_profile)
         internship.company = request.POST.get("InternshipName")
         internship.stipend = request.POST.get("stipend")
+        internship.stipend_amount = request.POST.get("stipend_amount")
         internship.desc = request.POST.get("InternshipDescription")
         internship.Position = request.POST.get("InternshipPosition")
         internship.Loc = request.POST.get("InternshipLocation")
@@ -2160,6 +2161,7 @@ def download_all_excel(request):
             "desc",
             "how",
             "stipend",
+            "stipend_amount",
             "total_hours",
         )
         for row in rows:
