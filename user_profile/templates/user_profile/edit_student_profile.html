@@ -923,6 +923,7 @@
                           <th class="mailbox-name">Duration</th>
                           <th class="mailbox-number">Total Hours</th>
                           <th class="mailbox-name">Stipend</th>
+                          <th class="mailbox-name">Stipend Amount</th>
                           <th class="mailbox-name">Offer Letter</th>
                           <th class="mailbox-name">Certificate</th>
                           <th class="mailbox-name">Evaluation Report (Mentor)</th>
@@ -937,6 +938,7 @@
                           <td class="mailbox-name">{{ internship.From }} - {{ internship.To }}</td>
                           <td class="mailbox-number">{{ internship.total_hours }}</td>
                           <td class="mailbox-name">{{ internship.stipend }}</td>
+                          <td class="mailbox-name">{{ internship.stipend_amount }}</td>
                           {% if internship.offer_letter %}
                           <td class="mailbox-name"><a target="_blank" href="{{internship.offer_letter.url}}">Offer Letter
                             URL</a></td>

@@ -53,7 +53,7 @@
       </div>
       <div class="form-group has-feedback">
         <select required id="mentor" type="text" class="form-control" placeholder="Name of Your Mentor" name="mentor">
-          <option value="">Select Your Mentor</option>
+          <option value="">Select Your Faculty Incharge</option>
           {% for mentor in mentor_list %}
           <option value="{{mentor.Sap_Id}}">{{mentor.first_name}} {{mentor.last_name}}</option>
           {% endfor %}
