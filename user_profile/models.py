@@ -202,6 +202,7 @@ class Hackathon(models.Model):
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
     total_no_of_hours = models.IntegerField(default=0, blank=True, null=True)
+    rejection_remark = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return str(self.CompetitionName)
@@ -260,6 +261,7 @@ class Internship(models.Model):
     # image5 = models.FileField(blank=True, null=True)
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
+    rejection_remark = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return str(self.company)
@@ -297,6 +299,7 @@ class Project(models.Model):
 
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
+    rejection_remark = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return str(self.ProjName)
@@ -322,6 +325,7 @@ class Committee(models.Model):
     # image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
+    rejection_remark = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return str(self.OrganisationName)
@@ -360,6 +364,7 @@ class ResearchPaper(models.Model):
     # image5 = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
+    rejection_remark = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return str(self.Title)
@@ -392,6 +397,7 @@ class BeProject(models.Model):
     project_report = models.FileField(null=True, blank=True)
     history = HistoricalRecords()
     is_approved = models.BooleanField(null=True, blank=True, default=None)
+    rejection_remark = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return str(self.ProjName)
@@ -442,6 +448,7 @@ class CompetitiveExams(models.Model):
     # gate_score = models.CharField(max_length=10, null=True, blank=True)
     # gmat_score = models.CharField(max_length=10, null=True, blank=True)
     is_approved = models.BooleanField(null=True, blank=True, default=None)
+    rejection_remark = models.CharField(max_length=255, blank=True, null=True)
     # # mhcet_score = models.CharField(max_length=10, null=True, blank=True)
     # # NEW STUFF
     # gre_registration_number = models.CharField(max_length=25, null=True, blank=True)
@@ -471,6 +478,7 @@ class Admit(models.Model):
     selected = models.CharField(max_length=50, null=True, blank=True)
     admit_proof = models.FileField(blank=True, null=True)
     is_approved = models.BooleanField(null=True, blank=True, default=None)
+    rejection_remark = models.CharField(max_length=255, blank=True, null=True)
 
 class Placements(models.Model):
     student = models.ForeignKey(
@@ -484,3 +492,4 @@ class Placements(models.Model):
     company_address = models.CharField(max_length=255, blank=True, null=True)
     company_phone_number = models.CharField(max_length=20, blank=True, null=True)
     designation = models.CharField(max_length=255, blank=True, null=True)
+    rejection_remark = models.CharField(max_length=255, blank=True, null=True)
