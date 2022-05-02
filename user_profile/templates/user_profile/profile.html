@@ -1478,20 +1478,51 @@
                                 <thead>
                                   <th class="mailbox-number">Sr. No</th>
                                   <th class="mailbox-name">Company Name</th>
-                                  <th class="mailbox-name">Offer Letter</th>
+                                  <th class="mailbox-name">CTC</th>
+                                  <th class="mailbox-name">Designation</th>
+
+                                  <th class="mailbox-name">Company Address</th>
+                                  <th class="mailbox-name">Company Phone No.</th>
+
+                                  <th class="mailbox-name">Offer Letter 1</th>
+                                  <th class="mailbox-name">Offer Letter 2</th>
+                                  <th class="mailbox-name">Offer Letter 3</th>
+
                                 </thead>
                                 {% for project in placement_approved %}
                                 <tr>
                                   <td class="mailbox-number">{{ forloop.counter }}</td>
                                   <td class="mailbox-name">{{project.company_name}}</td>
+                                  <td class="mailbox-name">{{project.ctc}}</td>
+                                  <td class="mailbox-name">{{project.designation}}</td>
+
+                                  <td class="mailbox-name">{{project.company_address}}</td>
+                                  <td class="mailbox-name">{{project.company_phone_number}}</td>
+
                                   {% ifequal project.offer_letter "" %}
                                   <td class="mailbox-name">Not Uploaded</td>
                                   {% else %}
                                   <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter.url}}">Offer Letter</a>
                                   </td>
                                   {% endifequal %}
-                                </tr>
-                                {% endfor %}
+
+
+                                  {% ifequal project.offer_letter2 "" %}
+                                  <td class="mailbox-name">Not Uploaded</td>
+                                  {% else %}
+                                  <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter2.url}}">Offer Letter 2</a>
+                                  </td>
+                                  {% endifequal %}
+
+
+                                {% ifequal project.offer_letter3 "" %}
+                                <td class="mailbox-name">Not Uploaded</td>
+                                {% else %}
+                                <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter3.url}}">Offer Letter 3</a>
+                                </td>
+                                {% endifequal %}
+                              </tr>
+                              {% endfor %}
                               </tbody>
                             </table>
                             <!-- /.table -->
@@ -1514,20 +1545,50 @@
                               <thead>
                                 <th class="mailbox-number">Sr. No</th>
                                 <th class="mailbox-name">Company Name</th>
-                                <th class="mailbox-name">Offer Letter</th>
+                                <th class="mailbox-name">CTC</th>
+                                <th class="mailbox-name">Designation</th>
+
+                                <th class="mailbox-name">Company Address</th>
+                                <th class="mailbox-name">Company Phone No.</th>
+
+                                <th class="mailbox-name">Offer Letter 1</th>
+                                <th class="mailbox-name">Offer Letter 2</th>
+                                <th class="mailbox-name">Offer Letter 3</th>
+
                               </thead>
                               {% for project in placement_pending %}
                               <tr>
                                 <td class="mailbox-number">{{ forloop.counter }}</td>
                                 <td class="mailbox-name">{{project.company_name}}</td>
-                                {% if project.offer_letter %}
+                                <td class="mailbox-name">{{project.ctc}}</td>
+                                <td class="mailbox-name">{{project.designation}}</td>
+
+                                <td class="mailbox-name">{{project.company_address}}</td>
+                                <td class="mailbox-name">{{project.company_phone_number}}</td>
+
+                                {% ifequal project.offer_letter "" %}
+                                <td class="mailbox-name">Not Uploaded</td>
+                                {% else %}
                                 <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter.url}}">Offer Letter</a>
                                 </td>
-                                {% else %}
+                                {% endifequal %}
+
+
+                                {% ifequal project.offer_letter2 "" %}
                                 <td class="mailbox-name">Not Uploaded</td>
-                                
-                                {% endif %}
-                              </tr>
+                                {% else %}
+                                <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter2.url}}">Offer Letter 2</a>
+                                </td>
+                                {% endifequal %}
+
+
+                              {% ifequal project.offer_letter3 "" %}
+                              <td class="mailbox-name">Not Uploaded</td>
+                              {% else %}
+                              <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter3.url}}">Offer Letter 3</a>
+                              </td>
+                              {% endifequal %}
+                            </tr>
                               {% endfor %}
                             </table>
                             <!-- /.table -->
@@ -1551,20 +1612,50 @@
                                 <thead>
                                   <th class="mailbox-number">Sr. No</th>
                                   <th class="mailbox-name">Company Name</th>
-                                  <th class="mailbox-name">Offer Letter</th>
+                                  <th class="mailbox-name">CTC</th>
+                                  <th class="mailbox-name">Designation</th>
+  
+                                  <th class="mailbox-name">Company Address</th>
+                                  <th class="mailbox-name">Company Phone No.</th>
+  
+                                  <th class="mailbox-name">Offer Letter 1</th>
+                                  <th class="mailbox-name">Offer Letter 2</th>
+                                  <th class="mailbox-name">Offer Letter 3</th>
+  
                                 </thead>
                                 {% for project in placement_rejected %}
                                 <tr>
                                   <td class="mailbox-number">{{ forloop.counter }}</td>
                                   <td class="mailbox-name">{{project.company_name}}</td>
-                                  {% if project.offer_letter %}
-                                  
+                                  <td class="mailbox-name">{{project.ctc}}</td>
+                                  <td class="mailbox-name">{{project.designation}}</td>
+  
+                                  <td class="mailbox-name">{{project.company_address}}</td>
+                                  <td class="mailbox-name">{{project.company_phone_number}}</td>
+  
+                                  {% ifequal project.offer_letter "" %}
+                                  <td class="mailbox-name">Not Uploaded</td>
+                                  {% else %}
                                   <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter.url}}">Offer Letter</a>
                                   </td>
-                                  {% else %}
+                                  {% endifequal %}
+  
+  
+                                  {% ifequal project.offer_letter2 "" %}
                                   <td class="mailbox-name">Not Uploaded</td>
-                                  {% endif %}
-                                </tr>
+                                  {% else %}
+                                  <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter2.url}}">Offer Letter 2</a>
+                                  </td>
+                                  {% endifequal %}
+  
+  
+                                {% ifequal project.offer_letter3 "" %}
+                                <td class="mailbox-name">Not Uploaded</td>
+                                {% else %}
+                                <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter3.url}}">Offer Letter 3</a>
+                                </td>
+                                {% endifequal %}
+                              </tr>
                                 {% endfor %}
                               </tbody>
                             </table>
