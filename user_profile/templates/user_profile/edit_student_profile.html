@@ -2076,9 +2076,24 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="offer_letter" class="col-sm-2 control-label"> Offer Letter </label>
+                  <label for="offer_letter" class="col-sm-2 control-label"> Offer Letter 1</label>
                   <div class="col-sm-8">
                     <input type="file" name="offer_letter" class="form-control" id="offer_letter">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="offer_letter2" class="col-sm-2 control-label"> Offer Letter 2</label>
+                  <div class="col-sm-8">
+                    <input type="file" name="offer_lette2r" class="form-control" id="offer_letter2">
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="offer_letter3" class="col-sm-2 control-label"> Offer Letter 3</label>
+                  <div class="col-sm-8">
+                    <input type="file" name="offer_letter3" class="form-control" id="offer_letter3">
                   </div>
                 </div>
 
@@ -2131,7 +2146,9 @@
                         <thead>
                           <th class="mailbox-number">Sr. No</th>
                           <th class="mailbox-name">Company Name</th>
-                          <th class="mailbox-name">Offer Letter</th>
+                          <th class="mailbox-name">Offer Letter 1</th>
+                          <th class="mailbox-name">Offer Letter 2</th>
+                          <th class="mailbox-name">Offer Letter 3</th>
                           <th class="mailbox-name">CTC</th>
                           <th class="mailbox-name">Company Address</th>
                           <th class="mailbox-name">Company Phone No.</th>
@@ -2142,11 +2159,26 @@
                           <td class="mailbox-number">{{ forloop.counter }}</td>
                           <td class="mailbox-name">{{project.company_name}}</td>
                           {% if project.offer_letter %}
-                          <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter.url}}">Offer Letter</a>
+                          <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter.url}}">Offer Letter 1</a>
                           </td>
                           {% else %}
                           <td class="mailbox-name">Not Uploaded</td>
                           {% endif %}
+
+                          {% if project.offer_letter2 %}
+                          <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter2.url}}">Offer Letter 2</a>
+                          </td>
+                          {% else %}
+                          <td class="mailbox-name">Not Uploaded</td>
+                          {% endif %}                          
+                          
+                          {% if project.offer_letter3 %}
+                          <td class="mailbox-name"><a target="_blank" href="{{project.offer_letter3.url}}">Offer Letter 3</a>
+                          </td>
+                          {% else %}
+                          <td class="mailbox-name">Not Uploaded</td>
+                          {% endif %}
+
                           <td class="mailbox-name">{{project.ctc}}</td>
                           <td class="mailbox-name">{{project.company_address}}</td>
                           <td class="mailbox-name">{{project.company_phone_number}}</td>
