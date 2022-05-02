@@ -1407,7 +1407,13 @@
                   <th class="mailbox-number">Sr. No</th>
                   <th class="mailbox-name">Student</th>
                   <th class="mailbox-name">Company Name</th>
-                  <th class="mailbox-name">Offer Letter</th>
+                  <th class="mailbox-name">CTC</th>
+                  <th class="mailbox-name">Designation</th>
+                  <th class="mailbox-name">Company Address</th>
+                  <th class="mailbox-name">Company Phone No.</th>
+                  <th class="mailbox-name">Offer Letter 1</th>
+                  <th class="mailbox-name">Offer Letter 2</th>
+                  <th class="mailbox-name">Offer Letter 3</th>
                   <th class="mailbox-name">Action</th>
                 </thead>
                 {% for placement in placements_pending %}
@@ -1416,12 +1422,31 @@
                   <td class="mailbox-name">{{placement.student.Sap_Id}} - {{placement.student.first_name}}
                     {{placement.student.last_name}}</td>
                   <td class="mailbox-name">{{ placement.company_name }}</td>
+                  <td class="mailbox-name">{{ placement.ctc }}</td>
+                  <td class="mailbox-name">{{ placement.designation }}</td>
+                  <td class="mailbox-name">{{ placement.company_address }}</td>
+                  <td class="mailbox-name">{{ placement.company_phone_no }}</td>
                   {% ifequal placement.offer_letter "" %}
                   <td class="mailbox-name">Not Uploaded</td>
                   {% else %}
-                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter.url}}">Report</a>
+                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter.url}}">Offer Letter 1</a>
                   </td>
                   {% endifequal %}
+
+                  {% ifequal placement.offer_letter2 "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter2.url}}">Offer Letter 2</a>
+                  </td>
+                  {% endifequal %}
+
+                  {% ifequal placement.offer_letter3 "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter3.url}}">Offer Letter 3</a>
+                  </td>
+                  {% endifequal %}
+
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:placement-approved' placement.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
                     <a style="color:red" href="{% url 'user_profile:placement-rejected' placement.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
@@ -1452,7 +1477,13 @@
                   <th class="mailbox-number">Sr. No</th>
                   <th class="mailbox-name">Student</th>
                   <th class="mailbox-name">Company Name</th>
-                  <th class="mailbox-name">Offer Letter</th>
+                  <th class="mailbox-name">CTC</th>
+                  <th class="mailbox-name">Designation</th>
+                  <th class="mailbox-name">Company Address</th>
+                  <th class="mailbox-name">Company Phone No.</th>
+                  <th class="mailbox-name">Offer Letter 1</th>
+                  <th class="mailbox-name">Offer Letter 2</th>
+                  <th class="mailbox-name">Offer Letter 3</th>
                 </thead>
                 {% for placement in placements_approved %}
                 <tr>
@@ -1460,10 +1491,28 @@
                   <td class="mailbox-name">{{placement.student.Sap_Id}} - {{placement.student.first_name}}
                     {{placement.student.last_name}}</td>
                   <td class="mailbox-name">{{ placement.company_name }}</td>
+                  <td class="mailbox-name">{{ placement.ctc }}</td>
+                  <td class="mailbox-name">{{ placement.designation }}</td>
+                  <td class="mailbox-name">{{ placement.company_address }}</td>
+                  <td class="mailbox-name">{{ placement.company_phone_no }}</td>
                   {% ifequal placement.offer_letter "" %}
                   <td class="mailbox-name">Not Uploaded</td>
                   {% else %}
-                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter.url}}">Report</a>
+                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter.url}}">Offer Letter 1</a>
+                  </td>
+                  {% endifequal %}
+
+                  {% ifequal placement.offer_letter2 "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter2.url}}">Offer Letter 2</a>
+                  </td>
+                  {% endifequal %}
+
+                  {% ifequal placement.offer_letter3 "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter3.url}}">Offer Letter 3</a>
                   </td>
                   {% endifequal %}
                 </tr>
@@ -1492,7 +1541,13 @@
                   <th class="mailbox-number">Sr. No</th>
                   <th class="mailbox-name">Student</th>
                   <th class="mailbox-name">Company Name</th>
-                  <th class="mailbox-name">Offer Letter</th>
+                  <th class="mailbox-name">CTC</th>
+                  <th class="mailbox-name">Designation</th>
+                  <th class="mailbox-name">Company Address</th>
+                  <th class="mailbox-name">Company Phone No.</th>
+                  <th class="mailbox-name">Offer Letter 1</th>
+                  <th class="mailbox-name">Offer Letter 2</th>
+                  <th class="mailbox-name">Offer Letter 3</th>
                 </thead>
                 {% for placement in placements_rejected %}
                 <tr>
@@ -1500,10 +1555,28 @@
                   <td class="mailbox-name">{{placement.student.Sap_Id}} - {{placement.student.first_name}}
                     {{placement.student.last_name}}</td>
                   <td class="mailbox-name">{{ placement.company_name }}</td>
+                  <td class="mailbox-name">{{ placement.ctc }}</td>
+                  <td class="mailbox-name">{{ placement.designation }}</td>
+                  <td class="mailbox-name">{{ placement.company_address }}</td>
+                  <td class="mailbox-name">{{ placement.company_phone_no }}</td>
                   {% ifequal placement.offer_letter "" %}
                   <td class="mailbox-name">Not Uploaded</td>
                   {% else %}
-                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter.url}}">Report</a>
+                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter.url}}">Offer Letter 1</a>
+                  </td>
+                  {% endifequal %}
+
+                  {% ifequal placement.offer_letter2 "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter2.url}}">Offer Letter 2</a>
+                  </td>
+                  {% endifequal %}
+
+                  {% ifequal placement.offer_letter3 "" %}
+                  <td class="mailbox-name">Not Uploaded</td>
+                  {% else %}
+                  <td class="mailbox-name"><a target="_blank" href="{{placement.offer_letter3.url}}">Offer Letter 3</a>
                   </td>
                   {% endifequal %}
                 </tr>
