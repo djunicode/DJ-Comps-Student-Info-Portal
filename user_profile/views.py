@@ -1732,7 +1732,18 @@ def edit_placement_info(request, id):
         student_profile = StudentProfile.objects.get(id=id)
         extra = Placements.objects.create(student=student_profile)
         extra.company_name = request.POST.get("company_name")
-        extra.offer_letter = request.FILES.get("offer_letter")
+        try:
+            extra.offer_letter = request.FILES.get("offer_letter")
+        except:
+            pass
+        try:
+            extra.offer_letter2 = request.FILES.get("offer_letter2")
+        except:
+            pass
+        try:
+            extra.offer_letter3 = request.FILES.get("offer_letter3")
+        except:
+            pass
         extra.ctc = request.POST.get("ctc")
         extra.company_address = request.POST.get("company_address")
         extra.company_phone_number = request.POST.get("company_phone")
@@ -1744,7 +1755,12 @@ def edit_placement_info(request, id):
         return JsonResponse(
             {
                 "company_name": data.company_name,
-                "offer_letter": data.offer_letter,
+                "offer_letter": data.offer_letter1,
+                "offer_letter2": data.offer_letter2,
+                "offer_letter3": data.offer_letter3,
+                "ctc": data.ctc,
+                "company_address": data.company_address,
+                "company_phone_number": data.company_phone_number,
                 "id": data.id,
             }
         )

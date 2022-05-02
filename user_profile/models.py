@@ -493,3 +493,5 @@ class Placements(models.Model):
     company_phone_number = models.CharField(max_length=20, blank=True, null=True)
     designation = models.CharField(max_length=255, blank=True, null=True)
     rejection_remark = models.CharField(max_length=255, blank=True, null=True)
+    offer_letter2 = models.FileField(null=True, blank=True)
+    offer_letter3 = models.FileField(null=True, blank=True)
