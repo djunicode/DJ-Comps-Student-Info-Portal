@@ -1340,19 +1340,19 @@ def edit_competitive_exams(request, id):
         #     ]
         # except:
         competitive_exam = CompetitiveExams.objects.create(student=student_profile)
-        if request.POST.get("exam_name") is not "":
+        if request.POST.get("exam_name") != "":
             exam_details = ExamDetails.objects.create()
             exam_details.exam_name = request.POST.get("exam_name")
         else:
             exam_details.delete()
 
-        if request.POST.get("exam_score") is not "":
+        if request.POST.get("exam_score") != "":
             exam_details.exam_score = request.POST.get("exam_score")
 
-        if request.POST.get("exam_registration_number") is not "":
+        if request.POST.get("exam_registration_number") != "":
             exam_details.exam_registration_number = request.POST.get("exam_registration_number")
 
-        if request.FILES.get("exam_proof") is not None:
+        if request.FILES.get("exam_proof") != None:
             exam_details.exam_proof = request.FILES.get("exam_proof")
 
         exam_details.save()
@@ -1877,6 +1877,9 @@ def internship_approved(request, id):
 def internship_rejected(request, id):
     try:
         internship = Internship.objects.get(id=id)
+        rejection_remark = request.POST.get("rejection_remark")
+        internship.rejection_remark = rejection_remark
+        internship.save()
     except Internship.DoesNotExist:
         return redirect("user_profile:notifs")
     if internship.is_approved == None:
@@ -1900,6 +1903,9 @@ def hackathon_approved(request, id):
 def hackathon_rejected(request, id):
     try:
         hackathon = Hackathon.objects.get(id=id)
+        rejection_remark = request.POST.get("rejection_remark")
+        hackathon.rejection_remark = rejection_remark
+        hackathon.save()
     except Hackathon.DoesNotExist:
         return redirect("user_profile:notifs")
     if hackathon.is_approved == None:
@@ -1923,6 +1929,9 @@ def project_approved(request, id):
 def project_rejected(request, id):
     try:
         project = Project.objects.get(id=id)
+        rejection_remark = request.POST.get("rejection_remark")
+        project.rejection_remark = rejection_remark
+        project.save()
     except Project.DoesNotExist:
         return redirect("user_profile:notifs")
     if project.is_approved == None:
@@ -1946,6 +1955,9 @@ def research_paper_approved(request, id):
 def research_paper_rejected(request, id):
     try:
         research_paper = ResearchPaper.objects.get(id=id)
+        rejection_remark = request.POST.get("rejection_remark")
+        research_paper.rejection_remark = rejection_remark
+        research_paper.save()
     except ResearchPaper.DoesNotExist:
         return redirect("user_profile:notifs")
     if research_paper.is_approved == None:
@@ -1969,6 +1981,9 @@ def BE_project_approved(request, id):
 def BE_project_rejected(request, id):
     try:
         BE_project = BeProject.objects.get(id=id)
+        rejection_remark = request.POST.get("rejection_remark")
+        BE_project.rejection_remark = rejection_remark
+        BE_project.save()
     except BeProject.DoesNotExist:
         return redirect("user_profile:notifs")
     if BE_project.is_approved == None:
@@ -1992,6 +2007,9 @@ def admit_approved(request, id):
 def admit_rejected(request, id):
     try:
         admit = Admit.objects.get(id=id)
+        rejection_remark = request.POST.get("rejection_remark")
+        admit.rejection_remark = rejection_remark
+        admit.save()
     except Admit.DoesNotExist:
         return redirect("user_profile:notifs")
     if admit.is_approved == None:
@@ -2015,6 +2033,9 @@ def placement_approved(request, id):
 def placement_rejected(request, id):
     try:
         placement = Placements.objects.get(id=id)
+        rejection_remark = request.POST.get("rejection_remark")
+        placement.rejection_remark = rejection_remark
+        placement.save()
     except Placements.DoesNotExist:
         return redirect("user_profile:notifs")
     if placement.is_approved == None:
@@ -2038,6 +2059,9 @@ def competitive_exams_approved(request, id):
 def competitive_exams_rejected(request, id):
     try:
         competitive_exams = CompetitiveExams.objects.get(id=id)
+        rejection_remark = request.POST.get("rejection_remark")
+        competitive_exams.rejection_remark = rejection_remark
+        competitive_exams.save()
     except CompetitiveExams.DoesNotExist:
         return redirect("user_profile:notifs")
     if competitive_exams.is_approved == None:
@@ -2061,6 +2085,9 @@ def committee_approved(request, id):
 def committee_rejected(request, id):
     try:
         committee = Committee.objects.get(id=id)
+        rejection_remark = request.POST.get("rejection_remark")
+        committee.rejection_remark = rejection_remark
+        committee.save()
     except Committee.DoesNotExist:
         return redirect("user_profile:notifs")
     if committee.is_approved == None:
