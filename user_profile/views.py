@@ -55,6 +55,10 @@ from datetime import timedelta
 import os
 import requests
 
+#for reseting password
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
+
 
 def homepage(request):
     return render(request, "index.html")
@@ -154,6 +158,73 @@ def register(request):
             )
 
 
+def ForgotPassword(request):
+    if request.user.is_authenticated:
+        try:
+            student_profile = StudentProfile.objects.get(student=request.user)
+            student_profile_url = "/student_profile/" + str(student_profile.id)
+            return HttpResponseRedirect(student_profile_url)
+        except Exception as e:
+            teacher_profile_url= '/teacherdashboard/'
+            return HttpResponseRedirect(teacher_profile_url)
+    else:
+        return render(request, "reset_password/reset_form.html")
+
+
+def ResetPasswordRequest(request):
+    if request.user.is_authenticated:
+        try:
+            student_profile = StudentProfile.objects.get(student=request.user)
+            student_profile_url = "/student_profile/" + str(student_profile.id)
+            return HttpResponseRedirect(student_profile_url)
+        except Exception as e:
+            teacher_profile_url= '/teacherdashboard/'
+            return HttpResponseRedirect(teacher_profile_url)
+    else:
+        if request.method == "POST":
+            email = request.POST.get("email", "")
+            if User.objects.filter(email=email).exists():
+                user = User.objects.get(email=email)
+                uidb64=urlsafe_base64_encode(smart_bytes(user.id))
+                #hashing the user id 
+                token=PasswordResetTokenGenerator().make_token(user) 
+                #this token becomes invalid once the user has reset the password
+                current_site = get_current_site(request).domain
+                relative_link = reverse('user_profile:password-reset-confirm',kwargs={'uidb64':uidb64,'token':token})
+                abs_url = current_site + relative_link
+                mail_subject = "Password Reset"
+                message = render_to_string(
+                    "reset_password/mail.html",
+                    {"user": user, "url": abs_url},
+                )
+                email_message = EmailMessage(mail_subject, message, to=[email])
+                email_message.send()
+                return render(request, "reset_password/mail_sent_success.html")
+            else:
+                error = "The email does not exist."
+                return render(request, "reset_password/incorrect_mail.html", {"error": error})
+
+
+def ResetPassword(request, user_id):
+    if request.method == "POST":
+        new_password = request.POST.get("new_password", "")
+        user = User.objects.get(id=user_id)
+        print(user_id, user.username, user, new_password)
+        user.set_password(new_password)
+        user.save()
+        return HttpResponse("Password reset successfully")
+
+def PasswordResetConfirm(request, uidb64, token):
+
+    uid = force_text(urlsafe_base64_decode(uidb64))
+    user = User.objects.get(pk=uid)
+    if not PasswordResetTokenGenerator().check_token(user, token):
+        return HttpResponse("Invalid token")
+    return render(request, "reset_password/update_password.html", context={"user": user.id})
+    
+
+
+@csrf_exempt
 def user_login(request):
     if request.user.is_authenticated:
         try:

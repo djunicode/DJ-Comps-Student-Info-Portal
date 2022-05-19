@@ -87,4 +87,8 @@ urlpatterns = [
 
 
     path("all_excel", views.download_all_excel, name="all-excel"),
+    path("forgot-password/",views.ForgotPassword,name="forgot_password"),
+    path("reset_password_request/", views.ResetPasswordRequest, name="reset_password_request"),
+    path("password-reset-confirm/<uidb64>/<token>/", views.PasswordResetConfirm, name="password-reset-confirm"),
+    path("rese_password/<int:user_id>/", views.ResetPassword, name="reset_password"),
 ]
