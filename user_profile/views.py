@@ -1960,7 +1960,7 @@ def internship_approved(request, id):
         internship.save()
     return redirect("user_profile:notifs")
 
-
+@csrf_exempt
 def internship_rejected(request, id):
     try:
         internship = Internship.objects.get(id=id)

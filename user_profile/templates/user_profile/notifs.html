@@ -261,7 +261,8 @@
 
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:iapproved' internship.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="{% url 'user_profile:irejected' internship.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:red" onclick="rejectRequest('internship_rejected',{{internship.id}})"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <!-- <a style="color:red" href="{% url 'user_profile:irejected' internship.id %}"><i class="fa fa-times" aria-hidden="true"></i></a> -->
                   </td>
                 </tr>
                 {% endfor %}
@@ -593,7 +594,8 @@
                   <td class="mailbox-name">{{ project.skill }}</td>
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:project-approved' project.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="{% url 'user_profile:project-rejected' project.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:red" onclick="rejectRequest('project_rejected',{{project.id}})"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <!-- <a style="color:red" href="{% url 'user_profile:project-rejected' project.id %}"><i class="fa fa-times" aria-hidden="true"></i></a> -->
                   </td>
                 </tr>
                 {% endfor %}
@@ -753,7 +755,8 @@
 
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:research-paper-approved' research_paper.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="{% url 'user_profile:research-paper-rejected' research_paper.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:red" onclick="rejectRequest('research_paper_rejected',{{research_paper.id}})"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <!-- <a style="color:red" href="{% url 'user_profile:research-paper-rejected' research_paper.id %}"><i class="fa fa-times" aria-hidden="true"></i></a> -->
                   </td>
                 </tr>
                 {% endfor %}
@@ -995,7 +998,8 @@
                   <td class="mailbox-name"><a target="_blank" href="{{ hackathon.Github_url }}">{{ hackathon.Github_url }}</a></td>
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:hackathon-approved' hackathon.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="{% url 'user_profile:hackathon-rejected' hackathon.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:red" onclick="rejectRequest('hackathon_rejected',{{hackathon.id}})"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <!-- <a style="color:red" href="{% url 'user_profile:hackathon-rejected' hackathon.id %}"><i class="fa fa-times" aria-hidden="true"></i></a> -->
                   </td>
                 </tr>
                 {% endfor %}
@@ -1136,7 +1140,8 @@
                   {% endifequal %}
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:be-project-approved' project.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="{% url 'user_profile:be-project-rejected' project.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:red" onclick="rejectRequest('be_project_rejected',{{project.id}})"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <!-- <a style="color:red" href="{% url 'user_profile:be-project-rejected' project.id %}"><i class="fa fa-times" aria-hidden="true"></i></a> -->
                   </td>
                 </tr>
                 {% endfor %}
@@ -1283,7 +1288,8 @@
                   {% endifequal %}
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:admit-approved' admit.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="{% url 'user_profile:admit-rejected' admit.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:red" onclick="rejectRequest('admit_rejected',{{admit.id}})"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <!-- <a style="color:red" href="{% url 'user_profile:admit-rejected' admit.id %}"><i class="fa fa-times" aria-hidden="true"></i></a> -->
                   </td>
                 </tr>
                 {% endfor %}
@@ -1449,7 +1455,8 @@
 
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:placement-approved' placement.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="{% url 'user_profile:placement-rejected' placement.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:red" onclick="rejectRequest('placement_rejected',{{placement.id}})"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <!-- <a style="color:red" href="{% url 'user_profile:placement-rejected' placement.id %}"><i class="fa fa-times" aria-hidden="true"></i></a> -->
                   </td>
                 </tr>
                 {% endfor %}
@@ -1639,7 +1646,8 @@
 
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:competitive-exam-approved' competitive_exam.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="{% url 'user_profile:competitive-exam-rejected' competitive_exam.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:red" onclick="rejectRequest('competitive_exam_rejected',{{competitive_exam.id}})"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <!-- <a style="color:red" href="{% url 'user_profile:competitive-exam-rejected' competitive_exam.id %}"><i class="fa fa-times" aria-hidden="true"></i></a> -->
                   </td>
                 </tr>
                 {% endfor %}
@@ -1783,7 +1791,8 @@
                 </tr>
                   <td class="mailbox-name">
                     <a style="color:green" href="{% url 'user_profile:committee-approved' committee.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>&nbsp;&nbsp;
-                    <a style="color:red" href="{% url 'user_profile:committee-rejected' committee.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a style="color:red" onclick="rejectRequest('committee_rejected',{{committee.id}})"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <!-- <a style="color:red" href="{% url 'user_profile:committee-rejected' committee.id %}"><i class="fa fa-times" aria-hidden="true"></i></a> -->
                   </td>
                 </tr>
                 {% endfor %}
@@ -1900,11 +1909,68 @@
   </div>
   <!-- /.row -->
 </section> <!-- /.content -->
+<style>
+  .bg-modal{
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 0;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content{
+    width: 250px;
+    height: fit-content;
+    background-color: white;
+    border-radius: 4px;
+    text-align: center;
+    padding: 10px;
+
+  }
+</style>
+<div id="reject-modal" class="bg-modal">
+  <div id="reject-content" tabindex="0" class="modal-content">
+    <h4 id ="pqrs" tabindex="0">Reason for Rejection</h4>
+    <input tabindex="0" id="request-reason" style="width: 100%;" type="text">
+    <p style="display: none;" id="type"></p>
+    <p style="display: none;" id="valueID"></p>
+    <br><br>
+    <a onclick="sendRejectRequest()" class="btn btn-primary btn-block btn-flat">Submit</a>
+    <a onclick="cancelRejectRequest()" class="btn btn-danger btn-block btn-flat">Cancel</a>
+  </div>
+</div>
 {% endblock %}
 
 {% block js %}
 <script type="text/javascript">
   window.onload = students();
+
+  function rejectRequest(x,y){
+    document.getElementById('type').innerHTML=x;
+    document.getElementById('valueID').innerHTML=y;
+    document.getElementById('request-reason').value="";
+    document.getElementById("pqrs").focus();
+    document.getElementById('reject-modal').style.display="flex";
+  }
+  function cancelRejectRequest(){
+    document.getElementById('reject-modal').style.display="none";
+  }
+  function sendRejectRequest(){
+    text = document.getElementById('request-reason').value;
+    type = document.getElementById('type').innerText;
+    valueID = document.getElementById('valueID').innerText;
+    $.ajax({
+        url: "/"+type+"/"+valueID,
+        method:"POST",
+        data:{"rejection_remark":text},
+        success:function(data){
+          window.location=(window.location.href);
+        }
+    })
+  }
 
   function students() {
     document.getElementById("s").className="active"
