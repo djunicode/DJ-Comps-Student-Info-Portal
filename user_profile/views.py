@@ -1986,7 +1986,7 @@ def hackathon_approved(request, id):
         hackathon.save()
     return redirect("user_profile:notifs")
 
-
+@csrf_exempt
 def hackathon_rejected(request, id):
     try:
         hackathon = Hackathon.objects.get(id=id)
@@ -2012,7 +2012,7 @@ def project_approved(request, id):
         project.save()
     return redirect("user_profile:notifs")
 
-
+@csrf_exempt
 def project_rejected(request, id):
     try:
         project = Project.objects.get(id=id)
@@ -2038,7 +2038,7 @@ def research_paper_approved(request, id):
         research_paper.save()
     return redirect("user_profile:notifs")
 
-
+@csrf_exempt
 def research_paper_rejected(request, id):
     try:
         research_paper = ResearchPaper.objects.get(id=id)
@@ -2090,7 +2090,7 @@ def admit_approved(request, id):
         admit.save()
     return redirect("user_profile:notifs")
 
-
+@csrf_exempt
 def admit_rejected(request, id):
     try:
         admit = Admit.objects.get(id=id)
@@ -2116,7 +2116,7 @@ def placement_approved(request, id):
         placement.save()
     return redirect("user_profile:notifs")
 
-
+@csrf_exempt
 def placement_rejected(request, id):
     try:
         placement = Placements.objects.get(id=id)
@@ -2142,7 +2142,7 @@ def competitive_exams_approved(request, id):
         competitive_exams.save()
     return redirect("user_profile:notifs")
 
-
+@csrf_exempt
 def competitive_exams_rejected(request, id):
     try:
         competitive_exams = CompetitiveExams.objects.get(id=id)
@@ -2168,7 +2168,7 @@ def committee_approved(request, id):
         committee.save()
     return redirect("user_profile:notifs")
 
-
+@csrf_exempt
 def committee_rejected(request, id):
     try:
         committee = Committee.objects.get(id=id)
