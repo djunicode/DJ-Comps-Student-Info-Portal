@@ -2064,7 +2064,7 @@ def BE_project_approved(request, id):
         BE_project.save()
     return redirect("user_profile:notifs")
 
-
+@csrf_exempt
 def BE_project_rejected(request, id):
     try:
         BE_project = BeProject.objects.get(id=id)
