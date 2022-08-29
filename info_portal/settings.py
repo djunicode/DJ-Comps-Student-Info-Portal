@@ -152,7 +152,7 @@ ELASTICSEARCH_URL = 'localhost'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'junaidgirkar@gmail.com'
-EMAIL_HOST_PASSWORD = 'vbupgutcreqerltd'
+EMAIL_HOST_PASSWORD = 'uaufaiptliracmmc'
 EMAIL_PORT = 587
 
 
